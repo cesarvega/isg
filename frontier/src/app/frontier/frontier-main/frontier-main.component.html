@@ -1,0 +1,26 @@
+<main class="container">
+  <div class="row my-4">
+    <div class="col-md-10">
+      <img
+        src="../../../assets/images/frontier-logo-red.svg"
+        style="width: 8rem"
+      />
+    </div>
+    <div class="col-md-2 mt-2">
+      <button
+        (click)="resetOrder()"
+        type="button"
+        class="btn btn-outline-danger btn-lg"
+      >
+        Reset Order
+      </button>
+    </div>
+  </div>
+
+  <app-tabs-menu></app-tabs-menu>
+  <div class="card mt-3">
+    <div class="card-body">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</main>

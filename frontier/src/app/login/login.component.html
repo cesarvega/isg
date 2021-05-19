@@ -1,0 +1,60 @@
+<div class="login">
+  <main class="form-signin">
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="needs-validation"
+      [ngClass]="this.submitted ? 'was-validated' : ''"
+      novalidate=""
+      class="text-center"
+    >
+      <img
+        class="mb-4"
+        src="../../assets//images/ISG-LOGO-BLUE.png"
+        alt=""
+        height="57"
+      />
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+      <div class="form-floating">
+        <input
+          type="number"
+          class="form-control"
+          id="floatingInput"
+          required
+          placeholder="123456"
+          formControlName="agentId"
+        />
+        <label for="floatingInput">Agent Id</label>
+      </div>
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          formControlName="password"
+          required
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me" /> Remember me
+        </label>
+      </div>
+      <button
+        *ngIf="!loading"
+        class="w-100 btn btn-lg btn-primary"
+        type="submit"
+      >
+        Sign in
+      </button>
+      <div *ngIf="loading" class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-5 mb-3 text-muted">© Infinity Sales Group</p>
+    </form>
+  </main>
+</div>

@@ -1,0 +1,119 @@
+<div
+  *ngIf="error"
+  class="alert alert-danger alert-dismissible fade show"
+  role="alert"
+>
+  <div class="row">
+    <div class="col-md-11">
+      <strong>{{ error.message }}</strong>
+      <p *ngFor="let error of error.errors">
+        {{ error }}
+      </p>
+    </div>
+    <div class="col-md-1">
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>
+<form
+  [formGroup]="addressForm"
+  (ngSubmit)="onSubmit()"
+  class="needs-validation"
+  [ngClass]="this.submitted ? 'was-validated' : ''"
+  novalidate=""
+>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label for="address" class="form-label">* Street Address:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="address"
+        placeholder="1234 Main St"
+        required
+        formControlName="addressLine1"
+      />
+      <div class="invalid-feedback">Please enter your address.</div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="address2" class="form-label">Apt / Suite Number: </label>
+      <input
+        formControlName="addressLine2"
+        type="text"
+        class="form-control"
+        id="address2"
+        placeholder="Apt 101"
+      />
+    </div>
+
+    <div class="col-md-5">
+      <label for="country" class="form-label">* City</label>
+      <input
+        type="text"
+        required
+        formControlName="city"
+        class="form-control"
+        id="address2"
+        placeholder="New York"
+      />
+      <div class="invalid-feedback">City field is required.</div>
+    </div>
+
+    <div class="col-md-3">
+      <label for="zip" class="form-label">* Zip Code</label>
+      <input
+        type="text"
+        class="form-control"
+        id="zip"
+        formControlName="zipCode"
+        placeholder="12345"
+        required
+      />
+      <div class="invalid-feedback">Zip Code field is required.</div>
+    </div>
+    <div class="col-md-4">
+      <label for="state" class="form-label">* State</label>
+      <select
+        class="form-select"
+        id="state"
+        required
+        formControlName="stateProvince"
+      >
+        <option value="">Choose a State</option>
+        <option [value]="state.value" *ngFor="let state of states">
+          {{ state.name }}
+        </option>
+      </select>
+      <div class="invalid-feedback">Please provide a valid state.</div>
+    </div>
+  </div>
+  <div style="text-align: right">
+    <div *ngIf="loading" class="spinner-border text-primary m-5" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <button *ngIf="!loading" class="btn btn-primary btn-lg mt-3" type="submit">
+      Find Plans
+    </button>
+  </div>
+</form>
+<div class="col-md-4">
+  <label class="text-primary" style="font-weight: bold"
+    >Select a Test Address</label
+  >
+  <select
+    class="form-select mt-2"
+    [(ngModel)]="selectedTestAlias"
+    (change)="onSelectTestAddress()"
+  >
+    <option>Select Address</option>
+    <option [value]="address.alias" *ngFor="let address of testAddresses">
+      {{ address.alias }}
+    </option>
+  </select>
+</div>
