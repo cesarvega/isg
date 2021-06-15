@@ -27,6 +27,9 @@ import { ConfirmationComponent } from './confirmation/confirmation.component'
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarHeaderComponent } from './confirmation/calendar-header/calendar-header.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -51,7 +54,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ChildEntityConfigurationComponent,
     DisclosureComponent,
     DisclosureItemComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    CalendarHeaderComponent
 
   ],
   imports: [
@@ -63,6 +67,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ReactiveFormsModule,
     FormsModule,
     FullCalendarModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     NgxMaskModule.forRoot()
   ]
 })

@@ -3,6 +3,8 @@ import { ScheduleApiService } from '../services/api/schedule-api.service';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { StateService } from '../services/state.service';
 import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
+import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { setHours, setMinutes } from 'date-fns';
 
 @Component({
   selector: 'app-confirmation',
@@ -17,15 +19,21 @@ export class ConfirmationComponent implements OnInit {
 
   constructor(private scheduleApiService: ScheduleApiService, private stateService: StateService) { }
 
-  calendarOptions: CalendarOptions = {
-    themeSystem: 'standard',
-    initialView: 'dayGridWeek',
-    eventClick: this.handleDateClick.bind(this),
-    events: [
-      { start: '2021-06-14T10:30:00', id: "abc" },
-      { date: '2021-06-15T11:30:00' }
-    ]
-  };
+  view: CalendarView = CalendarView.Week;
+
+  viewDate: Date = new Date();
+
+  events: CalendarEvent[] = [
+    {
+      title: 'No event end date',
+      start: setHours(setMinutes(new Date(), 0), 3),
+    },
+    {
+      title: 'No event end date',
+      start: setHours(setMinutes(new Date(), 0), 5),
+    },
+  ];
+
 
 
   ngOnInit(): void {
