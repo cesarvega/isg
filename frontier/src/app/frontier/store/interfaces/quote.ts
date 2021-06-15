@@ -50,7 +50,6 @@ export interface ProductConfiguration {
 export interface ChildEntity {
   ID,
   Name,
-  Parent?,
   ChangedManually?,
   ConfiguredValue,
   Mandatory,
@@ -77,6 +76,6 @@ export interface Value {
 
 interface Price {
   Name,
-  rateNonRecurring: Number,
-  rateRecurring: Number
+  rateNonRecurring,
+  rateRecurring
 }

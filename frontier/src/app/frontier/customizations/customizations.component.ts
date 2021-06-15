@@ -76,6 +76,10 @@ export class CustomizationsComponent implements OnInit {
 
   private openDisclosures() {
     const modalRef = this.modalService.open(DisclosureComponent);
+    modalRef.componentInstance.onSubmitDisclosures.subscribe(() => {
+      modalRef.close();
+      this.onSubmitDisclosures()
+    })
   }
 
   async submitCustomizations() {
@@ -91,6 +95,7 @@ export class CustomizationsComponent implements OnInit {
 
       // submit customizations
       for (let item of this.items) {
+        delete item.completed;
         await this.productApiService.updateProduct(item, this.quoteId, item.id)
       }
 
@@ -104,17 +109,19 @@ export class CustomizationsComponent implements OnInit {
       await this.quoteApiService.validateQuote(this.quoteId);
 
       // accept disclosures
-
+      this.loading = false;
       this.openDisclosures();
 
 
     } catch (error) {
       this.loading = false;
       this.error = error;
+      return;
     }
-    this.loading = false;
-    this.redirectToConfirmation()
+  }
 
+  onSubmitDisclosures(){
+    this.redirectToConfirmation()
   }
 
   private redirectToConfirmation() {

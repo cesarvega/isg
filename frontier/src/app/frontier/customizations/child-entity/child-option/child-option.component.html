@@ -13,9 +13,9 @@
 <label class="form-check-label">{{ childEntity.Name }}</label>
 <ng-container *ngFor="let price of childEntity.Price">
   <p *ngIf="price.rateNonRecurring">
-    One Time Price : {{ price.rateNonRecurring | currency }}
+    One Time Price : {{ price.rateNonRecurring }}
   </p>
   <p *ngIf="price.rateRecurring">
-    Monthly Price : {{ price.rateRecurring | currency }}
+    Monthly Price : {{ price.rateRecurring }}
   </p></ng-container
 >

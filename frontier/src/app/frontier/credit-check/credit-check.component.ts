@@ -104,9 +104,7 @@ export class CreditCheckComponent implements OnInit {
       // but the task is already closed
       if (this.customerDetailTask)
         await this.tasksApiService.closeTask(this.quoteId, this.customerDetailTask.taskId);
-      let response = await this.customerApiService.creditCheck(this.getAccountUuid(customer), this.quoteId);
-      debugger
-      console.log(JSON.stringify(response))
+      await this.customerApiService.creditCheck(this.getAccountUuid(customer), this.quoteId);
       await this.getTasks(this.quoteId);
       let creditCheckTask: TaskInterface = this.stateService.getValueFromSelector(getTaskByName(creditCheckTaskName))
       if (creditCheckTask)

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DisclosuresApiService } from '../services/api/disclosures-api.service';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
@@ -18,6 +18,8 @@ export class DisclosureComponent implements OnInit {
   disclosures: DisclosureInterface[];
   loading: boolean = false;
   error: ErrorInterface;
+
+  @Output() onSubmitDisclosures = new EventEmitter<any>();
 
   constructor(public activeModal: NgbActiveModal
     , private disclosuresApiService: DisclosuresApiService, private stateService: StateService) { }
@@ -69,7 +71,7 @@ export class DisclosureComponent implements OnInit {
     }
     this.loading = false;
     // close modal
-    this.activeModal.close('Close click')
+    this.onSubmitDisclosures.emit()
   }
 
 
