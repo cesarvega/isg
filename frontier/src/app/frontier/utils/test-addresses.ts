@@ -1,28 +1,37 @@
 export interface AddressFormInterface {
-    alias: string,
-    addressLine1: string,
-    addressLine2: string,
-    city: string,
-    stateProvince: string,
-    zipCode: string,
+  alias: string,
+  addressLine1: string,
+  addressLine2: string,
+  city: string,
+  stateProvince: string,
+  zipCode: string,
 }
 const testFL: AddressFormInterface = {
-    addressLine1: '328 South Ketch Dr',
-    addressLine2: '',
-    city: 'Sunrise',
-    stateProvince: 'FL',
-    zipCode: '33326',
-    alias: 'Test Florida'
+  addressLine1: '1339 Capri Dr Pacific',
+  addressLine2: '',
+  city: 'Palisades',
+  stateProvince: 'CA',
+  zipCode: '90272',
+  alias: 'Cooper CA'
 };
 const testVA: AddressFormInterface = {
-    addressLine1: '14611 Batavia Dr',
-    addressLine2: '',
-    city: 'Centerville',
-    stateProvince: 'VA',
-    zipCode: '20120',
-    alias: 'Test VA'
+  addressLine1: '7109 Jessup Ct',
+  addressLine2: '',
+  city: 'Plano',
+  stateProvince: 'TX',
+  zipCode: '75074',
+  alias: 'Fiber TX'
+};
+const testMultiple: AddressFormInterface = {
+  addressLine1: '1651 Sailing Hawks Drive',
+  addressLine2: '',
+  city: 'LAKE HAVASU CITY',
+  stateProvince: 'AZ',
+  zipCode: '86404',
+  alias: 'Multiple Address AZ'
 };
 export const frontierTestAddresses: ReadonlyArray<AddressFormInterface> = [
-    testFL,
-    testVA
+  testFL,
+  testVA,
+  testMultiple
 ]

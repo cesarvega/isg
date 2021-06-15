@@ -3,20 +3,23 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { FormsModule } from '@angular/forms';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 
 
 @NgModule({
   declarations: [
-    AddressFormComponent
+    AddressFormComponent,
+    ErrorMessageComponent
   ],
   imports: [
-    FormsModule  ,
+    FormsModule,
     CommonModule,
     ReactiveFormsModule,
   ],
-  exports:[
-    AddressFormComponent
+  exports: [
+    AddressFormComponent,
+    ErrorMessageComponent
   ]
 })
 export class IsgSharedModule { }

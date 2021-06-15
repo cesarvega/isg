@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h6 class="modal-title">We found multiple addresses, please select one</h6>
+  <button
+    (click)="activeModal.dismiss('Cross click')"
+    type="button"
+    class="btn btn-outline-primary btn-sm"
+  >
+    <fa-icon class="mx-1" [icon]="faTimes"></fa-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <ul class="list-group list-group-flush">
+      <li
+        *ngFor="let address of addresses"
+        (click)="onSelectAddress(address)"
+        class="list-group-item selectable"
+        style="cursor: pointer"
+      >
+        <p>{{ getUnparsedAddress(address) }}</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>

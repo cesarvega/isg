@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AddressInterface } from '../../isg-shared/interfaces/address';
-import { AddressPredictiveSearchInterface } from '../interfaces/address-predictive-search';
+import { AddressPredictiveSearchInterface } from '../services/interfaces/qualification/address-predictive-search';
 import { Store } from '@ngrx/store';
-import {
-  setStepAction,
-} from '../store/actions';
-import { selectUser } from '../store/selectors';
+import { setStepAction, setCustomerAction } from '../store/actions';
+import { selectUser, selectSelectedAddress } from '../store/selectors';
 import { frontierTestAddresses } from '../utils/test-addresses';
 import { Steps } from '../utils/steps';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ErrorInterface } from '../interfaces/error-interface';
+import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { parseHttperror } from '../utils/helper-functions';
-import { Milestone1ApiService } from '../services/milestone1-api.service';
-import { UserInterface } from '../interfaces/user-interface';
+import { QualificationApiService } from '../services/api/qualification-api.service';
+import { UserInterface } from '../services/interfaces/common/user-interface';
+import { QuoteApiService } from '../services/api/quote-api.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddressSelectorComponent } from './address-selector/address-selector.component';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'app-address-search',
@@ -20,6 +22,7 @@ import { UserInterface } from '../interfaces/user-interface';
   styleUrls: ['./address-search.component.css'],
 })
 export class AddressSearchComponent implements OnInit {
+  selectedAddress;
   frontierTestAddresses = frontierTestAddresses;
   addressSuscriber$: any;
   addressSearchRequest: AddressPredictiveSearchInterface;
@@ -29,51 +32,82 @@ export class AddressSearchComponent implements OnInit {
   error: ErrorInterface = null;
 
   constructor(
-    private milestone1ApiService: Milestone1ApiService,
+    private qualificationApiService: QualificationApiService,
+    private quoteApiService: QuoteApiService,
     private store: Store<any>,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+    private stateService: StateService
   ) {
+    this.selectedAddress = this.stateService.getValueFromSelector(selectSelectedAddress)
     this.userSuscriber = this.store.select(selectUser).subscribe((user) => {
       this.user = user;
     });
   }
 
   async submitAddress(address: AddressInterface) {
-    // generate transactionID
     this.loading = true;
     try {
-      await this.milestone1ApiService.generateTransactionId();
-    } catch (error) {
+      // generate transactionID
+      await this.quoteApiService.generateTransactionId();
+      let requestAddress = { address: address.addressLine1, ...address }
+      delete requestAddress.addressLine1
+      // search Address
+      let addressSearchResponse = await this.qualificationApiService.addressExhaustiveSearch(requestAddress);
+
+      // select address
+      let addresses = addressSearchResponse.addresses;
+      if (addresses.length < 1) {
+        this.loading = false;
+        this.error = {
+          errors: [],
+          message: "Could not find services for this address"
+        }
+        return
+      }
+      if (addresses.length == 1) {
+        await this.generateQuote(addresses[0]);
+      } else {
+        this.openModal(addresses);
+      }
+    }
+    catch (error) {
+      this.error = error;
       this.loading = false;
-      this.error = parseHttperror(error);
       return;
     }
-    // search Address
-    let addressSearchResponse;
+  }
+
+  private async generateQuote(address) {
     try {
-      addressSearchResponse = await this.milestone1ApiService.addressPredictiveSearch(address);
-    } catch (error) {
-      this.loading = false;
-      this.error = parseHttperror(error);
-      return;
-    }
-
-    // select address
-
-    let selectedAddress = addressSearchResponse.addresses[0];
-    // generate quote
-
-    try {
-      await this.milestone1ApiService.generateQuote(selectedAddress, this.user.agentId);
+      this.loading = true;
+      let quoteResponse = await this.quoteApiService.generateQuote(address, this.user.agentId);
+      if (quoteResponse.customer) {
+        this.store.dispatch(setCustomerAction({ customer: quoteResponse.customer }));
+      }
       this.loading = false;
       this.store.dispatch(setStepAction({ step: Steps.offersStep }));
       this.router.navigate(['../offers'], { relativeTo: this.route });
     } catch (error) {
       this.loading = false;
-      this.error = parseHttperror(error);
+      this.error = error;
       return;
     }
+  }
+
+  openModal(addresses) {
+    const modalRef = this.modalService.open(AddressSelectorComponent);
+    modalRef.componentInstance.addresses = addresses;
+    modalRef.componentInstance.selectAddress.subscribe((address) => {
+      modalRef.close();
+      this.onSelectAddress(address)
+    })
+  }
+
+  private onSelectAddress(address: AddressInterface) {
+    this.selectedAddress = address;
+    this.generateQuote(address);
   }
 
   ngOnInit(): void { }
@@ -81,4 +115,6 @@ export class AddressSearchComponent implements OnInit {
   ngOnDestroy() {
     this.userSuscriber.unsubscribe();
   }
+
+
 }

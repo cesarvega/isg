@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUser, selectLoading } from '../frontier/store/selectors';
-import { UserInterface } from '../frontier/interfaces/user-interface';
+import { UserInterface } from '../store/interfaces/user-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
 
   private selectUserValue() {
     let user$ = this.store.select(selectUser)
-    user$.subscribe((value) => { this.user = value; console.log(value) })
+    user$.subscribe((value) => { this.user = value; })
   }
 
   private isUserAuthenticated(user: UserInterface) {

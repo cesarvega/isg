@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { Frontier } from '../interfaces/app.state';
-import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction } from './actions';
-import { ErrorInterface } from '../interfaces/error-interface';
+import { Frontier } from './interfaces/app.state';
+import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction } from './actions';
+import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../utils/steps';
 
 
@@ -18,8 +18,12 @@ export const initialState: Frontier = {
   createQuoteRequest: null,
   createQuoteResponse: null,
   quoteId: null,
-  offers: null
-
+  offers: null,
+  selectedProducts: [],
+  customer: null,
+  tasks: [],
+  quote: null,
+  disclosures: []
 };
 
 const _counterReducer = createReducer(
@@ -34,9 +38,22 @@ const _counterReducer = createReducer(
   on(setStepAction, (state, { step }) => ({ ...state, currentStep: step })),
   on(resetOrderAction, (state) => (initialState)),
   on(setOffersAction, (state, offers) => ({ ...state, offers })),
+  on(selectProductsAction, (state, { products }) => ({ ...state, selectedProducts: products })),
+  on(removeProductAction, (state, { productIds }) => ({ ...state, selectedProducts: removeProducts(productIds, state.selectedProducts) })),
+  on(setCustomerAction, (state, { customer }) => ({ ...state, customer })),
+  on(setTasksAction, (state, { tasks }) => ({ ...state, tasks })),
+  on(setQuoteAction, (state, { quote }) => ({ ...state, quote })),
+  on(setCustomerForms, (state, { accountForm, identityForm }) => ({ ...state, accountForm, identityForm })),
+  on(setDisclosuresAction, (state, { disclosures }) => ({ ...state, disclosures })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);
+}
+
+function removeProducts(productIds, products) {
+  return products.filter((product) => {
+    return !productIds.includes(product.id)
+  })
 }
 
 function parseHttperror(error) {

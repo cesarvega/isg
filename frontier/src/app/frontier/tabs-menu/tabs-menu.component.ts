@@ -16,6 +16,7 @@ export class TabsMenuComponent implements OnInit {
   offerStep = Steps.offersStep
   creditCheckStep = Steps.creditCheckStep
   billingStep = Steps.billingStep
+  customizationStep = Steps.customizationStep
   confirmationStep = Steps.confirmationStep
   constructor(private store: Store<any>, public router: Router) {
     this.currentStep$ = store.select(selectStep)

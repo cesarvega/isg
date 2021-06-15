@@ -17,10 +17,10 @@
         <a ngbNavLink routerLink="credit-check">Credit Check</a>
       </li>
       <li
-        [ngbNavItem]="billingStep.url"
-        [disabled]="!isStepEnabled(billingStep, currentStep$ | async)"
+        [ngbNavItem]="customizationStep.url"
+        [disabled]="!isStepEnabled(customizationStep, currentStep$ | async)"
       >
-        <a ngbNavLink routerLink="billing">Billing</a>
+        <a ngbNavLink routerLink="customizations">Customization</a>
       </li>
       <li
         [ngbNavItem]="confirmationStep.url"

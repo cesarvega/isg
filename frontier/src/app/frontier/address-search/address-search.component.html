@@ -6,6 +6,7 @@
     </p>
     <p class="text-danger">Fields with * are required</p>
     <app-address-form
+      [selectedAddress]="selectedAddress"
       (submitAddressEvent)="submitAddress($event)"
       [loading]="loading"
       [error]="error"

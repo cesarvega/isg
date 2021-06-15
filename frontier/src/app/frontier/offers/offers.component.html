@@ -7,9 +7,30 @@
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
+<app-error-message [error]="error"></app-error-message>
+<ngb-alert *ngIf="alert" [type]="alert.type" (closed)="alert = null">
+  <p class="alert-heading">
+    <fa-icon class="mx-3" [icon]="faExclamationTriangle"></fa-icon
+    >{{ alert.message }}
+  </p>
+</ngb-alert>
 
 <div *ngIf="!loading" class="row row-cols-1 row-cols-md-3 g-5 p-3">
   <div class="col" *ngFor="let offer of offers">
-    <app-offer-detail [offer]="offer"></app-offer-detail>
+    <app-offer-detail
+      [offer]="offer"
+      (selectProduct)="selectProduct($event)"
+      (removeProduct)="removeProduct($event)"
+    ></app-offer-detail>
   </div>
+</div>
+<div class="d-grid gap-2">
+  <button
+    *ngIf="!loading"
+    (click)="onContinue()"
+    class="btn btn-outline-danger btn-lg"
+    type="button"
+  >
+    Continue
+  </button>
 </div>

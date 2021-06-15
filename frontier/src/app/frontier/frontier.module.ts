@@ -10,8 +10,28 @@ import { TabsMenuComponent } from './tabs-menu/tabs-menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OfferDetailComponent } from './offers/offer-detail/offer-detail.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CreditCheckComponent } from './credit-check/credit-check.component';
+import { AccountComponent } from './credit-check/account/account.component';
+import { IdentityComponent } from './credit-check/identity/identity.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { CustomizationsComponent } from './customizations/customizations.component';
+import { ChildEntityComponent } from './customizations/child-entity/child-entity.component';
+import { AddressSelectorComponent } from './address-search/address-selector/address-selector.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { ChildOptionComponent } from './customizations/child-entity/child-option/child-option.component';
+import { ChildEntityConfigurationComponent } from './customizations/child-entity/child-entity-configuration/child-entity-configuration.component';
+import { DisclosureComponent } from './disclosure/disclosure.component';
+import { DisclosureItemComponent } from './disclosure/disclosure-item/disclosure-item.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component'
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 
-
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -20,7 +40,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     OffersComponent,
     ShoppingCartComponent,
     TabsMenuComponent,
-    OfferDetailComponent
+    OfferDetailComponent,
+    CreditCheckComponent,
+    AccountComponent,
+    IdentityComponent,
+    CustomizationsComponent,
+    ChildEntityComponent,
+    AddressSelectorComponent,
+    ChildOptionComponent,
+    ChildEntityConfigurationComponent,
+    DisclosureComponent,
+    DisclosureItemComponent,
+    ConfirmationComponent
 
   ],
   imports: [
@@ -28,7 +59,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     IsgSharedModule,
     FrontierRoutingModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FullCalendarModule,
+    NgxMaskModule.forRoot()
   ]
 })
 export class FrontierModule { }

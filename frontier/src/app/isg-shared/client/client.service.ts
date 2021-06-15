@@ -9,19 +9,29 @@ const baseUrl = "http://127.0.0.1:8000/api";
 })
 export class ClientService {
   constructor(private http: HttpClient) { }
-  getAll(endpoint): Observable<any> {
-    return this.http.get(`${baseUrl}/${endpoint}`);
+  getAll(endpoint, params = null): Observable<any> {
+    return this.http.get(this.concatURL(endpoint), { params });
   }
-  get(endpoint,id): Observable<any> {
-    return this.http.get(`${baseUrl}/${endpoint}/${id}`);
+  get(endpoint, id): Observable<any> {
+    return this.http.get(this.concatURL(endpoint, id));
   }
-  post(endpoint,data): Observable<any> {
-    return this.http.post(`${baseUrl}/${endpoint}`, data);
+  post(endpoint, data): Observable<any> {
+    return this.http.post(this.concatURL(endpoint), data);
   }
-  update(endpoint,id, data): Observable<any> {
-    return this.http.put(`${baseUrl}${endpoint}/${id}`, data);
+  put(endpoint, data): Observable<any> {
+    return this.http.put(this.concatURL(endpoint), data);
   }
-  delete(endpoint,id): Observable<any> {
-    return this.http.delete(`${baseUrl}/${endpoint}/${id}`);
+  patch(endpoint, id, data): Observable<any> {
+    return this.http.patch(this.concatURL(endpoint, id), data);
+  }
+  delete(endpoint, id): Observable<any> {
+    return this.http.delete(this.concatURL(endpoint, id));
+  }
+
+  private concatURL(endpoint, id = null) {
+    let url = `${baseUrl}/${endpoint}`;
+    if (id)
+      url += `/${id}`;
+    return url
   }
 }

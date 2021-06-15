@@ -1,0 +1,22 @@
+<div
+  *ngIf="error"
+  class="alert alert-danger alert-dismissible fade show"
+  role="alert"
+>
+  <div class="row">
+    <div class="col-md-11">
+      <strong>{{ error.message }}</strong>
+      <p *ngFor="let error of error.errors">
+        {{ error }}
+      </p>
+    </div>
+    <div class="col-md-1">
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>

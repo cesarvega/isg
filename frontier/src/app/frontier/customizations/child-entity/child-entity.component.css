@@ -1,0 +1,12 @@
+.accordion-button {
+  color: #0c63e4;
+  background-color: #e7f1ff;
+}
+
+.success {
+  background-color: #e7ffe7;
+}
+
+.error {
+  background-color: #ffe7e7;
+}

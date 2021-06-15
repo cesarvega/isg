@@ -1,0 +1,49 @@
+<form
+  form
+  [formGroup]="verifyIdentityForm"
+  (ngSubmit)="onSubmit()"
+  class="needs-validation"
+  [ngClass]="this.submitted ? 'was-validated' : ''"
+  novalidate=""
+  class="row g-3"
+>
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Birth Date</label>
+    <input
+      required
+      placeholder="MM/DD/YYYY"
+      mask="00/00/0000"
+      formControlName="dateOfBirth"
+      [dropSpecialCharacters]="false"
+      type="text"
+      class="form-control"
+      id="inputEmail4"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label"
+      >Social Security Number</label
+    >
+    <input
+      required
+      placeholder="000-00-0000"
+      mask="000-00-0000"
+      formControlName="ssn"
+      type="password"
+      class="form-control"
+      id="inputPassword4"
+    />
+  </div>
+  <div class="col-12">
+    <button
+      *ngIf="!loading"
+      type="submit"
+      class="btn btn-outline-danger btn-lg"
+    >
+      Submit
+    </button>
+    <div *ngIf="loading" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</form>

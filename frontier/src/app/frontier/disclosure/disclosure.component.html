@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4 class="modal-title">Please accept disclosures to proceed</h4>
+  </div>
+  <div class="modal-body">
+    <app-error-message [error]="error"></app-error-message>
+    <div *ngIf="loading" class="d-flex justify-content-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <ng-container *ngIf="!loading" >
+      <app-disclosure-item *ngFor="let disclosure of disclosures" [disclosure]="disclosure"></app-disclosure-item>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="submitDisclosures()">Submit</button>
+  </div>

@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FrontierModule } from './frontier/frontier.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { FrontierReducer } from './frontier/store/reducer';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RootReducer } from './store/reducer';
 import { storageSyncMetaReducer } from 'ngrx-store-persist';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ErrorInterceptor } from './frontier/utils/interceptors/error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

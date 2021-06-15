@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { setUserAction, logoutAction } from './actions';
-import { UserInterface } from '../frontier/interfaces/user-interface';
+import { UserInterface } from './interfaces/user-interface';
 import { RootInterface } from '../interfaces/root-interface';
 
 

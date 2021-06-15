@@ -1,0 +1,58 @@
+<form
+  [formGroup]="accountForm"
+  (ngSubmit)="onSubmit()"
+  class="needs-validation"
+  [ngClass]="this.submitted ? 'was-validated' : ''"
+  novalidate=""
+  class="row g-3"
+>
+  <div class="col-md-6">
+    <label for="inputfirstName" class="form-label">Legal First Name</label>
+    <input
+      required
+      formControlName="firstName"
+      type="text"
+      class="form-control"
+      id="inputfirstName"
+    />
+    <div class="invalid-feedback">Legal First Name is required.</div>
+  </div>
+  <div class="col-md-6">
+    <label for="inputLegalLastName" class="form-label">Legal Last Name</label>
+    <input
+      required
+      formControlName="lastName"
+      type="text"
+      class="form-control"
+      id="inputLegalLastName"
+    />
+    <div class="invalid-feedback">Legal Last Name is required.</div>
+  </div>
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Email Address</label>
+    <input
+      required
+      formControlName="email"
+      type="email"
+      class="form-control"
+      id="inputAddress"
+    />
+    <div class="invalid-feedback">Must be an email.</div>
+    <div class="invalid-feedback">Email address is required.</div>
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">Phone Number</label>
+    <input
+      required
+      formControlName="phoneNumber"
+      type="text"
+      mask="(000) 000-0000"
+      class="form-control"
+      id="inputAddress2"
+    />
+    <div class="invalid-feedback">Phone Number is required.</div>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-outline-danger btn-lg">Next</button>
+  </div>
+</form>

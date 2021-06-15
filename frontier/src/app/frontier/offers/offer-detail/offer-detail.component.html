@@ -48,8 +48,21 @@
         </p>
       </div>
       <div class="row mt-3 px-4">
-        <button type="button" class="btn btn-outline-danger">
+        <button
+          *ngIf="!offer.selected"
+          (click)="addProduct(offer)"
+          type="button"
+          class="btn btn-outline-danger"
+        >
           Select Plan
+        </button>
+        <button
+          *ngIf="offer.selected"
+          (click)="deleteProduct(offer)"
+          type="button"
+          class="btn btn-outline-dark"
+        >
+          Remove
         </button>
       </div>
     </div>

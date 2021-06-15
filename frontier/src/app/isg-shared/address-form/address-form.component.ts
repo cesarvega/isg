@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { FormBuilder, AbstractControl } from '@angular/forms';
 import { states } from '../../../utils/states';
 import { Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { zipCodeValidator } from '../validators/zipCodeValidator';
 import { Output, EventEmitter } from '@angular/core';
 import { AddressInterface } from '../interfaces/address';
 import { AddressFormInterface } from '../../frontier/utils/test-addresses';
+import { AddressSearchResponseItemInterface } from 'src/app/frontier/services/interfaces/qualification/address-search-response';
 
 @Component({
   selector: 'app-address-form',
@@ -16,6 +17,7 @@ export class AddressFormComponent implements OnInit {
 
   constructor(private addressFormBuilder: FormBuilder) { }
 
+  @Input() selectedAddress: AddressSearchResponseItemInterface
   @Input() testAddresses: Array<AddressFormInterface>;
   @Input() loading: boolean;
   @Input() error: any;
@@ -60,7 +62,7 @@ export class AddressFormComponent implements OnInit {
       this.patchValue(address)
   }
 
-  private patchValue(address: AddressFormInterface) {
+  private patchValue(address) {
     this.addressForm.patchValue({
       addressLine1: address.addressLine1,
       addressLine2: '',
@@ -70,7 +72,15 @@ export class AddressFormComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: { [property: string]: SimpleChange }) {
+    if (changes['selectedAddress'] && this.selectedAddress)
+      this.patchValue(this.selectedAddress.address)
+  }
+
   ngOnInit(): void {
+    if (this.selectedAddress) {
+      this.patchValue(this.selectedAddress.address)
+    }
 
   }
 

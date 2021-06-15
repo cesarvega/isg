@@ -1,0 +1,51 @@
+<div class="accordion mx-2" id="accordionExample" *ngIf="shouldDisplay()">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne" *ngIf="shouldDisplayTitle()">
+      <button
+        [ngClass]="
+          childEntityHelperService.isCustomizationCompleteFunctional(
+            childEntity
+          )
+            ? 'success'
+            : 'error'
+        "
+        class="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#' + childEntity.ID"
+        aria-expanded="true"
+        aria-controls="collapseOne"
+      >
+        {{ childEntity.Name }}
+      </button>
+    </h2>
+    <div
+      [attr.id]="childEntity.ID"
+      class="accordion-collapse collapse show"
+      aria-labelledby="headingOne"
+    >
+      <div class="accordion-body" style="padding: 0rem 0.6rem">
+        <app-child-option
+          *ngIf="isEntitySelectable()"
+          [childEntity]="childEntity"
+          [parentEntity]="parentEntity"
+        ></app-child-option>
+        <div *ngIf="childEntity.ConfiguredValue" class="d-grid gap-2 m-2">
+          <button
+            (click)="open(content)"
+            class="btn btn-outline-primary btn-large"
+          >
+            Configure {{ childEntity.Name }}
+          </button>
+        </div>
+      </div>
+      <ng-container *ngFor="let iterateChildEntity of childEntity.ChildEntity">
+        <app-child-entity
+          class="mx-2"
+          [childEntity]="iterateChildEntity"
+          [parentEntity]="childEntity"
+        ></app-child-entity>
+      </ng-container>
+    </div>
+  </div>
+</div>

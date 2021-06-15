@@ -1,4 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import { CustomerInterface } from '../services/interfaces/customer/customer';
+import { TaskInterface } from './interfaces/task-interface';
 
 export const addressSearchRequestAction = createAction('addressSearchRequest', props<any>());
 export const addressSearchResponseAction = createAction('addressSearchResponse', props<any>());
@@ -10,3 +12,11 @@ export const setCreateQuoteResponseAction = createAction('setCreateQuoteResponse
 export const setStepAction = createAction('setStepAction', props<{ step: any }>());
 export const resetOrderAction = createAction('resetOrderAction');
 export const setOffersAction = createAction('setOffersAction', props<any>());
+export const selectProductsAction = createAction('selectProductsAction', props<{ products }>());
+export const removeProductAction = createAction('removeProductAction', props<{ productIds: string[] }>());
+export const setCustomerAction = createAction('setCustomerAction', props<{ customer: CustomerInterface }>());
+export const setTasksAction = createAction('setTasksAction', props<{ tasks: TaskInterface[] }>());
+export const setQuoteAction = createAction('setQuoteAction', props<{ quote }>());
+export const setCustomerForms = createAction('setCustomerForms', props<{ accountForm, identityForm }>());
+export const setDisclosuresAction = createAction('setDisclosures', props<{ disclosures }>());
+
