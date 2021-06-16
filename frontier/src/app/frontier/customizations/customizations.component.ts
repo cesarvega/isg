@@ -10,7 +10,7 @@ import { TaskInterface } from '../store/interfaces/task-interface';
 import { getValueFromState } from '../utils/get-value-from-state';
 import { TasksApiService } from '../services/api/tasks-api.service.';
 import { getTaskByName } from '../store/complexSelectors/taks';
-import { offerTaskIdName, numberPortabilityTaskName } from '../utils/taskNames';
+import { offerTaskIdName, numberPortabilityTaskName, quoteValidationTaskName } from '../utils/taskNames';
 import { ChildEntityHelperService } from './child-entity-helper.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DisclosureComponent } from '../disclosure/disclosure.component';
@@ -108,6 +108,15 @@ export class CustomizationsComponent implements OnInit {
       // validate quote
       await this.quoteApiService.validateQuote(this.quoteId);
 
+      // close validate quote task
+      let response= await this.tasksApiService.getTasks(this.quoteId);
+      let tasks = response.currentTasks;
+      let quoteValidationTask = tasks.find((iterateTask)=>{
+        return iterateTask.specName == quoteValidationTaskName
+      })
+      await this.tasksApiService.closeTask(this.quoteId,quoteValidationTask.taskId)
+
+
       // accept disclosures
       this.loading = false;
       this.openDisclosures();
@@ -120,7 +129,7 @@ export class CustomizationsComponent implements OnInit {
     }
   }
 
-  onSubmitDisclosures(){
+  async onSubmitDisclosures(){
     this.redirectToConfirmation()
   }
 
