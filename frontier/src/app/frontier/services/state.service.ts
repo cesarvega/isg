@@ -13,6 +13,12 @@ export class StateService {
 
   }
 
+  isTaskClosed(taskId){
+    return this.getFrontierState().closedTasks.find((closedTaskId)=>{
+      return taskId == closedTaskId
+    }) 
+  }
+
   getFrontierState(): Frontier {
     return this.getValueFromSelector(selectFrontier)
   }

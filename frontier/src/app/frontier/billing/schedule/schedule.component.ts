@@ -87,7 +87,7 @@ export class ScheduleComponent implements OnInit {
      this.posIdHoldTask = tasks.find((iterateTask)=>{
       return iterateTask.specName == posIdHoldTaskName
     })
-     await this.taskApiService.closeTask(this.quoteId,this.posIdHoldTask.taskId)
+     await this.taskApiService.closeTask(this.quoteId,this.posIdHoldTask)
     }catch(error){
       this.error = error;
     }

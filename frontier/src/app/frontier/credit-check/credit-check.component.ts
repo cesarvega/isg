@@ -102,14 +102,16 @@ export class CreditCheckComponent implements OnInit {
       // the customer detail task could be null if this task is already closed
       // need to ask what to do in that case, when we want to update the customer infoormation
       // but the task is already closed
-      if (this.customerDetailTask)
-        await this.tasksApiService.closeTask(this.quoteId, this.customerDetailTask.taskId);
+      if (this.customerDetailTask && (!this.stateService.isTaskClosed(customerDetailsTaskName)))
+        await this.tasksApiService.closeTask(this.quoteId, this.customerDetailTask);
       await this.customerApiService.creditCheck(this.getAccountUuid(customer), this.quoteId);
+      
       await this.getTasks(this.quoteId);
       let creditCheckTask: TaskInterface = this.stateService.getValueFromSelector(getTaskByName(creditCheckTaskName))
-      if (creditCheckTask)
-        await this.tasksApiService.closeTask(this.quoteId, creditCheckTask.taskId);
-      this.stateService.dispatchAction(setStepAction({ step: Steps.customizationStep }))
+      if (creditCheckTask &&(!this.stateService.isTaskClosed(creditCheckTaskName)))
+        await this.tasksApiService.closeTask(this.quoteId, creditCheckTask);
+      
+        this.stateService.dispatchAction(setStepAction({ step: Steps.customizationStep }))
       this.router.navigate(['../customizations'], { relativeTo: this.route });
     }
     catch (error) {

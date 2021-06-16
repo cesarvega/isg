@@ -100,10 +100,12 @@ export class CustomizationsComponent implements OnInit {
       }
 
       // close select offer task
-      await this.tasksApiService.closeTask(this.quoteId, this.selectOfferTask.taskId);
+      if(this.selectOfferTask && !this.stateService.isTaskClosed(offerTaskIdName))
+        await this.tasksApiService.closeTask(this.quoteId, this.selectOfferTask);
 
       // close number portability task
-      await this.tasksApiService.closeTask(this.quoteId, this.numberPortabilityTask.taskId);
+      if(this.numberPortabilityTask && !this.stateService.isTaskClosed(numberPortabilityTaskName))
+        await this.tasksApiService.closeTask(this.quoteId, this.numberPortabilityTask);
 
       // validate quote
       await this.quoteApiService.validateQuote(this.quoteId);
@@ -114,7 +116,8 @@ export class CustomizationsComponent implements OnInit {
       let quoteValidationTask = tasks.find((iterateTask)=>{
         return iterateTask.specName == quoteValidationTaskName
       })
-      await this.tasksApiService.closeTask(this.quoteId,quoteValidationTask.taskId)
+      if(quoteValidationTask && !this.stateService.isTaskClosed(quoteValidationTaskName))
+        await this.tasksApiService.closeTask(this.quoteId,quoteValidationTask)
 
 
       // accept disclosures

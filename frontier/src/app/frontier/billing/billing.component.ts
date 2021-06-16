@@ -52,7 +52,8 @@ export class BillingComponent implements OnInit {
   }
 
   async closeTask(quoteId,task:TaskInterface){
-    await this.taskApiService.closeTask(quoteId,task.taskId);
+    if(!this.stateService.isTaskClosed(task.specName))
+      await this.taskApiService.closeTask(quoteId,task);
   }
 
    getTask(tasks:TaskInterface[],taskName){

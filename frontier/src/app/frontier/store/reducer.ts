@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Frontier } from './interfaces/app.state';
-import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction, setReservationAction } from './actions';
+import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction, setReservationAction, addClosedTaskAction } from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../utils/steps';
 
@@ -48,6 +48,7 @@ const _counterReducer = createReducer(
   on(setCustomerForms, (state, { accountForm, identityForm }) => ({ ...state, accountForm, identityForm })),
   on(setDisclosuresAction, (state, { disclosures }) => ({ ...state, disclosures })),
   on(setReservationAction, (state, { reservation }) => ({ ...state, reservation })),
+  on(addClosedTaskAction, (state, { taskName }) => ({ ...state, closedTasks: state.closedTasks.concat(taskName) })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);
