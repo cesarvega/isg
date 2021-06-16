@@ -28,6 +28,7 @@ export interface Frontier {
   accountForm?,
   identityForm?,
   disclosures: DisclosureInterface[],
-  reservation: ReservationInterface
+  reservation: ReservationInterface,
+  closedTasks: string[]
 }
 

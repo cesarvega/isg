@@ -25,6 +25,7 @@ export const initialState: Frontier = {
   quote: null,
   disclosures: [],
   reservation:null,
+  closedTasks:[] 
 };
 
 const _counterReducer = createReducer(

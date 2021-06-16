@@ -22,8 +22,8 @@ export class DepositeApiService {
     return await this.clientService.post(url,request).toPromise()
   }
 
-  async generatePaymentToken(quoteId,request){
-    let url = this.depositEndpoints.getGeneratePaymentTokenEndpoint(quoteId);
+  async generatePaymentToken(accountUUID,request){
+    let url = this.depositEndpoints.getGeneratePaymentTokenEndpoint(accountUUID);
     return await this.clientService.post(url,request).toPromise()
   }
 }

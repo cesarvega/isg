@@ -134,7 +134,7 @@ export class CustomizationsComponent implements OnInit {
   }
 
   private redirectToConfirmation() {
-    this.stateService.dispatchAction(setStepAction({ step: Steps.confirmationStep }))
-    this.router.navigate(['../confirmation'], { relativeTo: this.route });
+    this.stateService.dispatchAction(setStepAction({ step: Steps.billingStep }))
+    this.router.navigate([Steps.billingStep.url]);
   }
 }

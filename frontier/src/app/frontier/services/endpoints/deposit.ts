@@ -4,7 +4,7 @@ export class DepositEndpoints extends MainEndpoint {
 
   private despositRequirementsEndpoint  = "billing/deposit-requirements"
   private depositEndpoint =  "billing/deposit/:quoteId";
-  private generatePaymentTokenEndpoint = "billing/generatePaymentToken/:quoteId";
+  private generatePaymentTokenEndpoint = "billing/generate-payment-token/:accountUUID";
 
   getDepositRequirementEndpoint() {
     return this.buildURL(this.despositRequirementsEndpoint);
@@ -15,8 +15,8 @@ export class DepositEndpoints extends MainEndpoint {
     return this.buildURL(endpoint);
   }
 
-  getGeneratePaymentTokenEndpoint(quoteId) {
-    let endpoint = this.generatePaymentTokenEndpoint.replace(":quoteId",quoteId);
+  getGeneratePaymentTokenEndpoint(accountUUID) {
+    let endpoint = this.generatePaymentTokenEndpoint.replace(":accountUUID",accountUUID);
     return this.buildURL(endpoint);
   }
 }
