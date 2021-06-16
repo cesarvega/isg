@@ -23,12 +23,14 @@ import { ChildOptionComponent } from './customizations/child-entity/child-option
 import { ChildEntityConfigurationComponent } from './customizations/child-entity/child-entity-configuration/child-entity-configuration.component';
 import { DisclosureComponent } from './disclosure/disclosure.component';
 import { DisclosureItemComponent } from './disclosure/disclosure-item/disclosure-item.component';
-import { ConfirmationComponent } from './confirmation/confirmation.component'
+import { BillingComponent } from './billing/billing.component'
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { PaymentComponent } from './billing/payment/payment.component';
+import { ScheduleComponent } from './billing/schedule/schedule.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -53,7 +55,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ChildEntityConfigurationComponent,
     DisclosureComponent,
     DisclosureItemComponent,
-    ConfirmationComponent,
+    BillingComponent,
+    PaymentComponent,
+    ScheduleComponent,
   ],
   imports: [
     CommonModule,

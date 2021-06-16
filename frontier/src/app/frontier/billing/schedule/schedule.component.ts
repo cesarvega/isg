@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleApiService } from '../services/api/schedule-api.service';
-import { ErrorInterface } from '../services/interfaces/common/error-interface';
-import { StateService } from '../services/state.service';
+import { ScheduleApiService } from '../../services/api/schedule-api.service';
+import { ErrorInterface } from '../../services/interfaces/common/error-interface';
+import { StateService } from '../../services/state.service';
 import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
-import { TasksApiService } from '../services/api/tasks-api.service.';
-import { posIdHoldTaskName, quoteValidationTaskName } from '../utils/taskNames';
-import { TaskInterface } from '../store/interfaces/task-interface';
+import { TasksApiService } from '../../services/api/tasks-api.service.';
+import { posIdHoldTaskName, quoteValidationTaskName } from '../../utils/taskNames';
+import { TaskInterface } from '../../store/interfaces/task-interface';
 import * as moment from 'moment';
-import { setReservationAction } from '../store/actions';
+import { setReservationAction } from '../../store/actions';
 
 @Component({
-  selector: 'app-confirmation',
-  templateUrl: './confirmation.component.html',
-  styleUrls: ['./confirmation.component.css']
+  selector: 'app-schedule',
+  templateUrl: './schedule.component.html',
+  styleUrls: ['./schedule.component.css']
 })
-export class ConfirmationComponent implements OnInit {
-
+export class ScheduleComponent implements OnInit {
   quoteId: string;
   error: ErrorInterface;
   loading: boolean = false;

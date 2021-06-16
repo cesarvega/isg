@@ -5,7 +5,7 @@ import { OffersComponent } from './offers/offers.component';
 import { FrontierMainComponent } from './frontier-main/frontier-main.component';
 import { CreditCheckComponent } from './credit-check/credit-check.component';
 import { CustomizationsComponent } from './customizations/customizations.component';
-import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { BillingComponent } from './billing/billing.component';
 
 const routes: Routes = [
   {
@@ -29,8 +29,8 @@ const routes: Routes = [
         component: CustomizationsComponent
       },
       {
-        path: 'confirmation',
-        component: ConfirmationComponent
+        path: 'billing',
+        component: BillingComponent
       },
       {
         path: '',
