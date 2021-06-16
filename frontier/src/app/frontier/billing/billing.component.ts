@@ -6,6 +6,7 @@ import { StateService } from '../services/state.service';
 import { setReservationAction } from '../store/actions';
 import { TaskInterface } from '../store/interfaces/task-interface';
 import { posIdHoldTaskName } from '../utils/taskNames';
+import { DepositRequirementsInterface } from './interfaces/deposit-requirements-interface';
 
 @Component({
   selector: 'app-billing',
@@ -14,61 +15,61 @@ import { posIdHoldTaskName } from '../utils/taskNames';
 })
 export class BillingComponent implements OnInit {
 
-  loading : boolean = false;
+  loading: boolean = false;
   error: ErrorInterface;
   quoteId: string;
   tasks: TaskInterface[] = [];
   postIdHoldTask: TaskInterface;
+  depositRequirements: DepositRequirementsInterface = null;
 
-  constructor(private depositApiService: DepositeApiService,private stateService:StateService,private taskApiService: TasksApiService) { }
+  constructor(private depositApiService: DepositeApiService, private stateService: StateService, private taskApiService: TasksApiService) { }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
+    return;
     this.initComponent(this.quoteId);
   }
 
-  async initComponent(quoteId){
+  async initComponent(quoteId) {
     this.loading = true;
-    try{
+    try {
       // get tasks
       let tasks = await this.getTasks(quoteId);
       this.tasks = tasks.currentTasks;
       // get postIdHoldTask
-      this.postIdHoldTask = this.getTask(this.tasks,posIdHoldTaskName);
-
+      this.postIdHoldTask = this.getTask(this.tasks, posIdHoldTaskName);
       // close task if exists
-      if(this.postIdHoldTask){
-        await this.closeTask(quoteId,this.postIdHoldTask)
+      if (this.postIdHoldTask) {
+        await this.closeTask(quoteId, this.postIdHoldTask)
       }
 
       // get deposit requirements
-      let depositRequirements = await this.getDepositRequirements(quoteId)
-      console.log(depositRequirements)
+      this.depositRequirements = await this.getDepositRequirements(quoteId)
       this.loading = false;
-    }catch(error){
-      this.loading= false;
+    } catch (error) {
+      this.loading = false;
       this.error = error;
     }
   }
 
-  async closeTask(quoteId,task:TaskInterface){
-    if(!this.stateService.isTaskClosed(task.specName))
-      await this.taskApiService.closeTask(quoteId,task);
+  async closeTask(quoteId, task: TaskInterface) {
+    if (!this.stateService.isTaskClosed(task.specName))
+      await this.taskApiService.closeTask(quoteId, task);
   }
 
-   getTask(tasks:TaskInterface[],taskName){
-     return tasks.find((iterateTask: TaskInterface)=>{
+  getTask(tasks: TaskInterface[], taskName) {
+    return tasks.find((iterateTask: TaskInterface) => {
       return iterateTask.specName == taskName
-     })
+    })
 
   }
 
-  async getTasks(quoteId): Promise<any>{
+  async getTasks(quoteId): Promise<any> {
     return await this.taskApiService.getTasks(quoteId)
   }
 
-  async getDepositRequirements(quoteId){
-      return await this.depositApiService.getDepositRequirements(quoteId);
+  async getDepositRequirements(quoteId) {
+    return await this.depositApiService.getDepositRequirements(quoteId);
   }
 
 }

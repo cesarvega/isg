@@ -1,1 +1,94 @@
-<p>payment works!</p>
+<form
+  [formGroup]="paymentForm"
+  (ngSubmit)="onSubmit()"
+  class="needs-validation"
+  [ngClass]="this.submitted ? 'was-validated' : ''"
+  novalidate=""
+>
+  <div class="row g-3">
+    <div class="row g-2">
+      <div class="col-md-6">
+        <label for="nameOnCard" class="form-label">* Name on card:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nameOnCard"
+          required
+          formControlName="nameOnCard"
+        />
+        <div class="invalid-feedback">Please enter the name on the card.</div>
+      </div>
+    </div>
+    <div class="row g-2">
+      <div class="col-md-6">
+        <label for="cardNumber" class="form-label">* Card Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cardNumber"
+          formControlName="cardNumber"
+          required
+        />
+        <div class="invalid-feedback">Card Number field is required.</div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <label for="expirationDate" class="form-label">* Expiration Date</label>
+      <input
+        type="text"
+        class="form-control"
+        id="expirationDate"
+        formControlName="expirationDate"
+        required
+      />
+      <div class="invalid-feedback">Expiration Date field is required.</div>
+    </div>
+    <div class="col-md-4">
+      <label for="securityCode" class="form-label">* Security Code</label>
+      <input
+        type="number"
+        class="form-control"
+        id="securityCode"
+        formControlName="securityCode"
+        required
+      />
+      <div class="invalid-feedback">Security Code field is required.</div>
+    </div>
+    <div class="col-md-4">
+      <label for="zipCode" class="form-label">* Zip Code</label>
+      <input
+        type="number"
+        class="form-control"
+        id="zipCode"
+        formControlName="zipCode"
+        required
+      />
+      <div class="invalid-feedback">Zip Code field is required.</div>
+    </div>
+  </div>
+
+  <div class="d-grid gap-2 my-3">
+    <button class="btn btn-outline-primary btn-lg" type="submit">
+      Save Information
+    </button>
+  </div>
+</form>
+<div class="col-md-4">
+  <label class="text-primary" style="font-weight: bold"
+    >Select a Test Address</label
+  >
+  <select
+    class="form-select mt-2"
+    [(ngModel)]="selectedTestPaymentAlias"
+    (change)="onSelectTestCase(selectedTestPaymentAlias)"
+  >
+    <option>Select Address</option>
+    <option
+      [value]="testPayment.alias"
+      *ngFor="let testPayment of testPayments"
+    >
+      {{ testPayment.alias }}
+    </option>
+  </select>
+</div>
