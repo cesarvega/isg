@@ -1,8 +1,10 @@
 const urlPrefix = "/frontier/";
 
+
 export const Steps = {
   qualificationStep: {
-    url: `${urlPrefix}addressSearch`,
+    path:'addressSearch',
+    url: `${urlPrefix}`,
     step: 1
   },
   offersStep: {
