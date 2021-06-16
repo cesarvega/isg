@@ -8,6 +8,7 @@ import { setHours, setMinutes } from 'date-fns';
 import { TasksApiService } from '../services/api/tasks-api.service.';
 import { posIdHoldTaskName, quoteValidationTaskName } from '../utils/taskNames';
 import { TaskInterface } from '../store/interfaces/task-interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-confirmation',
@@ -28,22 +29,28 @@ export class ConfirmationComponent implements OnInit {
 
   viewDate: Date = new Date();
 
-  events: CalendarEvent[] = [
-    {
-      title: 'No event end date',
-      start: setHours(setMinutes(new Date(), 0), 3),
-    },
-    {
-      title: 'No event end date',
-      start: setHours(setMinutes(new Date(), 0), 5),
-    },
-  ];
+
+  events: CalendarEvent[] = [];
 
 
 
   ngOnInit(): void {
-    this.quoteId = this.stateService.getQuoteId();
-    this.getSchedule()
+   // this.quoteId = this.stateService.getQuoteId();
+    //this.getSchedule()
+    this.mapEvents()
+  }
+
+  mapEvents(){
+    let mockEvents = [{"scheduleId":13343098,"earliestStartTime":"2021-06-16T18:00:00.000Z","latestStartTime":"2021-06-16T22:00:00.000Z","dayOfWeek":"Wed","appointmentCode":"4"},{"scheduleId":13343120,"earliestStartTime":"2021-06-17T13:00:00.000Z","latestStartTime":"2021-06-17T17:00:00.000Z","dayOfWeek":"Thu","appointmentCode":"4"},{"scheduleId":13343125,"earliestStartTime":"2021-06-17T18:00:00.000Z","latestStartTime":"2021-06-17T22:00:00.000Z","dayOfWeek":"Thu","appointmentCode":"4"},{"scheduleId":13343147,"earliestStartTime":"2021-06-18T13:00:00.000Z","latestStartTime":"2021-06-18T17:00:00.000Z","dayOfWeek":"Fri","appointmentCode":"4"},{"scheduleId":13343152,"earliestStartTime":"2021-06-18T18:00:00.000Z","latestStartTime":"2021-06-18T22:00:00.000Z","dayOfWeek":"Fri","appointmentCode":"4"},{"scheduleId":13343174,"earliestStartTime":"2021-06-19T13:00:00.000Z","latestStartTime":"2021-06-19T17:00:00.000Z","dayOfWeek":"Sat","appointmentCode":"4"},{"scheduleId":13343179,"earliestStartTime":"2021-06-19T18:00:00.000Z","latestStartTime":"2021-06-19T22:00:00.000Z","dayOfWeek":"Sat","appointmentCode":"4"},{"scheduleId":13343228,"earliestStartTime":"2021-06-21T13:00:00.000Z","latestStartTime":"2021-06-21T17:00:00.000Z","dayOfWeek":"Mon","appointmentCode":"4"},{"scheduleId":13343233,"earliestStartTime":"2021-06-21T18:00:00.000Z","latestStartTime":"2021-06-21T22:00:00.000Z","dayOfWeek":"Mon","appointmentCode":"4"},{"scheduleId":13343255,"earliestStartTime":"2021-06-22T13:00:00.000Z","latestStartTime":"2021-06-22T17:00:00.000Z","dayOfWeek":"Tue","appointmentCode":"4"},{"scheduleId":13343260,"earliestStartTime":"2021-06-22T18:00:00.000Z","latestStartTime":"2021-06-22T22:00:00.000Z","dayOfWeek":"Tue","appointmentCode":"4"},{"scheduleId":13343282,"earliestStartTime":"2021-06-23T13:00:00.000Z","latestStartTime":"2021-06-23T17:00:00.000Z","dayOfWeek":"Wed","appointmentCode":"4"},{"scheduleId":13343287,"earliestStartTime":"2021-06-23T18:00:00.000Z","latestStartTime":"2021-06-23T22:00:00.000Z","dayOfWeek":"Wed","appointmentCode":"4"},{"scheduleId":13343309,"earliestStartTime":"2021-06-24T13:00:00.000Z","latestStartTime":"2021-06-24T17:00:00.000Z","dayOfWeek":"Thu","appointmentCode":"4"},{"scheduleId":13343314,"earliestStartTime":"2021-06-24T18:00:00.000Z","latestStartTime":"2021-06-24T22:00:00.000Z","dayOfWeek":"Thu","appointmentCode":"4"},{"scheduleId":13343336,"earliestStartTime":"2021-06-25T13:00:00.000Z","latestStartTime":"2021-06-25T17:00:00.000Z","dayOfWeek":"Fri","appointmentCode":"4"},{"scheduleId":13343341,"earliestStartTime":"2021-06-25T18:00:00.000Z","latestStartTime":"2021-06-25T22:00:00.000Z","dayOfWeek":"Fri","appointmentCode":"4"},{"scheduleId":13343363,"earliestStartTime":"2021-06-26T13:00:00.000Z","latestStartTime":"2021-06-26T17:00:00.000Z","dayOfWeek":"Sat","appointmentCode":"4"},{"scheduleId":13343368,"earliestStartTime":"2021-06-26T18:00:00.000Z","latestStartTime":"2021-06-26T22:00:00.000Z","dayOfWeek":"Sat","appointmentCode":"4"},{"scheduleId":13343417,"earliestStartTime":"2021-06-28T13:00:00.000Z","latestStartTime":"2021-06-28T17:00:00.000Z","dayOfWeek":"Mon","appointmentCode":"4"},{"scheduleId":13343422,"earliestStartTime":"2021-06-28T18:00:00.000Z","latestStartTime":"2021-06-28T22:00:00.000Z","dayOfWeek":"Mon","appointmentCode":"4"},{"scheduleId":13343444,"earliestStartTime":"2021-06-29T13:00:00.000Z","latestStartTime":"2021-06-29T17:00:00.000Z","dayOfWeek":"Tue","appointmentCode":"4"},{"scheduleId":13343449,"earliestStartTime":"2021-06-29T18:00:00.000Z","latestStartTime":"2021-06-29T22:00:00.000Z","dayOfWeek":"Tue","appointmentCode":"4"}]
+    let mappedEvents : CalendarEvent[] = mockEvents.map((iterateMockEvent)=>{
+      let parsedDate = new Date(iterateMockEvent.earliestStartTime)
+      let mappedEvent: CalendarEvent = {
+        title: moment(parsedDate).format("LT"),
+        start: parsedDate
+      }
+      return mappedEvent;
+    })
+    this.events = mappedEvents;
   }
 
   async getTasks(quoteId){
