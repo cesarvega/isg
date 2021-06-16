@@ -19,4 +19,5 @@ export const setTasksAction = createAction('setTasksAction', props<{ tasks: Task
 export const setQuoteAction = createAction('setQuoteAction', props<{ quote }>());
 export const setCustomerForms = createAction('setCustomerForms', props<{ accountForm, identityForm }>());
 export const setDisclosuresAction = createAction('setDisclosures', props<{ disclosures }>());
+export const setReservationAction = createAction('setReservationAction', props<{ reservation }>());
 

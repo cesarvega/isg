@@ -7,6 +7,7 @@ import { CustomerInterface } from '../../services/interfaces/customer/customer';
 import { TaskInterface } from './task-interface';
 import { QuoteInterface } from './quote';
 import { DisclosureInterface } from '../../services/interfaces/disclosures/disclosure-interface';
+import { ReservationInterface } from '../../confirmation/interfaces/reservation-interface';
 export interface Frontier {
   transactionId: string,
   currentStep: any
@@ -26,6 +27,7 @@ export interface Frontier {
   quote: QuoteInterface,
   accountForm?,
   identityForm?,
-  disclosures: DisclosureInterface[]
+  disclosures: DisclosureInterface[],
+  reservation: ReservationInterface
 }
 

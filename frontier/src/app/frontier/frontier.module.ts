@@ -29,7 +29,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarHeaderComponent } from './confirmation/calendar-header/calendar-header.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -55,8 +54,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     DisclosureComponent,
     DisclosureItemComponent,
     ConfirmationComponent,
-    CalendarHeaderComponent
-
   ],
   imports: [
     CommonModule,

@@ -4,26 +4,17 @@
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-<app-calendar-header [(view)]="view" [(viewDate)]="viewDate">
-</app-calendar-header>
+<div class="row">
+  <div class="col-md-6">
+    <full-calendar [options]="calendarOptions" ></full-calendar>
+  </div>
+  <div *ngIf="selectedEvent" class="col-md-6" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+    <div >
+      <h4>Selected appointment is : {{getSelectedEventTitle(selectedEvent.startStr)}}</h4>
+    </div>
+    <div>
+      <button (click)="submitSchedule(selectedEvent,quoteId)" class="btn btn-outline-primary btn-lg">Submit</button>
+    </div>
+  </div>
 
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="'month'"
-    [viewDate]="viewDate"
-    [events]="events"
-  >
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="'week'"
-    [viewDate]="viewDate"
-    [events]="events"
-  >
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="'day'"
-    [viewDate]="viewDate"
-    [events]="events"
-  >
-  </mwl-calendar-day-view>
 </div>

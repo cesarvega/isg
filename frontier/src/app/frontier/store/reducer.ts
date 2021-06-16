@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Frontier } from './interfaces/app.state';
-import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction } from './actions';
+import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction, setReservationAction } from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../utils/steps';
 
@@ -23,7 +23,8 @@ export const initialState: Frontier = {
   customer: null,
   tasks: [],
   quote: null,
-  disclosures: []
+  disclosures: [],
+  reservation:null,
 };
 
 const _counterReducer = createReducer(
@@ -45,6 +46,7 @@ const _counterReducer = createReducer(
   on(setQuoteAction, (state, { quote }) => ({ ...state, quote })),
   on(setCustomerForms, (state, { accountForm, identityForm }) => ({ ...state, accountForm, identityForm })),
   on(setDisclosuresAction, (state, { disclosures }) => ({ ...state, disclosures })),
+  on(setReservationAction, (state, { reservation }) => ({ ...state, reservation })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);

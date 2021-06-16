@@ -16,4 +16,9 @@ export class ScheduleApiService {
     let url = this.scheduleEndpoint.getScheduleEndpoint();
     return await this.clientService.getAll(url, { quoteId }).toPromise();
   }
+
+  async reserveSchedule(quoteId,request){
+    let url = this.scheduleEndpoint.getReserveScheduleEndpoint(quoteId);
+    return await this.clientService.post(url,request).toPromise()
+  }
 }
