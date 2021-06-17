@@ -4,6 +4,7 @@ import { zipCodeValidator } from 'src/app/isg-shared/validators/zipCodeValidator
 import { DepositRequirementsInterface } from '../interfaces/deposit-requirements-interface';
 import { PaymentFormInterface } from './interfaces/payment.form.interface';
 import { paymentTestCases } from './test-cases/payment.test.cases';
+import { customerTypes } from './utils/customer.types';
 
 @Component({
   selector: 'app-payment',
@@ -12,6 +13,7 @@ import { paymentTestCases } from './test-cases/payment.test.cases';
 })
 export class PaymentComponent implements OnInit {
 
+  customerTypes = customerTypes
   loading: boolean = false;
   submitted: boolean = false;
   testPayments: ReadonlyArray<PaymentFormInterface> = paymentTestCases;
@@ -23,6 +25,7 @@ export class PaymentComponent implements OnInit {
   }
 
   paymentForm = this.formBuilder.group({
+    customerType: ['', [Validators.required]],
     cardNumber: ['', [Validators.required, Validators.maxLength(20)]],
     expirationDate: ['', Validators.required],
     nameOnCard: ['', [Validators.required, Validators.maxLength(200)]],

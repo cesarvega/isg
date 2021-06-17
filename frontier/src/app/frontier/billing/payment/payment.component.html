@@ -6,19 +6,25 @@
   novalidate=""
 >
   <div class="row g-3">
-    <div class="row g-2">
-      <div class="col-md-6">
-        <label for="nameOnCard" class="form-label">* Name on card:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="nameOnCard"
-          required
-          formControlName="nameOnCard"
-        />
-        <div class="invalid-feedback">Please enter the name on the card.</div>
-      </div>
+    <div class="col-md-6">
+      <label for="customerType" class="form-label">* Customer Type</label>
+      <select
+        class="form-select"
+        id="customerType"
+        required
+        formControlName="customerType"
+      >
+        <option value="">Select an option</option>
+        <option
+          [value]="customerTypes.value"
+          *ngFor="let customerType of customerTypes"
+        >
+          {{ customerType.name }}
+        </option>
+      </select>
+      <div class="invalid-feedback">Please select a customer type.</div>
     </div>
+
     <div class="row g-2">
       <div class="col-md-6">
         <label for="cardNumber" class="form-label">* Card Number</label>
@@ -30,6 +36,17 @@
           required
         />
         <div class="invalid-feedback">Card Number field is required.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="nameOnCard" class="form-label">* Name on card:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nameOnCard"
+          required
+          formControlName="nameOnCard"
+        />
+        <div class="invalid-feedback">Please enter the name on the card.</div>
       </div>
     </div>
 
