@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ClientService } from 'src/app/isg-shared/client/client.service';
+import { GenerateTokenRequestInterface } from '../../billing/payment/interfaces/generate-token-request.interface';
 import { DepositEndpoints } from '../endpoints/deposit';
 
 
@@ -17,13 +18,13 @@ export class DepositeApiService {
     return await this.clientService.getAll(url, { quoteId }).toPromise();
   }
 
-  async depositCollection(quoteId,request){
+  async depositCollection(quoteId, request) {
     let url = this.depositEndpoints.getDepositEndpoint(quoteId);
-    return await this.clientService.post(url,request).toPromise()
+    return await this.clientService.post(url, request).toPromise()
   }
 
-  async generatePaymentToken(accountUUID,request){
+  async generatePaymentToken(accountUUID, request: GenerateTokenRequestInterface) {
     let url = this.depositEndpoints.getGeneratePaymentTokenEndpoint(accountUUID);
-    return await this.clientService.post(url,request).toPromise()
+    return await this.clientService.post(url, request).toPromise()
   }
 }
