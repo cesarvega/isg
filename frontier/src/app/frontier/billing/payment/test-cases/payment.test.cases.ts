@@ -2,6 +2,7 @@ import { PaymentFormInterface } from "../interfaces/payment.form.interface";
 
 const testResidential: PaymentFormInterface = {
     alias: "Test Residential",
+    customerType: "RESIDENTIAL",
     cardNumber: '4100010000001800',
     firstName: 'Test',
     lastName: 'lunkad',
