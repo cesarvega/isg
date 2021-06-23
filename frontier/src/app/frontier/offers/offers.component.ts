@@ -40,7 +40,7 @@ export class OffersComponent implements OnInit {
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
-    this.selectProduct = this.stateService.getValueFromSelector(selectSelectedProducts)
+    this.selectedProducts = this.stateService.getValueFromSelector(selectSelectedProducts)
     this.getOffers()
   }
 
@@ -55,11 +55,13 @@ export class OffersComponent implements OnInit {
     this.loading = false
   }
 
-
-  async selectProduct(product: OffersInterface) {
+  select(product: OffersInterface) {
     product.selected = true;
     this.addProducts.push(product);
   }
+
+
+
 
   private gotProductsSelected(offers): boolean {
     let offersSelected = offers.filter((offer: OffersInterface) => {
@@ -81,7 +83,7 @@ export class OffersComponent implements OnInit {
     this.loading = true;
 
     try {
-      await this.sendRemoveProductsApi(this.removeProduct, this.quoteId);
+      await this.sendRemoveProductsApi(this.removeProducts, this.quoteId);
       await this.sendAddProductsApi(this.addProducts, this.quoteId, this.productBuilder);
       this.stateService.dispatchAction(setStepAction({ step: Steps.creditCheckStep }))
       this.router.navigate(['../credit-check'], { relativeTo: this.route });

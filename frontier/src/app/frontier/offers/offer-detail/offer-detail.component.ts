@@ -11,18 +11,19 @@ import { faWifi } from '@fortawesome/free-solid-svg-icons';
 export class OfferDetailComponent implements OnInit {
   faWifi = faWifi;
   @Input() offer: OffersInterface = null;
-  @Output() selectProduct = new EventEmitter<OffersInterface>();
-  @Output() removeProduct = new EventEmitter<OffersInterface>();
+  @Output() selectEvent = new EventEmitter<OffersInterface>();
+  @Output() removeEvent = new EventEmitter<OffersInterface>();
   constructor(public offerService: OffersService) { }
 
   ngOnInit(): void {
   }
 
   addProduct(offer: OffersInterface) {
-    this.selectProduct.emit(offer);
+    this.selectEvent.emit(offer)
+    //this.selectProduct.emit(offer);
   }
   deleteProduct(offer: OffersInterface) {
-    this.removeProduct.emit(offer);
+    this.removeEvent.emit(offer);
   }
 
 }

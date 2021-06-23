@@ -19,8 +19,8 @@
   <div class="col" *ngFor="let offer of offers">
     <app-offer-detail
       [offer]="offer"
-      (selectProduct)="selectProduct($event)"
-      (removeProduct)="removeProduct($event)"
+      (selectEvent)="select($event)"
+      (removeEvent)="removeProduct($event)"
     ></app-offer-detail>
   </div>
 </div>
