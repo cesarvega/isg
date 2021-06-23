@@ -10,7 +10,13 @@
       <strong style="margin-right: 5px" class="text-danger"
         >Order Number:</strong
       >
-      <span> {{ transactionId$ | async }}</span>
+      <span>
+        {{
+          (transactionId$ | async)
+            ? (transactionId$ | async)
+            : "No order number yet"
+        }}</span
+      >
     </div>
     <div class="col-md-2">
       <button
