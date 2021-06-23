@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { resetOrderAction } from '../store/actions';
 import { Router, ActivatedRoute } from '@angular/router';
+import { selectTransactionId } from '../store/selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-frontier-main',
@@ -9,7 +11,10 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./frontier-main.component.css']
 })
 export class FrontierMainComponent implements OnInit {
-  constructor(private store: Store<any>, private router: Router, private route: ActivatedRoute) { }
+  transactionId$: Observable<string>;
+  constructor(private store: Store<any>, private router: Router, private route: ActivatedRoute) {
+    this.transactionId$ = this.store.select(selectTransactionId);
+  }
 
   ngOnInit(): void {
 
