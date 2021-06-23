@@ -54,18 +54,8 @@ export class AddressSearchComponent implements OnInit {
       let requestAddress = { address: address.addressLine1, ...address }
       delete requestAddress.addressLine1
       // search Address
-      let addressSearchResponse = await this.qualificationApiService.addressExhaustiveSearch(requestAddress);
+      let addresses = await this.qualificationApiService.addressExhaustiveSearch(requestAddress);
 
-      // select address
-      let addresses = addressSearchResponse.addresses;
-      if (addresses.length < 1) {
-        this.loading = false;
-        this.error = {
-          errors: [],
-          message: "Could not find services for this address"
-        }
-        return
-      }
       if (addresses.length == 1) {
         await this.generateQuote(addresses[0]);
       } else {
