@@ -29,8 +29,8 @@ export class ProductsApiService {
 
   private getSelectedProducts() {
     let selectedProducts = [];
-    this.store.select(selectSelectedProducts).subscribe((selectedProducts) => {
-      selectedProducts = selectedProducts;
+    this.store.select(selectSelectedProducts).subscribe((storeSelectedProducts) => {
+      selectedProducts = storeSelectedProducts;
     }).unsubscribe()
     return selectedProducts;
   }
