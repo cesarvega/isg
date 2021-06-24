@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { selectQuoteId, selectSelectedProducts } from '../store/selectors';
+import { selectQuoteId } from '../store/selectors';
 import { OffersInterface } from '../services/interfaces/products/offers-interface';
 import { ProductsApiService } from '../services/api/products-api.service';
 import { UserInterface } from '../services/interfaces/common/user-interface';
@@ -14,7 +14,6 @@ import { AlertInterface } from '../services/interfaces/common/alert-interface';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { StateService } from '../services/state.service';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-offers',
@@ -24,7 +23,6 @@ import { Subscription } from 'rxjs';
 export class OffersComponent implements OnInit {
 
   quoteId: string;
-  selectedProducts = [];
   user: UserInterface;
   loading: Boolean = false;
   offers: OffersInterface[] = [];
@@ -42,19 +40,12 @@ export class OffersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getQuoteId();
-    this.getSelectedProducts();
     this.getOffers()
   }
 
   getQuoteId() {
     this.store.select(selectQuoteId).subscribe((quoteId) => {
       this.quoteId = quoteId;
-    }).unsubscribe()
-  }
-
-  async getSelectedProducts() {
-    this.store.select(selectSelectedProducts).subscribe((selectedProducts) => {
-      this.selectedProducts = selectedProducts;
     }).unsubscribe()
   }
 
@@ -101,7 +92,7 @@ export class OffersComponent implements OnInit {
       await this.sendRemoveProductsApi(this.removeProducts, this.quoteId);
       await this.sendAddProductsApi(this.addProducts, this.quoteId, this.productBuilder);
       this.stateService.dispatchAction(setStepAction({ step: Steps.creditCheckStep }))
-      this.router.navigate(['../credit-check'], { relativeTo: this.route });
+      this.router.navigate([Steps.creditCheckStep.url]);
     } catch (error) {
       this.loading = false;
       this.error = error;
