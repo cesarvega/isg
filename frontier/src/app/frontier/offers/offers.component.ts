@@ -13,6 +13,8 @@ import { QuoteInterface } from '../store/interfaces/quote';
 import { AlertInterface } from '../services/interfaces/common/alert-interface';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { StateService } from '../services/state.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-offers',
@@ -22,33 +24,46 @@ import { StateService } from '../services/state.service';
 export class OffersComponent implements OnInit {
 
   quoteId: string;
+  selectedProducts = [];
   user: UserInterface;
   loading: Boolean = false;
   offers: OffersInterface[] = [];
   error: ErrorInterface = null
-  selectedProducts;
   offerTask
   addProducts: OffersInterface[] = [];
   removeProducts = [];
   alert: AlertInterface;
   faExclamationTriangle = faExclamationTriangle
 
-  constructor(private stateService: StateService, private productsApiService: ProductsApiService, private productBuilder: ProductsBuilder, private router: Router,
-    private route: ActivatedRoute, private quoteApiService: QuoteApiService) {
+  constructor(private store: Store<any>, private stateService: StateService, private productsApiService: ProductsApiService, private router: Router,
+    private route: ActivatedRoute, private quoteApiService: QuoteApiService, private productBuilder: ProductsBuilder) {
 
   }
 
   ngOnInit(): void {
-    this.quoteId = this.stateService.getQuoteId();
-    this.selectedProducts = this.stateService.getValueFromSelector(selectSelectedProducts)
+    this.getQuoteId();
+    this.getSelectedProducts();
     this.getOffers()
   }
+
+  getQuoteId() {
+    this.store.select(selectQuoteId).subscribe((quoteId) => {
+      this.quoteId = quoteId;
+    }).unsubscribe()
+  }
+
+  async getSelectedProducts() {
+    this.store.select(selectSelectedProducts).subscribe((selectedProducts) => {
+      this.selectedProducts = selectedProducts;
+    }).unsubscribe()
+  }
+
+
 
   async getOffers() {
     this.loading = true;
     try {
-      this.offers = await this.productsApiService.getOffers(this.quoteId)
-      this.offers = this.productBuilder.mapSelectedProducts(this.offers, this.selectedProducts);
+      this.offers = await this.productsApiService.getOffers(this.quoteId);
     } catch (error) {
       this.error = error;
     }

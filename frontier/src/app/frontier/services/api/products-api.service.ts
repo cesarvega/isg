@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { map, tap } from 'rxjs/operators';
 import { ClientService } from 'src/app/isg-shared/client/client.service';
+import { selectSelectedProducts } from '../../store/selectors';
+import { ProductsBuilder } from '../builders/products-builder';
 import { getOffersURL, addProductURL, getUpdateProductURL } from '../endpoints/products';
 import { AddProduct } from '../interfaces/products/add-product';
 
@@ -10,13 +13,26 @@ import { AddProduct } from '../interfaces/products/add-product';
 })
 export class ProductsApiService {
 
-  constructor(private store: Store<any>, private clientService: ClientService) {
+  constructor(private clientService: ClientService, private productBuilder: ProductsBuilder, private store: Store<any>) {
 
   }
 
   async getOffers(quoteId) {
+    let selectedProducts = this.getSelectedProducts();
     let endpoint = getOffersURL + "/" + quoteId;
-    return await this.clientService.getAll(endpoint).toPromise();
+    return this.clientService.getAll(endpoint).pipe(
+      map((offers) => {
+        return this.productBuilder.mapSelectedProducts(offers, selectedProducts);
+      })
+    ).toPromise()
+  }
+
+  private getSelectedProducts() {
+    let selectedProducts = [];
+    this.store.select(selectSelectedProducts).subscribe((selectedProducts) => {
+      selectedProducts = selectedProducts;
+    }).unsubscribe()
+    return selectedProducts;
   }
 
   async addProduct(addProductRequest: AddProduct, quoteId: string) {
