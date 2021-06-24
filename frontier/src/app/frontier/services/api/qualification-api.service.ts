@@ -19,7 +19,7 @@ export class QualificationApiService {
 
   async addressExhaustiveSearch(address: AddressInterface): Promise<AddressInterface[]> {
     this.store.dispatch(addressSearchRequestAction(address));
-    return await this.clientService
+    return this.clientService
       .post(addressExhaustiveSearchURL, address)
       .pipe(
         map((addressSearchResponse) => {

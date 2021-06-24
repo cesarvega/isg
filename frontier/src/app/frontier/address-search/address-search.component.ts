@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { AddressInterface } from '../../isg-shared/interfaces/address';
 import { AddressPredictiveSearchInterface } from '../services/interfaces/qualification/address-predictive-search';
 import { Store } from '@ngrx/store';
-import { setStepAction, setCustomerAction } from '../store/actions';
+import { setStepAction, setSelectedAddressAction } from '../store/actions';
 import { selectUser, selectSelectedAddress } from '../store/selectors';
 import { frontierTestAddresses } from '../utils/test-addresses';
 import { Steps } from '../utils/steps';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
-import { parseHttperror } from '../utils/helper-functions';
 import { QualificationApiService } from '../services/api/qualification-api.service';
 import { UserInterface } from '../services/interfaces/common/user-interface';
 import { QuoteApiService } from '../services/api/quote-api.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddressSelectorComponent } from './address-selector/address-selector.component';
-import { StateService } from '../services/state.service';
+import { Observable, Subscription } from 'rxjs';
+import { AddressSearchResponseItemInterface } from '../services/interfaces/qualification/address-search-response';
 
 @Component({
   selector: 'app-address-search',
@@ -22,13 +22,13 @@ import { StateService } from '../services/state.service';
   styleUrls: ['./address-search.component.css'],
 })
 export class AddressSearchComponent implements OnInit {
-  selectedAddress;
+  selectedAddress$: Observable<AddressSearchResponseItemInterface>;
   frontierTestAddresses = frontierTestAddresses;
   addressSuscriber$: any;
   addressSearchRequest: AddressPredictiveSearchInterface;
   loading: Boolean = false;
   user: UserInterface;
-  userSuscriber;
+  userSuscriber$: Subscription;
   error: ErrorInterface = null;
 
   constructor(
@@ -36,12 +36,10 @@ export class AddressSearchComponent implements OnInit {
     private quoteApiService: QuoteApiService,
     private store: Store<any>,
     private router: Router,
-    private route: ActivatedRoute,
     private modalService: NgbModal,
-    private stateService: StateService
   ) {
-    this.selectedAddress = this.stateService.getValueFromSelector(selectSelectedAddress)
-    this.userSuscriber = this.store.select(selectUser).subscribe((user) => {
+    this.selectedAddress$ = this.store.select(selectSelectedAddress);
+    this.userSuscriber$ = this.store.select(selectUser).subscribe((user) => {
       this.user = user;
     });
   }
@@ -70,20 +68,21 @@ export class AddressSearchComponent implements OnInit {
   }
 
   private async generateQuote(address) {
+    this.loading = true;
     try {
-      this.loading = true;
-      let quoteResponse = await this.quoteApiService.generateQuote(address, this.user.agentId);
-      if (quoteResponse.customer) {
-        this.store.dispatch(setCustomerAction({ customer: quoteResponse.customer }));
-      }
-      this.loading = false;
-      this.store.dispatch(setStepAction({ step: Steps.offersStep }));
-      this.router.navigate(['../offers'], { relativeTo: this.route });
+      await this.quoteApiService.generateQuote(address, this.user.agentId);
     } catch (error) {
       this.loading = false;
       this.error = error;
       return;
     }
+    this.loading = false;
+    this.navigateToOffers()
+  }
+
+  navigateToOffers() {
+    this.store.dispatch(setStepAction({ step: Steps.offersStep }));
+    this.router.navigate([Steps.offersStep.url]);
   }
 
   openModal(addresses) {
@@ -96,14 +95,14 @@ export class AddressSearchComponent implements OnInit {
   }
 
   private onSelectAddress(address: AddressInterface) {
-    this.selectedAddress = address;
+    this.store.dispatch(setSelectedAddressAction(address));
     this.generateQuote(address);
   }
 
   ngOnInit(): void { }
 
   ngOnDestroy() {
-    this.userSuscriber.unsubscribe();
+    this.userSuscriber$.unsubscribe();
   }
 
 

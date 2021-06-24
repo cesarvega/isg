@@ -5,7 +5,8 @@ import { environment } from 'src/environments/environment';
 import { createQuoteURL, generateTransactionIdURL, getCompleteTaskURL, validateQuoteURL, getValidateQuoteURL, getQuoteURL } from '../endpoints/qualification';
 import { AddressSearchResponseItemInterface } from '../interfaces/qualification/address-search-response';
 import { CreateQuoteInterface } from '../interfaces/qualification/create-quote';
-import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setSelectedAddressAction, setTransactionIdAction } from '../../store/actions';
+import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setSelectedAddressAction, setTransactionIdAction } from '../../store/actions';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,16 @@ export class QuoteApiService {
     this.store.dispatch(setSelectedAddressAction(address));
     let createQuoteRequest = this.createQuoteRequest(address, agentId);
     this.store.dispatch(setCreateQuoteRequestAction(createQuoteRequest));
-    let quoteResponse = await this.clientService
-      .post(createQuoteURL, createQuoteRequest)
+    return this.clientService
+      .post(createQuoteURL, createQuoteRequest).pipe(
+        tap((quoteResponse) => {
+          this.store.dispatch(setCreateQuoteResponseAction(quoteResponse));
+          if (quoteResponse.customer) {
+            this.store.dispatch(setCustomerAction({ customer: quoteResponse.customer }));
+          }
+        })
+      )
       .toPromise();
-    this.store.dispatch(setCreateQuoteResponseAction(quoteResponse));
-    return quoteResponse;
   }
 
   async validateQuote(quoteId) {
