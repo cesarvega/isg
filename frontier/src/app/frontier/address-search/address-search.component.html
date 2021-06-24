@@ -1,16 +1,34 @@
 <div style="display: flex; justify-content: center">
   <div class="col-md-10 p-3">
-    <h5 class="card-title">Location</h5>
-    <p class="card-subtitle text-muted">
-      Please enter the address where you would like to order service.
-    </p>
-    <p class="text-danger">Fields with * are required</p>
-    <app-address-form
-      [selectedAddress]="selectedAddress$ | async"
-      (submitAddressEvent)="submitAddress($event)"
-      [loading]="loading"
-      [error]="error"
-      [testAddresses]="frontierTestAddresses"
-    ></app-address-form>
+    <ng-container *ngIf="canEdit">
+      <h5 class="card-title">Location</h5>
+      <p class="card-subtitle text-muted">
+        Please enter the address where you would like to order service.
+      </p>
+      <p class="text-danger">Fields with * are required</p>
+      <app-address-form
+        [selectedAddress]="selectedAddress$ | async"
+        (submitAddressEvent)="submitAddress($event)"
+        [loading]="loading"
+        [error]="error"
+        [testAddresses]="frontierTestAddresses"
+      ></app-address-form>
+    </ng-container>
+
+    <div *ngIf="!canEdit" class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Services found for address</h4>
+      <p>
+        {{ getParsedAddress(selectedAddress$ | async) }}
+      </p>
+      <hr />
+      <p class="mb-0">
+        <button
+          (click)="navigateToOffers()"
+          class="btn btn-outline-success btn-lg"
+        >
+          Continue to Offers
+        </button>
+      </p>
+    </div>
   </div>
 </div>

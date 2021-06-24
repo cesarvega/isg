@@ -1,10 +1,14 @@
 const urlPrefix = "/frontier/";
 
+export interface StepInterface {
+  url: string,
+  step: number
+}
 
 export const Steps = {
   qualificationStep: {
-    path:'addressSearch',
-    url: `${urlPrefix}`,
+    path: 'addressSearch',
+    url: `${urlPrefix}addressSearch`,
     step: 1
   },
   offersStep: {

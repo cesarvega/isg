@@ -29,11 +29,11 @@
         <a ngbNavLink routerLink="billing">Billing</a>
       </li>
       <li
-      [ngbNavItem]="confirmationStep.url"
-      [disabled]="!isStepEnabled(confirmationStep, currentStep$ | async)"
-    >
-      <a ngbNavLink routerLink="confirmation">Confirmation</a>
-    </li>
+        [ngbNavItem]="confirmationStep.url"
+        [disabled]="!isStepEnabled(confirmationStep, currentStep$ | async)"
+      >
+        <a ngbNavLink routerLink="confirmation">Confirmation</a>
+      </li>
     </ul>
   </div>
 </div>
