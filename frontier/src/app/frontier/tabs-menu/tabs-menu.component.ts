@@ -4,6 +4,7 @@ import { selectStep } from '../store/selectors';
 import { Observable } from 'rxjs';
 import { Steps } from '../utils/steps';
 import { Router } from '@angular/router';
+import { displayQualificationStep, displayCreditCheckStep, displayOffersStep } from './validators/validator';
 @Component({
   selector: 'app-tabs-menu',
   templateUrl: './tabs-menu.component.html',
@@ -18,6 +19,11 @@ export class TabsMenuComponent implements OnInit {
   billingStep = Steps.billingStep
   customizationStep = Steps.customizationStep
   confirmationStep = Steps.confirmationStep
+
+  public displayQualificationStep = displayQualificationStep;
+  public displayCreditCheckStep = displayCreditCheckStep;
+  public displayOffersStep = displayOffersStep;
+
   constructor(private store: Store<any>, public router: Router) {
     this.currentStep$ = store.select(selectStep)
   }

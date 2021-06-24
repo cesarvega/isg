@@ -1,18 +1,25 @@
 <div class="card">
   <div class="card-body">
     <ul ngbNav [activeId]="router.url" class="nav nav-pills nav-fill">
-      <li [ngbNavItem]="qualificationStep.url">
+      <li
+        [disabled]="
+          !displayQualificationStep(qualificationStep, currentStep$ | async)
+        "
+        [ngbNavItem]="qualificationStep.url"
+      >
         <a ngbNavLink routerLink="addressSearch">Qualification</a>
       </li>
       <li
         [ngbNavItem]="offerStep.url"
-        [disabled]="!isStepEnabled(offerStep, currentStep$ | async)"
+        [disabled]="!displayOffersStep(offerStep, currentStep$ | async)"
       >
         <a ngbNavLink routerLink="offers">Offers</a>
       </li>
       <li
         [ngbNavItem]="creditCheckStep.url"
-        [disabled]="!isStepEnabled(creditCheckStep, currentStep$ | async)"
+        [disabled]="
+          !displayCreditCheckStep(creditCheckStep, currentStep$ | async)
+        "
       >
         <a ngbNavLink routerLink="credit-check">Credit Check</a>
       </li>
