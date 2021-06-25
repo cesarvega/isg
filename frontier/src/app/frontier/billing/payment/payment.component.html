@@ -51,17 +51,6 @@
 
     <div class="row g-2">
       <div class="col-md-6">
-        <label for="cardNumber" class="form-label">* Card Number</label>
-        <input
-          type="text"
-          class="form-control"
-          id="cardNumber"
-          formControlName="cardNumber"
-          required
-        />
-        <div class="invalid-feedback">Card Number field is required.</div>
-      </div>
-      <div class="col-md-6">
         <label for="nameOnCard" class="form-label">* Name on card:</label>
         <input
           type="text"
@@ -71,6 +60,17 @@
           formControlName="nameOnCard"
         />
         <div class="invalid-feedback">Please enter the name on the card.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="cardNumber" class="form-label">* Card Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cardNumber"
+          formControlName="cardNumber"
+          required
+        />
+        <div class="invalid-feedback">Card Number field is required.</div>
       </div>
     </div>
 

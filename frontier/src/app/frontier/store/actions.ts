@@ -23,3 +23,4 @@ export const setReservationAction = createAction('setReservationAction', props<{
 export const addClosedTaskAction = createAction('addClosedTaskAction', props<{ taskName }>());
 export const validateQuoteAction = createAction('validateQuoteAction');
 export const acceptDisclosuresAction = createAction('acceptDisclosuresAction');
+export const setDepositRequirementsAction = createAction('setDepositRequirementsAction', props<{ depositRequirements }>());

@@ -5,6 +5,7 @@ import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { StateService } from '../services/state.service';
 import { setReservationAction } from '../store/actions';
 import { TaskInterface } from '../store/interfaces/task-interface';
+import { selectDepositRequirements } from '../store/selectors';
 import { posIdHoldTaskName } from '../utils/taskNames';
 import { DepositRequirementsInterface } from './interfaces/deposit-requirements-interface';
 
@@ -26,25 +27,21 @@ export class BillingComponent implements OnInit {
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
-    return;
-    this.initComponent(this.quoteId);
+    this.depositRequirements = this.stateService.getValueFromSelector(selectDepositRequirements);
+    this.initComponent(this.quoteId, this.depositRequirements);
+
   }
 
-  async initComponent(quoteId) {
+  async initComponent(quoteId, depositRequirements) {
     this.loading = true;
     try {
       // get tasks
       let tasks = await this.getTasks(quoteId);
       this.tasks = tasks.currentTasks;
-      // get postIdHoldTask
-      this.postIdHoldTask = this.getTask(this.tasks, posIdHoldTaskName);
-      // close task if exists
-      if (this.postIdHoldTask) {
-        await this.closeTask(quoteId, this.postIdHoldTask)
-      }
 
       // get deposit requirements
-      this.depositRequirements = await this.getDepositRequirements(quoteId)
+      if (!depositRequirements)
+        this.depositRequirements = await this.getDepositRequirements(quoteId)
       this.loading = false;
     } catch (error) {
       this.loading = false;
@@ -69,7 +66,7 @@ export class BillingComponent implements OnInit {
   }
 
   async getDepositRequirements(quoteId) {
-    return await this.depositApiService.getDepositRequirements(quoteId);
+    return this.depositApiService.getDepositRequirements(quoteId)
   }
 
 }

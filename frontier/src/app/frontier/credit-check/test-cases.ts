@@ -3,6 +3,20 @@ import { creditCheckInterface } from '../services/interfaces/customer/credit-che
 
 export const creditCheckTestCases: creditCheckInterface[] = [
   {
+    alias: "WILLIAM Credit A",
+    identityForm: {
+      ssn: "666363985",
+      dateOfBirth: "01/13/1952",
+    },
+    accountForm: {
+      firstName: "WILLIAM",
+      lastName: "SKNNKSRXZ",
+      email: "jane@msn.com",
+      phoneNumber: "3195553434"
+    }
+
+  },
+  {
     alias: "Arlene Berrone",
     identityForm: {
       ssn: "666397620",

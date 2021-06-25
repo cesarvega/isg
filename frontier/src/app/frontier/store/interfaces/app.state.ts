@@ -32,5 +32,6 @@ export interface Frontier {
   closedTasks: string[],
   quoteValidated: boolean;
   wereDisclosuresAccepted: boolean;
+  depositRequirements;
 }
 

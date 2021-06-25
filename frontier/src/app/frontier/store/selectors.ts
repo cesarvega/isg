@@ -15,4 +15,5 @@ export const selectQuote = (state: AppState) => state.frontier.quote;
 export const selectFrontier = (state: AppState) => state.frontier;
 export const selectWasQuoteValidated = (state: AppState) => state.frontier.quoteValidated;
 export const selectWereDisclosuresAccepted = (state: AppState) => state.frontier.wereDisclosuresAccepted;
+export const selectDepositRequirements = (state: AppState) => state.frontier.depositRequirements;
 
