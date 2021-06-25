@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { zipCodeValidator } from 'src/app/isg-shared/validators/zipCodeValidator';
 import { DepositeApiService } from '../../services/api/deposit-api.service';
 import { ErrorInterface } from '../../services/interfaces/common/error-interface';
@@ -27,21 +27,28 @@ export class PaymentComponent implements OnInit {
   testPayments: ReadonlyArray<PaymentFormInterface> = paymentTestCases;
   selectedTestPaymentAlias: string;
   @Input() depositRequirements: DepositRequirementsInterface
-  customer: CustomerInterface;
-  constructor(private formBuilder: FormBuilder, private stateService: StateService, private depositApiService: DepositeApiService) { }
+  customer: CustomerInterface = null;
+  paymentForm: FormGroup;
 
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder, private stateService: StateService, private depositApiService: DepositeApiService) {
     this.customer = this.stateService.getValueFromSelector(selectCustomer);
+    this.paymentForm = this.formBuilder.group({
+      firstName: [this.customer.firstName, [Validators.required]],
+      lastName: [this.customer.lastName, [Validators.required]],
+      customerType: ['', [Validators.required]],
+      cardNumber: ['', [Validators.required, Validators.maxLength(20)]],
+      expirationDate: ['', Validators.required],
+      nameOnCard: ['', [Validators.required, Validators.maxLength(200)]],
+      securityCode: ['', [Validators.required, Validators.maxLength(4)]],
+      zipCode: ['', [Validators.required, zipCodeValidator()]],
+    });
   }
 
-  paymentForm = this.formBuilder.group({
-    customerType: ['', [Validators.required]],
-    cardNumber: ['', [Validators.required, Validators.maxLength(20)]],
-    expirationDate: ['', Validators.required],
-    nameOnCard: ['', [Validators.required, Validators.maxLength(200)]],
-    securityCode: ['', [Validators.required, Validators.maxLength(4)]],
-    zipCode: ['', [Validators.required, zipCodeValidator()]],
-  });
+  ngOnInit(): void {
+
+  }
+
+
 
   onSelectTestCase(selectedTestCase) {
     let testCase = this.testPayments.find((testPayment) => {
