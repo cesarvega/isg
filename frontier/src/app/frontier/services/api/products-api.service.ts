@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, tap } from 'rxjs/operators';
 import { ClientService } from 'src/app/isg-shared/client/client.service';
+import { setOffersAction } from '../../store/actions';
 import { selectSelectedProducts } from '../../store/selectors';
 import { ProductsBuilder } from '../builders/products-builder';
 import { getOffersURL, addProductURL, getUpdateProductURL } from '../endpoints/products';
@@ -23,6 +24,9 @@ export class ProductsApiService {
     return this.clientService.getAll(endpoint).pipe(
       map((offers) => {
         return this.productBuilder.mapSelectedProducts(offers, selectedProducts);
+      }),
+      tap((mappedOffers) => {
+        this.store.dispatch(setOffersAction({ offers: mappedOffers }))
       })
     ).toPromise()
   }

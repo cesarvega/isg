@@ -8,6 +8,7 @@ import { TaskInterface } from './task-interface';
 import { QuoteInterface } from './quote';
 import { DisclosureInterface } from '../../services/interfaces/disclosures/disclosure-interface';
 import { ReservationInterface } from '../../billing/interfaces/reservation-interface';
+import { OffersInterface } from '../../services/interfaces/products/offers-interface';
 export interface Frontier {
   transactionId: string,
   currentStep: any
@@ -20,7 +21,7 @@ export interface Frontier {
   createQuoteRequest: CreateQuoteInterface,
   createQuoteResponse: CreateQuoteResponseInterface,
   quoteId: string,
-  offers: null,
+  offers: OffersInterface[],
   selectedProducts,
   customer: CustomerInterface,
   tasks: TaskInterface[],

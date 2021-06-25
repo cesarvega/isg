@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { selectQuoteId } from '../store/selectors';
+import { selectOffers, selectQuoteId } from '../store/selectors';
 import { OffersInterface } from '../services/interfaces/products/offers-interface';
 import { ProductsApiService } from '../services/api/products-api.service';
 import { UserInterface } from '../services/interfaces/common/user-interface';
@@ -46,7 +46,9 @@ export class OffersComponent implements OnInit {
   ngOnInit(): void {
     this.selectedParsedAdress$ = this.store.select(selectParsedAddress);
     this.getQuoteId();
-    this.getOffers()
+    this.offers = this.getOffersFromStore();
+    if (this.offers.length < 1)
+      this.getOffers()
   }
 
   getQuoteId() {
@@ -55,7 +57,13 @@ export class OffersComponent implements OnInit {
     }).unsubscribe()
   }
 
-
+  getOffersFromStore() {
+    let offers;
+    this.store.select(selectOffers).subscribe((stateOffers) => {
+      offers = stateOffers
+    }).unsubscribe()
+    return offers;
+  }
 
   async getOffers() {
     this.loading = true;

@@ -11,7 +11,7 @@ export const setCreateQuoteRequestAction = createAction('setCreateQuoteRequestAc
 export const setCreateQuoteResponseAction = createAction('setCreateQuoteResponse', props<any>());
 export const setStepAction = createAction('setStepAction', props<{ step: any }>());
 export const resetOrderAction = createAction('resetOrderAction');
-export const setOffersAction = createAction('setOffersAction', props<any>());
+export const setOffersAction = createAction('setOffersAction', props<{ offers }>());
 export const selectProductsAction = createAction('selectProductsAction', props<{ products }>());
 export const removeProductAction = createAction('removeProductAction', props<{ productIds: string[] }>());
 export const setCustomerAction = createAction('setCustomerAction', props<{ customer: CustomerInterface }>());
@@ -24,3 +24,4 @@ export const addClosedTaskAction = createAction('addClosedTaskAction', props<{ t
 export const validateQuoteAction = createAction('validateQuoteAction');
 export const acceptDisclosuresAction = createAction('acceptDisclosuresAction');
 export const setDepositRequirementsAction = createAction('setDepositRequirementsAction', props<{ depositRequirements }>());
+
