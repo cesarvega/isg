@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, tap } from 'rxjs/operators';
 import { ClientService } from 'src/app/isg-shared/client/client.service';
-import { setOffersAction } from '../../store/actions';
+import { removeProductAction, selectProductsAction, setOffersAction } from '../../store/actions';
+import { QuoteInterface } from '../../store/interfaces/quote';
 import { selectSelectedProducts } from '../../store/selectors';
 import { ProductsBuilder } from '../builders/products-builder';
 import { getOffersURL, addProductURL, getUpdateProductURL } from '../endpoints/products';
 import { AddProduct } from '../interfaces/products/add-product';
+import { OffersInterface } from '../interfaces/products/offers-interface';
 
 
 @Injectable({
@@ -39,13 +41,27 @@ export class ProductsApiService {
     return selectedProducts;
   }
 
-  async addProduct(addProductRequest: AddProduct, quoteId: string) {
+  async addProduct(products: OffersInterface[], quoteId: string) {
+    let request = this.productBuilder.buildAddProduct(products);
     let endpoint = addProductURL + "/" + quoteId;
-    return await this.clientService.post(endpoint, addProductRequest).toPromise();
+    return this.clientService.post(endpoint, request).pipe(
+      tap(() => {
+        products = products.map((product) => {
+          product.addedApi = true;
+          return product
+        })
+        this.store.dispatch(selectProductsAction({ products }));
+      })
+    ).toPromise();
   }
-  async removeProduct(productId: string, quoteId: string) {
-    let endpoint = addProductURL + "/" + quoteId;
-    return await this.clientService.delete(endpoint, productId).toPromise();
+  removeProduct(product: OffersInterface, quote: QuoteInterface) {
+    let endpoint = addProductURL + "/" + quote.quoteId;
+    let itemId = this.productBuilder.getItemIdFromProductId(quote, product.id);
+    return this.clientService.delete(endpoint, itemId).pipe(
+      tap(() => {
+        this.store.dispatch(removeProductAction({ id: product.id }));
+      })
+    ).toPromise();
   }
 
   async updateProduct(itemConfiguration, quoteId, quoteItemId) {

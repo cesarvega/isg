@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { selectOffers, selectQuoteId } from '../store/selectors';
+import { selectOffers, selectQuote, selectQuoteId } from '../store/selectors';
 import { OffersInterface } from '../services/interfaces/products/offers-interface';
 import { ProductsApiService } from '../services/api/products-api.service';
 import { UserInterface } from '../services/interfaces/common/user-interface';
@@ -26,13 +26,14 @@ import { Observable } from 'rxjs';
 export class OffersComponent implements OnInit {
 
   quoteId: string;
+  quote: QuoteInterface;
   user: UserInterface;
   loading: Boolean = false;
   offers: OffersInterface[] = [];
   error: ErrorInterface = null
   offerTask
   addProducts: OffersInterface[] = [];
-  removeProducts = [];
+  removeProducts: OffersInterface[] = [];
   alert: AlertInterface;
   faExclamationTriangle = faExclamationTriangle;
   selectedParsedAdress$: Observable<string>;
@@ -45,17 +46,31 @@ export class OffersComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedParsedAdress$ = this.store.select(selectParsedAddress);
-    this.getQuoteId();
-    this.offers = this.getOffersFromStore();
-    if (this.offers.length < 1)
-      this.getOffers()
+    this.initComponent();
+
   }
 
-  getQuoteId() {
-    this.store.select(selectQuoteId).subscribe((quoteId) => {
-      this.quoteId = quoteId;
-    }).unsubscribe()
+  async initComponent() {
+    this.loading = true;
+    try {
+      this.quote = await this.getQuote();
+      this.quoteId = this.quote.quoteId;
+      this.offers = this.getOffersFromStore();
+      if (this.offers.length < 1)
+        this.offers = await this.getOffers(this.quoteId)
+    } catch (error) {
+      this.error = error;
+    }
+    this.loading = false;
+
   }
+
+
+  async getQuote() {
+    this.loading = true;
+    return await this.quoteApiService.getQuote(this.quoteId, true, true) as QuoteInterface;
+  }
+
 
   getOffersFromStore() {
     let offers;
@@ -65,14 +80,8 @@ export class OffersComponent implements OnInit {
     return offers;
   }
 
-  async getOffers() {
-    this.loading = true;
-    try {
-      this.offers = await this.productsApiService.getOffers(this.quoteId);
-    } catch (error) {
-      this.error = error;
-    }
-    this.loading = false
+  async getOffers(quoteId): Promise<OffersInterface[]> {
+    return await this.productsApiService.getOffers(quoteId) as OffersInterface[];
   }
 
   select(product: OffersInterface) {
@@ -91,31 +100,24 @@ export class OffersComponent implements OnInit {
   }
 
   async onContinue() {
-    if (!this.gotProductsSelected(this.offers)) {
-      this.alert = {
-        type: "danger",
-        message: "Need to select at least one product"
-      }
-      window.scrollTo(0, 0);
-      return;
-    }
 
     this.loading = true;
-
     try {
-      await this.sendRemoveProductsApi(this.removeProducts, this.quoteId);
-      await this.sendAddProductsApi(this.addProducts, this.quoteId, this.productBuilder);
+      if (!this.gotProductsSelected(this.offers)) {
+        throw new Error("Need to select at least one product")
+      }
+      if (this.removeProducts.length > 0)
+        await this.sendRemoveProductsApi(this.removeProducts, this.quote);
+      if (this.addProducts.length > 0)
+        await this.sendAddProductsApi(this.addProducts, this.quoteId);
       this.stateService.dispatchAction(setStepAction({ step: Steps.creditCheckStep }))
       this.router.navigate([Steps.creditCheckStep.url]);
     } catch (error) {
       this.loading = false;
       this.error = error;
+      window.scrollTo(0, 0);
     }
     this.loading = false;
-  }
-
-  async getQuote() {
-    return await this.quoteApiService.getQuote(this.quoteId, true, true);
   }
 
   async removeProduct(product: OffersInterface) {
@@ -123,25 +125,17 @@ export class OffersComponent implements OnInit {
     this.addProducts = this.addProducts.filter((iterateProduct) => {
       return iterateProduct.id != product.id
     })
-    this.removeProducts.push(product.id)
+    if (product.addedApi)
+      this.removeProducts.push(product)
   }
 
-  async sendAddProductsApi(addProducts, quoteId, productBuilder) {
-    if (addProducts.length < 1)
-      return
-    let request = productBuilder.buildAddProduct(addProducts);
-    this.stateService.dispatchAction(selectProductsAction({ products: addProducts }));
-    await this.productsApiService.addProduct(request, quoteId);
+  async sendAddProductsApi(addProducts, quoteId) {
+    await this.productsApiService.addProduct(addProducts, quoteId);
   }
 
-  async sendRemoveProductsApi(removeProducts, quoteId) {
-    if (removeProducts.length < 1)
-      return
-    this.stateService.dispatchAction(removeProductAction({ productIds: removeProducts }));
-    let quote: QuoteInterface = await this.getQuote();
-    for (let removeProductId of removeProducts) {
-      let itemId = this.productBuilder.getItemIdFromProductId(quote, removeProductId);
-      await this.productsApiService.removeProduct(itemId, quoteId);
+  async sendRemoveProductsApi(removeProducts: OffersInterface[], quote: QuoteInterface) {
+    for (let product of removeProducts) {
+      await this.productsApiService.removeProduct(product, quote);
     }
   }
 

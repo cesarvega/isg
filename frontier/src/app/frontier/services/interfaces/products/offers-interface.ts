@@ -1,4 +1,5 @@
 export interface OffersInterface {
+  addedApi?: boolean;
   id: string,
   name: String,
   description: String,

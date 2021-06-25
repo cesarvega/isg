@@ -1,5 +1,5 @@
 export interface QuoteInterface {
-  quoteId: String,
+  quoteId: string,
   status: Status,
   specName: String,
   description: String,

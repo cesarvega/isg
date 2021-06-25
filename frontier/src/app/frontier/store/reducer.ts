@@ -3,6 +3,7 @@ import { Frontier } from './interfaces/app.state';
 import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction, setReservationAction, addClosedTaskAction, validateQuoteAction, acceptDisclosuresAction, setDepositRequirementsAction } from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../utils/steps';
+import { OffersInterface } from '../services/interfaces/products/offers-interface';
 
 
 
@@ -44,7 +45,7 @@ const _counterReducer = createReducer(
   on(resetOrderAction, (state) => (initialState)),
   on(setOffersAction, (state, { offers }) => ({ ...state, offers })),
   on(selectProductsAction, (state, { products }) => ({ ...state, selectedProducts: products })),
-  on(removeProductAction, (state, { productIds }) => ({ ...state, selectedProducts: removeProducts(productIds, state.selectedProducts) })),
+  on(removeProductAction, (state, { id }) => ({ ...state, selectedProducts: removeProducts(id, state.selectedProducts) })),
   on(setCustomerAction, (state, { customer }) => ({ ...state, customer })),
   on(setTasksAction, (state, { tasks }) => ({ ...state, tasks })),
   on(setQuoteAction, (state, { quote }) => ({ ...state, quote })),
@@ -60,9 +61,9 @@ export function FrontierReducer(state, action) {
   return _counterReducer(state, action);
 }
 
-function removeProducts(productIds, products) {
+function removeProducts(productId: string, products: OffersInterface[]) {
   return products.filter((product) => {
-    return !productIds.includes(product.id)
+    return product.id != productId
   })
 }
 
