@@ -21,4 +21,5 @@ export const setCustomerForms = createAction('setCustomerForms', props<{ account
 export const setDisclosuresAction = createAction('setDisclosures', props<{ disclosures }>());
 export const setReservationAction = createAction('setReservationAction', props<{ reservation }>());
 export const addClosedTaskAction = createAction('addClosedTaskAction', props<{ taskName }>());
-
+export const validateQuoteAction = createAction('validateQuoteAction');
+export const acceptDisclosuresAction = createAction('acceptDisclosuresAction');

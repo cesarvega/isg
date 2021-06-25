@@ -1,4 +1,4 @@
-import { Component, OnInit,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DisclosuresApiService } from '../services/api/disclosures-api.service';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
@@ -63,7 +63,6 @@ export class DisclosureComponent implements OnInit {
     this.loading = true;
     try {
       let response = await this.disclosuresApiService.submitDisclosures(this.quoteId, { disclosures: this.disclosures });
-      console.log(response)
     } catch (error) {
       this.loading = false;
       this.error = error;

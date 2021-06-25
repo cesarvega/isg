@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { createQuoteURL, generateTransactionIdURL, getCompleteTaskURL, validateQuoteURL, getValidateQuoteURL, getQuoteURL } from '../endpoints/qualification';
 import { AddressSearchResponseItemInterface } from '../interfaces/qualification/address-search-response';
 import { CreateQuoteInterface } from '../interfaces/qualification/create-quote';
-import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setSelectedAddressAction, setTransactionIdAction } from '../../store/actions';
+import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setSelectedAddressAction, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -35,7 +35,11 @@ export class QuoteApiService {
 
   async validateQuote(quoteId) {
     return await this.clientService
-      .post(getValidateQuoteURL(quoteId), null)
+      .post(getValidateQuoteURL(quoteId), null).pipe(
+        tap(() => {
+          this.store.dispatch(validateQuoteAction());
+        })
+      )
       .toPromise();
   }
 

@@ -29,6 +29,8 @@ export interface Frontier {
   identityForm?,
   disclosures: DisclosureInterface[],
   reservation: ReservationInterface,
-  closedTasks: string[]
+  closedTasks: string[],
+  quoteValidated: boolean;
+  wereDisclosuresAccepted: boolean;
 }
 

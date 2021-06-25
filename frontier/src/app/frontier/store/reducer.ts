@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Frontier } from './interfaces/app.state';
-import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction, setReservationAction, addClosedTaskAction } from './actions';
+import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction, setReservationAction, addClosedTaskAction, validateQuoteAction, acceptDisclosuresAction } from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../utils/steps';
 
@@ -24,8 +24,10 @@ export const initialState: Frontier = {
   tasks: [],
   quote: null,
   disclosures: [],
-  reservation:null,
-  closedTasks:[] 
+  reservation: null,
+  closedTasks: [],
+  quoteValidated: false,
+  wereDisclosuresAccepted: false
 };
 
 const _counterReducer = createReducer(
@@ -49,6 +51,8 @@ const _counterReducer = createReducer(
   on(setDisclosuresAction, (state, { disclosures }) => ({ ...state, disclosures })),
   on(setReservationAction, (state, { reservation }) => ({ ...state, reservation })),
   on(addClosedTaskAction, (state, { taskName }) => ({ ...state, closedTasks: state.closedTasks.concat(taskName) })),
+  on(validateQuoteAction, (state) => ({ ...state, quoteValidated: true })),
+  on(acceptDisclosuresAction, (state) => ({ ...state, wereDisclosuresAccepted: true })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);

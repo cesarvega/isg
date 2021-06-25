@@ -16,6 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DisclosureComponent } from '../disclosure/disclosure.component';
 import { Steps } from '../utils/steps';
 import { ActivatedRoute, Router } from '@angular/router';
+import { selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../store/selectors';
 
 @Component({
   selector: 'app-customizations',
@@ -30,13 +31,16 @@ export class CustomizationsComponent implements OnInit {
   items: Item[] = []
   selectOfferTask: TaskInterface
   numberPortabilityTask: TaskInterface
+  wasQuoteValidated: boolean = false;
+  wereDisclosuresAccepted: boolean = false;
 
   constructor(private stateService: StateService, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
-    private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService,
-    private route: ActivatedRoute, private router: Router, private modalService: NgbModal) {
+    private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router, private modalService: NgbModal) {
     this.quoteId = stateService.getQuoteId();
     this.selectOfferTask = stateService.getValueFromSelector(getTaskByName(offerTaskIdName))
     this.numberPortabilityTask = stateService.getValueFromSelector(getTaskByName(numberPortabilityTaskName))
+    this.wasQuoteValidated = stateService.getValueFromSelector(selectWasQuoteValidated);
+    this.wereDisclosuresAccepted = stateService.getValueFromSelector(selectWereDisclosuresAccepted)
   }
 
   isItemConfigurationCompleted(item: Item) {
@@ -100,30 +104,34 @@ export class CustomizationsComponent implements OnInit {
       }
 
       // close select offer task
-      if(this.selectOfferTask && !this.stateService.isTaskClosed(offerTaskIdName))
+      if (this.selectOfferTask && !this.stateService.isTaskClosed(offerTaskIdName))
         await this.tasksApiService.closeTask(this.quoteId, this.selectOfferTask);
 
       // close number portability task
-      if(this.numberPortabilityTask && !this.stateService.isTaskClosed(numberPortabilityTaskName))
+      if (this.numberPortabilityTask && !this.stateService.isTaskClosed(numberPortabilityTaskName))
         await this.tasksApiService.closeTask(this.quoteId, this.numberPortabilityTask);
 
       // validate quote
-      await this.quoteApiService.validateQuote(this.quoteId);
+      if (!this.wasQuoteValidated)
+        await this.quoteApiService.validateQuote(this.quoteId);
 
       // close validate quote task
-      let response= await this.tasksApiService.getTasks(this.quoteId);
+      let response = await this.tasksApiService.getTasks(this.quoteId);
       let tasks = response.currentTasks;
-      let quoteValidationTask = tasks.find((iterateTask)=>{
+      let quoteValidationTask = tasks.find((iterateTask) => {
         return iterateTask.specName == quoteValidationTaskName
       })
-      if(quoteValidationTask && !this.stateService.isTaskClosed(quoteValidationTaskName))
-        await this.tasksApiService.closeTask(this.quoteId,quoteValidationTask)
+      if (quoteValidationTask && !this.stateService.isTaskClosed(quoteValidationTaskName))
+        await this.tasksApiService.closeTask(this.quoteId, quoteValidationTask)
 
 
       // accept disclosures
       this.loading = false;
-      this.openDisclosures();
-
+      if (this.wereDisclosuresAccepted) {
+        this.redirectToBilling();
+      } else {
+        this.openDisclosures();
+      }
 
     } catch (error) {
       this.loading = false;
@@ -132,11 +140,11 @@ export class CustomizationsComponent implements OnInit {
     }
   }
 
-  async onSubmitDisclosures(){
-    this.redirectToConfirmation()
+  async onSubmitDisclosures() {
+    this.redirectToBilling()
   }
 
-  private redirectToConfirmation() {
+  private redirectToBilling() {
     this.stateService.dispatchAction(setStepAction({ step: Steps.billingStep }))
     this.router.navigate([Steps.billingStep.url]);
   }
