@@ -53,12 +53,12 @@ export class OffersComponent implements OnInit {
   async initComponent() {
     this.loading = true;
     try {
-      this.quote = await this.getQuote();
-      this.quoteId = this.quote.quoteId;
+      this.quoteId = this.stateService.getQuoteId();
       this.offers = this.getOffersFromStore();
       if (this.offers.length < 1)
         this.offers = await this.getOffers(this.quoteId)
     } catch (error) {
+      this.loading = false;
       this.error = error;
     }
     this.loading = false;
@@ -66,9 +66,8 @@ export class OffersComponent implements OnInit {
   }
 
 
-  async getQuote() {
-    this.loading = true;
-    return await this.quoteApiService.getQuote(this.quoteId, true, true) as QuoteInterface;
+  async getQuote(quoteId) {
+    return await this.quoteApiService.getQuote(quoteId, true, true) as QuoteInterface;
   }
 
 
@@ -106,8 +105,10 @@ export class OffersComponent implements OnInit {
       if (!this.gotProductsSelected(this.offers)) {
         throw new Error("Need to select at least one product")
       }
-      if (this.removeProducts.length > 0)
-        await this.sendRemoveProductsApi(this.removeProducts, this.quote);
+      if (this.removeProducts.length > 0) {
+        let quote = await this.getQuote(this.quoteId);
+        await this.sendRemoveProductsApi(this.removeProducts, quote);
+      }
       if (this.addProducts.length > 0)
         await this.sendAddProductsApi(this.addProducts, this.quoteId);
       this.stateService.dispatchAction(setStepAction({ step: Steps.creditCheckStep }))
