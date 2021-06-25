@@ -30,7 +30,13 @@ import { ErrorInterceptor } from './frontier/utils/interceptors/error.intercepto
     FrontierModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    StoreModule.forRoot({ frontier: FrontierReducer, root: RootReducer }, { metaReducers: [storageSyncMetaReducer] }),
+    StoreModule.forRoot({ frontier: FrontierReducer, root: RootReducer },
+      {
+        metaReducers: [storageSyncMetaReducer], runtimeChecks: {
+          strictStateImmutability: false,
+          strictActionImmutability: false,
+        },
+      }),
     ReactiveFormsModule,
     FontAwesomeModule
   ],
