@@ -15,13 +15,25 @@
   </p>
 </ngb-alert>
 
-<div *ngIf="!loading" class="row row-cols-1 row-cols-md-3 g-5 p-3">
-  <div class="col" *ngFor="let offer of offers">
-    <app-offer-detail
-      [offer]="offer"
-      (selectEvent)="select($event)"
-      (removeEvent)="removeProduct($event)"
-    ></app-offer-detail>
+<div *ngIf="!loading">
+  <div class="row justify-content-md-center">
+    <div class="col-md-5">
+      <div class="alert alert-success p-3" role="alert">
+        <h4 class="alert-heading text-center">Showing offers for address</h4>
+        <h6 class="text-center">
+          {{ selectedParsedAdress$ | async }}
+        </h6>
+      </div>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-5 p-3">
+    <div class="col" *ngFor="let offer of offers">
+      <app-offer-detail
+        [offer]="offer"
+        (selectEvent)="select($event)"
+        (removeEvent)="removeProduct($event)"
+      ></app-offer-detail>
+    </div>
   </div>
 </div>
 <div class="d-grid gap-2">

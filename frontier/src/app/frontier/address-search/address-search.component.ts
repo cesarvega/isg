@@ -15,6 +15,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddressSelectorComponent } from './address-selector/address-selector.component';
 import { Observable, Subscription } from 'rxjs';
 import { AddressSearchResponseItemInterface } from '../services/interfaces/qualification/address-search-response';
+import { getParsedAddress } from './helpers/get-parsed-adress';
 
 @Component({
   selector: 'app-address-search',
@@ -33,6 +34,7 @@ export class AddressSearchComponent implements OnInit {
   canEdit: boolean = true;
   currentStep: StepInterface;
 
+  public getParsedAddress = getParsedAddress;
   constructor(
     private qualificationApiService: QualificationApiService,
     private quoteApiService: QuoteApiService,
@@ -55,11 +57,6 @@ export class AddressSearchComponent implements OnInit {
     return currentStep;
   }
 
-  getParsedAddress(selectedAddress: AddressSearchResponseItemInterface) {
-    const { addressLine1, addressLine2, city, stateProvince, zipCode } = selectedAddress.address;
-    return `${addressLine1} ${addressLine2} ${city}, ${stateProvince} ${zipCode}`;
-
-  }
 
   canAccessQualification() {
     let step: StepInterface = this.getCurrentStep();

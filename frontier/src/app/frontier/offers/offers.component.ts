@@ -14,6 +14,9 @@ import { AlertInterface } from '../services/interfaces/common/alert-interface';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { StateService } from '../services/state.service';
 import { Store } from '@ngrx/store';
+import { getParsedAddress } from '../address-search/helpers/get-parsed-adress';
+import { selectParsedAddress } from '../store/complexSelectors/address-parsed-selector';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-offers',
@@ -31,14 +34,17 @@ export class OffersComponent implements OnInit {
   addProducts: OffersInterface[] = [];
   removeProducts = [];
   alert: AlertInterface;
-  faExclamationTriangle = faExclamationTriangle
+  faExclamationTriangle = faExclamationTriangle;
+  selectedParsedAdress$: Observable<string>;
 
-  constructor(private store: Store<any>, private stateService: StateService, private productsApiService: ProductsApiService, private router: Router,
-    private route: ActivatedRoute, private quoteApiService: QuoteApiService, private productBuilder: ProductsBuilder) {
+  public getParsedAddress = getParsedAddress;
+
+  constructor(private store: Store<any>, private stateService: StateService, private productsApiService: ProductsApiService, private router: Router, private quoteApiService: QuoteApiService, private productBuilder: ProductsBuilder) {
 
   }
 
   ngOnInit(): void {
+    this.selectedParsedAdress$ = this.store.select(selectParsedAddress);
     this.getQuoteId();
     this.getOffers()
   }
