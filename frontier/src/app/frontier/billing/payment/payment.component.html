@@ -1,135 +1,147 @@
-<form
-  [formGroup]="paymentForm"
-  (ngSubmit)="onSubmit()"
-  class="needs-validation"
-  [ngClass]="this.submitted ? 'was-validated' : ''"
-  novalidate=""
->
-  <div class="row g-3">
-    <div class="row g-2">
-      <div class="col-md-6">
-        <label for="firstName" class="form-label">* First Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="firstName"
-          formControlName="firstName"
-          required
-        />
-        <div class="invalid-feedback">First Name is required.</div>
-      </div>
-      <div class="col-md-6">
-        <label for="lastName" class="form-label">* Last Name:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="lastName"
-          required
-          formControlName="lastName"
-        />
-        <div class="invalid-feedback">Last Name is required.</div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <label for="customerType" class="form-label">* Customer Type</label>
-      <select
-        class="form-select"
-        id="customerType"
-        required
-        formControlName="customerType"
-      >
-        <option value="">Select an option</option>
-        <option
-          [value]="customerType.value"
-          *ngFor="let customerType of customerTypes"
-        >
-          {{ customerType.name }}
-        </option>
-      </select>
-      <div class="invalid-feedback">Please select a customer type.</div>
-    </div>
-
-    <div class="row g-2">
-      <div class="col-md-6">
-        <label for="nameOnCard" class="form-label">* Name on card:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="nameOnCard"
-          required
-          formControlName="nameOnCard"
-        />
-        <div class="invalid-feedback">Please enter the name on the card.</div>
-      </div>
-      <div class="col-md-6">
-        <label for="cardNumber" class="form-label">* Card Number</label>
-        <input
-          type="text"
-          class="form-control"
-          id="cardNumber"
-          formControlName="cardNumber"
-          required
-        />
-        <div class="invalid-feedback">Card Number field is required.</div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <label for="expirationDate" class="form-label">* Expiration Date</label>
-      <input
-        type="text"
-        class="form-control"
-        id="expirationDate"
-        formControlName="expirationDate"
-        required
-      />
-      <div class="invalid-feedback">Expiration Date field is required.</div>
-    </div>
-    <div class="col-md-4">
-      <label for="securityCode" class="form-label">* Security Code</label>
-      <input
-        type="number"
-        class="form-control"
-        id="securityCode"
-        formControlName="securityCode"
-        required
-      />
-      <div class="invalid-feedback">Security Code field is required.</div>
-    </div>
-    <div class="col-md-4">
-      <label for="zipCode" class="form-label">* Zip Code</label>
-      <input
-        type="number"
-        class="form-control"
-        id="zipCode"
-        formControlName="zipCode"
-        required
-      />
-      <div class="invalid-feedback">Zip Code field is required.</div>
-    </div>
-  </div>
-
-  <div class="d-grid gap-2 my-3">
-    <button class="btn btn-outline-primary btn-lg" type="submit">
-      Save Information
-    </button>
-  </div>
-</form>
-<div class="col-md-4">
-  <label class="text-primary" style="font-weight: bold"
-    >Select a Test Address</label
+<app-error-message [error]="error"></app-error-message>
+<div *ngIf="loading" class="d-flex justify-content-center">
+  <div
+    class="spinner-border text-primary"
+    role="status"
+    style="width: 4rem; height: 4rem"
   >
-  <select
-    class="form-select mt-2"
-    [(ngModel)]="selectedTestPaymentAlias"
-    (change)="onSelectTestCase(selectedTestPaymentAlias)"
-  >
-    <option>Select Address</option>
-    <option
-      [value]="testPayment.alias"
-      *ngFor="let testPayment of testPayments"
-    >
-      {{ testPayment.alias }}
-    </option>
-  </select>
+    <span class="visually-hidden">Loading...</span>
+  </div>
 </div>
+<ng-container *ngIf="!loading">
+  <form
+    [formGroup]="paymentForm"
+    (ngSubmit)="onSubmit()"
+    class="needs-validation"
+    [ngClass]="this.submitted ? 'was-validated' : ''"
+    novalidate=""
+  >
+    <div class="row g-3">
+      <div class="row g-2">
+        <div class="col-md-6">
+          <label for="firstName" class="form-label">* First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            formControlName="firstName"
+            required
+          />
+          <div class="invalid-feedback">First Name is required.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">* Last Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            required
+            formControlName="lastName"
+          />
+          <div class="invalid-feedback">Last Name is required.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="customerType" class="form-label">* Customer Type</label>
+        <select
+          class="form-select"
+          id="customerType"
+          required
+          formControlName="customerType"
+        >
+          <option value="">Select an option</option>
+          <option
+            [value]="customerType.value"
+            *ngFor="let customerType of customerTypes"
+          >
+            {{ customerType.name }}
+          </option>
+        </select>
+        <div class="invalid-feedback">Please select a customer type.</div>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-md-6">
+          <label for="nameOnCard" class="form-label">* Name on card:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nameOnCard"
+            required
+            formControlName="nameOnCard"
+          />
+          <div class="invalid-feedback">Please enter the name on the card.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="cardNumber" class="form-label">* Card Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="cardNumber"
+            formControlName="cardNumber"
+            required
+          />
+          <div class="invalid-feedback">Card Number field is required.</div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="expirationDate" class="form-label">* Expiration Date</label>
+        <input
+          type="text"
+          class="form-control"
+          id="expirationDate"
+          formControlName="expirationDate"
+          required
+        />
+        <div class="invalid-feedback">Expiration Date field is required.</div>
+      </div>
+      <div class="col-md-4">
+        <label for="securityCode" class="form-label">* Security Code</label>
+        <input
+          type="number"
+          class="form-control"
+          id="securityCode"
+          formControlName="securityCode"
+          required
+        />
+        <div class="invalid-feedback">Security Code field is required.</div>
+      </div>
+      <div class="col-md-4">
+        <label for="zipCode" class="form-label">* Zip Code</label>
+        <input
+          type="number"
+          class="form-control"
+          id="zipCode"
+          formControlName="zipCode"
+          required
+        />
+        <div class="invalid-feedback">Zip Code field is required.</div>
+      </div>
+    </div>
+
+    <div class="d-grid gap-2 my-3">
+      <button class="btn btn-outline-primary btn-lg" type="submit">
+        Save Information
+      </button>
+    </div>
+  </form>
+  <div class="col-md-4">
+    <label class="text-primary" style="font-weight: bold"
+      >Select a Test Address</label
+    >
+    <select
+      class="form-select mt-2"
+      [(ngModel)]="selectedTestPaymentAlias"
+      (change)="onSelectTestCase(selectedTestPaymentAlias)"
+    >
+      <option>Select Address</option>
+      <option
+        [value]="testPayment.alias"
+        *ngFor="let testPayment of testPayments"
+      >
+        {{ testPayment.alias }}
+      </option>
+    </select>
+  </div>
+</ng-container>

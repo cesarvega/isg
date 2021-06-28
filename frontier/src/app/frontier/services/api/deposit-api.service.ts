@@ -21,7 +21,7 @@ export class DepositeApiService {
     return await this.clientService.getAll(url, { quoteId }).
       pipe(
         tap((depositRequirements) => {
-          this.store.dispatch(setDepositRequirementsAction(depositRequirements))
+          this.store.dispatch(setDepositRequirementsAction({ depositRequirements }))
         })
       ).toPromise();
   }

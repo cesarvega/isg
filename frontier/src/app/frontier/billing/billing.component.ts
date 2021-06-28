@@ -54,7 +54,7 @@ export class BillingComponent implements OnInit {
       await this.taskApiService.closeTask(quoteId, task);
   }
 
-  getTask(tasks: TaskInterface[], taskName) {
+  getTaskByName(tasks: TaskInterface[], taskName) {
     return tasks.find((iterateTask: TaskInterface) => {
       return iterateTask.specName == taskName
     })
