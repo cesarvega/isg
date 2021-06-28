@@ -24,4 +24,6 @@ export const addClosedTaskAction = createAction('addClosedTaskAction', props<{ t
 export const validateQuoteAction = createAction('validateQuoteAction');
 export const acceptDisclosuresAction = createAction('acceptDisclosuresAction');
 export const setDepositRequirementsAction = createAction('setDepositRequirementsAction', props<{ depositRequirements }>());
+export const setCorrelationId = createAction('setCorrelationId', props<{ CorrelationId }>());
+export const setFundingAccountToken = createAction('setFundingAccountToken', props<{ token }>());
 

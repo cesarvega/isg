@@ -5,7 +5,7 @@ import { AddressInterface } from 'src/app/isg-shared/interfaces/address';
 import { environment } from 'src/environments/environment';
 import { addressExhaustiveSearchURL, addressPredictiveSearchURL } from '../endpoints/qualification';
 import { AddressPredictiveSearchInterface } from '../interfaces/qualification/address-predictive-search';
-import { addressSearchRequestAction, addressSearchResponseAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setSelectedAddressAction, setTransactionIdAction } from '../../store/actions';
+import { addressSearchRequestAction, addressSearchResponseAction, setCorrelationId, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setSelectedAddressAction, setTransactionIdAction } from '../../store/actions';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -22,6 +22,10 @@ export class QualificationApiService {
     return this.clientService
       .post(addressExhaustiveSearchURL, address)
       .pipe(
+        tap((addressSearchResponse) => {
+          let CorrelationId = addressSearchResponse.CorrelationId;
+          this.store.dispatch(setCorrelationId({ CorrelationId }));
+        }),
         map((addressSearchResponse) => {
           let addresses = addressSearchResponse.addresses
           if (addresses.length < 1) {

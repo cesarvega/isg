@@ -34,5 +34,7 @@ export interface Frontier {
   quoteValidated: boolean;
   wereDisclosuresAccepted: boolean;
   depositRequirements;
+  CorrelationId: string,
+  fundingAccountToken: string
 }
 

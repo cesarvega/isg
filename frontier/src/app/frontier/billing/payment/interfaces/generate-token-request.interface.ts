@@ -1,4 +1,5 @@
 export interface GenerateTokenRequestInterface {
+    CorrelationId: string,
     customerType: string,
     firstName,
     lastName,

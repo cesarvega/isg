@@ -3,12 +3,11 @@ import { GenerateTokenRequestInterface } from "../interfaces/generate-token-requ
 import { PaymentFormInterface } from "../interfaces/payment.form.interface";
 
 export const buildRequestGeneratePaymentToken = (paymentForm: PaymentFormInterface
-  , customer: CustomerInterface, lineOfBusiness: string): GenerateTokenRequestInterface => {
+  , lineOfBusiness: string, CorrelationId: string): GenerateTokenRequestInterface => {
   let requestForm: GenerateTokenRequestInterface = {
     ...paymentForm,
-    firstName: customer.firstName,
-    lastName: customer.lastName,
-    lineOfBusiness
+    lineOfBusiness,
+    CorrelationId,
   }
   return requestForm;
 }
