@@ -9,6 +9,7 @@ import { QuoteInterface } from './quote';
 import { DisclosureInterface } from '../../services/interfaces/disclosures/disclosure-interface';
 import { ReservationInterface } from '../../billing/interfaces/reservation-interface';
 import { OffersInterface } from '../../services/interfaces/products/offers-interface';
+import {DepositCollectionResponseInterface} from "../../billing/payment/interfaces/deposit-collection-response.interface";
 export interface Frontier {
   transactionId: string,
   currentStep: any
@@ -35,6 +36,7 @@ export interface Frontier {
   wereDisclosuresAccepted: boolean;
   depositRequirements;
   CorrelationId: string,
-  fundingAccountToken: string
+  fundingAccountToken: string,
+  depositCollectionResponse: DepositCollectionResponseInterface
 }
 

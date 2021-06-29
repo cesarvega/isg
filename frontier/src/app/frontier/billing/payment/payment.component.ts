@@ -1,17 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { zipCodeValidator } from 'src/app/isg-shared/validators/zipCodeValidator';
-import { DepositeApiService } from '../../services/api/deposit-api.service';
-import { ErrorInterface } from '../../services/interfaces/common/error-interface';
-import { CustomerInterface } from '../../services/interfaces/customer/customer';
-import { StateService } from '../../services/state.service';
-import { selectCorrelationId, selectCustomer } from '../../store/selectors';
-import { DepositRequirementsInterface } from '../interfaces/deposit-requirements-interface';
-import { PaymentFormInterface } from './interfaces/payment.form.interface';
-import { buildRequestGeneratePaymentToken } from './services/payment-builder.service';
-import { paymentTestCases } from './test-cases/payment.test.cases';
-import { customerTypes } from './utils/customer.types';
-import { lineOfBusiness } from './utils/line-of-business';
+import {Component, OnInit, Input} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {zipCodeValidator} from 'src/app/isg-shared/validators/zipCodeValidator';
+import {DepositeApiService} from '../../services/api/deposit-api.service';
+import {ErrorInterface} from '../../services/interfaces/common/error-interface';
+import {ContactInterface, ContactItemInterface, CustomerInterface} from '../../services/interfaces/customer/customer';
+import {StateService} from '../../services/state.service';
+import {selectCorrelationId, selectCustomer} from '../../store/selectors';
+import {DepositRequirementsInterface} from '../interfaces/deposit-requirements-interface';
+import {PaymentFormInterface} from './interfaces/payment.form.interface';
+import {buildRequestGeneratePaymentToken} from './services/payment-builder.service';
+import {paymentTestCases} from './test-cases/payment.test.cases';
+import {customerTypes} from './utils/customer.types';
+import {lineOfBusiness} from './utils/line-of-business';
+import {buildDepositCollectionRequest} from './services/deposit-request-builder.service';
+import {DepositRequestInterface} from './interfaces/deposit-request.interface';
 
 @Component({
   selector: 'app-payment',
@@ -20,13 +22,13 @@ import { lineOfBusiness } from './utils/line-of-business';
 })
 export class PaymentComponent implements OnInit {
 
-  error: ErrorInterface
-  customerTypes = customerTypes
-  loading: boolean = false;
-  submitted: boolean = false;
+  error: ErrorInterface;
+  customerTypes = customerTypes;
+  loading = false;
+  submitted = false;
   testPayments: ReadonlyArray<PaymentFormInterface> = paymentTestCases;
   selectedTestPaymentAlias: string;
-  @Input() depositRequirements: DepositRequirementsInterface
+  @Input() depositRequirements: DepositRequirementsInterface;
   customer: CustomerInterface = null;
   paymentForm: FormGroup;
   CorrelationId: string;
@@ -51,13 +53,13 @@ export class PaymentComponent implements OnInit {
   }
 
 
-
   onSelectTestCase(selectedTestCase) {
-    let testCase = this.testPayments.find((testPayment) => {
-      return testPayment.alias === selectedTestCase
-    })
-    if (testCase)
-      this.patchValue(testCase)
+    const testCase = this.testPayments.find((testPayment) => {
+      return testPayment.alias === selectedTestCase;
+    });
+    if (testCase) {
+      this.patchValue(testCase);
+    }
   }
 
   private patchValue(testCase: PaymentFormInterface) {
@@ -66,19 +68,31 @@ export class PaymentComponent implements OnInit {
     });
   }
 
+  private getEmailFromCustomer = (customer: CustomerInterface) => {
+    const primaryContact: ContactInterface = customer.contacts.item.find((contactItem) => {
+      return contactItem.primary;
+    });
+    if (primaryContact) {
+      return primaryContact.emailAddresses.item[0].address;
+    }
+    return '';
+  }
+
   async onSubmit() {
     this.submitted = true;
     if (this.paymentForm.valid) {
-      let formValues = this.paymentForm.value;
+      const paymentFormValues = this.paymentForm.value;
       this.loading = true;
       try {
         // generatePaymentToken
-        let tokenResponse = await this.generatePaymentToken(formValues, lineOfBusiness, this.CorrelationId);
+        const fundingAccountToken = await this.generatePaymentToken(paymentFormValues, lineOfBusiness, this.CorrelationId);
+        // deposit collection
+        const depositCollectionResponse = await this.depositCollection(this.depositRequirements, fundingAccountToken,
+          paymentFormValues, this.getEmailFromCustomer(this.customer));
 
       } catch (error) {
-        this.loading = false;
         this.error = error;
-
+        this.loading = false;
       }
       this.loading = false;
 
@@ -86,8 +100,13 @@ export class PaymentComponent implements OnInit {
     }
   }
 
+  depositCollection(depositRequirements, fundingAccountToken: string, payment: PaymentFormInterface, email) {
+    const request: DepositRequestInterface = buildDepositCollectionRequest(depositRequirements, fundingAccountToken, payment, email);
+    return this.depositApiService.depositCollection(request);
+  }
+
   async generatePaymentToken(formValues, lineOfBusiness, CorrelationId: string) {
-    let request = buildRequestGeneratePaymentToken(formValues, lineOfBusiness, CorrelationId);
+    const request = buildRequestGeneratePaymentToken(formValues, lineOfBusiness, CorrelationId);
     return await this.depositApiService.generatePaymentToken(this.customer.accountUuid, request);
   }
 

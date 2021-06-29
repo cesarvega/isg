@@ -26,4 +26,5 @@ export const acceptDisclosuresAction = createAction('acceptDisclosuresAction');
 export const setDepositRequirementsAction = createAction('setDepositRequirementsAction', props<{ depositRequirements }>());
 export const setCorrelationId = createAction('setCorrelationId', props<{ CorrelationId }>());
 export const setFundingAccountToken = createAction('setFundingAccountToken', props<{ token }>());
+export const setDepositCollectionResponse = createAction('setDepositCollectionResponse', props<{ depositCollectionResponse }>());
 

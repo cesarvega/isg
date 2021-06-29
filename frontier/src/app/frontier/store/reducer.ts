@@ -1,6 +1,32 @@
 import { createReducer, on } from '@ngrx/store';
 import { Frontier } from './interfaces/app.state';
-import { addressSearchRequestAction, addressSearchResponseAction, setErrorAction, setTransactionIdAction, setSelectedAddressAction, setCreateQuoteRequestAction, setCreateQuoteResponseAction, setStepAction, resetOrderAction, setOffersAction, removeProductAction, setCustomerAction, setTasksAction, setQuoteAction, setCustomerForms, selectProductsAction, setDisclosuresAction, setReservationAction, addClosedTaskAction, validateQuoteAction, acceptDisclosuresAction, setDepositRequirementsAction, setCorrelationId, setFundingAccountToken } from './actions';
+import {
+  addressSearchRequestAction,
+  addressSearchResponseAction,
+  setErrorAction,
+  setTransactionIdAction,
+  setSelectedAddressAction,
+  setCreateQuoteRequestAction,
+  setCreateQuoteResponseAction,
+  setStepAction,
+  resetOrderAction,
+  setOffersAction,
+  removeProductAction,
+  setCustomerAction,
+  setTasksAction,
+  setQuoteAction,
+  setCustomerForms,
+  selectProductsAction,
+  setDisclosuresAction,
+  setReservationAction,
+  addClosedTaskAction,
+  validateQuoteAction,
+  acceptDisclosuresAction,
+  setDepositRequirementsAction,
+  setCorrelationId,
+  setFundingAccountToken,
+  setDepositCollectionResponse
+} from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../utils/steps';
 import { OffersInterface } from '../services/interfaces/products/offers-interface';
@@ -31,7 +57,8 @@ export const initialState: Frontier = {
   wereDisclosuresAccepted: false,
   depositRequirements: null,
   CorrelationId: null,
-  fundingAccountToken: null
+  fundingAccountToken: null,
+  depositCollectionResponse: null,
 };
 
 const _counterReducer = createReducer(
@@ -60,6 +87,7 @@ const _counterReducer = createReducer(
   on(setDepositRequirementsAction, (state, { depositRequirements }) => ({ ...state, depositRequirements })),
   on(setCorrelationId, (state, { CorrelationId }) => ({ ...state, CorrelationId })),
   on(setFundingAccountToken, (state, { token }) => ({ ...state, fundingAccountToken: token })),
+  on(setDepositCollectionResponse, (state, { depositCollectionResponse }) => ({ ...state, depositCollectionResponse })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);

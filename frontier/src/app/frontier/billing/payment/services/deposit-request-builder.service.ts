@@ -23,6 +23,8 @@ export const buildDepositCollectionRequest = (depositRequirements: DepositRespon
 };
 
 const buildApportioning = (depositRequirements: DepositResponse): ApportioningInterface[] => {
+  if(!depositRequirements.backBalances)
+    return [];
   return depositRequirements.backBalances.map((backBalance) => {
     return {
       accountId : backBalance.accountId,
@@ -36,7 +38,10 @@ const buildApportioning = (depositRequirements: DepositResponse): ApportioningIn
 
 
 const getTotalPayment = (depositRequirements: DepositResponse): number => {
-  let sum = 0;
+  let sum = depositRequirements.requiredDeposit;
+  if (!depositRequirements.backBalances) {
+    return sum;
+  }
   for (const deposit of depositRequirements.backBalances){
     sum += deposit.amountDue;
   }
