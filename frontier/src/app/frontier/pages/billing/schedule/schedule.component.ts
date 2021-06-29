@@ -10,6 +10,7 @@ import { setReservationAction } from '../../../utils/store/actions';
 import { CustomerInterface } from 'src/app/frontier/utils/services/interfaces/customer/customer';
 import { selectCustomer } from 'src/app/frontier/utils/store/selectors';
 import { buildScheduleRequest } from './helper/build-schedule-request';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-schedule',
@@ -17,6 +18,7 @@ import { buildScheduleRequest } from './helper/build-schedule-request';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
+  @Output() onSuccessScheduleEvent = new EventEmitter<void>();
   quoteId: string;
   error: ErrorInterface;
   loading: boolean = false;
@@ -53,8 +55,8 @@ export class ScheduleComponent implements OnInit {
     try {
       this.loading = true;
       let request = buildScheduleRequest(this.customer, selectedEvent.id);
-      let reservation = await this.scheduleApiService.reserveSchedule(quoteId, request);
-      this.stateService.dispatchAction(setReservationAction(reservation))
+      await this.scheduleApiService.reserveSchedule(quoteId, request);
+      let tasks = this.taskApiService.getTasks(quoteId);
     }
     catch (error) {
       this.loading = false;

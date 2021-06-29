@@ -4,6 +4,7 @@ import { TaskEndpoint } from '../endpoints/task';
 import { Store } from '@ngrx/store';
 import { addClosedTaskAction, setTasksAction } from '../../store/actions';
 import { TaskInterface } from '../../store/interfaces/task-interface';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,16 @@ export class TasksApiService {
     this.taskEndpoint = new TaskEndpoint()
   }
 
-  async getTasks(quoteId: string) {
+  async getTasks(quoteId: string): Promise<TaskInterface[]> {
     let endpoint = this.taskEndpoint.getTasksEndpoint(quoteId);
-    let tasks = await this.clientService.getAll(endpoint).toPromise();
-    this.store.dispatch(setTasksAction({ tasks: tasks.currentTasks }))
-    return tasks;
-
+    return this.clientService.getAll(endpoint).pipe(
+      map((response) => {
+        return response.currentTasks;
+      }),
+      tap((tasks) => {
+        this.store.dispatch(setTasksAction({ tasks }))
+      })
+    ).toPromise();
   }
 
   async closeTask(quoteId: string, task: TaskInterface) {

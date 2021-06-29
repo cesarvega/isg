@@ -116,8 +116,7 @@ export class CustomizationsComponent implements OnInit {
         await this.quoteApiService.validateQuote(this.quoteId);
 
       // close validate quote task
-      let response = await this.tasksApiService.getTasks(this.quoteId);
-      let tasks = response.currentTasks;
+      let tasks = await this.tasksApiService.getTasks(this.quoteId);
       let quoteValidationTask = tasks.find((iterateTask) => {
         return iterateTask.specName == quoteValidationTaskName
       })

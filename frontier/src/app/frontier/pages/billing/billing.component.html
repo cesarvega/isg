@@ -24,7 +24,9 @@
     </ngb-panel>
     <ngb-panel title="Schedule">
       <ng-template ngbPanelContent>
-        <app-schedule></app-schedule>
+        <app-schedule
+          (onSuccessScheduleEvent)="onSuccessScheduleEvent($event)"
+        ></app-schedule>
       </ng-template>
     </ngb-panel>
   </ngb-accordion>

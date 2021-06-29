@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { DepositeApiService } from '../../utils/services/api/deposit-api.service';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { StateService } from '../../utils/services/state.service';
+import { Steps } from '../../utils/steps';
+import { setStepAction } from '../../utils/store/actions';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { selectDepositCollectionResponse, selectDepositRequirements } from '../../utils/store/selectors';
 import { DepositRequirementsInterface } from './interfaces/deposit-requirements-interface';
@@ -27,7 +30,7 @@ export class BillingComponent implements OnInit {
   depositCollectionResponse: Observable<DepositCollectionResponseInterface>;
   @ViewChild('accordion') accordionComponent: NgbAccordion;
 
-  constructor(private depositApiService: DepositeApiService, private stateService: StateService, private taskApiService: TasksApiService) { }
+  constructor(private depositApiService: DepositeApiService, private stateService: StateService, private taskApiService: TasksApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
@@ -45,8 +48,7 @@ export class BillingComponent implements OnInit {
     this.loading = true;
     try {
       // get tasks
-      let tasks = await this.getTasks(quoteId);
-      this.tasks = tasks.currentTasks;
+      this.tasks = await this.getTasks(quoteId);
 
       // get deposit requirements
       if (!depositRequirements)
@@ -72,6 +74,11 @@ export class BillingComponent implements OnInit {
   onSuccessDeposit() {
     this.accordionComponent.toggle('payment-panel')
     this.successDeposit = true;
+  }
+
+  onSuccessScheduleEvent() {
+    this.stateService.dispatchAction(setStepAction({ step: Steps.confirmationStep }))
+    this.router.navigate([Steps.confirmationStep.url]);
   }
 
   async getTasks(quoteId): Promise<any> {
