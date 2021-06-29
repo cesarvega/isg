@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddressSearchComponent } from './address-search/address-search.component';
-import { OffersComponent } from './offers/offers.component';
-import { FrontierMainComponent } from './frontier-main/frontier-main.component';
-import { CreditCheckComponent } from './credit-check/credit-check.component';
-import { CustomizationsComponent } from './customizations/customizations.component';
-import { BillingComponent } from './billing/billing.component';
+import { AddressSearchComponent } from './pages/address-search/address-search.component';
+import { OffersComponent } from './pages/offers/offers.component';
+import { FrontierMainComponent } from './layout/frontier-main/frontier-main.component';
+import { CreditCheckComponent } from './pages/credit-check/credit-check.component';
+import { CustomizationsComponent } from './pages/customizations/customizations.component';
+import { BillingComponent } from './pages/billing/billing.component';
 
 const routes: Routes = [
   {

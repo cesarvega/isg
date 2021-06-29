@@ -6,7 +6,7 @@ import { zipCodeValidator } from '../validators/zipCodeValidator';
 import { Output, EventEmitter } from '@angular/core';
 import { AddressInterface } from '../interfaces/address';
 import { AddressFormInterface } from '../../frontier/utils/test-addresses';
-import { AddressSearchResponseItemInterface } from 'src/app/frontier/services/interfaces/qualification/address-search-response';
+import { AddressSearchResponseItemInterface } from 'src/app/frontier/utils/services/interfaces/qualification/address-search-response';
 
 @Component({
   selector: 'app-address-form',

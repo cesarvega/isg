@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorInterface } from '../services/interfaces/common/error-interface'
+import { ErrorInterface } from './services/interfaces/common/error-interface'
 export function parseHttperror(error: HttpErrorResponse) {
   if (error.status == 422) {
     let parsedError = error.error;

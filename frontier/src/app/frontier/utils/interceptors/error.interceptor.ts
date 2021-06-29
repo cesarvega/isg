@@ -9,7 +9,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { parseHttperror } from '../helper-functions';
-import { ErrorInterface } from '../../services/interfaces/common/error-interface';
+import { ErrorInterface } from '../services/interfaces/common/error-interface';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

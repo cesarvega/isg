@@ -7,7 +7,7 @@ import { FrontierModule } from './frontier/frontier.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { FrontierReducer } from './frontier/store/reducer';
+import { FrontierReducer } from './frontier/utils/store/reducer';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';

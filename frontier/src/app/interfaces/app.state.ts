@@ -1,4 +1,4 @@
-import { Frontier } from "../frontier/store/interfaces/app.state";
+import { Frontier } from "../frontier/utils/store/interfaces/app.state";
 import { RootInterface } from './root-interface';
 
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectUser, selectLoading } from '../frontier/store/selectors';
+import { selectUser, selectLoading } from '../frontier/utils/store/selectors';
 import { UserInterface } from '../store/interfaces/user-interface';
 
 @Injectable({

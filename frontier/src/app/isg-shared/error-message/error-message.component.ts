@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ErrorInterface } from '../../frontier/services/interfaces/common/error-interface';
+import { ErrorInterface } from '../../frontier/utils/services/interfaces/common/error-interface';
 
 @Component({
   selector: 'app-error-message',
