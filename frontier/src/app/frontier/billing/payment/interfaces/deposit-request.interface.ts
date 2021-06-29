@@ -8,7 +8,7 @@ export interface DepositRequestInterface {
 export interface PaymentInterface {
     name: string,
     fundingAccountToken: string,
-    addFundingAccountTokenToWallet: string,
+    addFundingAccountTokenToWallet: boolean,
     paymentMethod: string,
     total: number,
     note: string,
@@ -17,7 +17,7 @@ export interface PaymentInterface {
 export interface ApportioningInterface {
     accountId: AccountIdInterface,
     amount: number,
-    reaseon: ReasonInterface
+    reason: ReasonInterface
 }
 
 export interface AccountIdInterface {
