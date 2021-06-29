@@ -14,7 +14,7 @@ import { AddressInterface } from '../../utils/services/interfaces/customer/custo
 import { ActivatedRoute, Router } from '@angular/router';
 import { Steps } from '../../utils/steps';
 import { StateService } from '../../utils/services/state.service';
-import { getTaskByName } from '../../utils/store/complexSelectors/taks';
+import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
 import { creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
 import { creditCheckTestCases } from './test-cases';
 
@@ -98,7 +98,7 @@ export class CreditCheckComponent implements OnInit {
     let customer = this.customerContactBuilder.buildAccountAndVerifyInformation(accountForm, identityForm, this.getCustomer(), this.address.address);
     try {
       await this.customerApiService.updateCustomer(customer, this.quoteId);
-      this.customerDetailTask = this.stateService.getValueFromSelector(getTaskByName(customerDetailsTaskName))
+      this.customerDetailTask = this.stateService.getValueFromSelector(getTaskByNameFromState(customerDetailsTaskName))
       // the customer detail task could be null if this task is already closed
       // need to ask what to do in that case, when we want to update the customer infoormation
       // but the task is already closed
@@ -107,7 +107,7 @@ export class CreditCheckComponent implements OnInit {
       await this.customerApiService.creditCheck(this.getAccountUuid(customer), this.quoteId);
 
       await this.getTasks(this.quoteId);
-      let creditCheckTask: TaskInterface = this.stateService.getValueFromSelector(getTaskByName(creditCheckTaskName))
+      let creditCheckTask: TaskInterface = this.stateService.getValueFromSelector(getTaskByNameFromState(creditCheckTaskName))
       if (creditCheckTask && (!this.stateService.isTaskClosed(creditCheckTaskName)))
         await this.tasksApiService.closeTask(this.quoteId, creditCheckTask);
 

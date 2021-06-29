@@ -3,7 +3,7 @@ import { TaskInterface } from '../interfaces/task-interface';
 import { selectTasks } from "../selectors";
 
 
-export const getTaskByName = (taskName) => {
+export const getTaskByNameFromState = (taskName) => {
   return createSelector(
     selectTasks,
     (tasks: TaskInterface[]) => {
@@ -13,3 +13,10 @@ export const getTaskByName = (taskName) => {
     }
   );
 }
+
+export const getTasksByNameLocal = (tasks: TaskInterface[], taskName) => {
+  return tasks.find((task) => {
+    return task.specName == taskName;
+  })
+}
+

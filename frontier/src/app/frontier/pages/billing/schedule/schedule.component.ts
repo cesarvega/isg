@@ -11,6 +11,8 @@ import { CustomerInterface } from 'src/app/frontier/utils/services/interfaces/cu
 import { selectCustomer } from 'src/app/frontier/utils/store/selectors';
 import { buildScheduleRequest } from './helper/build-schedule-request';
 import { Output, EventEmitter } from '@angular/core';
+import { getTasksByNameLocal } from 'src/app/frontier/utils/store/complexSelectors/taks';
+import { reserveTaskName } from 'src/app/frontier/utils/taskNames';
 
 @Component({
   selector: 'app-schedule',
@@ -56,13 +58,22 @@ export class ScheduleComponent implements OnInit {
       this.loading = true;
       let request = buildScheduleRequest(this.customer, selectedEvent.id);
       await this.scheduleApiService.reserveSchedule(quoteId, request);
-      let tasks = this.taskApiService.getTasks(quoteId);
+      this.closeReserveTask(quoteId)
+      this.onSuccessScheduleEvent.emit();
     }
     catch (error) {
       this.loading = false;
       this.error = error;
     }
     this.loading = false;
+  }
+
+  private async closeReserveTask(quoteId) {
+    let tasks = await this.taskApiService.getTasks(quoteId);
+    let reserveTask = getTasksByNameLocal(tasks, reserveTaskName);
+    if (!reserveTask)
+      throw new Error("Could not get reserve task")
+    await this.taskApiService.closeTask(quoteId, reserveTask);
   }
 
 

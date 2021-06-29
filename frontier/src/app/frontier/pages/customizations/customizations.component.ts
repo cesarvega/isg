@@ -9,7 +9,7 @@ import { Item, ChildEntity } from '../../utils/store/interfaces/quote';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { getValueFromState } from '../../utils/get-value-from-state';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
-import { getTaskByName } from '../../utils/store/complexSelectors/taks';
+import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
 import { offerTaskIdName, numberPortabilityTaskName, quoteValidationTaskName } from '../../utils/taskNames';
 import { ChildEntityHelperService } from './child-entity-helper.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -37,8 +37,8 @@ export class CustomizationsComponent implements OnInit {
   constructor(private stateService: StateService, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router, private modalService: NgbModal) {
     this.quoteId = stateService.getQuoteId();
-    this.selectOfferTask = stateService.getValueFromSelector(getTaskByName(offerTaskIdName))
-    this.numberPortabilityTask = stateService.getValueFromSelector(getTaskByName(numberPortabilityTaskName))
+    this.selectOfferTask = stateService.getValueFromSelector(getTaskByNameFromState(offerTaskIdName))
+    this.numberPortabilityTask = stateService.getValueFromSelector(getTaskByNameFromState(numberPortabilityTaskName))
     this.wasQuoteValidated = stateService.getValueFromSelector(selectWasQuoteValidated);
     this.wereDisclosuresAccepted = stateService.getValueFromSelector(selectWereDisclosuresAccepted)
   }
