@@ -10,7 +10,7 @@ import { AccountFormInterface } from '../../../utils/services/interfaces/custome
 export class AccountComponent implements OnInit {
   @Input() accountFormValues: any;
   accountForm: FormGroup;
-  selectedTestCase: String
+  selectedTestCase: string
 
   constructor(private accountFormBuilder: FormBuilder) { }
 

@@ -1,11 +1,10 @@
-import { StringMap } from "@angular/compiler/src/compiler_facade_interface";
 
 export interface CustomerInterface {
-  accountName: String,
-  firstName: String,
-  lastName: String,
-  accountUuid?: String,
-  accountPinId?: String,
+  accountName: string,
+  firstName: string,
+  lastName: string,
+  accountUuid?: string,
+  accountPinId?: string,
   billing?: BillingInterface,
   contacts?: ContactItemInterface
   communicationPreferences?: CommunicationPreferencesInterface
@@ -17,11 +16,11 @@ export interface BillingInterface {
 }
 
 export interface AddressInterface {
-  addressLine1: String,
-  addressLine2: String,
-  city: String,
-  stateProvince: String,
-  postalCode: String,
+  addressLine1: string,
+  addressLine2: string,
+  city: string,
+  stateProvince: string,
+  postalCode: string,
 }
 
 export interface ContactItemInterface {
@@ -30,9 +29,9 @@ export interface ContactItemInterface {
 
 export interface ContactInterface {
   primary: Boolean,
-  fullName: String,
-  firstName: String,
-  lastName: String,
+  fullName: string,
+  firstName: string,
+  lastName: string,
   telephones: TelephoneItemsInterface,
   emailAddresses: EmailItemsInterface,
   creditProfile: CreditProfileInterface,
@@ -43,8 +42,8 @@ export interface TelephoneItemsInterface {
 }
 
 export interface TelephoneInterface {
-  phoneNumber: String,
-  phoneType: String,
+  phoneNumber: string,
+  phoneType: string,
   isPrimary: Boolean
 }
 
@@ -53,13 +52,13 @@ export interface EmailItemsInterface {
 }
 
 export interface EmailInterface {
-  address: String,
+  address: string,
   isPrimary: Boolean
 }
 
 
 export interface CreditProfileInterface {
-  ssn: String,
+  ssn: string,
   dateOfBirth
 }
 
@@ -68,7 +67,7 @@ export interface CommunicationPreferencesInterface {
 }
 
 export interface CommunicationItemInterface {
-  communicationType: String,
+  communicationType: string,
   optIn: Boolean,
-  mediaType: String,
+  mediaType: string,
 }

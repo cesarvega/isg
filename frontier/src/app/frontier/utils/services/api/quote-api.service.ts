@@ -67,7 +67,7 @@ export class QuoteApiService {
 
   createQuoteRequest(address: AddressSearchResponseItemInterface, agentId) {
     let createQuoteRequest: CreateQuoteInterface = {
-      agent: String(agentId),
+      agent: agentId,
       customerType: environment.customerType,
       samControlNumber: address.samRecords[0].controlNumber,
       environmentCode: address.samRecords[0].environment,

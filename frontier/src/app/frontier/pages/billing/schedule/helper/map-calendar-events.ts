@@ -1,9 +1,9 @@
 export const mapCalendarEvents = (events) => {
-    return events.map((iterateMockEvent) => {
-        let parsedDate = new Date(iterateMockEvent.earliestStartTime)
+    return events.map((mapEvent) => {
+        let parsedDate = new Date(mapEvent.earliestStartTime)
         let mappedEvent = {
-            ...iterateMockEvent,
-            id: iterateMockEvent.scheduleId.toString(),
+            ...mapEvent,
+            id: mapEvent.scheduleId.toString(),
             start: parsedDate
         }
         return mappedEvent;

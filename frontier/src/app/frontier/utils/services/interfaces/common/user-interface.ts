@@ -1,4 +1,4 @@
 export interface UserInterface {
-    name: String,
-    agentId: String,
+    name: string,
+    agentId: string,
 }

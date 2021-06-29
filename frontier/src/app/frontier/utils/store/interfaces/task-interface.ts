@@ -1,8 +1,8 @@
 export interface TaskInterface {
-  taskId: String,
-  specId: String,
-  specName: String,
-  description: String,
-  state: String,
+  taskId: string,
+  specId: string,
+  specName: string,
+  description: string,
+  state: string,
   originatingTask: TaskInterface
 }

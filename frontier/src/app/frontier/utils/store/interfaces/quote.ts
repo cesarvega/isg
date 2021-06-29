@@ -1,23 +1,23 @@
 export interface QuoteInterface {
   quoteId: string,
   status: Status,
-  specName: String,
-  description: String,
-  state: String,
+  specName: string,
+  description: string,
+  state: string,
   productSummary: ProductSummary
-  installationType: String,
-  voiceService: String,
-  videoService: String,
-  dataService: String,
+  installationType: string,
+  voiceService: string,
+  videoService: string,
+  dataService: string,
   items: Item[]
 }
 
 interface Status {
-  quoteStatus: String,
+  quoteStatus: string,
   productsModifiable: Boolean,
   scheduleModifiable: Boolean,
   cancelAllowed: Boolean,
-  productConfigStatus: String,
+  productConfigStatus: string,
 }
 
 interface ProductSummary {
@@ -25,17 +25,17 @@ interface ProductSummary {
 }
 
 interface ProductLineItemSummary {
-  lineItemId: String,
-  name: String,
+  lineItemId: string,
+  name: string,
   nonRecurringPrice: Number,
   recurringPrice: Number,
-  serviceType: String,
+  serviceType: string,
   billOfMaterials: []
 }
 
 export interface Item {
   id,
-  productId: String
+  productId: string
   productConfiguration: ProductConfiguration,
   completed: boolean
 }

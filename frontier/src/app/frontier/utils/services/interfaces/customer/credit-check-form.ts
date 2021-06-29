@@ -1,13 +1,13 @@
 export interface IdentityFormInterface {
   dateOfBirth,
-  ssn: String
+  ssn: string
 }
 
 export interface AccountFormInterface {
-  firstName: String,
-  lastName: String,
-  email: String,
-  phoneNumber: String
+  firstName: string,
+  lastName: string,
+  email: string,
+  phoneNumber: string
 }
 
 export interface creditCheckInterface {

@@ -1,4 +1,4 @@
 export interface AddressPredictiveSearchInterface {
-    stateProvince: String,
-    address: String,
+    stateProvince: string,
+    address: string,
 }

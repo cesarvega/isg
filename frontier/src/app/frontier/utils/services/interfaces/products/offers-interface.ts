@@ -1,17 +1,17 @@
 export interface OffersInterface {
   addedApi?: boolean;
   id: string,
-  name: String,
-  description: String,
-  serviceType: String,
+  name: string,
+  description: string,
+  serviceType: string,
   dataspeed: DataSpeed,
   pricePlan: PricePlan,
   selected: Boolean
 }
 
 interface DataSpeed {
-  uploadInKbps: String,
-  downloadInKbps: String
+  uploadInKbps: string,
+  downloadInKbps: string
 }
 
 interface PricePlan {
@@ -21,11 +21,11 @@ interface PricePlan {
 interface PriceTerm {
   amount: Number,
   amountR2: Number,
-  durationInMonths: String,
-  durationInMonthsR2: String,
-  productId: String,
-  sequence: String,
-  termType: String,
+  durationInMonths: string,
+  durationInMonthsR2: string,
+  productId: string,
+  sequence: string,
+  termType: string,
   discount: Discount,
 }
 

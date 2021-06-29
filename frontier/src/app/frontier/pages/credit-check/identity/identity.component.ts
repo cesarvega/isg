@@ -10,7 +10,7 @@ export class IdentityComponent implements OnInit {
   @Input() identityFormValues: any;
   @Input() loading: Boolean;
   verifyIdentityForm;
-  selectedTestCase: String;
+  selectedTestCase: string;
 
   constructor(private formBuilder: FormBuilder) { }
 

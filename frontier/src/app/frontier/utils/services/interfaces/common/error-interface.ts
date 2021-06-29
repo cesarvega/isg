@@ -1,4 +1,4 @@
 export interface ErrorInterface {
-    message: String,
+    message: string,
     errors: any,
 }

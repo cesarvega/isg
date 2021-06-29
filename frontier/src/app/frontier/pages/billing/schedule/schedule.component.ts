@@ -7,6 +7,9 @@ import { TasksApiService } from '../../../utils/services/api/tasks-api.service.'
 import { TaskInterface } from '../../../utils/store/interfaces/task-interface';
 import * as moment from 'moment';
 import { setReservationAction } from '../../../utils/store/actions';
+import { CustomerInterface } from 'src/app/frontier/utils/services/interfaces/customer/customer';
+import { selectCustomer } from 'src/app/frontier/utils/store/selectors';
+import { buildScheduleRequest } from './helper/build-schedule-request';
 
 @Component({
   selector: 'app-schedule',
@@ -20,6 +23,7 @@ export class ScheduleComponent implements OnInit {
   posIdHoldTask: TaskInterface;
   quoteValidationTask: TaskInterface;
   selectedEvent;
+  customer: CustomerInterface;
 
   constructor(private scheduleApiService: ScheduleApiService, private stateService: StateService, private taskApiService: TasksApiService) { }
 
@@ -33,22 +37,22 @@ export class ScheduleComponent implements OnInit {
     this.selectedEvent = event.event;
   }
 
-  getSelectedEventTitle(startString) {
-    return moment(startString).format("LLL")
+  getSelectedEventTitle(startstring) {
+    return moment(startstring).format("LLL")
 
   }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
+    this.customer = this.stateService.getValueFromSelector(selectCustomer);
     this.getSchedule()
   }
 
   async submitSchedule(selectedEvent, quoteId) {
-    let request = {
-      scheduleId: selectedEvent.id
-    }
+
     try {
       this.loading = true;
+      let request = buildScheduleRequest(this.customer, selectedEvent.id);
       let reservation = await this.scheduleApiService.reserveSchedule(quoteId, request);
       this.stateService.dispatchAction(setReservationAction(reservation))
     }
