@@ -31,6 +31,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { PaymentComponent } from './pages/billing/payment/payment.component';
 import { ScheduleComponent } from './pages/billing/schedule/schedule.component';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -58,6 +59,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     BillingComponent,
     PaymentComponent,
     ScheduleComponent,
+    ConfirmationComponent,
   ],
   imports: [
     CommonModule,
