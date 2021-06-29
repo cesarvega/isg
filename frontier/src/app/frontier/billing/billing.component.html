@@ -9,10 +9,17 @@
   </div>
 </div>
 <div *ngIf="!loading">
-  <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-    <ngb-panel title="Payment">
+  <ngb-accordion #accordion="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel
+      id="payment-panel"
+      title="Payment"
+      [disabled]="isPaymentComplete()"
+    >
       <ng-template ngbPanelContent>
-        <app-payment [depositRequirements]="depositRequirements"></app-payment>
+        <app-payment
+          (onSuccessDepositEvent)="onSuccessDeposit($event)"
+          [depositRequirements]="depositRequirements"
+        ></app-payment>
       </ng-template>
     </ngb-panel>
     <ngb-panel title="Schedule">

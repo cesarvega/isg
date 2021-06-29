@@ -1,19 +1,20 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {zipCodeValidator} from 'src/app/isg-shared/validators/zipCodeValidator';
-import {DepositeApiService} from '../../services/api/deposit-api.service';
-import {ErrorInterface} from '../../services/interfaces/common/error-interface';
-import {ContactInterface, ContactItemInterface, CustomerInterface} from '../../services/interfaces/customer/customer';
-import {StateService} from '../../services/state.service';
-import {selectCorrelationId, selectCustomer} from '../../store/selectors';
-import {DepositRequirementsInterface} from '../interfaces/deposit-requirements-interface';
-import {PaymentFormInterface} from './interfaces/payment.form.interface';
-import {buildRequestGeneratePaymentToken} from './services/payment-builder.service';
-import {paymentTestCases} from './test-cases/payment.test.cases';
-import {customerTypes} from './utils/customer.types';
-import {lineOfBusiness} from './utils/line-of-business';
-import {buildDepositCollectionRequest} from './services/deposit-request-builder.service';
-import {DepositRequestInterface} from './interfaces/deposit-request.interface';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { zipCodeValidator } from 'src/app/isg-shared/validators/zipCodeValidator';
+import { DepositeApiService } from '../../services/api/deposit-api.service';
+import { ErrorInterface } from '../../services/interfaces/common/error-interface';
+import { ContactInterface, ContactItemInterface, CustomerInterface } from '../../services/interfaces/customer/customer';
+import { StateService } from '../../services/state.service';
+import { selectCorrelationId, selectCustomer } from '../../store/selectors';
+import { DepositRequirementsInterface } from '../interfaces/deposit-requirements-interface';
+import { PaymentFormInterface } from './interfaces/payment.form.interface';
+import { buildRequestGeneratePaymentToken } from './services/payment-builder.service';
+import { paymentTestCases } from './test-cases/payment.test.cases';
+import { customerTypes } from './utils/customer.types';
+import { lineOfBusiness } from './utils/line-of-business';
+import { buildDepositCollectionRequest } from './services/deposit-request-builder.service';
+import { DepositRequestInterface } from './interfaces/deposit-request.interface';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-payment',
@@ -32,6 +33,7 @@ export class PaymentComponent implements OnInit {
   customer: CustomerInterface = null;
   paymentForm: FormGroup;
   CorrelationId: string;
+  @Output() onSuccessDepositEvent = new EventEmitter<void>();
 
   constructor(private formBuilder: FormBuilder, private stateService: StateService, private depositApiService: DepositeApiService) {
     this.customer = this.stateService.getValueFromSelector(selectCustomer);
@@ -87,8 +89,10 @@ export class PaymentComponent implements OnInit {
         // generatePaymentToken
         const fundingAccountToken = await this.generatePaymentToken(paymentFormValues, lineOfBusiness, this.CorrelationId);
         // deposit collection
-        const depositCollectionResponse = await this.depositCollection(this.depositRequirements, fundingAccountToken,
+        await this.depositCollection(this.depositRequirements, fundingAccountToken,
           paymentFormValues, this.getEmailFromCustomer(this.customer));
+
+        this.onSuccessDepositEvent.emit();
 
       } catch (error) {
         this.error = error;

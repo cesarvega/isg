@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 import { DepositeApiService } from '../services/api/deposit-api.service';
 import { TasksApiService } from '../services/api/tasks-api.service.';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { StateService } from '../services/state.service';
-import { setReservationAction } from '../store/actions';
 import { TaskInterface } from '../store/interfaces/task-interface';
-import { selectDepositRequirements } from '../store/selectors';
-import { posIdHoldTaskName } from '../utils/taskNames';
+import { selectDepositCollectionResponse, selectDepositRequirements } from '../store/selectors';
 import { DepositRequirementsInterface } from './interfaces/deposit-requirements-interface';
+import { DepositCollectionResponseInterface } from './payment/interfaces/deposit-collection-response.interface';
 
 @Component({
   selector: 'app-billing',
@@ -22,14 +23,22 @@ export class BillingComponent implements OnInit {
   tasks: TaskInterface[] = [];
   postIdHoldTask: TaskInterface;
   depositRequirements: DepositRequirementsInterface = null;
+  successDeposit = false;
+  depositCollectionResponse: Observable<DepositCollectionResponseInterface>;
+  @ViewChild('accordion') accordionComponent: NgbAccordion;
 
   constructor(private depositApiService: DepositeApiService, private stateService: StateService, private taskApiService: TasksApiService) { }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
     this.depositRequirements = this.stateService.getValueFromSelector(selectDepositRequirements);
+    this.depositCollectionResponse = this.stateService.getValueFromSelector(selectDepositCollectionResponse);
     this.initComponent(this.quoteId, this.depositRequirements);
 
+  }
+
+  isPaymentComplete() {
+    return this.successDeposit || this.depositCollectionResponse
   }
 
   async initComponent(quoteId, depositRequirements) {
@@ -58,7 +67,11 @@ export class BillingComponent implements OnInit {
     return tasks.find((iterateTask: TaskInterface) => {
       return iterateTask.specName == taskName
     })
+  }
 
+  onSuccessDeposit() {
+    this.accordionComponent.toggle('payment-panel')
+    this.successDeposit = true;
   }
 
   async getTasks(quoteId): Promise<any> {
