@@ -5,13 +5,16 @@ import { Observable } from 'rxjs';
 import { DepositeApiService } from '../../utils/services/api/deposit-api.service';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
+import { CustomerInterface } from '../../utils/services/interfaces/customer/customer';
 import { StateService } from '../../utils/services/state.service';
 import { Steps } from '../../utils/steps';
 import { setStepAction } from '../../utils/store/actions';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
-import { selectDepositCollectionResponse, selectDepositRequirements } from '../../utils/store/selectors';
+import { selectCorrelationId, selectCustomer, selectDepositCollectionResponse, selectDepositRequirements } from '../../utils/store/selectors';
+import { customerNeedsDepositHelper } from './helpers/customer-needs-deposit';
 import { DepositRequirementsInterface } from './interfaces/deposit-requirements-interface';
 import { DepositCollectionResponseInterface } from './payment/interfaces/deposit-collection-response.interface';
+import { DepositResponse } from './payment/interfaces/deposit-requirements-response.interface';
 
 @Component({
   selector: 'app-billing',
@@ -25,12 +28,18 @@ export class BillingComponent implements OnInit {
   quoteId: string;
   tasks: TaskInterface[] = [];
   postIdHoldTask: TaskInterface;
-  depositRequirements: DepositRequirementsInterface = null;
+  depositRequirements: DepositResponse = null;
   successDeposit = false;
   depositCollectionResponse: Observable<DepositCollectionResponseInterface>;
   @ViewChild('accordion') accordionComponent: NgbAccordion;
+  customer: CustomerInterface = null;
+  CorrelationId: string;
+  customerNeedsDeposit = true;
 
-  constructor(private depositApiService: DepositeApiService, private stateService: StateService, private taskApiService: TasksApiService, private router: Router) { }
+  constructor(private depositApiService: DepositeApiService, private stateService: StateService, private taskApiService: TasksApiService, private router: Router) {
+    this.customer = this.stateService.getValueFromSelector(selectCustomer);
+    this.CorrelationId = this.stateService.getValueFromSelector(selectCorrelationId);
+  }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
@@ -41,7 +50,7 @@ export class BillingComponent implements OnInit {
   }
 
   isPaymentComplete() {
-    return this.successDeposit || this.depositCollectionResponse
+    return this.successDeposit || this.depositCollectionResponse || !this.customerNeedsDeposit
   }
 
   async initComponent(quoteId, depositRequirements) {
@@ -53,6 +62,7 @@ export class BillingComponent implements OnInit {
       // get deposit requirements
       if (!depositRequirements)
         this.depositRequirements = await this.getDepositRequirements(quoteId)
+      this.customerNeedsDeposit = customerNeedsDepositHelper(this.depositRequirements);
       this.loading = false;
     } catch (error) {
       this.loading = false;
@@ -85,7 +95,7 @@ export class BillingComponent implements OnInit {
     return await this.taskApiService.getTasks(quoteId)
   }
 
-  async getDepositRequirements(quoteId) {
+  async getDepositRequirements(quoteId): Promise<DepositResponse> {
     return this.depositApiService.getDepositRequirements(quoteId)
   }
 

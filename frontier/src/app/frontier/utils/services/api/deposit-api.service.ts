@@ -7,6 +7,7 @@ import { setDepositCollectionResponse, setDepositRequirementsAction, setFundingA
 import { DepositEndpoints } from '../endpoints/deposit';
 import { DepositRequestInterface } from '../../../pages/billing/payment/interfaces/deposit-request.interface';
 import { StateService } from '../state.service';
+import { DepositResponse } from 'src/app/frontier/pages/billing/payment/interfaces/deposit-requirements-response.interface';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class DepositeApiService {
   constructor(private clientService: ClientService, private store: Store<any>, private stateService: StateService) {
   }
 
-  async getDepositRequirements(quoteId: string) {
+  async getDepositRequirements(quoteId: string): Promise<DepositResponse> {
     const url = this.depositEndpoints.getDepositRequirementEndpoint();
     return await this.clientService.getAll(url, { quoteId }).
       pipe(

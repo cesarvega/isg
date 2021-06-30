@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { zipCodeValidator } from 'src/app/isg-shared/validators/zipCodeValidator';
 import { DepositeApiService } from '../../../utils/services/api/deposit-api.service';
 import { ErrorInterface } from '../../../utils/services/interfaces/common/error-interface';
-import { ContactInterface, ContactItemInterface, CustomerInterface } from '../../../utils/services/interfaces/customer/customer';
-import { StateService } from '../../../utils/services/state.service';
-import { selectCorrelationId, selectCustomer } from '../../../utils/store/selectors';
+import { ContactInterface, CustomerInterface } from '../../../utils/services/interfaces/customer/customer';
 import { DepositRequirementsInterface } from '../interfaces/deposit-requirements-interface';
 import { PaymentFormInterface } from './interfaces/payment.form.interface';
 import { buildRequestGeneratePaymentToken } from './services/payment-builder.service';
@@ -30,14 +28,12 @@ export class PaymentComponent implements OnInit {
   testPayments: ReadonlyArray<PaymentFormInterface> = paymentTestCases;
   selectedTestPaymentAlias: string;
   @Input() depositRequirements: DepositRequirementsInterface;
-  customer: CustomerInterface = null;
+  @Input() customer: CustomerInterface;
   paymentForm: FormGroup;
-  CorrelationId: string;
+  @Input() CorrelationId: string;
   @Output() onSuccessDepositEvent = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private stateService: StateService, private depositApiService: DepositeApiService) {
-    this.customer = this.stateService.getValueFromSelector(selectCustomer);
-    this.CorrelationId = this.stateService.getValueFromSelector(selectCorrelationId);
+  constructor(private formBuilder: FormBuilder, private depositApiService: DepositeApiService) {
     this.paymentForm = this.formBuilder.group({
       firstName: [this.customer.firstName, [Validators.required]],
       lastName: [this.customer.lastName, [Validators.required]],
