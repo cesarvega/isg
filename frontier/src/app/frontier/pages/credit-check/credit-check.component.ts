@@ -41,7 +41,7 @@ export class CreditCheckComponent implements OnInit {
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getValueFromSelector(selectQuoteId);
-    this.getTasks(this.quoteId);
+    this.getTasks();
     this.address = this.stateService.getValueFromSelector(selectSelectedAddress)
 
     this.accountFormValues = this.stateService.getFrontierState().accountForm;
@@ -53,9 +53,9 @@ export class CreditCheckComponent implements OnInit {
       this.accordionComponent.toggle("verify-identity-panel");
     }
   }
-  async getTasks(quoteId) {
+  async getTasks() {
     try {
-      return await this.tasksApiService.getTasks(quoteId);
+      return await this.tasksApiService.getTasks();
     } catch (error) {
       this.error = error;
     }
@@ -103,13 +103,13 @@ export class CreditCheckComponent implements OnInit {
       // need to ask what to do in that case, when we want to update the customer infoormation
       // but the task is already closed
       if (this.customerDetailTask && (!this.stateService.isTaskClosed(customerDetailsTaskName)))
-        await this.tasksApiService.closeTask(this.quoteId, this.customerDetailTask);
+        await this.tasksApiService.closeTask(customerDetailsTaskName);
       await this.customerApiService.creditCheck(this.getAccountUuid(customer), this.quoteId);
 
-      await this.getTasks(this.quoteId);
+      await this.getTasks();
       let creditCheckTask: TaskInterface = this.stateService.getValueFromSelector(getTaskByNameFromState(creditCheckTaskName))
       if (creditCheckTask && (!this.stateService.isTaskClosed(creditCheckTaskName)))
-        await this.tasksApiService.closeTask(this.quoteId, creditCheckTask);
+        await this.tasksApiService.closeTask(creditCheckTaskName);
 
       this.stateService.dispatchAction(setStepAction({ step: Steps.customizationStep }))
       this.router.navigate(['../customizations'], { relativeTo: this.route });

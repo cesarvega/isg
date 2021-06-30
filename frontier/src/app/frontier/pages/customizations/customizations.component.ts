@@ -105,23 +105,23 @@ export class CustomizationsComponent implements OnInit {
 
       // close select offer task
       if (this.selectOfferTask && !this.stateService.isTaskClosed(offerTaskIdName))
-        await this.tasksApiService.closeTask(this.quoteId, this.selectOfferTask);
+        await this.tasksApiService.closeTask(offerTaskIdName);
 
       // close number portability task
       if (this.numberPortabilityTask && !this.stateService.isTaskClosed(numberPortabilityTaskName))
-        await this.tasksApiService.closeTask(this.quoteId, this.numberPortabilityTask);
+        await this.tasksApiService.closeTask(numberPortabilityTaskName);
 
       // validate quote
       if (!this.wasQuoteValidated)
         await this.quoteApiService.validateQuote(this.quoteId);
 
       // close validate quote task
-      let tasks = await this.tasksApiService.getTasks(this.quoteId);
+      let tasks = await this.tasksApiService.getTasks();
       let quoteValidationTask = tasks.find((iterateTask) => {
         return iterateTask.specName == quoteValidationTaskName
       })
       if (quoteValidationTask && !this.stateService.isTaskClosed(quoteValidationTaskName))
-        await this.tasksApiService.closeTask(this.quoteId, quoteValidationTask)
+        await this.tasksApiService.closeTask(quoteValidationTaskName)
 
 
       // accept disclosures

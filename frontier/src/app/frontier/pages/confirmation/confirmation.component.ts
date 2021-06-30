@@ -1,7 +1,9 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
+import { acceptQuoteTaskName } from '../../utils/taskNames';
 import { BillingApiService } from './services/billing-api.service';
 
 @Component({
@@ -15,7 +17,7 @@ export class ConfirmationComponent implements OnInit {
   loading = false;
   billPreviewHtml;
 
-  constructor(private billingApiService: BillingApiService, private sanitizer: DomSanitizer) { }
+  constructor(private billingApiService: BillingApiService, private sanitizer: DomSanitizer, private taskApiService: TasksApiService) { }
 
   ngOnInit(): void {
     this.initComponent();
@@ -24,6 +26,14 @@ export class ConfirmationComponent implements OnInit {
   async initComponent() {
     let response = await this.makeRequest(this.getBillPreview.bind(this));
     this.billPreviewHtml = this.sanitizer.bypassSecurityTrustHtml(response);
+  }
+
+  async placeOrder() {
+    try {
+      await this.taskApiService.closeTask(acceptQuoteTaskName);
+
+    } catch (error) {
+    }
   }
 
   private getBillPreview() {

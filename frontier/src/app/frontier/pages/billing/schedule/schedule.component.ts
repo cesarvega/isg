@@ -69,11 +69,8 @@ export class ScheduleComponent implements OnInit {
   }
 
   private async closeReserveTask(quoteId) {
-    let tasks = await this.taskApiService.getTasks(quoteId);
-    let reserveTask = getTasksByNameLocal(tasks, reserveTaskName);
-    if (!reserveTask)
-      throw new Error("Could not get reserve task")
-    await this.taskApiService.closeTask(quoteId, reserveTask);
+    await this.taskApiService.getTasks();
+    await this.taskApiService.closeTask(reserveTaskName);
   }
 
 

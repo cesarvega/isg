@@ -57,7 +57,7 @@ export class BillingComponent implements OnInit {
     this.loading = true;
     try {
       // get tasks
-      this.tasks = await this.getTasks(quoteId);
+      this.tasks = await this.getTasks();
 
       // get deposit requirements
       if (!depositRequirements)
@@ -72,7 +72,7 @@ export class BillingComponent implements OnInit {
 
   async closeTask(quoteId, task: TaskInterface) {
     if (!this.stateService.isTaskClosed(task.specName))
-      await this.taskApiService.closeTask(quoteId, task);
+      await this.taskApiService.closeTask(task.specName);
   }
 
   getTaskByName(tasks: TaskInterface[], taskName) {
@@ -91,8 +91,8 @@ export class BillingComponent implements OnInit {
     this.router.navigate([Steps.confirmationStep.url]);
   }
 
-  async getTasks(quoteId): Promise<any> {
-    return await this.taskApiService.getTasks(quoteId)
+  async getTasks(): Promise<any> {
+    return await this.taskApiService.getTasks()
   }
 
   async getDepositRequirements(quoteId): Promise<DepositResponse> {
