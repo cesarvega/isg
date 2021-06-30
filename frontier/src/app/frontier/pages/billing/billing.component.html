@@ -17,8 +17,8 @@
     >
       <ng-template ngbPanelContent>
         <app-payment
-          (CorrelationId)="(CorrelationId)"
-          (customer)="(customer)"
+          [CorrelationId]="CorrelationId"
+          [customer]="customer"
           (onSuccessDepositEvent)="onSuccessDeposit($event)"
           [depositRequirements]="depositRequirements"
         ></app-payment>

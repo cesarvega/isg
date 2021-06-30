@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { zipCodeValidator } from 'src/app/isg-shared/validators/zipCodeValidator';
 import { DepositeApiService } from '../../../utils/services/api/deposit-api.service';
@@ -35,8 +35,8 @@ export class PaymentComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private depositApiService: DepositeApiService) {
     this.paymentForm = this.formBuilder.group({
-      firstName: [this.customer.firstName, [Validators.required]],
-      lastName: [this.customer.lastName, [Validators.required]],
+      firstName: [this.customer?.firstName, [Validators.required]],
+      lastName: [this.customer?.lastName, [Validators.required]],
       customerType: ['', [Validators.required]],
       cardNumber: ['', [Validators.required, Validators.maxLength(20)]],
       expirationDate: ['', Validators.required],
@@ -50,6 +50,12 @@ export class PaymentComponent implements OnInit {
 
   }
 
+  ngOnChanges(changes: { [property: string]: SimpleChange }) {
+    if (changes['customer'] && this.paymentForm) {
+      const { firstName, lastName } = this.customer;
+      this.paymentForm.patchValue({ firstName, lastName })
+    }
+  }
 
   onSelectTestCase(selectedTestCase) {
     const testCase = this.testPayments.find((testPayment) => {
