@@ -6,6 +6,7 @@ import { FrontierMainComponent } from './layout/frontier-main/frontier-main.comp
 import { CreditCheckComponent } from './pages/credit-check/credit-check.component';
 import { CustomizationsComponent } from './pages/customizations/customizations.component';
 import { BillingComponent } from './pages/billing/billing.component';
+import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,9 @@ const routes: Routes = [
       {
         path: 'billing',
         component: BillingComponent
+      }, {
+        path: 'confirmation',
+        component: ConfirmationComponent
       },
       {
         path: '',

@@ -35,7 +35,7 @@ export class TabsMenuComponent implements OnInit {
   isStepEnabled(step, currentStep) {
     step = step.step;
     currentStep = currentStep.step;
-    if (currentStep == this.confirmationStep)
+    if (currentStep == this.confirmationStep.step)
       return false;
     if (step > currentStep) {
       return false;
