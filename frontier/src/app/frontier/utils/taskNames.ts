@@ -6,3 +6,4 @@ export const quoteValidationTaskName = "validateProductConfigurationTask"
 export const posIdHoldTaskName = "posIdHoldTask"
 export const reserveTaskName = "scheduleTask"
 export const acceptQuoteTaskName = "acceptQuoteTask";
+export const billPreviewTaskName = "billPreviewTask";

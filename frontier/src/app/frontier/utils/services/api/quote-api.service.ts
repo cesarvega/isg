@@ -2,19 +2,29 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ClientService } from 'src/app/isg-shared/client/client.service';
 import { environment } from 'src/environments/environment';
-import { createQuoteURL, generateTransactionIdURL, getCompleteTaskURL, validateQuoteURL, getValidateQuoteURL, getQuoteURL } from '../endpoints/qualification';
+import { createQuoteURL, generateTransactionIdURL, getCompleteTaskURL, validateQuoteURL, getValidateQuoteURL, getQuoteURL, getSubmitQuoteURL } from '../endpoints/qualification';
 import { AddressSearchResponseItemInterface } from '../interfaces/qualification/address-search-response';
 import { CreateQuoteInterface } from '../interfaces/qualification/create-quote';
 import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setSelectedAddressAction, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
 import { tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { selectQuoteId } from '../../store/selectors';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuoteApiService {
+  quoteIdSubscription$: Subscription;
+  quoteId: string;
 
   constructor(private store: Store<any>, private clientService: ClientService) {
+    this.store.select(selectQuoteId).subscribe((quoteId) => {
+      this.quoteId = quoteId;
+    })
+  }
 
+  ngOnDestroy(): void {
+    this.quoteIdSubscription$.unsubscribe();
   }
 
   async generateQuote(address: AddressSearchResponseItemInterface, agentId) {
@@ -38,6 +48,17 @@ export class QuoteApiService {
       .post(getValidateQuoteURL(quoteId), null).pipe(
         tap(() => {
           this.store.dispatch(validateQuoteAction());
+        })
+      )
+      .toPromise();
+  }
+
+  submitQuote() {
+    return this.clientService
+      .post(getSubmitQuoteURL(this.quoteId), null).pipe(
+        tap((response) => {
+          console.log(response)
+          //this.store.dispatch(validateQuoteAction());
         })
       )
       .toPromise();

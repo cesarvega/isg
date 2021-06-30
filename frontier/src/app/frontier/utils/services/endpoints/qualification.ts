@@ -7,6 +7,7 @@ const createQuote = 'quote/create';
 const validateQuote = 'quote/validation/{quoteId}';
 const completeTask = 'tasks/complete/{transactionId}?quoteId={quoteId}';
 const getQuote = 'quote/{quoteId}';
+const submitQuote = 'quote/submit/{quoteId}';
 
 export const addressPredictiveSearchURL = buildURL(addressSearchPredictive);
 export const addressExhaustiveSearchURL = buildURL(addressSearchExhaustive);
@@ -15,6 +16,10 @@ export const createQuoteURL = buildURL(createQuote);
 export const validateQuoteURL = buildURL(validateQuote);
 export const getQuoteURL = buildURL(getQuote);
 
+
+export const getSubmitQuoteURL = (quoteId) => {
+  return buildURL(submitQuote).replace("{quoteId}", quoteId);
+}
 
 
 export const getCompleteTaskURL = (transactionId, quoteId) => {
