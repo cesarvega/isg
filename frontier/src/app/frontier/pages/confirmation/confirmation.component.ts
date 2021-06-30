@@ -1,5 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { BillingApiService } from './services/billing-api.service';
 
@@ -12,11 +13,17 @@ export class ConfirmationComponent implements OnInit {
 
   error: ErrorInterface;
   loading = false;
+  billPreviewHtml;
 
-  constructor(private billingApiService: BillingApiService) { }
+  constructor(private billingApiService: BillingApiService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    this.makeRequest(this.getBillPreview.bind(this));
+    this.initComponent();
+  }
+
+  async initComponent() {
+    let response = await this.makeRequest(this.getBillPreview.bind(this));
+    this.billPreviewHtml = this.sanitizer.bypassSecurityTrustHtml(response);
   }
 
   private getBillPreview() {
