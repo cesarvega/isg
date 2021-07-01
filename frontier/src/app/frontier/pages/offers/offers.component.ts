@@ -17,7 +17,7 @@ import { Store } from '@ngrx/store';
 import { getParsedAddress } from '../address-search/helpers/get-parsed-adress';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
 import { Observable } from 'rxjs';
-import { categories, Category } from './utils/categories';
+import { broadbandServiceType, categories, Category } from './utils/categories';
 import { filterProducts } from './utils/filter-products';
 
 
@@ -110,20 +110,24 @@ export class OffersComponent implements OnInit {
 
 
 
-  private gotProductsSelected(offers): boolean {
+  private gotProductsSelected(offers): void {
+    let hasBroadBandProduct = false;
     let offersSelected = offers.filter((offer: OffersInterface) => {
+      if (offer.selected && offer.serviceType === broadbandServiceType)
+        hasBroadBandProduct = true;
       return offer.selected == true
     })
-    return offersSelected.length > 0
+    if (!offersSelected.length)
+      throw new Error("Need to select at least one product");
+    if (!hasBroadBandProduct)
+      throw new Error("Need to select an Internet Product");
   }
 
   async onContinue() {
 
     this.loading = true;
     try {
-      if (!this.gotProductsSelected(this.offers)) {
-        throw new Error("Need to select at least one product")
-      }
+      this.gotProductsSelected(this.offers)
       if (this.removeProducts.length > 0) {
         let quote = await this.getQuote(this.quoteId);
         await this.sendRemoveProductsApi(this.removeProducts, quote);
