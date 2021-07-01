@@ -1,8 +1,8 @@
 <div class="card">
   <div class="card-img-top bg-primary p-4">
-    <h4 class="text-white text-center">{{ offer.name }}</h4>
+    <h5 class="text-white text-center">{{ offer.name }}</h5>
   </div>
-  <div class="card-body">
+  <div *ngIf="offer.dataspeed" class="card-body">
     <h5 class="card-title text-center">Speed</h5>
     <div class="row text-center">
       <div class="col-md-6">
@@ -15,78 +15,104 @@
       </div>
     </div>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
+  <ul
+    class="list-group list-group-flush"
+    *ngFor="let priceTerm of offer.pricePlan.priceTerm"
+  >
+    <!-- Offer has discount -->
+    <li
+      *ngIf="offerService.priceTermHasDiscount(priceTerm)"
+      class="list-group-item"
+    >
+      <p class="text-center text-danger" style="text-decoration: line-through">
+        $ {{ priceTerm.amount }} /mo
+      </p>
+      <h4 class="text-center text-danger">
+        $
+        {{ offerService.getReducedPrice(priceTerm) }}
+        /mo
+      </h4>
+    </li>
+    <!-- Offer does not have discount -->
+    <li
+      *ngIf="!offerService.priceTermHasDiscount(priceTerm)"
+      class="list-group-item mt-2"
+    >
+      <h4 class="text-center text-danger">$ {{ priceTerm.amount }} /mo</h4>
+    </li>
+    <!-- if has discount -->
+    <li
+      *ngIf="offerService.priceTermHasDiscount(priceTerm)"
+      class="list-group-item text-center"
+    >
+      <strong style="font-style: italic">
+        Price for
+        {{ offerService.getBestDiscount(priceTerm).durationInMonths }} months
+      </strong>
+    </li>
+    <!-- does not have discount -->
+    <li
+      *ngIf="!offerService.priceTermHasDiscount(priceTerm)"
+      class="list-group-item text-center"
+    >
+      <strong style="font-style: italic">
+        Price for
+        {{ priceTerm.durationInMonths }} months
+      </strong>
+    </li>
   </ul>
-  <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div *ngIf="offer" class="card">
-  <div class="card-img-top planCardHeader" alt="...">
-    <h6 class="text-white">{{ offer.name }}</h6>
-  </div>
-
-  <div class="card-body">
-    <div *ngFor="let priceTerm of offer.pricePlan.priceTerm">
-      <div *ngFor="let discount of priceTerm.discount">
-        <div
-          class="row"
-          *ngIf="
-            offerService.getDiscountedPrice(priceTerm.amount, discount.amount);
-            let discountedPrice
-          "
-        >
-          <div class="col-6">
-            <div style="display: flex; justify-content: center">
-              <div class="priceNumber">$</div>
-              <div class="priceNumber">
-                {{ offerService.getPriceWithoutCents(discountedPrice) }}
-              </div>
-              <div style="margin-left: 5px">
-                <div class="priceCents mt-2">
-                  {{ offerService.getCentsFromPrice(discountedPrice) }}
-                </div>
-                <div class="priceCents">/mo</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <p class="shortDisclosure">
-              per month for {{ discount.durationInMonths }} months. Actual
-              speeds may vary. One-time charge applies. Service subject to
-              availability and all applicable terms and conditions.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="row px-4 mt-3">
-        <p class="descriptionItem">All capabilities of 50 Mbps Plan</p>
-        <p class="descriptionItem">
-          Multiple users or large families simultaneously
-        </p>
-      </div>
-      <div class="row mt-3 px-4">
-        <button
-          *ngIf="!offer.selected"
-          (click)="addProduct(offer)"
-          type="button"
-          class="btn btn-outline-danger"
-        >
-          Select Plan
-        </button>
-        <button
-          *ngIf="offer.selected"
-          (click)="deleteProduct(offer)"
-          type="button"
-          class="btn btn-outline-dark"
-        >
-          Remove
-        </button>
-      </div>
+  <div class="card-body text-center">
+    <div class="text-center">
+      <button
+        (click)="openOffersDetailsModal(content)"
+        type="button"
+        class="btn btn-link my-2"
+      >
+        See Offer Details
+      </button>
     </div>
+
+    <button
+      *ngIf="!offer.selected"
+      (click)="addProduct(offer)"
+      type="button"
+      class="btn btn-outline-danger btn-lg"
+    >
+      Add to Order
+    </button>
+    <button
+      *ngIf="offer.selected"
+      (click)="deleteProduct(offer)"
+      type="button"
+      class="btn btn-outline-dark btn-lg"
+    >
+      Remove from Order
+    </button>
   </div>
 </div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-danger" id="modal-basic-title">
+      Offer Details
+    </h4>
+    <button
+      (click)="modal.dismiss()"
+      type="button"
+      class="btn btn-outline-danger btn-sm"
+    >
+      <fa-icon class="mx-1" [icon]="faTimes"></fa-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{ offer.description }}</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="modal.close()"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

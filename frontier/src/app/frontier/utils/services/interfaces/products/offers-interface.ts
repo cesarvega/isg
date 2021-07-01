@@ -18,18 +18,18 @@ interface PricePlan {
   priceTerm: PriceTerm[]
 }
 
-interface PriceTerm {
-  amount: Number,
+export interface PriceTerm {
+  amount: string,
   amountR2: Number,
   durationInMonths: string,
   durationInMonthsR2: string,
   productId: string,
   sequence: string,
   termType: string,
-  discount: Discount,
+  discount: Discount[],
 }
 
-interface Discount {
-  amount: Number,
+export interface Discount {
+  amount: string,
   durationInMonths: Number,
 }
