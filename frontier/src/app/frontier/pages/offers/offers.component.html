@@ -26,33 +26,7 @@
       </div>
     </div>
   </div>
-  <div class="row row-cols-1 row-cols-md-3 g-5 p-3">
-    <div class="col-md-4">
-      <button style="width: 100%" type="button" class="btn btn-outline-danger">
-        <div class="m-3">
-          <fa-icon class="display-3 text-center" [icon]="faWifi"></fa-icon>
-          <h4 class="card-text text-center">Internet</h4>
-        </div>
-      </button>
-    </div>
-    <div class="col-md-4">
-      <button style="width: 100%" type="button" class="btn btn-outline-danger">
-        <div class="m-3">
-          <fa-icon class="display-3 text-center" [icon]="faWifi"></fa-icon>
-          <h4 class="card-text text-center">Voice</h4>
-        </div>
-      </button>
-    </div>
-    <div class="col-md-4">
-      <button style="width: 100%" type="button" class="btn btn-outline-danger">
-        <div class="m-3">
-          <fa-icon class="display-3 text-center" [icon]="faWifi"></fa-icon>
-          <h4 class="card-text text-center">Add Ons Products</h4>
-        </div>
-      </button>
-    </div>
-  </div>
-
+  <app-categories></app-categories>
   <div class="row row-cols-1 row-cols-md-3 g-5 p-3">
     <div class="col" *ngFor="let offer of offers">
       <app-offer-detail

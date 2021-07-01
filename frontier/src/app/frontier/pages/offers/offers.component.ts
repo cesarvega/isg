@@ -17,7 +17,7 @@ import { Store } from '@ngrx/store';
 import { getParsedAddress } from '../address-search/helpers/get-parsed-adress';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
 import { Observable } from 'rxjs';
-import { faWifi } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-offers',
@@ -25,7 +25,6 @@ import { faWifi } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./offers.component.css']
 })
 export class OffersComponent implements OnInit {
-  faWifi = faWifi;
   quoteId: string;
   quote: QuoteInterface;
   user: UserInterface;
