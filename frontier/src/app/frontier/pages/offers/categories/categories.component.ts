@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { faWifi } from '@fortawesome/free-solid-svg-icons';
 import { faTty } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ import { Category } from '../utils/categories';
 })
 export class CategoriesComponent implements OnInit {
 
+  @Output() onSelectCategoryEvent = new EventEmitter<string>();
   @Input() categories: Category[]
   faWifi = faWifi;
   faVoice = faTty;
@@ -26,7 +27,10 @@ export class CategoriesComponent implements OnInit {
       return category;
     })
     category.active = !category.active;
+    if (category.active)
+      this.onSelectCategoryEvent.emit(category.value);
   }
+
 
   getIcon(icon: string) {
     switch (icon) {

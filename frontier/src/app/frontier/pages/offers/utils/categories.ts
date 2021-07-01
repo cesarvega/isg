@@ -10,6 +10,7 @@ export const categories: Category[] = [
         name: "Internet",
         value: "Broadband",
         icon: "faWifi",
+        active: true
     },
     {
         name: "Voice",
@@ -18,7 +19,7 @@ export const categories: Category[] = [
     },
     {
         name: "Add Ons",
-        value: "FrontierSecure",
+        value: "Frontier Secure",
         icon: "faPlus"
     }
 ]

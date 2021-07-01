@@ -18,6 +18,7 @@ import { getParsedAddress } from '../address-search/helpers/get-parsed-adress';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
 import { Observable } from 'rxjs';
 import { categories, Category } from './utils/categories';
+import { filterProducts } from './utils/filter-products';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class OffersComponent implements OnInit {
   user: UserInterface;
   loading: Boolean = false;
   offers: OffersInterface[] = [];
+  constOffers: OffersInterface[] = [];
   error: ErrorInterface = null
   offerTask
   addProducts: OffersInterface[] = [];
@@ -56,9 +58,8 @@ export class OffersComponent implements OnInit {
     this.loading = true;
     try {
       this.quoteId = this.stateService.getQuoteId();
-      this.offers = this.getOffersFromStore();
-      if (this.offers.length < 1)
-        this.offers = await this.getOffers(this.quoteId)
+      this.getOffers();
+      this.selectCategoriesOnInit();
     } catch (error) {
       this.loading = false;
       this.error = error;
@@ -72,6 +73,22 @@ export class OffersComponent implements OnInit {
     return await this.quoteApiService.getQuote(quoteId, true, true) as QuoteInterface;
   }
 
+  private async getOffers() {
+    let offers = this.getOffersFromStore();
+    if (offers.length < 1)
+      offers = await this.getOffersFromApi(this.quoteId)
+    this.offers = offers;
+    this.constOffers = offers;
+  }
+
+  private selectCategoriesOnInit() {
+    for (let category of this.categories) {
+      if (category.active) {
+        this.onSelectCategory(category.value);
+        return;
+      }
+    }
+  }
 
   getOffersFromStore() {
     let offers;
@@ -81,7 +98,7 @@ export class OffersComponent implements OnInit {
     return offers;
   }
 
-  async getOffers(quoteId): Promise<OffersInterface[]> {
+  async getOffersFromApi(quoteId): Promise<OffersInterface[]> {
     return await this.productsApiService.getOffers(quoteId) as OffersInterface[];
   }
 
@@ -142,4 +159,7 @@ export class OffersComponent implements OnInit {
     }
   }
 
+  onSelectCategory = (categoryName: string) => {
+    this.offers = filterProducts(this.constOffers, categoryName);
+  }
 }
