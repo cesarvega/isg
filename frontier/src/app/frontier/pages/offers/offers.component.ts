@@ -17,6 +17,7 @@ import { Store } from '@ngrx/store';
 import { getParsedAddress } from '../address-search/helpers/get-parsed-adress';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
 import { Observable } from 'rxjs';
+import { categories, Category } from './utils/categories';
 
 
 @Component({
@@ -25,6 +26,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./offers.component.css']
 })
 export class OffersComponent implements OnInit {
+  categories: Category[] = categories;
   quoteId: string;
   quote: QuoteInterface;
   user: UserInterface;
