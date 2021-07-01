@@ -1,6 +1,6 @@
 <div style="display: flex; justify-content: center">
   <div class="col-md-10 p-3">
-    <ng-container *ngIf="canEdit">
+    <ng-container *ngIf="canAccessQualification()">
       <h5 class="card-title">Location</h5>
       <p class="card-subtitle text-muted">
         Please enter the address where you would like to order service.
@@ -14,8 +14,12 @@
         [testAddresses]="frontierTestAddresses"
       ></app-address-form>
     </ng-container>
-
-    <div *ngIf="!canEdit" class="alert alert-success" role="alert">
+    {{ getParsedAddress(selectedAddress$ | async) }}
+    <div
+      *ngIf="!canAccessQualification()"
+      class="alert alert-success"
+      role="alert"
+    >
       <h4 class="alert-heading">Services found for address</h4>
       <p>
         {{ getParsedAddress(selectedAddress$ | async) }}

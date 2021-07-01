@@ -31,7 +31,6 @@ export class AddressSearchComponent implements OnInit {
   user: UserInterface;
   userSuscriber$: Subscription;
   error: ErrorInterface = null;
-  canEdit: boolean = true;
   currentStep: StepInterface;
 
   public getParsedAddress = getParsedAddress;
@@ -42,7 +41,6 @@ export class AddressSearchComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
   ) {
-    this.canEdit = this.canAccessQualification();
     this.selectedAddress$ = this.store.select(selectSelectedAddress);
     this.userSuscriber$ = this.store.select(selectUser).subscribe((user) => {
       this.user = user;
