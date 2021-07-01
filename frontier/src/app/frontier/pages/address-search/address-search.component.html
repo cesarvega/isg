@@ -14,7 +14,6 @@
         [testAddresses]="frontierTestAddresses"
       ></app-address-form>
     </ng-container>
-    {{ getParsedAddress(selectedAddress$ | async) }}
     <div
       *ngIf="!canAccessQualification()"
       class="alert alert-success"
