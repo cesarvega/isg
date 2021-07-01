@@ -10,8 +10,8 @@ export interface OffersInterface {
 }
 
 interface DataSpeed {
-  uploadInKbps: string,
-  downloadInKbps: string
+  uploadInKbps: number,
+  downloadInKbps: number
 }
 
 interface PricePlan {

@@ -1,13 +1,35 @@
+<div class="card">
+  <div class="card-img-top bg-primary p-4">
+    <h4 class="text-white text-center">{{ offer.name }}</h4>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title text-center">Speed</h5>
+    <div class="row text-center">
+      <div class="col-md-6">
+        <fa-icon class="display-6 text-danger" [icon]="faDownload"></fa-icon>
+        <p>{{ offer.dataspeed.downloadInKbps / 1000 }} Mbps</p>
+      </div>
+      <div class="col-md-6">
+        <fa-icon class="display-6 text-danger" [icon]="faUpload"></fa-icon>
+        <p>{{ offer.dataspeed.uploadInKbps / 1000 }} Mbps</p>
+      </div>
+    </div>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
 <div *ngIf="offer" class="card">
   <div class="card-img-top planCardHeader" alt="...">
-    <div class="mb-4">
-      <small style="font-size: 12px" class="text-white border p-2 rounded mb-3">
-        <fa-icon class="mx-1" [icon]="faWifi"></fa-icon>
-        {{ offer.serviceType }}</small
-      >
-    </div>
     <h6 class="text-white">{{ offer.name }}</h6>
   </div>
+
   <div class="card-body">
     <div *ngFor="let priceTerm of offer.pricePlan.priceTerm">
       <div *ngFor="let discount of priceTerm.discount">

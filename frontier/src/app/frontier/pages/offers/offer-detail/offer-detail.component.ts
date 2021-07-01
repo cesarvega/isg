@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { OffersInterface } from '../../../utils/services/interfaces/products/offers-interface';
 import { OffersService } from '../../../utils/services/helpers/offers.service';
 import { faWifi } from '@fortawesome/free-solid-svg-icons';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-offer-detail',
@@ -10,6 +12,8 @@ import { faWifi } from '@fortawesome/free-solid-svg-icons';
 })
 export class OfferDetailComponent implements OnInit {
   faWifi = faWifi;
+  faUpload = faUpload;
+  faDownload = faDownload;
   @Input() offer: OffersInterface = null;
   @Output() selectEvent = new EventEmitter<OffersInterface>();
   @Output() removeEvent = new EventEmitter<OffersInterface>();
