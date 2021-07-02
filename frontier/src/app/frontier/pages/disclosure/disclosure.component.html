@@ -8,16 +8,23 @@
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-<ng-container *ngIf="!loading">
-  <app-disclosure-item
-    *ngFor="let disclosure of disclosures"
-    [disclosure]="disclosure"
-  ></app-disclosure-item>
-</ng-container>
-<button
-  type="button"
-  class="btn btn-outline-primary"
-  (click)="submitDisclosures()"
->
-  Submit
-</button>
+
+<ngb-accordion *ngIf="!loading" #acc="ngbAccordion">
+  <ng-container *ngFor="let disclosure of disclosures">
+    <ngb-panel title="{{ disclosure.name }}">
+      <ng-template ngbPanelContent>
+        <app-disclosure-item [disclosure]="disclosure"></app-disclosure-item>
+      </ng-template>
+    </ngb-panel>
+  </ng-container>
+</ngb-accordion>
+
+<div class="d-grid gap-2 mt-3">
+  <button
+    (click)="submitDisclosures()"
+    class="btn btn-outline-danger btn-lg"
+    type="button"
+  >
+    Submit
+  </button>
+</div>
