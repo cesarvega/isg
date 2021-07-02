@@ -17,6 +17,7 @@ import { StateService } from '../../utils/services/state.service';
 import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
 import { creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
 import { creditCheckTestCases } from './test-cases';
+import { faComment } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-credit-check',
@@ -25,9 +26,11 @@ import { creditCheckTestCases } from './test-cases';
 })
 export class CreditCheckComponent implements OnInit {
 
+  faComment = faComment;
   constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
     , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: StateService) { }
 
+  showForm = false;
   quoteId;
   customerDetailTask: TaskInterface;
   address;

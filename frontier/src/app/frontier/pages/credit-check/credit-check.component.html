@@ -1,4 +1,38 @@
+<div class="alert alert-info" role="alert">
+  <h4 class="alert-heading">
+    <fa-icon class="mr-2" [icon]="faComment"></fa-icon> Mandatory verbatim
+    disclosure:*
+  </h4>
+  <hr />
+  <p>
+    To continue, I may need to use your existing credit information on file with
+    other AT&T Companies. Is that ok?
+  </p>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      (change)="showForm = true"
+      [checked]="showForm"
+      id="flexCheckDefault"
+    />
+    <label class="form-check-label" for="flexCheckDefault">
+      Yes, Credit Check authorization granted
+    </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      [checked]="showForm === false"
+      (change)="showForm = false"
+      id="flexCheckChecked"
+    />
+    <label class="form-check-label" for="flexCheckChecked"> No </label>
+  </div>
+</div>
 <ngb-accordion
+  *ngIf="showForm"
   #accordion="ngbAccordion"
   destroyOnHide="false"
   activeIds="create-account-panel"

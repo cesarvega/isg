@@ -58,7 +58,7 @@ export class OffersComponent implements OnInit {
     this.loading = true;
     try {
       this.quoteId = this.stateService.getQuoteId();
-      this.getOffers();
+      await this.getOffers();
       this.selectCategoriesOnInit();
     } catch (error) {
       this.loading = false;
