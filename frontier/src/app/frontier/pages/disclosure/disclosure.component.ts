@@ -1,9 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
 import { DisclosuresApiService } from '../../utils/services/api/disclosures-api.service';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { DisclosureInterface } from '../../utils/services/interfaces/disclosures/disclosure-interface';
 import { StateService } from '../../utils/services/state.service';
+import { Steps } from '../../utils/steps';
+import { setStepAction } from '../../utils/store/actions';
 
 
 
@@ -19,10 +23,8 @@ export class DisclosureComponent implements OnInit {
   loading: boolean = false;
   error: ErrorInterface;
 
-  @Output() onSubmitDisclosures = new EventEmitter<any>();
-
   constructor(
-    private disclosuresApiService: DisclosuresApiService, private stateService: StateService) { }
+    private disclosuresApiService: DisclosuresApiService, private stateService: StateService, private router: Router, private store: Store<any>) { }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();
@@ -70,7 +72,8 @@ export class DisclosureComponent implements OnInit {
     }
     this.loading = false;
     // close modal
-    this.onSubmitDisclosures.emit()
+    this.store.dispatch(setStepAction({ step: Steps.billingStep }))
+    this.router.navigate([Steps.billingStep.url]);
   }
 
 
