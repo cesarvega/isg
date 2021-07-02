@@ -10,6 +10,7 @@ export const selectQuoteId = (state: AppState) => state.frontier.quoteId;
 export const selectSelectedProducts = (state: AppState) => state.frontier.selectedProducts;
 export const selectCustomer = (state: AppState) => state.frontier.customer;
 export const selectTasks = (state: AppState) => state.frontier.tasks;
+export const selectCloseTasks = (state: AppState) => state.frontier.closedTasks;
 export const selectSelectedAddress = (state: AppState) => state.frontier.selectedAddress;
 export const selectQuote = (state: AppState) => state.frontier.quote;
 export const selectFrontier = (state: AppState) => state.frontier;

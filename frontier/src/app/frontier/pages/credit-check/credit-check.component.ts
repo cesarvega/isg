@@ -3,18 +3,14 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerApiService } from '../../utils/services/api/customer-api.service';
 import { CustomerContactBuilder } from '../../utils/services/builders/customer/customer-contact-builder';
 import { IdentityFormInterface, AccountFormInterface, creditCheckInterface } from '../../utils/services/interfaces/customer/credit-check-form';
-import { Store } from '@ngrx/store';
-import { selectQuoteId, selectCustomer, selectSelectedAddress } from '../../utils/store/selectors';
+import { selectQuoteId, selectSelectedAddress } from '../../utils/store/selectors';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
-import { setCustomerAction, setCustomerForms, setStepAction } from '../../utils/store/actions';
+import { setStepAction } from '../../utils/store/actions';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
-import { getValueFromState } from '../../utils/get-value-from-state';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
-import { AddressInterface } from '../../utils/services/interfaces/customer/customer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Steps } from '../../utils/steps';
 import { StateService } from '../../utils/services/state.service';
-import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
 import { creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
 import { creditCheckTestCases } from './test-cases';
 import { faComment } from '@fortawesome/free-regular-svg-icons';
@@ -44,9 +40,7 @@ export class CreditCheckComponent implements OnInit {
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getValueFromSelector(selectQuoteId);
-    this.getTasks();
     this.address = this.stateService.getValueFromSelector(selectSelectedAddress)
-
     this.accountFormValues = this.stateService.getFrontierState().accountForm;
     this.identityFormValues = this.stateService.getFrontierState().identityForm;
   }
@@ -57,20 +51,9 @@ export class CreditCheckComponent implements OnInit {
     }
   }
   async getTasks() {
-    try {
-      return await this.tasksApiService.getTasks();
-    } catch (error) {
-      this.error = error;
-    }
+    return await this.tasksApiService.getTasks();
   }
 
-  getCustomer() {
-    return this.stateService.getValueFromSelector(selectCustomer)
-  }
-
-  getAccountUuid(customer) {
-    return customer.accountUuid
-  }
 
   submitAccountForm(accountForm) {
     this.accountFormValues = accountForm;
@@ -97,25 +80,17 @@ export class CreditCheckComponent implements OnInit {
 
   private async submitCreditCheckInformation(identityForm: IdentityFormInterface, accountForm: AccountFormInterface) {
     this.loading = true;
-    this.stateService.dispatchAction(setCustomerForms({ accountForm, identityForm }))
-    let customer = this.customerContactBuilder.buildAccountAndVerifyInformation(accountForm, identityForm, this.getCustomer(), this.address.address);
-    try {
-      await this.customerApiService.updateCustomer(customer, this.quoteId);
-      this.customerDetailTask = this.stateService.getValueFromSelector(getTaskByNameFromState(customerDetailsTaskName))
-      // the customer detail task could be null if this task is already closed
-      // need to ask what to do in that case, when we want to update the customer infoormation
-      // but the task is already closed
-      if (this.customerDetailTask && (!this.stateService.isTaskClosed(customerDetailsTaskName)))
-        await this.tasksApiService.closeTask(customerDetailsTaskName);
-      await this.customerApiService.creditCheck(this.getAccountUuid(customer), this.quoteId);
 
+    try {
+      await this.customerApiService.updateCustomer(identityForm, accountForm, this.address.address);
       await this.getTasks();
-      let creditCheckTask: TaskInterface = this.stateService.getValueFromSelector(getTaskByNameFromState(creditCheckTaskName))
-      if (creditCheckTask && (!this.stateService.isTaskClosed(creditCheckTaskName)))
-        await this.tasksApiService.closeTask(creditCheckTaskName);
+      await this.tasksApiService.closeTask(customerDetailsTaskName);
+      await this.customerApiService.creditCheck();
+      await this.getTasks();
+      await this.tasksApiService.closeTask(creditCheckTaskName);
 
       this.stateService.dispatchAction(setStepAction({ step: Steps.customizationStep }))
-      this.router.navigate(['../customizations'], { relativeTo: this.route });
+      this.router.navigate([Steps.customizationStep.url]);
     }
     catch (error) {
       this.error = error;

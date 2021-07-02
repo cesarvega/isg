@@ -7,7 +7,7 @@ import { TaskInterface } from '../../store/interfaces/task-interface';
 import { map, tap } from 'rxjs/operators';
 import { selectQuoteId } from '../../store/selectors';
 import { StateService } from '../state.service';
-import { getTaskByNameFromState } from '../../store/complexSelectors/taks';
+import { getTaskByNameFromState, isTaskClosedSelector } from '../../store/complexSelectors/taks';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,13 @@ export class TasksApiService {
 
   async closeTask(taskName: string) {
     let quoteId = this.stateService.getQuoteId();
+    let isTaskClosed = this.stateService.getValueFromSelector(isTaskClosedSelector(taskName))
+    if (isTaskClosed)
+      return
     let task = this.stateService.getValueFromSelector(getTaskByNameFromState(taskName));
+    if (!task) {
+      throw new Error(`Task: ${taskName} not foun`)
+    }
     let endpoint = this.taskEndpoint.getCompleteTaskEndpoint(quoteId, task.taskId);
     return this.clientService.post(endpoint, null).pipe(
       tap(() => {

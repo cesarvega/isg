@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { TaskInterface } from '../interfaces/task-interface';
-import { selectTasks } from "../selectors";
+import { selectCloseTasks, selectTasks } from "../selectors";
 
 
 export const getTaskByNameFromState = (taskName) => {
@@ -9,6 +9,17 @@ export const getTaskByNameFromState = (taskName) => {
     (tasks: TaskInterface[]) => {
       return tasks.find((iterateTask) => {
         return iterateTask.specName == taskName;
+      })
+    }
+  );
+}
+
+export const isTaskClosedSelector = (taskName) => {
+  return createSelector(
+    selectCloseTasks,
+    (tasks: string[]) => {
+      return tasks.find((iterateTask) => {
+        return iterateTask === taskName;
       })
     }
   );

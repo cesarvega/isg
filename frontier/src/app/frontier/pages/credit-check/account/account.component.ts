@@ -21,6 +21,7 @@ export class AccountComponent implements OnInit {
       lastName: [lastName, [Validators.required, Validators.maxLength(200)]],
       email: [email, [Validators.required, Validators.email]],
       phoneNumber: [phoneNumber, [Validators.required]],
+      secondaryPhoneNumber: [phoneNumber, [Validators.required]],
     });
   }
   @Output() submitAccountForm = new EventEmitter<any>();

@@ -7,7 +7,8 @@ export interface AccountFormInterface {
   firstName: string,
   lastName: string,
   email: string,
-  phoneNumber: string
+  phoneNumber: string,
+  secondaryPhoneNumber: string
 }
 
 export interface creditCheckInterface {

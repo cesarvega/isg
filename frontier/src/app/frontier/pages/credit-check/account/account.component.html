@@ -40,8 +40,8 @@
     <div class="invalid-feedback">Must be an email.</div>
     <div class="invalid-feedback">Email address is required.</div>
   </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">Phone Number</label>
+  <div class="col-md-6">
+    <label for="inputAddress2" class="form-label">Primary Phone Number</label>
     <input
       required
       formControlName="phoneNumber"
@@ -51,6 +51,18 @@
       id="inputAddress2"
     />
     <div class="invalid-feedback">Phone Number is required.</div>
+  </div>
+  <div class="col-md-6">
+    <label for="inputAddress2" class="form-label">Secondary Phone Number</label>
+    <input
+      required
+      formControlName="secondaryPhoneNumber"
+      type="text"
+      mask="(000) 000-0000"
+      class="form-control"
+      id="inputAddress2"
+    />
+    <div class="invalid-feedback">Secondary Phone Number is required.</div>
   </div>
   <div class="col-12">
     <button type="submit" class="btn btn-outline-danger btn-lg">Next</button>

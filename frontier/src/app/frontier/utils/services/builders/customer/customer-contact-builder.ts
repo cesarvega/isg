@@ -55,6 +55,10 @@ export class CustomerContactBuilder {
           isPrimary: true,
           phoneType: "Mobile",
           phoneNumber: accountForm.phoneNumber,
+        }, {
+          isPrimary: false,
+          phoneType: "Mobile",
+          phoneNumber: accountForm.secondaryPhoneNumber
         }
         ]
       },

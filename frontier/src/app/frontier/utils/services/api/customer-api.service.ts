@@ -3,7 +3,14 @@ import { ClientService } from 'src/app/isg-shared/client/client.service';
 import { CustomerInterface } from '../interfaces/customer/customer';
 import { getCustomerURL, creditCheckURL } from '../endpoints/customer';
 import { Store } from '@ngrx/store';
-import { setCustomerAction } from '../../store/actions';
+import { setCustomerAction, setCustomerForms } from '../../store/actions';
+import { AccountFormInterface, IdentityFormInterface } from '../interfaces/customer/credit-check-form';
+import { selectCustomer, selectQuoteId } from '../../store/selectors';
+import { Subscription } from 'rxjs';
+import { CustomerContactBuilder } from '../builders/customer/customer-contact-builder';
+import { getValueFromState } from '../../get-value-from-state';
+import { AddressInterface } from '../interfaces/customer/customer';
+import { tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -11,20 +18,36 @@ import { setCustomerAction } from '../../store/actions';
 })
 export class CustomerApiService {
 
-  constructor(private clientService: ClientService, private store: Store<any>) {
+  quoteId: string
+  quoteSubscription: Subscription
 
+  constructor(private clientService: ClientService, private store: Store<any>, private customerContactBuilder: CustomerContactBuilder) {
+    store.select(selectQuoteId).subscribe((quoteId) => {
+      this.quoteId = quoteId;
+    })
   }
 
-  async updateCustomer(customer: CustomerInterface, quoteId: string) {
-    this.store.dispatch(setCustomerAction({ customer }))
+  ngOnDestroy(): void {
+    this.quoteSubscription.unsubscribe();
+  }
+
+  updateCustomer(identityForm: IdentityFormInterface, accountForm: AccountFormInterface, address: AddressInterface) {
+    let previousCustomer = getValueFromState(this.store.select(selectCustomer));
+    let customer = this.customerContactBuilder.buildAccountAndVerifyInformation(accountForm, identityForm, previousCustomer, address);
     let endpoint = getCustomerURL + "/" + customer.accountUuid;
-    return await this.clientService.patch(endpoint, quoteId, customer).toPromise();
+    return this.clientService.patch(endpoint, this.quoteId, customer).pipe(
+      tap(() => {
+        this.store.dispatch(setCustomerForms({ accountForm, identityForm }))
+        this.store.dispatch(setCustomerAction({ customer }))
+      })
+    ).toPromise();
   }
 
-  async creditCheck(accountUuid: string, quoteId: string) {
+  async creditCheck() {
+    let customer: CustomerInterface = getValueFromState(this.store.select(selectCustomer))
     let endpoint = creditCheckURL;
-    endpoint = endpoint.replace("{accountUuid}", accountUuid);
-    endpoint = endpoint.replace("{quoteId}", quoteId);
+    endpoint = endpoint.replace("{accountUuid}", customer.accountUuid);
+    endpoint = endpoint.replace("{quoteId}", this.quoteId);
     return await this.clientService.post(endpoint, null).toPromise();
   }
 

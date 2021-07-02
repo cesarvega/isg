@@ -12,7 +12,8 @@ export const creditCheckTestCases: creditCheckInterface[] = [
       firstName: "CYNTHIA",
       lastName: "RCZWR",
       email: "jane@msn.com",
-      phoneNumber: "3195553434"
+      phoneNumber: "3195553434",
+      secondaryPhoneNumber: "3195553434"
     }
 
   },
@@ -26,7 +27,8 @@ export const creditCheckTestCases: creditCheckInterface[] = [
       firstName: "WILLIAM",
       lastName: "SKNNKSRXZ",
       email: "jane@msn.com",
-      phoneNumber: "3195553434"
+      phoneNumber: "3195553434",
+      secondaryPhoneNumber: "3195553434"
     }
 
   },
@@ -40,7 +42,8 @@ export const creditCheckTestCases: creditCheckInterface[] = [
       firstName: "Arlene",
       lastName: "Berrones",
       email: "jane@msn.com",
-      phoneNumber: "3195553434"
+      phoneNumber: "3195553434",
+      secondaryPhoneNumber: "3195553434"
     }
 
   },
@@ -54,7 +57,8 @@ export const creditCheckTestCases: creditCheckInterface[] = [
       firstName: "SUKARI",
       lastName: "DCMMLKSP",
       email: "jane@msn.com",
-      phoneNumber: "3195553434"
+      phoneNumber: "3195553434",
+      secondaryPhoneNumber: "3195553434"
     }
 
   },
@@ -68,7 +72,8 @@ export const creditCheckTestCases: creditCheckInterface[] = [
       firstName: "KARYN",
       lastName: "QGRKPGK",
       email: "jane@msn.com",
-      phoneNumber: "3195553434"
+      phoneNumber: "3195553434",
+      secondaryPhoneNumber: "3195553434"
     },
   }, {
     alias: 'P Credit Score - DONALD EDGAR',
@@ -80,7 +85,8 @@ export const creditCheckTestCases: creditCheckInterface[] = [
       firstName: "DONALD",
       lastName: "EDGAR",
       email: "jane@msn.com",
-      phoneNumber: "3195553434"
+      phoneNumber: "3195553434",
+      secondaryPhoneNumber: "3195553434"
     },
   }
 ]

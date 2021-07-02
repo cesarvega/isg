@@ -4,4 +4,5 @@ export interface AddressInterface {
     city: string,
     stateProvince: string,
     zipCode: string,
+    postalCode: string,
 }
