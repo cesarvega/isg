@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChange } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-identity',
@@ -9,7 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class IdentityComponent implements OnInit {
   @Input() identityFormValues: any;
   @Input() loading: Boolean;
-  verifyIdentityForm;
+  verifyIdentityForm: FormGroup;
   selectedTestCase: string;
 
   constructor(private formBuilder: FormBuilder) { }
@@ -43,6 +43,11 @@ export class IdentityComponent implements OnInit {
   ngOnChanges(changes: { [property: string]: SimpleChange }) {
     if (changes['identityFormValues'] && this.verifyIdentityForm) {
       this.patchValue(this.identityFormValues)
+    }
+    if (changes['loading'] && this.verifyIdentityForm) {
+      if (this.loading) {
+        this.verifyIdentityForm.disable();
+      }
     }
 
   }
