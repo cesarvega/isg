@@ -35,6 +35,7 @@ export class AddressFormComponent implements OnInit {
   });
 
 
+
   get addressLine1() { return this.addressForm.get('addressLine1'); }
   get city() { return this.addressForm.get('city'); }
   get zipCode() { return this.addressForm.get('zipCode'); }
@@ -75,6 +76,11 @@ export class AddressFormComponent implements OnInit {
   ngOnChanges(changes: { [property: string]: SimpleChange }) {
     if (changes['selectedAddress'] && this.selectedAddress)
       this.patchValue(this.selectedAddress.address)
+    if (changes['loading']) {
+      if (this.loading) {
+        this.addressForm.disable();
+      }
+    }
   }
 
   ngOnInit(): void {

@@ -17,6 +17,7 @@ export class OfferDetailComponent implements OnInit {
   faWifi = faWifi;
   faUpload = faUpload;
   faDownload = faDownload;
+  @Input() loading;
   @Input() offer: OffersInterface = null;
   @Output() selectEvent = new EventEmitter<OffersInterface>();
   @Output() removeEvent = new EventEmitter<OffersInterface>();

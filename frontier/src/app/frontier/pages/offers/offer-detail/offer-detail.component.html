@@ -64,6 +64,7 @@
   <div class="card-body text-center">
     <div class="text-center">
       <button
+        [disabled]="loading"
         (click)="openOffersDetailsModal(content)"
         type="button"
         class="btn btn-link my-2"
@@ -73,6 +74,7 @@
     </div>
 
     <button
+      [disabled]="loading"
       *ngIf="!offer.selected"
       (click)="addProduct(offer)"
       type="button"
@@ -81,6 +83,7 @@
       Add to Order
     </button>
     <button
+      [disabled]="loading"
       *ngIf="offer.selected"
       (click)="deleteProduct(offer)"
       type="button"
