@@ -18,6 +18,7 @@ export class TabsMenuComponent implements OnInit {
   creditCheckStep = Steps.creditCheckStep
   billingStep = Steps.billingStep
   customizationStep = Steps.customizationStep
+  disclosureStep = Steps.disclosuresStep
   confirmationStep = Steps.confirmationStep
 
   public displayQualificationStep = displayQualificationStep;

@@ -28,14 +28,19 @@ export const Steps = {
     step: 4,
     name: "customizations"
   },
+  disclosuresStep: {
+    url: `${urlPrefix}disclosures`,
+    step: 5,
+    name: "disclosures"
+  },
   billingStep: {
     url: `${urlPrefix}billing`,
-    step: 5,
+    step: 6,
     name: "billing"
   },
   confirmationStep: {
     url: `${urlPrefix}confirmation`,
-    step: 6,
+    step: 7,
     name: "confirmation"
   },
 }

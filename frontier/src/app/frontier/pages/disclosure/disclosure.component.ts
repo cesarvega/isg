@@ -21,8 +21,8 @@ export class DisclosureComponent implements OnInit {
 
   @Output() onSubmitDisclosures = new EventEmitter<any>();
 
-  constructor(public activeModal: NgbActiveModal
-    , private disclosuresApiService: DisclosuresApiService, private stateService: StateService) { }
+  constructor(
+    private disclosuresApiService: DisclosuresApiService, private stateService: StateService) { }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();

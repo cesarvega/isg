@@ -2,20 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../utils/services/state.service';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { QuoteApiService } from '../../utils/services/api/quote-api.service';
-import { setQuoteAction, setStepAction } from '../../utils/store/actions';
+import { setStepAction } from '../../utils/store/actions';
 import { parseHttperror } from '../../utils/helper-functions';
 import { ProductsApiService } from '../../utils/services/api/products-api.service';
-import { Item, ChildEntity } from '../../utils/store/interfaces/quote';
+import { Item } from '../../utils/store/interfaces/quote';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
-import { getValueFromState } from '../../utils/get-value-from-state';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
 import { offerTaskIdName, numberPortabilityTaskName, quoteValidationTaskName } from '../../utils/taskNames';
 import { ChildEntityHelperService } from './child-entity-helper.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DisclosureComponent } from '../disclosure/disclosure.component';
 import { Steps } from '../../utils/steps';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../../utils/store/selectors';
 
 @Component({
@@ -35,7 +32,7 @@ export class CustomizationsComponent implements OnInit {
   wereDisclosuresAccepted: boolean = false;
 
   constructor(private stateService: StateService, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
-    private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router, private modalService: NgbModal) {
+    private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router) {
     this.quoteId = stateService.getQuoteId();
     this.selectOfferTask = stateService.getValueFromSelector(getTaskByNameFromState(offerTaskIdName))
     this.numberPortabilityTask = stateService.getValueFromSelector(getTaskByNameFromState(numberPortabilityTaskName))
@@ -73,28 +70,15 @@ export class CustomizationsComponent implements OnInit {
   areIteamsReadyToSubmit() {
     for (let item of this.items) {
       if (!item.completed)
-        return false
+        throw new Error("Need to complete required customizations");
     }
-    return true
   }
 
-  private openDisclosures() {
-    const modalRef = this.modalService.open(DisclosureComponent);
-    modalRef.componentInstance.onSubmitDisclosures.subscribe(() => {
-      modalRef.close();
-      this.onSubmitDisclosures()
-    })
-  }
 
   async submitCustomizations() {
-    if (!this.areIteamsReadyToSubmit()) {
-      this.error = {
-        message: "items are not ready",
-        errors: []
-      }
-      return
-    }
+
     try {
+      this.areIteamsReadyToSubmit()
       this.loading = true;
 
       // submit customizations
@@ -104,33 +88,23 @@ export class CustomizationsComponent implements OnInit {
       }
 
       // close select offer task
-      if (this.selectOfferTask && !this.stateService.isTaskClosed(offerTaskIdName))
-        await this.tasksApiService.closeTask(offerTaskIdName);
-
+      await this.tasksApiService.closeTask(offerTaskIdName);
       // close number portability task
-      if (this.numberPortabilityTask && !this.stateService.isTaskClosed(numberPortabilityTaskName))
-        await this.tasksApiService.closeTask(numberPortabilityTaskName);
+      await this.tasksApiService.closeTask(numberPortabilityTaskName);
 
       // validate quote
       if (!this.wasQuoteValidated)
         await this.quoteApiService.validateQuote(this.quoteId);
 
       // close validate quote task
-      let tasks = await this.tasksApiService.getTasks();
-      let quoteValidationTask = tasks.find((iterateTask) => {
-        return iterateTask.specName == quoteValidationTaskName
-      })
-      if (quoteValidationTask && !this.stateService.isTaskClosed(quoteValidationTaskName))
-        await this.tasksApiService.closeTask(quoteValidationTaskName)
+      await this.tasksApiService.getTasks();
 
+      // close validation quote class
+      await this.tasksApiService.closeTask(quoteValidationTaskName)
 
       // accept disclosures
       this.loading = false;
-      if (this.wereDisclosuresAccepted) {
-        this.redirectToBilling();
-      } else {
-        this.openDisclosures();
-      }
+      this.redirectToDisclosures();
 
     } catch (error) {
       this.loading = false;
@@ -139,12 +113,9 @@ export class CustomizationsComponent implements OnInit {
     }
   }
 
-  async onSubmitDisclosures() {
-    this.redirectToBilling()
-  }
 
-  private redirectToBilling() {
-    this.stateService.dispatchAction(setStepAction({ step: Steps.billingStep }))
-    this.router.navigate([Steps.billingStep.url]);
+  private redirectToDisclosures() {
+    this.stateService.dispatchAction(setStepAction({ step: Steps.disclosuresStep }))
+    this.router.navigate([Steps.disclosuresStep.url]);
   }
 }

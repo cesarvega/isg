@@ -30,6 +30,12 @@
         <a ngbNavLink routerLink="customizations">Customization</a>
       </li>
       <li
+        [ngbNavItem]="disclosureStep.url"
+        [disabled]="!isStepEnabled(disclosureStep, currentStep$ | async)"
+      >
+        <a ngbNavLink routerLink="disclosures">Disclosures</a>
+      </li>
+      <li
         [ngbNavItem]="billingStep.url"
         [disabled]="!isStepEnabled(billingStep, currentStep$ | async)"
       >

@@ -7,6 +7,7 @@ import { CreditCheckComponent } from './pages/credit-check/credit-check.componen
 import { CustomizationsComponent } from './pages/customizations/customizations.component';
 import { BillingComponent } from './pages/billing/billing.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
+import { DisclosureComponent } from './pages/disclosure/disclosure.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: 'customizations',
         component: CustomizationsComponent
+      },
+      {
+        path: 'disclosures',
+        component: DisclosureComponent
       },
       {
         path: 'billing',
