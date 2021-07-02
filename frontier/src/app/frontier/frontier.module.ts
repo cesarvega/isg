@@ -33,6 +33,8 @@ import { PaymentComponent } from './pages/billing/payment/payment.component';
 import { ScheduleComponent } from './pages/billing/schedule/schedule.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { CategoriesComponent } from './pages/offers/categories/categories.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -76,7 +78,11 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    PdfViewerModule,
   ]
 })
+
 export class FrontierModule { }
+
+

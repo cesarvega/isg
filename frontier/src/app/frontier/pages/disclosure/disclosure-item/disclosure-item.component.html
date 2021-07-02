@@ -1,13 +1,11 @@
 <div class="card my-2">
   <div class="card-body">
     <h5 class="card-title">{{ disclosure.name }}</h5>
-    <!-- <embed
-      src="https:\/\/frontier.com\/~\/media\/corporate\/disclosures\/install.ashx"
-    />
-    <iframe
-      src="https:\/\/frontier.com\/~\/media\/corporate\/disclosures\/install.ashx"
-    >
-    </iframe> -->
+    <pdf-viewer
+      [src]="disclosure.assistedUrl"
+      [render-text]="true"
+      style="display: block"
+    ></pdf-viewer>
     <p class="card-text">
       Some quick example text to build on the card title and make up the bulk of
       the card's content.

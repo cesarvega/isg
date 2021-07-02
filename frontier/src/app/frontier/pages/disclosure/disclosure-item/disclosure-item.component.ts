@@ -7,7 +7,7 @@ import { DisclosureInterface } from '../../../utils/services/interfaces/disclosu
   styleUrls: ['./disclosure-item.component.css']
 })
 export class DisclosureItemComponent implements OnInit {
-
+  pdfSrc = "https://frontier.com/~/media/corporate/disclosures/install.ashx";
   @Input() disclosure: DisclosureInterface;
   acceptedStatus = "ACCEPT";
   constructor() { }
