@@ -1,4 +1,13 @@
-<h1>Hola Mundo</h1>
+<pdf-viewer
+  [src]="disclosure.assistedUrl"
+  (after-load-complete)="afterPdfLoad()"
+  style="display: block; height: 300px"
+></pdf-viewer>
+<div class="d-grid gap-2 mt-2" *ngIf="pdfLoaded">
+  <button class="btn btn-outline-danger btn-lg" type="button">
+    Accept Disclosure
+  </button>
+</div>
 <!-- <div class="card my-2">
   <div class="card-body">
     <h5 class="card-title">{{ disclosure.name }}</h5>

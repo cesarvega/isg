@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { DisclosureInterface } from '../../../utils/services/interfaces/disclosures/disclosure-interface';
 
 @Component({
@@ -7,12 +7,30 @@ import { DisclosureInterface } from '../../../utils/services/interfaces/disclosu
   styleUrls: ['./disclosure-item.component.css']
 })
 export class DisclosureItemComponent implements OnInit {
-  pdfSrc = "https://frontier.com/~/media/corporate/disclosures/install.ashx";
+  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   @Input() disclosure: DisclosureInterface;
+
   acceptedStatus = "ACCEPT";
-  constructor() { }
+  pdfLoaded = false;
+  constructor(private elRef: ElementRef) { }
 
   ngOnInit(): void {
+  }
+
+  // for transcluded content
+  ngAfterContentInit() {
+
+  }
+
+  afterPdfLoad() {
+    this.pdfLoaded = true;
+    this.changeContainerCss();
+  }
+
+  private changeContainerCss() {
+    let ng2Container = this.elRef.nativeElement.querySelector('.ng2-pdf-viewer-container');
+    if (ng2Container)
+      ng2Container.style.position = "unset";
   }
 
 
