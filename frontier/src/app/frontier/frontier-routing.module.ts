@@ -8,6 +8,7 @@ import { CustomizationsComponent } from './pages/customizations/customizations.c
 import { BillingComponent } from './pages/billing/billing.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { DisclosureComponent } from './pages/disclosure/disclosure.component';
+import { RecapComponent } from './pages/recap/recap.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,12 @@ const routes: Routes = [
       {
         path: 'billing',
         component: BillingComponent
-      }, {
+      },
+      {
+        path: 'recap',
+        component: RecapComponent
+      },
+      {
         path: 'confirmation',
         component: ConfirmationComponent
       },

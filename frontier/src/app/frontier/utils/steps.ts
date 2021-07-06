@@ -38,9 +38,14 @@ export const Steps = {
     step: 6,
     name: "billing"
   },
+  recapStep: {
+    url: `${urlPrefix}recap`,
+    step: 7,
+    name: "recap"
+  },
   confirmationStep: {
     url: `${urlPrefix}confirmation`,
-    step: 7,
+    step: 8,
     name: "confirmation"
   },
 }

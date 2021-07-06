@@ -36,6 +36,7 @@ import { CategoriesComponent } from './pages/offers/categories/categories.compon
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CreditResultComponent } from './pages/credit-check/credit-result/credit-result.component';
+import { RecapComponent } from './pages/recap/recap.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -66,6 +67,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ConfirmationComponent,
     CategoriesComponent,
     CreditResultComponent,
+    RecapComponent,
   ],
   imports: [
     CommonModule,

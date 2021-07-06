@@ -39,9 +39,15 @@
       </li>
       <li
         [ngbNavItem]="billingStep.url"
-        [disabled]="!isStepEnabled(billingStep, currentStep$ | async)"
+        [disabled]="!displayBilling(disclosureStep, currentStep$ | async)"
       >
         <a ngbNavLink routerLink="billing">Billing</a>
+      </li>
+      <li
+        [ngbNavItem]="recapStep.url"
+        [disabled]="!isStepEnabled(recapStep, currentStep$ | async)"
+      >
+        <a ngbNavLink routerLink="recap">Recap</a>
       </li>
       <li
         [ngbNavItem]="confirmationStep.url"

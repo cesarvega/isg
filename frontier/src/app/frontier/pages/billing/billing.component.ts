@@ -87,8 +87,8 @@ export class BillingComponent implements OnInit {
   }
 
   onSuccessScheduleEvent() {
-    this.stateService.dispatchAction(setStepAction({ step: Steps.confirmationStep }))
-    this.router.navigate([Steps.confirmationStep.url]);
+    this.stateService.dispatchAction(setStepAction({ step: Steps.recapStep }))
+    this.router.navigate([Steps.recapStep.url]);
   }
 
   async getTasks(): Promise<any> {
