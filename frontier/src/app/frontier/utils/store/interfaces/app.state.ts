@@ -10,6 +10,7 @@ import { DisclosureInterface } from '../../services/interfaces/disclosures/discl
 import { ReservationInterface } from '../../../pages/billing/interfaces/reservation-interface';
 import { OffersInterface } from '../../services/interfaces/products/offers-interface';
 import { DepositCollectionResponseInterface } from "../../../pages/billing/payment/interfaces/deposit-collection-response.interface";
+import { CreditCheckResultInterface } from '../../services/interfaces/customer/credit-check-result';
 export interface Frontier {
   transactionId: string,
   currentStep: any
@@ -37,6 +38,7 @@ export interface Frontier {
   depositRequirements;
   CorrelationId: string,
   fundingAccountToken: string,
-  depositCollectionResponse: DepositCollectionResponseInterface
+  depositCollectionResponse: DepositCollectionResponseInterface,
+  creditCheckResult: CreditCheckResultInterface
 }
 

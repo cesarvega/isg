@@ -3,7 +3,7 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerApiService } from '../../utils/services/api/customer-api.service';
 import { CustomerContactBuilder } from '../../utils/services/builders/customer/customer-contact-builder';
 import { IdentityFormInterface, AccountFormInterface, creditCheckInterface } from '../../utils/services/interfaces/customer/credit-check-form';
-import { selectQuoteId, selectSelectedAddress } from '../../utils/store/selectors';
+import { selectCustomerCreditCheckResult, selectQuoteId, selectSelectedAddress } from '../../utils/store/selectors';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { setStepAction } from '../../utils/store/actions';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
@@ -14,6 +14,9 @@ import { StateService } from '../../utils/services/state.service';
 import { creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
 import { creditCheckTestCases } from './test-cases';
 import { faComment } from '@fortawesome/free-regular-svg-icons';
+import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-credit-check',
@@ -23,9 +26,6 @@ import { faComment } from '@fortawesome/free-regular-svg-icons';
 export class CreditCheckComponent implements OnInit {
 
   faComment = faComment;
-  constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
-    , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: StateService) { }
-
   showForm = false;
   quoteId;
   customerDetailTask: TaskInterface;
@@ -36,8 +36,18 @@ export class CreditCheckComponent implements OnInit {
   error: ErrorInterface = null;
   selectedTestCase: string;
   creditCheckTestCases = creditCheckTestCases;
-  showCreditResultPage = false;
   @ViewChild('accordion') accordionComponent: NgbAccordion;
+  creditCheckResult$: Observable<CreditCheckResultInterface>;
+
+  constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
+    , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: StateService, private store: Store<any>) {
+    this.creditCheckResult$ = this.store.select(selectCustomerCreditCheckResult)
+  }
+
+  displayCreditCheckResult(creditCheckResult) {
+    return creditCheckResult ? true : false;
+
+  }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getValueFromSelector(selectQuoteId);
@@ -89,8 +99,6 @@ export class CreditCheckComponent implements OnInit {
       await this.customerApiService.creditCheck();
       await this.getTasks();
       await this.tasksApiService.closeTask(creditCheckTaskName);
-
-      this.showCreditResultPage = true;
     }
     catch (error) {
       this.error = error;

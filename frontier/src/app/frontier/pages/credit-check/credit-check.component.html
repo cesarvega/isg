@@ -1,9 +1,10 @@
 <app-credit-result
+  [creditCheckResult]="displayCreditCheckResult(creditCheckResult$ | async)"
   (onContinue)="navigateToCustomization()"
-  *ngIf="showCreditResultPage"
+  *ngIf="creditCheckResult$ | async"
 >
 </app-credit-result>
-<ng-container *ngIf="!showCreditResultPage">
+<ng-container *ngIf="!displayCreditCheckResult(creditCheckResult$ | async)">
   <div class="alert alert-info" role="alert" *ngIf="!loading">
     <h4 class="alert-heading">
       <fa-icon class="mr-2" [icon]="faComment"></fa-icon> Mandatory verbatim

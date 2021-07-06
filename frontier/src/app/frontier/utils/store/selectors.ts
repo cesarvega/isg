@@ -21,4 +21,5 @@ export const selectOffers = (state: AppState) => state.frontier.offers;
 export const selectCorrelationId = (state: AppState) => state.frontier.CorrelationId;
 export const selectFundingAccountToken = (state: AppState) => state.frontier.fundingAccountToken;
 export const selectDepositCollectionResponse = (state: AppState) => state.frontier.depositCollectionResponse;
+export const selectCustomerCreditCheckResult = (state: AppState) => state.frontier.creditCheckResult;
 

@@ -3,7 +3,7 @@ import { ClientService } from 'src/app/isg-shared/client/client.service';
 import { CustomerInterface } from '../interfaces/customer/customer';
 import { getCustomerURL, creditCheckURL } from '../endpoints/customer';
 import { Store } from '@ngrx/store';
-import { setCustomerAction, setCustomerForms } from '../../store/actions';
+import { setCustomerAction, setCustomerForms, setCreditCheckResult } from '../../store/actions';
 import { AccountFormInterface, IdentityFormInterface } from '../interfaces/customer/credit-check-form';
 import { selectCustomer, selectQuoteId } from '../../store/selectors';
 import { Subscription } from 'rxjs';
@@ -48,7 +48,9 @@ export class CustomerApiService {
     let endpoint = creditCheckURL;
     endpoint = endpoint.replace("{accountUuid}", customer.accountUuid);
     endpoint = endpoint.replace("{quoteId}", this.quoteId);
-    return await this.clientService.post(endpoint, null).toPromise();
+    return await this.clientService.post(endpoint, null).pipe(tap((creditCheckResult) => {
+      this.store.dispatch(setCreditCheckResult({ creditCheckResult }))
+    })).toPromise();
   }
 
 }

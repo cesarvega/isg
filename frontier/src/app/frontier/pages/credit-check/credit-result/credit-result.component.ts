@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { CreditCheckResultInterface } from 'src/app/frontier/utils/services/interfaces/customer/credit-check-result';
 
 @Component({
   selector: 'app-credit-result',
@@ -7,6 +8,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class CreditResultComponent implements OnInit {
 
+  @Input() creditCheckResult: CreditCheckResultInterface;
   @Output() onContinue = new EventEmitter<any>();
 
   constructor() { }
