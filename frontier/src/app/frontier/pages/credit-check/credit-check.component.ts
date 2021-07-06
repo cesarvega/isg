@@ -35,7 +35,8 @@ export class CreditCheckComponent implements OnInit {
   loading: Boolean = false;
   error: ErrorInterface = null;
   selectedTestCase: string;
-  creditCheckTestCases = creditCheckTestCases
+  creditCheckTestCases = creditCheckTestCases;
+  showCreditResultPage = false;
   @ViewChild('accordion') accordionComponent: NgbAccordion;
 
   ngOnInit(): void {
@@ -89,13 +90,18 @@ export class CreditCheckComponent implements OnInit {
       await this.getTasks();
       await this.tasksApiService.closeTask(creditCheckTaskName);
 
-      this.stateService.dispatchAction(setStepAction({ step: Steps.customizationStep }))
-      this.router.navigate([Steps.customizationStep.url]);
+      this.showCreditResultPage = true;
     }
     catch (error) {
       this.error = error;
     }
     this.loading = false;
+
+  }
+
+  navigateToCustomization() {
+    this.stateService.dispatchAction(setStepAction({ step: Steps.customizationStep }))
+    this.router.navigate([Steps.customizationStep.url]);
 
   }
 
