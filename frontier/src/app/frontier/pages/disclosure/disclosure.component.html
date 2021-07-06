@@ -12,6 +12,18 @@
 <ngb-accordion *ngIf="!loading" #accordion="ngbAccordion" closeOthers="true">
   <ng-container *ngFor="let disclosure of disclosures">
     <ngb-panel id="{{ disclosure.name }}" title="{{ disclosure.name }}">
+      <ng-template ngbPanelHeader>
+        <button ngbPanelToggle class="btn btn-link">
+          {{ disclosure.name }}
+        </button>
+        <div
+          *ngIf="disclosure.status == 'ACCEPT'"
+          class="alert alert-success"
+          role="alert"
+        >
+          Disclosure Accepted
+        </div>
+      </ng-template>
       <ng-template ngbPanelContent>
         <app-disclosure-item
           (onAcceptDisclosure)="toggleDisclosure($event)"
