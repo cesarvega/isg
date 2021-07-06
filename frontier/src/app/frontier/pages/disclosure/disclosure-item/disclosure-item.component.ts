@@ -22,6 +22,7 @@ export class DisclosureItemComponent implements OnInit {
 
   }
 
+
   afterPdfLoad() {
     this.pdfLoaded = true;
     this.changeContainerCss();
