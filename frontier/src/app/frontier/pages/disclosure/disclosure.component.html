@@ -9,11 +9,14 @@
   </div>
 </div>
 
-<ngb-accordion *ngIf="!loading" #acc="ngbAccordion">
+<ngb-accordion *ngIf="!loading" #accordion="ngbAccordion" closeOthers="true">
   <ng-container *ngFor="let disclosure of disclosures">
-    <ngb-panel title="{{ disclosure.name }}">
+    <ngb-panel id="{{ disclosure.name }}" title="{{ disclosure.name }}">
       <ng-template ngbPanelContent>
-        <app-disclosure-item [disclosure]="disclosure"></app-disclosure-item>
+        <app-disclosure-item
+          (onAcceptDisclosure)="toggleDisclosure($event)"
+          [disclosure]="disclosure"
+        ></app-disclosure-item>
       </ng-template>
     </ngb-panel>
   </ng-container>

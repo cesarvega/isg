@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 import { DisclosureInterface } from '../../../utils/services/interfaces/disclosures/disclosure-interface';
 
 @Component({
@@ -9,6 +9,7 @@ import { DisclosureInterface } from '../../../utils/services/interfaces/disclosu
 export class DisclosureItemComponent implements OnInit {
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
   @Input() disclosure: DisclosureInterface;
+  @Output() onAcceptDisclosure = new EventEmitter<string>();
 
   acceptedStatus = "ACCEPT";
   pdfLoaded = false;
@@ -37,6 +38,7 @@ export class DisclosureItemComponent implements OnInit {
 
   acceptDisclosure() {
     this.disclosure.status = this.acceptedStatus
+    this.onAcceptDisclosure.emit(this.disclosure.name)
   }
 
   isDisclosureAccepted() {

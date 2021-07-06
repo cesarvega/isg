@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordion, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { DisclosuresApiService } from '../../utils/services/api/disclosures-api.service';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
@@ -22,6 +22,7 @@ export class DisclosureComponent implements OnInit {
   disclosures: DisclosureInterface[];
   loading: boolean = false;
   error: ErrorInterface;
+  @ViewChild('accordion') accordionComponent: NgbAccordion;
 
   constructor(
     private disclosuresApiService: DisclosuresApiService, private stateService: StateService, private router: Router, private store: Store<any>) { }
@@ -48,6 +49,10 @@ export class DisclosureComponent implements OnInit {
         return false
     }
     return true;
+  }
+
+  toggleDisclosure(disclosureName: string) {
+    this.accordionComponent.toggle(disclosureName)
   }
 
   async submitDisclosures() {
