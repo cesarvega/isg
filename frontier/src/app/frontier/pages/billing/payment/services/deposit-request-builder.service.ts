@@ -1,7 +1,7 @@
-import {DepositResponse} from '../interfaces/deposit-requirements-response.interface';
-import {PaymentFormInterface} from '../interfaces/payment.form.interface';
-import {ApportioningInterface, DepositRequestInterface} from '../interfaces/deposit-request.interface';
-import {lineOfBusiness} from '../utils/line-of-business';
+import { DepositResponse } from '../interfaces/deposit-requirements-response.interface';
+import { PaymentFormInterface } from '../interfaces/payment.form.interface';
+import { ApportioningInterface, DepositRequestInterface } from '../interfaces/deposit-request.interface';
+import { lineOfBusiness } from '../utils/line-of-business';
 
 export const buildDepositCollectionRequest = (depositRequirements: DepositResponse, fundingAccountToken: string, payment: PaymentFormInterface, emailAddress) => {
   const paymentMethod = 'ONE_TIME_ACH';
@@ -23,11 +23,11 @@ export const buildDepositCollectionRequest = (depositRequirements: DepositRespon
 };
 
 const buildApportioning = (depositRequirements: DepositResponse): ApportioningInterface[] => {
-  if(!depositRequirements.backBalances)
+  if (!depositRequirements.backBalances)
     return [];
   return depositRequirements.backBalances.map((backBalance) => {
     return {
-      accountId : backBalance.accountId,
+      accountId: backBalance.accountId,
       amount: backBalance.amountDue,
       reason: {
         type: 'DEPOSIT_FEE_FOR_INITIAL_RESIDENT',
@@ -37,12 +37,12 @@ const buildApportioning = (depositRequirements: DepositResponse): ApportioningIn
 };
 
 
-const getTotalPayment = (depositRequirements: DepositResponse): number => {
+export const getTotalPayment = (depositRequirements: DepositResponse): number => {
   let sum = depositRequirements.requiredDeposit;
   if (!depositRequirements.backBalances) {
     return sum;
   }
-  for (const deposit of depositRequirements.backBalances){
+  for (const deposit of depositRequirements.backBalances) {
     sum += deposit.amountDue;
   }
   return sum;

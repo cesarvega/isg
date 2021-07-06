@@ -10,9 +10,11 @@ import { buildRequestGeneratePaymentToken } from './services/payment-builder.ser
 import { paymentTestCases } from './test-cases/payment.test.cases';
 import { customerTypes } from './utils/customer.types';
 import { lineOfBusiness } from './utils/line-of-business';
-import { buildDepositCollectionRequest } from './services/deposit-request-builder.service';
+import { buildDepositCollectionRequest, getTotalPayment } from './services/deposit-request-builder.service';
 import { DepositRequestInterface } from './interfaces/deposit-request.interface';
 import { Output, EventEmitter } from '@angular/core';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { DepositResponse } from './interfaces/deposit-requirements-response.interface';
 
 @Component({
   selector: 'app-payment',
@@ -21,24 +23,27 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class PaymentComponent implements OnInit {
 
+  faComment = faComment;
   error: ErrorInterface;
   customerTypes = customerTypes;
   loading = false;
   submitted = false;
   testPayments: ReadonlyArray<PaymentFormInterface> = paymentTestCases;
   selectedTestPaymentAlias: string;
-  @Input() depositRequirements: DepositRequirementsInterface;
+  @Input() depositRequirements: DepositResponse;
   @Input() customer: CustomerInterface;
   paymentForm: FormGroup;
   @Input() CorrelationId: string;
   @Output() onSuccessDepositEvent = new EventEmitter<void>();
+  totalDueToday: number;
+  showBillingForm = false;
 
   constructor(private formBuilder: FormBuilder, private depositApiService: DepositeApiService) {
     this.paymentForm = this.formBuilder.group({
       firstName: [this.customer?.firstName, [Validators.required]],
       lastName: [this.customer?.lastName, [Validators.required]],
       customerType: ['', [Validators.required]],
-      cardNumber: ['', [Validators.required, Validators.maxLength(20)]],
+      cardNumber: ['', [Validators.required, Validators.maxLength(16)]],
       expirationDate: ['', Validators.required],
       nameOnCard: ['', [Validators.required, Validators.maxLength(200)]],
       securityCode: ['', [Validators.required, Validators.maxLength(4)]],
@@ -47,7 +52,7 @@ export class PaymentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.totalDueToday = getTotalPayment(this.depositRequirements);
   }
 
   ngOnChanges(changes: { [property: string]: SimpleChange }) {
