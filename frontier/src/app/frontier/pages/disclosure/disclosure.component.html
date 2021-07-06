@@ -34,7 +34,7 @@
   </ng-container>
 </ngb-accordion>
 
-<div class="d-grid gap-2 mt-3">
+<div *ngIf="!loading" class="d-grid gap-2 mt-3">
   <button
     (click)="submitDisclosures()"
     class="btn btn-outline-danger btn-lg"

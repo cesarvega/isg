@@ -22,3 +22,17 @@ export const displayCreditCheckStep = (qualificationStep: StepInterface, current
         return false;
     return false;
 }
+
+export const displayCustomizationsStep = (qualificationStep: StepInterface, currentStep: StepInterface) => {
+    if (!displayStep(qualificationStep, currentStep))
+        return false;
+    if (currentStep.name === Steps.disclosuresStep.name)
+        return true
+    return false;
+}
+
+export const displayDisclosures = (qualificationStep: StepInterface, currentStep: StepInterface) => {
+    if (!displayStep(qualificationStep, currentStep))
+        return false;
+    return false;
+}
