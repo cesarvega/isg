@@ -1,0 +1,33 @@
+<div class="alert alert-light" role="alert">
+  <h4 class="alert-heading">Service Address</h4>
+  <hr />
+  <h5 class="mb-0 text-primary">{{ parsedAddress }}</h5>
+</div>
+<div class="alert alert-light mt-3" role="alert">
+  <h4 class="alert-heading">Customer Information</h4>
+  <hr />
+  <div class="row g-3">
+    <div class="col-md-4">
+      <strong class="me-2">First Name:</strong>
+      <p class="d-inline text-primary">{{ accountForm.firstName }}</p>
+    </div>
+    <div class="col-md-4">
+      <strong class="me-2">Last Name:</strong>
+      <p class="d-inline text-primary">{{ accountForm.lastName }}</p>
+    </div>
+    <div class="col-md-4">
+      <strong class="me-2">Mobile Phone Number:</strong>
+      <p class="d-inline text-primary">{{ accountForm.phoneNumber }}</p>
+    </div>
+    <div class="col-md-4">
+      <strong class="me-2">Secondary Mobile Phone Number:</strong>
+      <p class="d-inline text-primary">
+        {{ accountForm.secondaryPhoneNumber }}
+      </p>
+    </div>
+    <div class="col-md-4">
+      <strong class="me-2">Email:</strong>
+      <p class="d-inline text-primary">{{ accountForm.email }}</p>
+    </div>
+  </div>
+</div>

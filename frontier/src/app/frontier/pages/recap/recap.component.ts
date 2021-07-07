@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
+import { AccountFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
+import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
+import { selectAccountForm } from '../../utils/store/selectors';
 import { acceptQuoteTaskName, billPreviewTaskName } from '../../utils/taskNames';
 import { BillingApiService } from '../confirmation/services/billing-api.service';
 
@@ -16,8 +21,14 @@ export class RecapComponent implements OnInit {
   error: ErrorInterface;
   loading = false;
   billPreviewHtml;
+  accountForm$: Observable<AccountFormInterface>;
+  selectedParsedAddress$: Observable<string>
 
-  constructor(private billingApiService: BillingApiService, private sanitizer: DomSanitizer, private taskApiService: TasksApiService, private quoteApiService: QuoteApiService) { }
+  constructor(private billingApiService: BillingApiService, private sanitizer: DomSanitizer,
+    private taskApiService: TasksApiService, private quoteApiService: QuoteApiService, private store: Store<any>) {
+    this.accountForm$ = this.store.select(selectAccountForm);
+    this.selectedParsedAddress$ = this.store.select(selectParsedAddress);
+  }
 
   ngOnInit(): void {
     this.initComponent();
