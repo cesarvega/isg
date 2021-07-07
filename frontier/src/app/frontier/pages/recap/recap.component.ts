@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { AccountFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
+import { Steps } from '../../utils/steps';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
 import { selectAccountForm } from '../../utils/store/selectors';
 import { acceptQuoteTaskName, billPreviewTaskName } from '../../utils/taskNames';
@@ -25,7 +27,8 @@ export class RecapComponent implements OnInit {
   selectedParsedAddress$: Observable<string>
 
   constructor(private billingApiService: BillingApiService, private sanitizer: DomSanitizer,
-    private taskApiService: TasksApiService, private quoteApiService: QuoteApiService, private store: Store<any>) {
+    private taskApiService: TasksApiService, private quoteApiService: QuoteApiService
+    , private store: Store<any>, private router: Router) {
     this.accountForm$ = this.store.select(selectAccountForm);
     this.selectedParsedAddress$ = this.store.select(selectParsedAddress);
   }
@@ -47,6 +50,7 @@ export class RecapComponent implements OnInit {
       await this.taskApiService.getTasks();
       await this.taskApiService.closeTask(acceptQuoteTaskName);
       await this.quoteApiService.submitQuote();
+      this.router.navigate([Steps.confirmationStep.url]);
     } catch (error) {
       this.loading = false;
       this.error = error;
