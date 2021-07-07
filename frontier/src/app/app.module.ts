@@ -16,6 +16,7 @@ import { RootReducer } from './store/reducer';
 import { storageSyncMetaReducer } from 'ngrx-store-persist';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ErrorInterceptor } from './frontier/utils/interceptors/error.interceptor';
+import { AuthenticationInterceptor } from './frontier/utils/interceptors/authentication.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,11 @@ import { ErrorInterceptor } from './frontier/utils/interceptors/error.intercepto
     FontAwesomeModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
