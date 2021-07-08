@@ -26,7 +26,8 @@ import {
   setCorrelationId,
   setFundingAccountToken,
   setDepositCollectionResponse,
-  setCreditCheckResult
+  setCreditCheckResult,
+  setSubmitOrderResponse
 } from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../steps';
@@ -60,7 +61,8 @@ export const initialState: Frontier = {
   CorrelationId: null,
   fundingAccountToken: null,
   depositCollectionResponse: null,
-  creditCheckResult: null
+  creditCheckResult: null,
+  order: null
 };
 
 const _counterReducer = createReducer(
@@ -91,6 +93,7 @@ const _counterReducer = createReducer(
   on(setFundingAccountToken, (state, { token }) => ({ ...state, fundingAccountToken: token })),
   on(setDepositCollectionResponse, (state, { depositCollectionResponse }) => ({ ...state, depositCollectionResponse })),
   on(setCreditCheckResult, (state, { creditCheckResult }) => ({ ...state, creditCheckResult })),
+  on(setSubmitOrderResponse, (state, { order }) => ({ ...state, order })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);

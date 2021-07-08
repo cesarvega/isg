@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { createQuoteURL, generateTransactionIdURL, getCompleteTaskURL, validateQuoteURL, getValidateQuoteURL, getQuoteURL, getSubmitQuoteURL } from '../endpoints/qualification';
 import { AddressSearchResponseItemInterface } from '../interfaces/qualification/address-search-response';
 import { CreateQuoteInterface } from '../interfaces/qualification/create-quote';
-import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setSelectedAddressAction, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
+import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setSelectedAddressAction, setSubmitOrderResponse, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
 import { tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { selectQuoteId } from '../../store/selectors';
@@ -57,8 +57,7 @@ export class QuoteApiService {
     return this.clientService
       .post(getSubmitQuoteURL(this.quoteId), null).pipe(
         tap((response) => {
-          console.log(response)
-          //this.store.dispatch(validateQuoteAction());
+          this.store.dispatch(setSubmitOrderResponse({ order: response }))
         })
       )
       .toPromise();

@@ -28,4 +28,5 @@ export const setCorrelationId = createAction('setCorrelationId', props<{ Correla
 export const setFundingAccountToken = createAction('setFundingAccountToken', props<{ token }>());
 export const setDepositCollectionResponse = createAction('setDepositCollectionResponse', props<{ depositCollectionResponse }>());
 export const setCreditCheckResult = createAction('setCreditCheckResult', props<{ creditCheckResult }>());
+export const setSubmitOrderResponse = createAction('setSubmitOrderResponse', props<{ order }>());
 

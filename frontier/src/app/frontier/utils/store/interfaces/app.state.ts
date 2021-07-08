@@ -11,6 +11,7 @@ import { ReservationInterface } from '../../../pages/billing/interfaces/reservat
 import { OffersInterface } from '../../services/interfaces/products/offers-interface';
 import { DepositCollectionResponseInterface } from "../../../pages/billing/payment/interfaces/deposit-collection-response.interface";
 import { CreditCheckResultInterface } from '../../services/interfaces/customer/credit-check-result';
+import { SubmitOrderResponseInterface } from '../../services/interfaces/order/submit-order-response.interface';
 export interface Frontier {
   transactionId: string,
   currentStep: any
@@ -39,6 +40,7 @@ export interface Frontier {
   CorrelationId: string,
   fundingAccountToken: string,
   depositCollectionResponse: DepositCollectionResponseInterface,
-  creditCheckResult: CreditCheckResultInterface
+  creditCheckResult: CreditCheckResultInterface,
+  order: SubmitOrderResponseInterface
 }
 
