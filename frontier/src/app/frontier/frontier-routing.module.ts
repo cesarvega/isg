@@ -46,12 +46,8 @@ const routes: Routes = [
       {
         path: 'confirmation',
         component: ConfirmationComponent
-      },
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full'
-      }
+      }, { path: '', redirectTo: 'addressSearch', pathMatch: 'full' },
+
     ]
   }
 ];
