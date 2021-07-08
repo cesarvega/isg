@@ -11,7 +11,7 @@ const routes: Routes = [
                 loadChildren: () => import('./frontier/frontier-routing.module')
                     .then(m => m.FrontierRoutingModule),
             },
-            { path: '', redirectTo: 'frontier', pathMatch: 'full' },
+            { path: '', redirectTo: '/frontier/addressSearch', pathMatch: 'full' },
         ]
     }
 ];
