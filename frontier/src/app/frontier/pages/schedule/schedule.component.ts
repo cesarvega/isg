@@ -48,8 +48,12 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  getSelectedEventTitle(startstring) {
-    return moment(startstring).format("LLL")
+  getInstallationDate(event) {
+    return moment(event.startStr).format("LL")
+  }
+
+  parseTime(dateTime) {
+    return moment(dateTime).format("LT")
   }
 
   async getTasks(): Promise<any> {

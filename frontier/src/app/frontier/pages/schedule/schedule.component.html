@@ -21,8 +21,14 @@
     <div *ngIf="selectedEvent" class="col-md-12">
       <div>
         <div class="alert alert-secondary text-center" role="alert">
-          Your selected Appointment will be on
-          <strong> {{ getSelectedEventTitle(selectedEvent.startStr) }}</strong>
+          <div>
+            Your selected Appointment will be on
+            <strong> {{ getInstallationDate(selectedEvent) }}</strong>
+          </div>
+          <div>
+            Between <strong>{{ parseTime(selectedEvent.startStr) }}</strong> and
+            <strong>{{ parseTime(selectedEvent.endStr) }}</strong>
+          </div>
         </div>
       </div>
     </div>
