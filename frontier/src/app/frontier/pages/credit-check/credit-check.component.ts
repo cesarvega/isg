@@ -13,7 +13,7 @@ import { Steps } from '../../utils/steps';
 import { StateService } from '../../utils/services/state.service';
 import { creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
 import { creditCheckTestCases } from './test-cases';
-import { faComment } from '@fortawesome/free-regular-svg-icons';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';

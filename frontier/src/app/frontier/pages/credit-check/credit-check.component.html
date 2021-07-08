@@ -6,10 +6,10 @@
 </app-credit-result>
 <ng-container *ngIf="!displayCreditCheckResult(creditCheckResult$ | async)">
   <div class="alert alert-info" role="alert" *ngIf="!loading">
-    <h4 class="alert-heading">
+    <h6 class="alert-heading">
       <fa-icon class="mr-2" [icon]="faComment"></fa-icon> Mandatory verbatim
       disclosure:*
-    </h4>
+    </h6>
     <hr />
     <p>
       To continue, I may need to use your existing credit information on file
@@ -47,7 +47,7 @@
     <ngb-panel id="create-account-panel">
       <ng-template ngbPanelHeader>
         <div class="d-flex align-items-center justify-content-between">
-          <h4 class="mx-2 text-secondary">Create your account</h4>
+          <h6 class="mx-2 text-secondary">Create your account</h6>
           <div>
             <button
               [disabled]="loading"
@@ -70,7 +70,7 @@
     <ngb-panel id="verify-identity-panel">
       <ng-template ngbPanelHeader>
         <div class="d-flex align-items-center justify-content-between">
-          <h4 class="mx-2 text-secondary">Verify your identity</h4>
+          <h6 class="mx-2 text-secondary">Verify your identity</h6>
           <div>
             <button
               [disabled]="loading"

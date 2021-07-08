@@ -34,13 +34,9 @@
       id="inputPassword4"
     />
   </div>
-  <div class="col-12">
-    <button
-      *ngIf="!loading"
-      type="submit"
-      class="btn btn-outline-danger btn-lg"
-    >
-      Submit
+  <div class="col-12 d-flex justify-content-end">
+    <button *ngIf="!loading" type="submit" class="btn btn-danger">
+      Verify Credit
     </button>
     <div *ngIf="loading" class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>

@@ -9,9 +9,9 @@
   </div>
 </div>
 <div *ngIf="!loading" class="p-3" style="height: 2400px">
-  <h4 class="text-danger" style="padding-left: 1rem">
+  <h5 class="text-danger" style="padding-left: 1rem">
     Please review your order
-  </h4>
+  </h5>
   <app-customer-information
     [parsedAddress]="selectedParsedAddress$ | async"
     [accountForm]="accountForm$ | async"
@@ -20,7 +20,7 @@
     style="width: 100%; height: 100%"
     [attr.srcDoc]="billPreviewHtml"
   ></iframe>
-  <div class="d-grid gap-2 my-4">
+  <div class="d-flex justify-content-end m-4">
     <button (click)="placeOrder()" class="btn btn-danger btn-lg" type="button">
       Place Order
     </button>

@@ -1,45 +1,42 @@
 <app-error-message [error]="error"></app-error-message>
-<div class="alert alert-info" role="alert">
-  <h4 class="alert-heading">Disclosures</h4>
-  <p>Please accept all disclosures to continue</p>
-</div>
-<div *ngIf="loading" class="d-flex justify-content-center">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
+<ng-container *ngIf="!loading">
+  <div class="alert alert-info" role="alert">
+    <h6 class="alert-heading">Disclosures</h6>
+    <p>Please accept all disclosures to continue</p>
   </div>
-</div>
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 
-<ngb-accordion *ngIf="!loading" #accordion="ngbAccordion" closeOthers="true">
-  <ng-container *ngFor="let disclosure of disclosures">
-    <ngb-panel id="{{ disclosure.name }}" title="{{ disclosure.name }}">
-      <ng-template ngbPanelHeader>
-        <button ngbPanelToggle class="btn btn-link">
-          {{ disclosure.name }}
-        </button>
-        <div
-          *ngIf="disclosure.status == 'ACCEPT'"
-          class="alert alert-success"
-          role="alert"
-        >
-          Disclosure Accepted
-        </div>
-      </ng-template>
-      <ng-template ngbPanelContent>
-        <app-disclosure-item
-          (onAcceptDisclosure)="toggleDisclosure($event)"
-          [disclosure]="disclosure"
-        ></app-disclosure-item>
-      </ng-template>
-    </ngb-panel>
-  </ng-container>
-</ngb-accordion>
+  <ngb-accordion #accordion="ngbAccordion" closeOthers="true">
+    <ng-container *ngFor="let disclosure of disclosures">
+      <ngb-panel id="{{ disclosure.name }}" title="{{ disclosure.name }}">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle class="btn btn-link">
+            {{ disclosure.name }}
+          </button>
+          <div
+            *ngIf="disclosure.status == 'ACCEPT'"
+            class="alert alert-success"
+            role="alert"
+          >
+            Disclosure Accepted
+          </div>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <app-disclosure-item
+            (onAcceptDisclosure)="toggleDisclosure($event)"
+            [disclosure]="disclosure"
+          ></app-disclosure-item>
+        </ng-template>
+      </ngb-panel>
+    </ng-container>
+  </ngb-accordion>
 
-<div *ngIf="!loading" class="d-grid gap-2 mt-3">
-  <button
-    (click)="submitDisclosures()"
-    class="btn btn-outline-danger btn-lg"
-    type="button"
-  >
-    Submit
-  </button>
-</div>
+  <div class="mt-4">
+    <app-continue-button (onContinueEvent)="submitDisclosures()">
+    </app-continue-button>
+  </div>
+</ng-container>

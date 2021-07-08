@@ -42,13 +42,8 @@
       </div>
     </div>
   </div>
-  <div class="d-grid gap-2 my-4">
-    <button
-      (click)="submitCustomizations()"
-      class="btn btn-outline-danger btn-lg"
-      type="button"
-    >
-      Submit
-    </button>
+  <div class="mt-3">
+    <app-continue-button (onContinueEvent)="submitCustomizations()">
+    </app-continue-button>
   </div>
 </div>
