@@ -9,27 +9,11 @@
   </div>
 </div>
 <div *ngIf="!loading">
-  <ngb-accordion #accordion="ngbAccordion" activeIds="ngb-panel-0">
-    <ngb-panel
-      id="payment-panel"
-      title="Payment"
-      [disabled]="isPaymentComplete()"
-    >
-      <ng-template ngbPanelContent>
-        <app-payment
-          [CorrelationId]="CorrelationId"
-          [customer]="customer"
-          (onSuccessDepositEvent)="onSuccessDeposit($event)"
-          [depositRequirements]="depositRequirements"
-        ></app-payment>
-      </ng-template>
-    </ngb-panel>
-    <ngb-panel title="Schedule">
-      <ng-template ngbPanelContent>
-        <app-schedule
-          (onSuccessScheduleEvent)="onSuccessScheduleEvent($event)"
-        ></app-schedule>
-      </ng-template>
-    </ngb-panel>
-  </ngb-accordion>
+  <app-payment
+    [CorrelationId]="CorrelationId"
+    [customer]="customer"
+    (submitPayment)="submitPayment($event)"
+    [depositRequirements]="depositRequirements"
+    [loading]="loading"
+  ></app-payment>
 </div>

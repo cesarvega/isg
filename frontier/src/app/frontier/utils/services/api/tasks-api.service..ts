@@ -6,7 +6,7 @@ import { addClosedTaskAction, setTasksAction } from '../../store/actions';
 import { TaskInterface } from '../../store/interfaces/task-interface';
 import { map, tap } from 'rxjs/operators';
 import { selectQuoteId } from '../../store/selectors';
-import { StateService } from '../state.service';
+import { SnapshotStore } from '../state.service';
 import { getTaskByNameFromState, isTaskClosedSelector } from '../../store/complexSelectors/taks';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { getTaskByNameFromState, isTaskClosedSelector } from '../../store/comple
 export class TasksApiService {
   taskEndpoint: TaskEndpoint
 
-  constructor(private clientService: ClientService, private store: Store<any>, private stateService: StateService) {
+  constructor(private clientService: ClientService, private store: Store<any>, private stateService: SnapshotStore) {
     this.taskEndpoint = new TaskEndpoint()
   }
 
@@ -34,10 +34,10 @@ export class TasksApiService {
 
   async closeTask(taskName: string) {
     let quoteId = this.stateService.getQuoteId();
-    let isTaskClosed = this.stateService.getValueFromSelector(isTaskClosedSelector(taskName))
+    let isTaskClosed = this.stateService.select(isTaskClosedSelector(taskName))
     if (isTaskClosed)
       return
-    let task = this.stateService.getValueFromSelector(getTaskByNameFromState(taskName));
+    let task = this.stateService.select(getTaskByNameFromState(taskName));
     if (!task) {
       throw new Error(`Task: ${taskName} not foun`)
     }

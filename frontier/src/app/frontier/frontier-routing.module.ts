@@ -9,6 +9,7 @@ import { BillingComponent } from './pages/billing/billing.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { DisclosureComponent } from './pages/disclosure/disclosure.component';
 import { RecapComponent } from './pages/recap/recap.component';
+import { ScheduleComponent } from './pages/schedule/schedule.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
       {
         path: 'billing',
         component: BillingComponent
+      },
+      {
+        path: 'schedule',
+        component: ScheduleComponent
       },
       {
         path: 'recap',

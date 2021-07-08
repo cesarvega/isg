@@ -6,8 +6,10 @@ import { GenerateTokenRequestInterface } from '../../../pages/billing/payment/in
 import { setDepositCollectionResponse, setDepositRequirementsAction, setFundingAccountToken } from '../../store/actions';
 import { DepositEndpoints } from '../endpoints/deposit';
 import { DepositRequestInterface } from '../../../pages/billing/payment/interfaces/deposit-request.interface';
-import { StateService } from '../state.service';
+import { SnapshotStore } from '../state.service';
 import { DepositResponse } from 'src/app/frontier/pages/billing/payment/interfaces/deposit-requirements-response.interface';
+import { selectQuoteId } from '../../store/selectors';
+import { getValueFromState } from '../../get-value-from-state';
 
 
 @Injectable({
@@ -16,10 +18,11 @@ import { DepositResponse } from 'src/app/frontier/pages/billing/payment/interfac
 export class DepositeApiService {
   depositEndpoints = new DepositEndpoints();
 
-  constructor(private clientService: ClientService, private store: Store<any>, private stateService: StateService) {
+  constructor(private clientService: ClientService, private store: Store<any>, private stateService: SnapshotStore) {
   }
 
-  async getDepositRequirements(quoteId: string): Promise<DepositResponse> {
+  async getDepositRequirements(): Promise<DepositResponse> {
+    const quoteId = this.stateService.getQuoteId();
     const url = this.depositEndpoints.getDepositRequirementEndpoint();
     return await this.clientService.getAll(url, { quoteId }).
       pipe(

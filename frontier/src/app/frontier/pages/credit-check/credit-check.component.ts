@@ -10,7 +10,7 @@ import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Steps } from '../../utils/steps';
-import { StateService } from '../../utils/services/state.service';
+import { SnapshotStore } from '../../utils/services/state.service';
 import { creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
 import { creditCheckTestCases } from './test-cases';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
@@ -40,7 +40,7 @@ export class CreditCheckComponent implements OnInit {
   creditCheckResult$: Observable<CreditCheckResultInterface>;
 
   constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
-    , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: StateService, private store: Store<any>) {
+    , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: SnapshotStore, private store: Store<any>) {
   }
 
   displayCreditCheckResult(creditCheckResult) {
@@ -50,8 +50,8 @@ export class CreditCheckComponent implements OnInit {
 
   ngOnInit(): void {
     this.creditCheckResult$ = this.store.select(selectCustomerCreditCheckResult)
-    this.quoteId = this.stateService.getValueFromSelector(selectQuoteId);
-    this.address = this.stateService.getValueFromSelector(selectSelectedAddress)
+    this.quoteId = this.stateService.select(selectQuoteId);
+    this.address = this.stateService.select(selectSelectedAddress)
     this.accountFormValues = this.stateService.getFrontierState().accountForm;
     this.identityFormValues = this.stateService.getFrontierState().identityForm;
   }
@@ -108,7 +108,7 @@ export class CreditCheckComponent implements OnInit {
   }
 
   navigateToCustomization() {
-    this.stateService.dispatchAction(setStepAction({ step: Steps.customizationStep }))
+    this.stateService.dispatch(setStepAction({ step: Steps.customizationStep }))
     this.router.navigate([Steps.customizationStep.url]);
 
   }

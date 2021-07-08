@@ -26,7 +26,6 @@ export class PaymentComponent implements OnInit {
   faComment = faComment;
   error: ErrorInterface;
   customerTypes = customerTypes;
-  loading = false;
   submitted = false;
   testPayments: ReadonlyArray<PaymentFormInterface> = paymentTestCases;
   selectedTestPaymentAlias: string;
@@ -34,7 +33,8 @@ export class PaymentComponent implements OnInit {
   @Input() customer: CustomerInterface;
   paymentForm: FormGroup;
   @Input() CorrelationId: string;
-  @Output() onSuccessDepositEvent = new EventEmitter<void>();
+  @Output() submitPayment = new EventEmitter<void>();
+  @Input() loading;
   totalDueToday: number;
   showBillingForm = false;
 
@@ -77,37 +77,11 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  private getEmailFromCustomer = (customer: CustomerInterface) => {
-    const primaryContact: ContactInterface = customer.contacts.item.find((contactItem) => {
-      return contactItem.primary;
-    });
-    if (primaryContact) {
-      return primaryContact.emailAddresses.item[0].address;
-    }
-    return '';
-  }
 
-  async onSubmit() {
+  onSubmit() {
     this.submitted = true;
     if (this.paymentForm.valid) {
-      const paymentFormValues = this.paymentForm.value;
-      this.loading = true;
-      try {
-        // generatePaymentToken
-        const fundingAccountToken = await this.generatePaymentToken(paymentFormValues, lineOfBusiness, this.CorrelationId);
-        // deposit collection
-        await this.depositCollection(this.depositRequirements, fundingAccountToken,
-          paymentFormValues, this.getEmailFromCustomer(this.customer));
-
-        this.onSuccessDepositEvent.emit();
-
-      } catch (error) {
-        this.error = error;
-        this.loading = false;
-      }
-      this.loading = false;
-
-
+      this.submitPayment.emit(this.paymentForm.value);
     }
   }
 

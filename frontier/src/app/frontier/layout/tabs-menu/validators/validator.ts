@@ -43,3 +43,11 @@ export const displayBilling = (step: StepInterface, currentStep: StepInterface) 
     return false;
 }
 
+
+export const displaySchedule = (step: StepInterface, currentStep: StepInterface) => {
+    if (!displayStep(step, currentStep))
+        return false;
+    return false;
+}
+
+

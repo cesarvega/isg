@@ -12,7 +12,7 @@ import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { QuoteInterface } from '../../utils/store/interfaces/quote';
 import { AlertInterface } from '../../utils/services/interfaces/common/alert-interface';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { StateService } from '../../utils/services/state.service';
+import { SnapshotStore } from '../../utils/services/state.service';
 import { Store } from '@ngrx/store';
 import { getParsedAddress } from '../address-search/helpers/get-parsed-adress';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
@@ -44,7 +44,7 @@ export class OffersComponent implements OnInit {
 
   public getParsedAddress = getParsedAddress;
 
-  constructor(private store: Store<any>, private stateService: StateService, private productsApiService: ProductsApiService, private router: Router, private quoteApiService: QuoteApiService, private productBuilder: ProductsBuilder) {
+  constructor(private store: Store<any>, private stateService: SnapshotStore, private productsApiService: ProductsApiService, private router: Router, private quoteApiService: QuoteApiService, private productBuilder: ProductsBuilder) {
 
   }
 
@@ -134,7 +134,7 @@ export class OffersComponent implements OnInit {
       }
       if (this.addProducts.length > 0)
         await this.sendAddProductsApi(this.addProducts, this.quoteId);
-      this.stateService.dispatchAction(setStepAction({ step: Steps.creditCheckStep }))
+      this.stateService.dispatch(setStepAction({ step: Steps.creditCheckStep }))
       this.router.navigate([Steps.creditCheckStep.url]);
     } catch (error) {
       this.loading = false;

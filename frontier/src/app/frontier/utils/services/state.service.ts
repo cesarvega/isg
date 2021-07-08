@@ -7,7 +7,7 @@ import { getValueFromState } from '../get-value-from-state';
 @Injectable({
   providedIn: 'root'
 })
-export class StateService {
+export class SnapshotStore {
 
   constructor(private store: Store<any>) {
 
@@ -20,7 +20,7 @@ export class StateService {
   }
 
   getFrontierState(): Frontier {
-    return this.getValueFromSelector(selectFrontier)
+    return this.select(selectFrontier)
   }
 
 
@@ -32,11 +32,11 @@ export class StateService {
     return getValueFromState(this.store.select(selectQuoteId))
   }
 
-  getValueFromSelector(selector) {
+  select(selector) {
     return getValueFromState(this.store.select(selector))
   }
 
-  dispatchAction(action) {
+  dispatch(action) {
     this.store.dispatch(action)
   }
 

@@ -30,11 +30,10 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { PaymentComponent } from './pages/billing/payment/payment.component';
-import { ScheduleComponent } from './pages/billing/schedule/schedule.component';
+import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { CategoriesComponent } from './pages/offers/categories/categories.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CreditResultComponent } from './pages/credit-check/credit-result/credit-result.component';
 import { RecapComponent } from './pages/recap/recap.component';
 import { CustomerInformationComponent } from './pages/recap/customer-information/customer-information.component';

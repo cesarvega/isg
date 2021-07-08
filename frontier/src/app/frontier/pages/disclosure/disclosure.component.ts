@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { DisclosuresApiService } from '../../utils/services/api/disclosures-api.service';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { DisclosureInterface } from '../../utils/services/interfaces/disclosures/disclosure-interface';
-import { StateService } from '../../utils/services/state.service';
+import { SnapshotStore } from '../../utils/services/state.service';
 import { Steps } from '../../utils/steps';
 import { setStepAction } from '../../utils/store/actions';
 
@@ -25,7 +25,7 @@ export class DisclosureComponent implements OnInit {
   @ViewChild('accordion') accordionComponent: NgbAccordion;
 
   constructor(
-    private disclosuresApiService: DisclosuresApiService, private stateService: StateService, private router: Router, private store: Store<any>) { }
+    private disclosuresApiService: DisclosuresApiService, private stateService: SnapshotStore, private router: Router, private store: Store<any>) { }
 
   ngOnInit(): void {
     this.quoteId = this.stateService.getQuoteId();

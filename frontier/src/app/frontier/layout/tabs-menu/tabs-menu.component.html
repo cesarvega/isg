@@ -44,6 +44,12 @@
         <a ngbNavLink routerLink="billing">Billing</a>
       </li>
       <li
+        [ngbNavItem]="scheduleStep.url"
+        [disabled]="!displaySchedule(scheduleStep, currentStep$ | async)"
+      >
+        <a ngbNavLink routerLink="schedule">Schedule</a>
+      </li>
+      <li
         [ngbNavItem]="recapStep.url"
         [disabled]="!isStepEnabled(recapStep, currentStep$ | async)"
       >

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StateService } from '../../utils/services/state.service';
+import { SnapshotStore } from '../../utils/services/state.service';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { setStepAction } from '../../utils/store/actions';
@@ -31,13 +31,13 @@ export class CustomizationsComponent implements OnInit {
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
 
-  constructor(private stateService: StateService, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
+  constructor(private stateService: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router) {
     this.quoteId = stateService.getQuoteId();
-    this.selectOfferTask = stateService.getValueFromSelector(getTaskByNameFromState(offerTaskIdName))
-    this.numberPortabilityTask = stateService.getValueFromSelector(getTaskByNameFromState(numberPortabilityTaskName))
-    this.wasQuoteValidated = stateService.getValueFromSelector(selectWasQuoteValidated);
-    this.wereDisclosuresAccepted = stateService.getValueFromSelector(selectWereDisclosuresAccepted)
+    this.selectOfferTask = stateService.select(getTaskByNameFromState(offerTaskIdName))
+    this.numberPortabilityTask = stateService.select(getTaskByNameFromState(numberPortabilityTaskName))
+    this.wasQuoteValidated = stateService.select(selectWasQuoteValidated);
+    this.wereDisclosuresAccepted = stateService.select(selectWereDisclosuresAccepted)
   }
 
   isItemConfigurationCompleted(item: Item) {
@@ -115,7 +115,7 @@ export class CustomizationsComponent implements OnInit {
 
 
   private redirectToDisclosures() {
-    this.stateService.dispatchAction(setStepAction({ step: Steps.disclosuresStep }))
+    this.stateService.dispatch(setStepAction({ step: Steps.disclosuresStep }))
     this.router.navigate([Steps.disclosuresStep.url]);
   }
 }

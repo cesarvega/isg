@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { StateService } from 'src/app/frontier/utils/services/state.service';
+import { SnapshotStore } from 'src/app/frontier/utils/services/state.service';
 import { ClientService } from 'src/app/isg-shared/client/client.service';
 import { BillingEndpoints } from './endpoints/billing-endpoints';
 
@@ -10,7 +10,7 @@ import { BillingEndpoints } from './endpoints/billing-endpoints';
 export class BillingApiService {
   billingEndpoints = new BillingEndpoints();
 
-  constructor(private stateService: StateService, private clientService: ClientService) { }
+  constructor(private stateService: SnapshotStore, private clientService: ClientService) { }
 
   getBillPreview() {
     let quoteId = this.stateService.getQuoteId();

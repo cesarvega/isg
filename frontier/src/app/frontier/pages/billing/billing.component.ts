@@ -5,16 +5,20 @@ import { Observable } from 'rxjs';
 import { DepositeApiService } from '../../utils/services/api/deposit-api.service';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
-import { CustomerInterface } from '../../utils/services/interfaces/customer/customer';
-import { StateService } from '../../utils/services/state.service';
+import { ContactInterface, CustomerInterface } from '../../utils/services/interfaces/customer/customer';
+import { SnapshotStore } from '../../utils/services/state.service';
 import { Steps } from '../../utils/steps';
 import { setStepAction } from '../../utils/store/actions';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
-import { selectCorrelationId, selectCustomer, selectDepositCollectionResponse, selectDepositRequirements } from '../../utils/store/selectors';
+import { selectCorrelationId, selectCustomer, selectDepositRequirements } from '../../utils/store/selectors';
 import { customerNeedsDepositHelper } from './helpers/customer-needs-deposit';
-import { DepositRequirementsInterface } from './interfaces/deposit-requirements-interface';
 import { DepositCollectionResponseInterface } from './payment/interfaces/deposit-collection-response.interface';
+import { DepositRequestInterface } from './payment/interfaces/deposit-request.interface';
 import { DepositResponse } from './payment/interfaces/deposit-requirements-response.interface';
+import { PaymentFormInterface } from './payment/interfaces/payment.form.interface';
+import { buildDepositCollectionRequest } from './payment/services/deposit-request-builder.service';
+import { buildRequestGeneratePaymentToken } from './payment/services/payment-builder.service';
+import { lineOfBusiness } from './payment/utils/line-of-business';
 
 @Component({
   selector: 'app-billing',
@@ -36,32 +40,20 @@ export class BillingComponent implements OnInit {
   CorrelationId: string;
   customerNeedsDeposit = true;
 
-  constructor(private depositApiService: DepositeApiService, private stateService: StateService, private taskApiService: TasksApiService, private router: Router) {
-    this.customer = this.stateService.getValueFromSelector(selectCustomer);
-    this.CorrelationId = this.stateService.getValueFromSelector(selectCorrelationId);
-  }
+  constructor(private depositApiService: DepositeApiService, private snapShotStore: SnapshotStore, private taskApiService: TasksApiService, private router: Router) {
 
-  ngOnInit(): void {
-    this.quoteId = this.stateService.getQuoteId();
-    this.depositRequirements = this.stateService.getValueFromSelector(selectDepositRequirements);
-    this.depositCollectionResponse = this.stateService.getValueFromSelector(selectDepositCollectionResponse);
-    this.initComponent(this.quoteId, this.depositRequirements);
 
   }
 
-  isPaymentComplete() {
-    return this.successDeposit || this.depositCollectionResponse || !this.customerNeedsDeposit
-  }
-
-  async initComponent(quoteId, depositRequirements) {
+  async ngOnInit() {
     this.loading = true;
     try {
+      this.customer = this.snapShotStore.select(selectCustomer);
+      this.CorrelationId = this.snapShotStore.select(selectCorrelationId);
       // get tasks
-      this.tasks = await this.getTasks();
-
+      await this.getTasks();
       // get deposit requirements
-      if (!depositRequirements)
-        this.depositRequirements = await this.getDepositRequirements(quoteId)
+      this.depositRequirements = await this.getDepositRequirements();
       this.customerNeedsDeposit = customerNeedsDepositHelper(this.depositRequirements);
       this.loading = false;
     } catch (error) {
@@ -70,33 +62,63 @@ export class BillingComponent implements OnInit {
     }
   }
 
-  async closeTask(quoteId, task: TaskInterface) {
-    if (!this.stateService.isTaskClosed(task.specName))
-      await this.taskApiService.closeTask(task.specName);
+  isPaymentComplete() {
+    return this.successDeposit || this.depositCollectionResponse || !this.customerNeedsDeposit
   }
 
-  getTaskByName(tasks: TaskInterface[], taskName) {
-    return tasks.find((iterateTask: TaskInterface) => {
-      return iterateTask.specName == taskName
-    })
-  }
-
-  onSuccessDeposit() {
-    this.accordionComponent.toggle('payment-panel')
-    this.successDeposit = true;
-  }
-
-  onSuccessScheduleEvent() {
-    this.stateService.dispatchAction(setStepAction({ step: Steps.recapStep }))
-    this.router.navigate([Steps.recapStep.url]);
+  redirectToSchedule() {
+    this.snapShotStore.dispatch(setStepAction({ step: Steps.scheduleStep }))
+    this.router.navigate([Steps.scheduleStep.url]);
   }
 
   async getTasks(): Promise<any> {
     return await this.taskApiService.getTasks()
   }
 
-  async getDepositRequirements(quoteId): Promise<DepositResponse> {
-    return this.depositApiService.getDepositRequirements(quoteId)
+  async getDepositRequirements(): Promise<DepositResponse> {
+    let depositRequirements = this.snapShotStore.select(selectDepositRequirements);
+    if (!depositRequirements)
+      depositRequirements = await this.depositApiService.getDepositRequirements()
+    return depositRequirements
   }
+
+  private getEmailFromCustomer = (customer: CustomerInterface) => {
+    const primaryContact: ContactInterface = customer.contacts.item.find((contactItem) => {
+      return contactItem.primary;
+    });
+    if (primaryContact) {
+      return primaryContact.emailAddresses.item[0].address;
+    }
+    return '';
+  }
+
+  async submitPayment(paymentFormValues) {
+    this.loading = true;
+    try {
+      // generatePaymentToken
+      const fundingAccountToken = await this.generatePaymentToken(paymentFormValues, lineOfBusiness, this.CorrelationId);
+      // deposit collection
+      await this.depositCollection(this.depositRequirements, fundingAccountToken,
+        paymentFormValues, this.getEmailFromCustomer(this.customer));
+
+      this.redirectToSchedule();
+
+    } catch (error) {
+      this.error = error;
+      this.loading = false;
+    }
+    this.loading = false;
+  }
+
+  depositCollection(depositRequirements, fundingAccountToken: string, payment: PaymentFormInterface, email) {
+    const request: DepositRequestInterface = buildDepositCollectionRequest(depositRequirements, fundingAccountToken, payment, email);
+    return this.depositApiService.depositCollection(request);
+  }
+
+  async generatePaymentToken(formValues, lineOfBusiness, CorrelationId: string) {
+    const request = buildRequestGeneratePaymentToken(formValues, lineOfBusiness, CorrelationId);
+    return await this.depositApiService.generatePaymentToken(this.customer.accountUuid, request);
+  }
+
 
 }
