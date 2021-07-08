@@ -6,7 +6,7 @@
         (click)="this.onContinueEvent.emit()"
         class="btn btn-danger"
       >
-        Continue <fa-icon [icon]="faArrowRight"></fa-icon>
+        {{ name ? name : "Continue" }} <fa-icon [icon]="faArrowRight"></fa-icon>
       </button>
     </div>
   </div>

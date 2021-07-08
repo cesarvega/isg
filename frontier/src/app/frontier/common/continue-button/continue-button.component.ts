@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,6 +9,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 export class ContinueButtonComponent implements OnInit {
 
   faArrowRight = faArrowRight;
+  @Input() name: string;
   @Output() onContinueEvent = new EventEmitter<any>();
 
   constructor() { }

@@ -10,10 +10,10 @@
 </div>
 <ng-container *ngIf="!loading">
   <div class="alert alert-info" role="alert">
-    <h4 class="alert-heading">
+    <h5 class="alert-heading">
       <fa-icon class="mr-2" [icon]="faComment"></fa-icon> Mandatory Advanced or
       Deposit Payment Disclosure *
-    </h4>
+    </h5>
     <p>
       In order to continue with the order a
       <strong>{{ totalDueToday | currency }}</strong> payment is required.
@@ -154,10 +154,8 @@
       </div>
     </div>
 
-    <div class="d-grid gap-2 my-3">
-      <button class="btn btn-outline-primary btn-lg" type="submit">
-        Submit Payment
-      </button>
+    <div class="d-flex justify-content-end mt-5">
+      <button class="btn btn-danger" type="submit">Submit Payment</button>
     </div>
   </form>
   <div class="col-md-4">

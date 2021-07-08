@@ -8,33 +8,26 @@
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-<div class="row" *ngIf="!loading">
-  <div class="col-md-6">
-    <full-calendar [options]="calendarOptions"></full-calendar>
+<ng-container *ngIf="!loading">
+  <div class="alert alert-info" role="alert">
+    <h5 class="alert-heading">Schedule</h5>
+    <hr />
+    <p>Please select a time for installation.</p>
   </div>
-  <div
-    *ngIf="selectedEvent"
-    class="col-md-6"
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    "
-  >
-    <div>
-      <h4>
-        Selected appointment is :
-        {{ getSelectedEventTitle(selectedEvent.startStr) }}
-      </h4>
+  <div class="row g-3">
+    <div class="col-md-12">
+      <full-calendar [options]="calendarOptions"></full-calendar>
     </div>
-    <div>
-      <button
-        (click)="submitSchedule(selectedEvent)"
-        class="btn btn-outline-primary btn-lg"
-      >
-        Submit
-      </button>
+    <div *ngIf="selectedEvent" class="col-md-12">
+      <div>
+        <div class="alert alert-secondary text-center" role="alert">
+          Your selected Appointment will be on
+          <strong> {{ getSelectedEventTitle(selectedEvent.startStr) }}</strong>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  <app-continue-button
+    (onContinueEvent)="submitSchedule(selectedEvent)"
+  ></app-continue-button>
+</ng-container>
