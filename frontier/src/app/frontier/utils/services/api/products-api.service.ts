@@ -25,6 +25,9 @@ export class ProductsApiService {
     let endpoint = getOffersURL + "/" + quoteId;
     return this.clientService.getAll(endpoint).pipe(
       map((offers) => {
+        if (offers.length < 1) {
+          throw new Error("No offers found, please try a different address");
+        }
         return this.productBuilder.mapSelectedProducts(offers, selectedProducts);
       }),
       tap((mappedOffers) => {

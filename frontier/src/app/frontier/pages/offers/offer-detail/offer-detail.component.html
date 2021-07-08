@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-img-top bg-primary p-4">
-    <h5 class="text-white text-center">{{ offer.name }}</h5>
+    <strong class="d-block text-white text-center">{{ offer.name }}</strong>
   </div>
   <div *ngIf="offer.dataspeed" class="card-body">
     <h5 class="card-title text-center">Speed</h5>
@@ -78,7 +78,7 @@
       *ngIf="!offer.selected"
       (click)="addProduct(offer)"
       type="button"
-      class="btn btn-outline-danger btn-lg"
+      class="btn btn-danger"
     >
       Add to Order
     </button>
@@ -87,7 +87,7 @@
       *ngIf="offer.selected"
       (click)="deleteProduct(offer)"
       type="button"
-      class="btn btn-outline-dark btn-lg"
+      class="btn btn-dark"
     >
       Remove from Order
     </button>
@@ -101,7 +101,7 @@
     <button
       (click)="modal.dismiss()"
       type="button"
-      class="btn btn-outline-danger btn-sm"
+      class="btn btn-danger btn-sm"
     >
       <fa-icon class="mx-1" [icon]="faTimes"></fa-icon>
     </button>
@@ -110,11 +110,7 @@
     <p>{{ offer.description }}</p>
   </div>
   <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-danger"
-      (click)="modal.close()"
-    >
+    <button type="button" class="btn btn-danger" (click)="modal.close()">
       Close
     </button>
   </div>

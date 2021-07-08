@@ -38,6 +38,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CreditResultComponent } from './pages/credit-check/credit-result/credit-result.component';
 import { RecapComponent } from './pages/recap/recap.component';
 import { CustomerInformationComponent } from './pages/recap/customer-information/customer-information.component';
+import { ContinueButtonComponent } from './common/continue-button/continue-button.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -70,6 +71,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CreditResultComponent,
     RecapComponent,
     CustomerInformationComponent,
+    ContinueButtonComponent,
   ],
   imports: [
     CommonModule,
