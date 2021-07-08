@@ -1,5 +1,25 @@
-<h5>Credit Verification Result</h5>
-<p>credit-result works!</p>
-<button class="btn btn-primary" (click)="this.onContinue.emit()">
-  Continue
-</button>
+<div class="card">
+  <h5 class="card-header">Credit Check Result</h5>
+  <div class="card-body">
+    <div>
+      <strong>Credit Check Reuslt:</strong>
+      <h3 class="ms-2 d-inline text-danger">
+        {{ creditCheckResult.creditScore.rating }}
+      </h3>
+    </div>
+    <div>
+      <strong>Credit Bureau:</strong>
+      <p class="ms-2 d-inline text-primary">
+        {{ creditCheckResult.creditBureau }}
+      </p>
+    </div>
+    <div>
+      <strong>Credit Model:</strong>
+      <p class="ms-2 d-inline text-primary">
+        {{ creditCheckResult.creditScore.model }}
+      </p>
+    </div>
+    <app-continue-button (onContinueEvent)="this.onContinue.emit()">
+    </app-continue-button>
+  </div>
+</div>

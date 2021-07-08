@@ -38,11 +38,11 @@ export class TabsMenuComponent implements OnInit {
 
 
   isStepEnabled(step, currentStep) {
-    step = step.step;
-    currentStep = currentStep.step;
-    if (currentStep == this.confirmationStep.step)
+    let stepNumber = step.step;
+    let currentStepNumber = currentStep.step;
+    if (currentStepNumber == this.confirmationStep.step)
       return false;
-    if (step > currentStep) {
+    if (stepNumber > currentStepNumber) {
       return false;
     }
     return true;

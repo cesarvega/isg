@@ -8,6 +8,7 @@ import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { AccountFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
 import { Steps } from '../../utils/steps';
+import { setStepAction } from '../../utils/store/actions';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
 import { selectAccountForm } from '../../utils/store/selectors';
 import { acceptQuoteTaskName, billPreviewTaskName } from '../../utils/taskNames';
@@ -50,6 +51,7 @@ export class RecapComponent implements OnInit {
       await this.taskApiService.getTasks();
       await this.taskApiService.closeTask(acceptQuoteTaskName);
       await this.quoteApiService.submitQuote();
+      this.store.dispatch(setStepAction({ step: Steps.confirmationStep }))
       this.router.navigate([Steps.confirmationStep.url]);
     } catch (error) {
       this.loading = false;

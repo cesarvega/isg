@@ -1,5 +1,5 @@
 <app-credit-result
-  [creditCheckResult]="displayCreditCheckResult(creditCheckResult$ | async)"
+  [creditCheckResult]="creditCheckResult$ | async"
   (onContinue)="navigateToCustomization()"
   *ngIf="creditCheckResult$ | async"
 >

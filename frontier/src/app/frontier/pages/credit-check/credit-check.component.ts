@@ -41,7 +41,6 @@ export class CreditCheckComponent implements OnInit {
 
   constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
     , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: StateService, private store: Store<any>) {
-    this.creditCheckResult$ = this.store.select(selectCustomerCreditCheckResult)
   }
 
   displayCreditCheckResult(creditCheckResult) {
@@ -50,6 +49,7 @@ export class CreditCheckComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.creditCheckResult$ = this.store.select(selectCustomerCreditCheckResult)
     this.quoteId = this.stateService.getValueFromSelector(selectQuoteId);
     this.address = this.stateService.getValueFromSelector(selectSelectedAddress)
     this.accountFormValues = this.stateService.getFrontierState().accountForm;
@@ -57,7 +57,7 @@ export class CreditCheckComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.identityFormValues) {
+    if (this.identityFormValues && this.accordionComponent) {
       this.accordionComponent.toggle("verify-identity-panel");
     }
   }

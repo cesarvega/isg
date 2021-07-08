@@ -14,6 +14,7 @@ export class CreditResultComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.creditCheckResult)
   }
 
 }
