@@ -127,7 +127,7 @@ export class OffersComponent implements OnInit {
 
     this.loading = true;
     try {
-      this.gotProductsSelected(this.offers)
+      this.gotProductsSelected(this.addProducts)
       if (this.removeProducts.length > 0) {
         let quote = await this.getQuote(this.quoteId);
         await this.sendRemoveProductsApi(this.removeProducts, quote);

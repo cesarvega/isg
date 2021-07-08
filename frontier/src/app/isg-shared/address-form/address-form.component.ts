@@ -79,6 +79,8 @@ export class AddressFormComponent implements OnInit {
     if (changes['loading']) {
       if (this.loading) {
         this.addressForm.disable();
+      } else {
+        this.addressForm.enable();
       }
     }
   }
