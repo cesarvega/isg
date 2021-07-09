@@ -24,11 +24,17 @@
       </button>
     </div>
   </div>
-
-  <app-tabs-menu></app-tabs-menu>
-  <div class="card mt-3">
-    <div class="card-body">
-      <router-outlet></router-outlet>
+  <div class="row">
+    <div class="col-md-8">
+      <app-tabs-menu></app-tabs-menu>
+      <div class="card mt-3">
+        <div class="card-body">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <shopping-cart style="position: absolute"></shopping-cart>
     </div>
   </div>
 </main>
