@@ -32,9 +32,21 @@
       </h4>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
+      <li
+        class="list-group-item"
+        *ngFor="let product of selectedProducts$ | async"
+      >
+        <div class="row">
+          <div class="col-md-8">
+            {{ product.name }}
+          </div>
+          <div class="col-md-4">
+            <strong>{{
+              product.bestPriceTerm.discountedPrice | currency
+            }}</strong>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
   <div>
@@ -59,7 +71,9 @@
         <i class="fa fa-bars"></i>
         Due Today:
       </h4>
-      <h4 class="text-danger">$60.00</h4>
+      <h4 class="text-danger">
+        {{ getDueToday(depositResponse$ | async) | currency }}
+      </h4>
     </div>
     <div class="m-2 d-flex justify-content-end">
       <small class="text-danger">* Plus taxes and surcharges</small>
