@@ -1,8 +1,12 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
-html,
+html {
+  height: 100%;
+}
 body {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .alert-dismissible .close {
   position: absolute;
