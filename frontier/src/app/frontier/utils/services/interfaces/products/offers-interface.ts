@@ -1,4 +1,5 @@
 export interface OffersInterface {
+  bestPriceTerm: PriceTerm;
   addedApi?: boolean;
   id: string,
   name: string,
@@ -19,6 +20,7 @@ interface PricePlan {
 }
 
 export interface PriceTerm {
+  discountedPrice: number;
   amount: string,
   amountR2: Number,
   durationInMonths: string,

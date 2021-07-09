@@ -2,20 +2,67 @@
   <h5 class="card-header bg-danger text-white text-center">
     Frontier Shopping Cart
   </h5>
-  <ul class="list-group list-group-flush mt-3">
+  <ul
+    class="list-group list-group-flush mt-3"
+    *ngIf="accountForm$ | async as accountForm"
+  >
     <li class="list-group-item">
-      <strong>Service at: </strong>6200 SW 24TH PL APT 103 DAVIE FL 33314
+      <strong>Service at: </strong>{{ selectedAddress$ | async }}
     </li>
-    <li class="list-group-item"><strong>Customer: </strong> Franz Bascope</li>
     <li class="list-group-item">
-      <div class="row">
-        <div class="col-md-6">
-          <strong>Customer Phone: </strong> Franz Bascope
-        </div>
-        <div class="col-md-6">
-          <strong>Customer Email: </strong> 305-549-0753
-        </div>
-      </div>
+      <strong>Customer: </strong>
+      {{ accountForm.firstName + " " + accountForm.lastName }}
+    </li>
+    <li class="list-group-item">
+      <strong>Customer Phone: </strong> {{ accountForm.phoneNumber }}
+    </li>
+    <li class="list-group-item">
+      <strong>Customer Email: </strong> {{ accountForm.email }}
     </li>
   </ul>
+  <div>
+    <div class="p-3 pb-0 d-flex text-orangered justify-content-between">
+      <h4 class="text-danger">
+        <fa-icon [icon]="faBars"></fa-icon>
+        <i class="fa fa-bars"></i>
+        Monthly:
+      </h4>
+      <h4 class="text-danger">
+        {{ getMonthlyTotalPrice(selectedProducts$ | async) | currency }}
+      </h4>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+    </ul>
+  </div>
+  <div>
+    <div class="p-3 pb-0 d-flex text-orangered justify-content-between">
+      <h4 class="text-danger">
+        <fa-icon [icon]="faBars"></fa-icon>
+        <i class="fa fa-bars"></i>
+        One Time:
+      </h4>
+      <h4 class="text-danger">$60.00</h4>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+    </ul>
+  </div>
+  <div>
+    <div class="p-3 pb-0 d-flex text-orangered justify-content-between">
+      <h4 class="text-danger">
+        <fa-icon [icon]="faBars"></fa-icon>
+        <i class="fa fa-bars"></i>
+        Due Today:
+      </h4>
+      <h4 class="text-danger">$60.00</h4>
+    </div>
+    <div class="m-2 d-flex justify-content-end">
+      <small class="text-danger">* Plus taxes and surcharges</small>
+    </div>
+  </div>
 </div>

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AddProduct } from '../interfaces/products/add-product';
-import { OffersInterface } from '../interfaces/products/offers-interface';
+import { OffersInterface, PriceTerm } from '../interfaces/products/offers-interface';
 import { Item, QuoteInterface } from '../../store/interfaces/quote';
+import { OffersService } from '../helpers/offers.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsBuilder {
 
-  constructor() { }
+  constructor(private offersService: OffersService) { }
 
   buildAddProduct(products: OffersInterface[]): AddProduct {
     let productsRequest = [];
@@ -33,9 +34,12 @@ export class ProductsBuilder {
   }
 
   mapSelectedProducts(products: OffersInterface[], selectedProducts) {
-    if (selectedProducts.length == 0)
-      return products;
     return products.map((product: OffersInterface) => {
+      product.pricePlan.priceTerm = product.pricePlan.priceTerm.map((priceTerm: PriceTerm) => {
+        priceTerm.discountedPrice = this.offersService.getReducedPrice(priceTerm);
+        return priceTerm;
+      })
+      product.bestPriceTerm = this.offersService.getBestPriceTerm(product);
       if (this.isProductSelected(product, selectedProducts))
         product.selected = true
       return product

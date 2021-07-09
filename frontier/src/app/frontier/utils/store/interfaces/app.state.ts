@@ -25,7 +25,7 @@ export interface Frontier {
   createQuoteResponse: CreateQuoteResponseInterface,
   quoteId: string,
   offers: OffersInterface[],
-  selectedProducts,
+  selectedProducts: OffersInterface[],
   customer: CustomerInterface,
   tasks: TaskInterface[],
   quote: QuoteInterface,
