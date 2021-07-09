@@ -27,9 +27,11 @@ export class OffersService {
 
 
   getReducedPrice(priceTerm: PriceTerm): number {
-    let discount = this.getBestDiscount(priceTerm);
-    if (discount) {
+    if (priceTerm.discount.length > 0) {
+      let discount = this.getBestDiscount(priceTerm);
       let discountedPrice = parseFloat(priceTerm.amount) + parseFloat(discount.amount);
+      if (isNaN(discountedPrice))
+        return parseFloat(priceTerm.amount);
       return Math.round(discountedPrice * 100) / 100;
     }
     return parseFloat(priceTerm.amount);

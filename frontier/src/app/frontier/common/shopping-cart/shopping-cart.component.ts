@@ -26,8 +26,11 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   getMonthlyTotalPrice(selectedProducts: OffersInterface[]): number {
-
-    return null;
+    let totalMonthly = 0;
+    for (let product of selectedProducts) {
+      totalMonthly += product.bestPriceTerm.discountedPrice;
+    }
+    return totalMonthly;
   }
 
   ngOnInit(): void {
