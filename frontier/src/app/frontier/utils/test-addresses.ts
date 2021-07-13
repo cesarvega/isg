@@ -7,9 +7,9 @@ export interface AddressFormInterface {
   zipCode: string,
 }
 const testFL: AddressFormInterface = {
-  addressLine1: '1339 Capri Dr Pacific',
+  addressLine1: '1339 Capri Dr',
   addressLine2: '',
-  city: 'Palisades',
+  city: 'Pacific Palisades',
   stateProvince: 'CA',
   zipCode: '90272',
   alias: 'Cooper CA'

@@ -37,14 +37,17 @@ export class QualificationApiService {
         )).toPromise();
   }
 
-  async addressPredictiveSearch(address: AddressInterface) {
+   addressPredictiveSearch(address: AddressInterface) {
     this.store.dispatch(addressSearchRequestAction(address));
     let addressPredictiveRequest = this.createAddressRequest(address);
-    let addressSearchResponse = await this.clientService
+    return  this.clientService
       .post(addressPredictiveSearchURL, addressPredictiveRequest)
+      .pipe(map((response)=>{
+        return response.addresses;
+      }),tap((response)=>{
+        this.store.dispatch(addressSearchResponseAction(response));
+      }))
       .toPromise();
-    this.store.dispatch(addressSearchResponseAction(addressSearchResponse));
-    return addressSearchResponse;
   }
   private createAddressRequest(
     address: AddressInterface
