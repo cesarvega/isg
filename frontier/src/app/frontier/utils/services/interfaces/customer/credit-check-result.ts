@@ -5,6 +5,7 @@ export interface CreditCheckResultInterface {
 }
 
 export interface CreditScoreInterface {
+    description: string,
     rating: string,
     model: string
 }

@@ -3,6 +3,34 @@ import { creditCheckInterface } from '../../utils/services/interfaces/customer/c
 
 export const creditCheckTestCases: creditCheckInterface[] = [
   {
+    alias: "Back Balance",
+    identityForm :{
+      ssn:"123456666",
+      dateOfBirth:"01/01/1921",
+    },
+    accountForm: {
+      firstName:"JOHN",
+      lastName: "VVEEXHMJYUXY",
+      email:"test@gmail.com",
+      phoneNumber:"3055490710",
+      secondaryPhoneNumber:"3055490710"
+    }
+  },
+  {
+    alias: "Challenge Questions",
+    identityForm :{
+      ssn:"666020683",
+      dateOfBirth:"12/20/1956",
+    },
+    accountForm: {
+      firstName:"JOHN W",
+      lastName: "VVEEXHMJYUXY",
+      email:"test@gmail.com",
+      phoneNumber:"3055490710",
+      secondaryPhoneNumber:"3055490710"
+    }
+  },
+  {
     alias: "CYNTHIA Credit Score C",
     identityForm: {
       ssn: "666316068",

@@ -2,10 +2,10 @@
   <h5 class="card-header">Credit Check Result</h5>
   <div class="card-body">
     <div>
-      <strong>Credit Check Reuslt:</strong>
-      <h3 class="ms-2 d-inline text-danger">
-        {{ creditCheckResult.creditScore.rating }}
-      </h3>
+      <strong>Credit Check Result:</strong>
+      <h5 class="ms-2 d-inline text-danger">
+        {{ creditCheckResult.creditScore.rating +" - "+ creditCheckResult.creditScore.description }}
+      </h5>
     </div>
     <div>
       <strong>Credit Bureau:</strong>

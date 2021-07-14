@@ -10,7 +10,8 @@ import { Subscription } from 'rxjs';
 import { CustomerContactBuilder } from '../builders/customer/customer-contact-builder';
 import { getValueFromState } from '../../get-value-from-state';
 import { AddressInterface } from '../interfaces/customer/customer';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { mapCreditCheckInformation } from 'src/app/frontier/pages/credit-check/helpers/mapCreditCheckInformation';
 
 
 @Injectable({
@@ -48,9 +49,14 @@ export class CustomerApiService {
     let endpoint = creditCheckURL;
     endpoint = endpoint.replace("{accountUuid}", customer.accountUuid);
     endpoint = endpoint.replace("{quoteId}", this.quoteId);
-    return await this.clientService.post(endpoint, null).pipe(tap((creditCheckResult) => {
-      this.store.dispatch(setCreditCheckResult({ creditCheckResult }))
-    })).toPromise();
+    return await this.clientService.post(endpoint, null).pipe(
+      map((response) => {
+        response.creditScore.description = mapCreditCheckInformation(response.creditScore.rating);
+        return response;
+      }),
+      tap((creditCheckResult) => {
+        this.store.dispatch(setCreditCheckResult({ creditCheckResult }))
+      })).toPromise();
   }
 
 }
