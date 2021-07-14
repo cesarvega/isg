@@ -17,6 +17,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { SecurityChallengeQuestionsRequestInterface } from './challenge-questions/helpers/interfaces/securityChallengeQuestionRequest.interface';
 
 @Component({
   selector: 'app-credit-check',
@@ -38,6 +39,7 @@ export class CreditCheckComponent implements OnInit {
   creditCheckTestCases = creditCheckTestCases;
   @ViewChild('accordion') accordionComponent: NgbAccordion;
   creditCheckResult$: Observable<CreditCheckResultInterface>;
+  displayChallengeQuestionsForm = false;
 
   constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
     , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: SnapshotStore, private store: Store<any>) {
@@ -102,8 +104,23 @@ export class CreditCheckComponent implements OnInit {
     }
     catch (error) {
       this.error = error;
+      window.scrollTo(0, 0);
     }
     this.loading = false;
+
+  }
+
+  displayCreditResult(creditCheckResult: CreditCheckResultInterface): boolean {
+    if (!creditCheckResult)
+      return false
+    return !this.displayQuestionsForm(creditCheckResult);
+  }
+
+  public displayQuestionsForm(creditCheckResult: CreditCheckResultInterface) {
+    return creditCheckResult?.fraudPrevention;
+  }
+
+  public async submitChallengeQuestions(request) {
 
   }
 

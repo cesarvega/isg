@@ -1,9 +1,16 @@
+<app-error-message [error]="error"></app-error-message>
 <app-credit-result
   [creditCheckResult]="creditCheckResult$ | async"
   (onContinue)="navigateToCustomization()"
-  *ngIf="creditCheckResult$ | async"
+  *ngIf="displayCreditResult(creditCheckResult$ | async)"
 >
 </app-credit-result>
+<app-challenge-questions
+  [creditCheckResult]="creditCheckResult$ | async"
+  (onContinue)="submitChallengeQuestions($event)"
+  *ngIf="displayQuestionsForm(creditCheckResult$ | async)"
+>
+</app-challenge-questions>
 <ng-container *ngIf="!displayCreditCheckResult(creditCheckResult$ | async)">
   <div class="alert alert-info" role="alert" *ngIf="!loading">
     <h6 class="alert-heading">
@@ -41,7 +48,6 @@
   <ngb-accordion
     *ngIf="showForm"
     #accordion="ngbAccordion"
-    destroyOnHide="false"
     activeIds="create-account-panel"
   >
     <ngb-panel id="create-account-panel">
@@ -84,7 +90,6 @@
         </div>
       </ng-template>
       <ng-template ngbPanelContent>
-        <app-error-message [error]="error"></app-error-message>
         <app-identity
           [loading]="loading"
           [identityFormValues]="identityFormValues"

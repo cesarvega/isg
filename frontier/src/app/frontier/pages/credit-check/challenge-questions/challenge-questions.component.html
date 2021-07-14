@@ -1,1 +1,20 @@
-<p>challenge-questions works!</p>
+<div class="alert alert-info" role="alert">
+  Please answer the following questions
+</div>
+<ul class="list-group list-group-numbered">
+  <li
+    *ngFor="
+      let question of creditCheckResult.fraudPrevention
+        .securityChallengeQuestions
+    "
+    class="list-group-item"
+  >
+    <strong>{{ question.question }}</strong>
+    <ul class="my-2 list-group list-group">
+      <li class="list-group-item" *ngFor="let answer of question.answerChoices">
+        <input class="form-check-input me-1" type="checkbox" value="" />
+        {{ answer.text }}
+      </li>
+    </ul>
+  </li>
+</ul>

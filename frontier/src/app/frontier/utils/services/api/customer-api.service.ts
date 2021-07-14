@@ -56,6 +56,8 @@ export class CustomerApiService {
       }),
       tap((creditCheckResult) => {
         this.store.dispatch(setCreditCheckResult({ creditCheckResult }))
+        if (creditCheckResult.fraudPrevention)
+          throw new Error("Customer needs to answer challenge questions");
       })).toPromise();
   }
 
