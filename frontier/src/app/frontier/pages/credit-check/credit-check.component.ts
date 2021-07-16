@@ -99,7 +99,7 @@ export class CreditCheckComponent implements OnInit {
       await this.getTasks();
       await this.tasksApiService.closeTask(customerDetailsTaskName);
       let creditCheckResponse = await this.customerApiService.creditCheck(null);
-      if (creditCheckResponse.fraudPrevention) {
+      if (creditCheckResponse.fraudPrevention && creditCheckResponse.fraudPrevention.length > 0) {
         return;
       }
       await this.getTasks();
@@ -120,7 +120,10 @@ export class CreditCheckComponent implements OnInit {
   }
 
   public displayQuestionsForm(creditCheckResult: CreditCheckResultInterface) {
-    return creditCheckResult?.fraudPrevention;
+    if (!creditCheckResult)
+      return false;
+    const fraudPrevention: any = creditCheckResult.fraudPrevention;
+    return fraudPrevention && fraudPrevention.length > 0
   }
 
   public async submitChallengeQuestions(request) {

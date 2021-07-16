@@ -6,6 +6,14 @@ export interface AddressFormInterface {
   stateProvince: string,
   zipCode: string,
 }
+const backBalance: AddressFormInterface = {
+  addressLine1: '7915 Ridgeside Ln',
+  addressLine2: '',
+  city: 'Fortwayne',
+  stateProvince: 'IN',
+  zipCode: '46835',
+  alias: 'Back Balance'
+};
 const testFL: AddressFormInterface = {
   addressLine1: '1339 Capri Dr',
   addressLine2: '',
@@ -33,5 +41,6 @@ const testMultiple: AddressFormInterface = {
 export const frontierTestAddresses: ReadonlyArray<AddressFormInterface> = [
   testFL,
   testVA,
-  testMultiple
+  testMultiple,
+  backBalance
 ]

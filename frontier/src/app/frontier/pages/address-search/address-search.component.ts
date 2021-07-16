@@ -71,7 +71,7 @@ export class AddressSearchComponent implements OnInit {
       let requestAddress = { address: address.addressLine1, ...address }
       delete requestAddress.addressLine1
       // search Address
-      let addresses = await this.qualificationApiService.addressPredictiveSearch(requestAddress);
+      let addresses = await this.qualificationApiService.addressExhaustiveSearch(requestAddress);
 
       if (addresses.length == 1) {
         await this.generateQuote(addresses[0]);
