@@ -98,7 +98,10 @@ export class CreditCheckComponent implements OnInit {
       await this.customerApiService.updateCustomer(identityForm, accountForm, this.address.address);
       await this.getTasks();
       await this.tasksApiService.closeTask(customerDetailsTaskName);
-      await this.customerApiService.creditCheck();
+      let creditCheckResponse = await this.customerApiService.creditCheck(null);
+      if (creditCheckResponse.fraudPrevention) {
+        return;
+      }
       await this.getTasks();
       await this.tasksApiService.closeTask(creditCheckTaskName);
     }

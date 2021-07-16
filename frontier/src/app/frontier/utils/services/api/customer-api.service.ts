@@ -44,20 +44,18 @@ export class CustomerApiService {
     ).toPromise();
   }
 
-  async creditCheck() {
+  async creditCheck(request = null) {
     let customer: CustomerInterface = getValueFromState(this.store.select(selectCustomer))
     let endpoint = creditCheckURL;
     endpoint = endpoint.replace("{accountUuid}", customer.accountUuid);
     endpoint = endpoint.replace("{quoteId}", this.quoteId);
-    return await this.clientService.post(endpoint, null).pipe(
+    return await this.clientService.post(endpoint, request).pipe(
       map((response) => {
         response.creditScore.description = mapCreditCheckInformation(response.creditScore.rating);
         return response;
       }),
       tap((creditCheckResult) => {
         this.store.dispatch(setCreditCheckResult({ creditCheckResult }))
-        if (creditCheckResult.fraudPrevention)
-          throw new Error("Customer needs to answer challenge questions");
       })).toPromise();
   }
 
