@@ -38,6 +38,15 @@ export class ChildOptionComponent implements OnInit {
     return counter;
   }
 
+  selectOpttion() {
+    if (!this.childEntity.Active) {
+      this.childEntity.Active = this.canActivate();
+    }
+    else {
+      this.childEntity.Active = false;
+    }
+  }
+
 
   canActivate() {
     this.childEntity.ChangedManually = true;
