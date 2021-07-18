@@ -37,6 +37,9 @@
       </h4>
     </div>
     <ul class="list-group list-group-flush">
+      <li class="list-group-item list-group-item-primary text-center">
+        Products
+      </li>
       <li
         class="list-group-item"
         *ngFor="let product of selectedProducts$ | async"
@@ -51,6 +54,9 @@
             }}</strong>
           </div>
         </div>
+      </li>
+      <li class="list-group-item list-group-item-primary text-center">
+        Customizations
       </li>
       <li
         class="list-group-item"
