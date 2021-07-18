@@ -15,6 +15,14 @@ export class ChildEntityConfigurationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  clearForm() {
+    for (let configureValue of this.childEntity.ConfiguredValue) {
+      if (configureValue.Value) {
+        configureValue.Value[0].Value = ""
+      }
+    }
+  }
+
   get ConfiguredValues() { return this.childEntity.ConfiguredValue; }
 
 }
