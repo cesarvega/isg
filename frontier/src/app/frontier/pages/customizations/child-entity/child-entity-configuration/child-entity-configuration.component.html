@@ -10,31 +10,33 @@
   </button>
 </div>
 <div class="modal-body">
-  <form class="row g-3">
-    <div class="col-md-6" *ngFor="let configureValue of ConfiguredValues">
+  <form
+    class="row g-3"
+    (ngSubmit)="onSubmit()"
+    #configurationForm="ngForm"
+    [ngClass]="this.submitted ? 'was-validated' : ''"
+  >
+    <div class="col-md-6" *ngFor="let configureValue of configurationValues">
       <label for="inputEmail4" class="form-label">{{
         configureValue.Name
       }}</label>
       <input
-        [attr.required]="configureValue.Mandatory"
+        required="{{ configureValue.Mandatory }}"
         [(ngModel)]="configureValue.Value[0].Value"
         name="{{ configureValue.Name }}"
         type="text"
         class="form-control"
         id="inputEmail4"
       />
+      <div class="invalid-feedback">
+        The field {{ configureValue.Name }} is required.
+      </div>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-danger me-3" (click)="clearForm()">
+        Clear Form
+      </button>
+      <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </form>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="clearForm()">
-    Clear Form
-  </button>
-  <button
-    type="button"
-    class="btn btn-primary"
-    (click)="activeModal.close('Close click')"
-  >
-    Save
-  </button>
 </div>
