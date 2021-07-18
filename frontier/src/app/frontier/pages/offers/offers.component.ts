@@ -126,7 +126,8 @@ export class OffersComponent implements OnInit {
 
   reviewOffers() {
     try {
-      this.gotProductsSelected(this.offers)
+      this.gotProductsSelected(this.constOffers)
+      console.log(this.addProducts)
     } catch (error) {
       this.error = error;
       return;
@@ -134,11 +135,16 @@ export class OffersComponent implements OnInit {
     this.showReviewPage = true;
   }
 
+  getSelectedOffersForReview() {
+    return this.constOffers.filter((offer) => {
+      return offer.selected
+    })
+  }
   async onContinue() {
     this.loading = true;
     this.showReviewPage = false;
     try {
-      this.gotProductsSelected(this.offers)
+      this.gotProductsSelected(this.addProducts)
       if (this.removeProducts.length > 0) {
         let quote = await this.getQuote(this.quoteId);
         await this.sendRemoveProductsApi(this.removeProducts, quote);

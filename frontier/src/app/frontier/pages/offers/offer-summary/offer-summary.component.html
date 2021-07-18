@@ -14,17 +14,27 @@
       </h4>
     </div>
   </li>
-  <li class="list-group-item" *ngFor="let product of offers">
+  <li class="list-group-item" *ngFor="let offer of offers">
     <div class="d-flex text-orangered justify-content-between">
       <p>
         <fa-icon
           class="text-danger me-2"
-          [icon]="getIcon(product.serviceType)"
+          [icon]="getIcon(offer.serviceType)"
         ></fa-icon>
-        {{ product.name }}
+        {{ offer.name }}
       </p>
-      <strong>{{ product.bestPriceTerm.discountedPrice | currency }}</strong>
+      <strong>{{ offer.bestPriceTerm.discountedPrice | currency }}</strong>
     </div>
+    <!-- <ng-container>
+      <strong>Discounts Applied</strong>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let discount of offer.discount">
+          <div class="d-flex justify-content-end">
+            <strong>{{ discount.amount | currency }}</strong>
+          </div>
+        </li>
+      </ul>
+    </ng-container> -->
   </li>
 </ul>
 

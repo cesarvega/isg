@@ -9,7 +9,7 @@
 </div>
 <app-error-message [error]="error"></app-error-message>
 <app-offer-summary
-  [offers]="addProducts"
+  [offers]="getSelectedOffersForReview()"
   (goBack)="showReviewPage = false"
   (submitOffers)="onContinue()"
   *ngIf="showReviewPage"
