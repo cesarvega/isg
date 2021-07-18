@@ -8,8 +8,13 @@
   </div>
 </div>
 <app-error-message [error]="error"></app-error-message>
-<app-offer-summary></app-offer-summary>
-<div *ngIf="!loading && offers.length > 0">
+<app-offer-summary
+  [offers]="addProducts"
+  (goBack)="showReviewPage = false"
+  (submitOffers)="onContinue()"
+  *ngIf="showReviewPage"
+></app-offer-summary>
+<div *ngIf="!showReviewPage && !loading && offers.length > 0">
   <div class="row">
     <div>
       <div class="alert alert-success p-3" role="alert">
@@ -34,5 +39,9 @@
       ></app-offer-detail>
     </div>
   </div>
-  <app-continue-button (onContinueEvent)="onContinue()"> </app-continue-button>
+  <app-continue-button
+    [name]="'Review Offers'"
+    (onContinueEvent)="reviewOffers()"
+  >
+  </app-continue-button>
 </div>

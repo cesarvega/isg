@@ -41,6 +41,7 @@ export class OffersComponent implements OnInit {
   alert: AlertInterface;
   faExclamationTriangle = faExclamationTriangle;
   selectedParsedAdress$: Observable<string>;
+  showReviewPage = false;
 
   public getParsedAddress = getParsedAddress;
 
@@ -123,9 +124,14 @@ export class OffersComponent implements OnInit {
       throw new Error("Need to select an Internet Product");
   }
 
-  async onContinue() {
+  reviewOffers() {
+    this.gotProductsSelected(this.addProducts)
+    this.showReviewPage = true;
+  }
 
+  async onContinue() {
     this.loading = true;
+    this.showReviewPage = false;
     try {
       this.gotProductsSelected(this.addProducts)
       if (this.removeProducts.length > 0) {
