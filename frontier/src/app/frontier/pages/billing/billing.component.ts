@@ -16,7 +16,7 @@ import { DepositCollectionResponseInterface } from './payment/interfaces/deposit
 import { DepositRequestInterface } from './payment/interfaces/deposit-request.interface';
 import { DepositResponse } from './payment/interfaces/deposit-requirements-response.interface';
 import { PaymentFormInterface } from './payment/interfaces/payment.form.interface';
-import { buildDepositCollectionRequest } from './payment/services/deposit-request-builder.service';
+import { buildDepositCollectionRequest, getTotalPayment } from './payment/services/deposit-request-builder.service';
 import { buildRequestGeneratePaymentToken } from './payment/services/payment-builder.service';
 import { lineOfBusiness } from './payment/utils/line-of-business';
 
@@ -39,11 +39,13 @@ export class BillingComponent implements OnInit {
   customer: CustomerInterface = null;
   CorrelationId: string;
   customerNeedsDeposit = true;
+  totalDueToday = 0;
 
   constructor(private depositApiService: DepositeApiService, private snapShotStore: SnapshotStore, private taskApiService: TasksApiService, private router: Router) {
 
 
   }
+
 
   async ngOnInit() {
     this.loading = true;
@@ -54,6 +56,7 @@ export class BillingComponent implements OnInit {
       await this.getTasks();
       // get deposit requirements
       this.depositRequirements = await this.getDepositRequirements();
+      this.totalDueToday = getTotalPayment(this.depositRequirements);
       this.customerNeedsDeposit = customerNeedsDepositHelper(this.depositRequirements);
       this.loading = false;
     } catch (error) {

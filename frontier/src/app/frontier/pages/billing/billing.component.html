@@ -10,10 +10,16 @@
 </div>
 <div *ngIf="!loading">
   <app-payment
+    *ngIf="totalDueToday > 0"
     [CorrelationId]="CorrelationId"
     [customer]="customer"
     (submitPayment)="submitPayment($event)"
     [depositRequirements]="depositRequirements"
     [loading]="loading"
   ></app-payment>
+  <app-no-payment
+    *ngIf="totalDueToday <= 0"
+    (continueEvent)="redirectToSchedule()"
+  >
+  </app-no-payment>
 </div>
