@@ -40,6 +40,7 @@ import { CustomerInformationComponent } from './pages/recap/customer-information
 import { ContinueButtonComponent } from './common/continue-button/continue-button.component';
 import { ChallengeQuestionsComponent } from './pages/credit-check/challenge-questions/challenge-questions.component';
 import { NoPaymentComponent } from './pages/billing/no-payment/no-payment.component';
+import { OfferSummaryComponent } from './pages/offers/offer-summary/offer-summary.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -75,6 +76,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ContinueButtonComponent,
     ChallengeQuestionsComponent,
     NoPaymentComponent,
+    OfferSummaryComponent,
   ],
   imports: [
     CommonModule,
