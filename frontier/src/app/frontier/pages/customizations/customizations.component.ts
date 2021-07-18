@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SnapshotStore } from '../../utils/services/state.service';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { QuoteApiService } from '../../utils/services/api/quote-api.service';
-import { setStepAction } from '../../utils/store/actions';
+import { removeAllCustomizations, setStepAction } from '../../utils/store/actions';
 import { parseHttperror } from '../../utils/helper-functions';
 import { ProductsApiService } from '../../utils/services/api/products-api.service';
 import { Item } from '../../utils/store/interfaces/quote';
@@ -40,6 +40,11 @@ export class CustomizationsComponent implements OnInit {
     this.wereDisclosuresAccepted = stateService.select(selectWereDisclosuresAccepted)
   }
 
+  ngOnInit(): void {
+    this.stateService.dispatch(removeAllCustomizations(null));
+    this.getQuote()
+  }
+
   isItemConfigurationCompleted(item: Item) {
     for (let childEntity of item.productConfiguration.ChildEntity) {
       if (!this.childEntityHelperService.isCustomizationCompleteFunctional(childEntity)) {
@@ -52,9 +57,7 @@ export class CustomizationsComponent implements OnInit {
     return item.completed
   }
 
-  ngOnInit(): void {
-    this.getQuote()
-  }
+
 
   async getQuote() {
     try {

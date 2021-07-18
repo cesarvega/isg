@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { CustomerInterface } from '../services/interfaces/customer/customer';
+import { ChildEntity } from './interfaces/quote';
 import { TaskInterface } from './interfaces/task-interface';
 
 export const addressSearchRequestAction = createAction('addressSearchRequest', props<any>());
@@ -29,4 +30,7 @@ export const setFundingAccountToken = createAction('setFundingAccountToken', pro
 export const setDepositCollectionResponse = createAction('setDepositCollectionResponse', props<{ depositCollectionResponse }>());
 export const setCreditCheckResult = createAction('setCreditCheckResult', props<{ creditCheckResult }>());
 export const setSubmitOrderResponse = createAction('setSubmitOrderResponse', props<{ order }>());
+export const setCustomization = createAction('setCustomization', props<{ customization: ChildEntity }>());
+export const removeCustomization = createAction('removeCustomization', props<{ customization }>());
+export const removeAllCustomizations = createAction('removeAllCustomizations', props<any>());
 

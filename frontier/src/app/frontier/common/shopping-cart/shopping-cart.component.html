@@ -28,7 +28,12 @@
         Monthly:
       </h4>
       <h4 class="text-danger">
-        {{ getMonthlyTotalPrice(selectedProducts$ | async) | currency }}
+        {{
+          getMonthlyTotalPrice(
+            selectedProducts$ | async,
+            monthlyCustomizations$ | async
+          ) | currency
+        }}
       </h4>
     </div>
     <ul class="list-group list-group-flush">
@@ -47,6 +52,19 @@
           </div>
         </div>
       </li>
+      <li
+        class="list-group-item"
+        *ngFor="let childEntity of monthlyCustomizations$ | async"
+      >
+        <div class="row" *ngFor="let price of childEntity.Price">
+          <div class="col-md-8">
+            {{ childEntity.Name }}
+          </div>
+          <div class="col-md-4">
+            <strong>{{ price.rateRecurring | currency }}</strong>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
   <div>
@@ -56,12 +74,29 @@
         <i class="fa fa-bars"></i>
         One Time:
       </h4>
-      <h4 class="text-danger">$60.00</h4>
+      <h4 class="text-danger">
+        {{
+          getOneTimeTotalPrice(
+            selectedProducts$ | async,
+            oneTimeCustomizations$ | async
+          ) | currency
+        }}
+      </h4>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
+      <li
+        class="list-group-item"
+        *ngFor="let childEntity of oneTimeCustomizations$ | async"
+      >
+        <div class="row" *ngFor="let price of childEntity.Price">
+          <div class="col-md-8">
+            {{ childEntity.Name }}
+          </div>
+          <div class="col-md-4">
+            <strong>{{ price.rateNonRecurring | currency }}</strong>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
   <div>

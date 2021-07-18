@@ -25,4 +25,5 @@ export const selectCustomerCreditCheckResult = (state: AppState) => state.fronti
 export const selectAccountForm = (state: AppState) => state.frontier.accountForm;
 export const selectSelectedAddressValues = (state: AppState) => state.frontier.selectedAddress.address;
 export const selectOrder = (state: AppState) => state.frontier.order;
+export const selectSelectedCustomizations = (state: AppState) => state.frontier.selectedCustomizations;
 

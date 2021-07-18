@@ -5,7 +5,7 @@ import { CreateQuoteInterface } from '../../services/interfaces/qualification/cr
 import { CreateQuoteResponseInterface } from '../../services/interfaces/qualification/create-quote-response';
 import { CustomerInterface } from '../../services/interfaces/customer/customer';
 import { TaskInterface } from './task-interface';
-import { QuoteInterface } from './quote';
+import { ChildEntity, QuoteInterface } from './quote';
 import { DisclosureInterface } from '../../services/interfaces/disclosures/disclosure-interface';
 import { ReservationInterface } from '../../../pages/billing/interfaces/reservation-interface';
 import { OffersInterface } from '../../services/interfaces/products/offers-interface';
@@ -41,6 +41,7 @@ export interface Frontier {
   fundingAccountToken: string,
   depositCollectionResponse: DepositCollectionResponseInterface,
   creditCheckResult: CreditCheckResultInterface,
-  order: SubmitOrderResponseInterface
+  order: SubmitOrderResponseInterface,
+  selectedCustomizations: ChildEntity[];
 }
 

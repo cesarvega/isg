@@ -7,7 +7,9 @@ import { getTotalPayment } from '../../pages/billing/payment/services/deposit-re
 import { AccountFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
 import { OffersInterface } from '../../utils/services/interfaces/products/offers-interface';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
-import { selectAccountForm, selectDepositRequirements, selectSelectedProducts } from '../../utils/store/selectors';
+import { selectMonthlyCustomizations, selectOneTimeCustomizations } from '../../utils/store/complexSelectors/customization-selectors';
+import { ChildEntity } from '../../utils/store/interfaces/quote';
+import { selectAccountForm, selectDepositRequirements, selectSelectedCustomizations, selectSelectedProducts } from '../../utils/store/selectors';
 
 @Component({
   selector: 'shopping-cart',
@@ -21,20 +23,41 @@ export class ShoppingCartComponent implements OnInit {
   selectedAddress$: Observable<string>;
   selectedProducts$: Observable<OffersInterface[]>;
   depositResponse$: Observable<DepositResponse>;
+  oneTimeCustomizations$: Observable<ChildEntity[]>;
+  monthlyCustomizations$: Observable<ChildEntity[]>;
+
 
   constructor(private store: Store<any>) {
     this.accountForm$ = this.store.select(selectAccountForm);
     this.selectedAddress$ = this.store.select(selectParsedAddress);
     this.selectedProducts$ = this.store.select(selectSelectedProducts);
     this.depositResponse$ = this.store.select(selectDepositRequirements);
+    this.oneTimeCustomizations$ = this.store.select(selectOneTimeCustomizations);
+    this.monthlyCustomizations$ = this.store.select(selectMonthlyCustomizations);
   }
 
-  getMonthlyTotalPrice(selectedProducts: OffersInterface[]): number {
+  getMonthlyTotalPrice(selectedProducts: OffersInterface[], monthlyCustomizations: ChildEntity[]): number {
     let totalMonthly = 0;
     for (let product of selectedProducts) {
       totalMonthly += product.bestPriceTerm.discountedPrice;
     }
+    for (let customization of monthlyCustomizations) {
+      for (let price of customization.Price) {
+        totalMonthly += parseFloat(price.rateRecurring);
+      }
+    }
     return totalMonthly;
+  }
+
+  getOneTimeTotalPrice(selectedProducts: OffersInterface[], oneTimeCustomizations: ChildEntity[]) {
+    let sum = 0;
+    for (let customization of oneTimeCustomizations) {
+      for (let price of customization.Price) {
+        sum += parseFloat(price.rateNonRecurring);
+      }
+    }
+    return sum;
+
   }
 
   getOneTimePrice(): number {

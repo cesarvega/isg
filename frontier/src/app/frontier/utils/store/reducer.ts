@@ -27,7 +27,10 @@ import {
   setFundingAccountToken,
   setDepositCollectionResponse,
   setCreditCheckResult,
-  setSubmitOrderResponse
+  setSubmitOrderResponse,
+  setCustomization,
+  removeCustomization,
+  removeAllCustomizations
 } from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../steps';
@@ -62,7 +65,8 @@ export const initialState: Frontier = {
   fundingAccountToken: null,
   depositCollectionResponse: null,
   creditCheckResult: null,
-  order: null
+  order: null,
+  selectedCustomizations: []
 };
 
 const _counterReducer = createReducer(
@@ -94,6 +98,14 @@ const _counterReducer = createReducer(
   on(setDepositCollectionResponse, (state, { depositCollectionResponse }) => ({ ...state, depositCollectionResponse })),
   on(setCreditCheckResult, (state, { creditCheckResult }) => ({ ...state, creditCheckResult })),
   on(setSubmitOrderResponse, (state, { order }) => ({ ...state, order })),
+  on(setCustomization, (state, { customization }) => ({ ...state, selectedCustomizations: state.selectedCustomizations.concat(customization) })),
+  on(removeCustomization, (state, { customization }) => ({
+    ...state,
+    selectedCustomizations: state.selectedCustomizations.filter((iterateCustomization) => {
+      return iterateCustomization.ID != customization.ID
+    })
+  })),
+  on(removeAllCustomizations, (state) => ({ ...state, selectedCustomizations: [] })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);

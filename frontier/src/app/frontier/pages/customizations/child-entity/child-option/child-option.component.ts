@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChildEntity } from '../../../../utils/store/interfaces/quote';
+import { ChildEntityService } from '../../helpers/child-entity.service';
 import { ChildEntityConfigurationComponent } from '../child-entity-configuration/child-entity-configuration.component';
 
 @Component({
@@ -16,7 +17,7 @@ export class ChildOptionComponent implements OnInit {
   faSquare = faSquare;
   faCheckSquare = faCheckSquare;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private childEntityService: ChildEntityService) { }
 
   ngOnInit(): void {
   }
@@ -42,12 +43,14 @@ export class ChildOptionComponent implements OnInit {
 
   selectOpttion() {
     if (!this.childEntity.Active) {
-      this.childEntity.Active = this.canActivate();
+      if (this.canActivate()) {
+        this.childEntityService.selectCustomization(this.childEntity);
+      }
       if (this.childEntity.ConfiguredValue)
         this.openConfigurationForm();
     }
     else {
-      this.childEntity.Active = false;
+      this.childEntityService.removeCustomization(this.childEntity);
     }
   }
 
@@ -59,7 +62,7 @@ export class ChildOptionComponent implements OnInit {
     // Validate when is multiple choice
     if (this.parentEntity.maximumActiveChildEntities == 1 && this.getParentSelectedOptions() > 0) {
       this.parentEntity.ChildEntity = this.parentEntity.ChildEntity.map((iterateChildEntity: ChildEntity) => {
-        iterateChildEntity.Active = false;
+        this.childEntityService.removeCustomization(iterateChildEntity);
         return iterateChildEntity
       })
 
