@@ -1,26 +1,39 @@
-<fa-icon
-  *ngIf="!childEntity.Active"
-  class="mx-2"
+<div
+  class="row p-2"
+  style="cursor: pointer"
   (click)="childEntity.Active = canActivate()"
-  [icon]="faSquare"
-></fa-icon>
-<fa-icon
-  (click)="childEntity.Active = false"
-  *ngIf="childEntity.Active"
-  class="mx-2"
-  [icon]="faCheckSquare"
-></fa-icon>
-<label *ngIf="!childEntity.ConfiguredValue" class="form-check-label">{{
-  childEntity.Name
-}}</label>
-<button *ngIf="childEntity.ConfiguredValue" class="btn btn-link">
-  {{ childEntity.Name }}
-</button>
-<ng-container *ngFor="let price of childEntity.Price">
-  <p *ngIf="price.rateNonRecurring">
-    One Time Price : {{ price.rateNonRecurring }}
-  </p>
-  <p *ngIf="price.rateRecurring">
-    Monthly Price : {{ price.rateRecurring }}
-  </p></ng-container
 >
+  <div class="col-md-9">
+    <fa-icon
+      *ngIf="!childEntity.Active"
+      class="mx-2"
+      [icon]="faSquare"
+    ></fa-icon>
+    <fa-icon
+      (click)="childEntity.Active = false"
+      *ngIf="childEntity.Active"
+      class="mx-2"
+      [icon]="faCheckSquare"
+    ></fa-icon>
+    <strong *ngIf="!childEntity.ConfiguredValue" class="form-check-label">{{
+      childEntity.Name
+    }}</strong>
+    <button *ngIf="childEntity.ConfiguredValue" class="btn btn-link">
+      {{ childEntity.Name }}
+    </button>
+  </div>
+  <div class="col-md-3">
+    <ng-container *ngFor="let price of childEntity.Price">
+      <div *ngIf="price.rateNonRecurring">
+        <strong class="text-danger">
+          {{ price.rateNonRecurring | currency }} / One Time</strong
+        >
+      </div>
+      <div *ngIf="price.rateRecurring">
+        <strong class="text-danger">
+          {{ price.rateRecurring | currency }} / Monthly</strong
+        >
+      </div>
+    </ng-container>
+  </div>
+</div>
