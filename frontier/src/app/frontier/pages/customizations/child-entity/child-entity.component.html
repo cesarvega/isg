@@ -51,18 +51,18 @@
         {{ childEntity.Name }}
       </button>
     </h2>
-    <div
-      class="accordion-body"
-      [attr.id]="childEntity.ID"
-      aria-labelledby="headingOne"
-    >
-      <ng-container *ngFor="let iterateChildEntity of childEntity.ChildEntity">
-        <app-child-entity
-          class="mx-2"
-          [childEntity]="iterateChildEntity"
-          [parentEntity]="childEntity"
-        ></app-child-entity>
-      </ng-container>
+    <div class="accordion-collapse collapse show" [attr.id]="childEntity.ID">
+      <div class="accordion-body" aria-labelledby="headingOne">
+        <ng-container
+          *ngFor="let iterateChildEntity of childEntity.ChildEntity"
+        >
+          <app-child-entity
+            class="mx-2"
+            [childEntity]="iterateChildEntity"
+            [parentEntity]="childEntity"
+          ></app-child-entity>
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>
