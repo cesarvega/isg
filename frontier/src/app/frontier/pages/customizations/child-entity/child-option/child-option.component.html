@@ -10,7 +10,12 @@
   class="mx-2"
   [icon]="faCheckSquare"
 ></fa-icon>
-<label class="form-check-label">{{ childEntity.Name }}</label>
+<label *ngIf="!childEntity.ConfiguredValue" class="form-check-label">{{
+  childEntity.Name
+}}</label>
+<button *ngIf="childEntity.ConfiguredValue" class="btn btn-link">
+  {{ childEntity.Name }}
+</button>
 <ng-container *ngFor="let price of childEntity.Price">
   <p *ngIf="price.rateNonRecurring">
     One Time Price : {{ price.rateNonRecurring }}

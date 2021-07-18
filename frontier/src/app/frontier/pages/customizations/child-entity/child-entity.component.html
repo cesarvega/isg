@@ -1,4 +1,36 @@
-<div class="accordion mx-2" id="accordionExample" *ngIf="shouldDisplay()">
+<ng-container *ngIf="!shouldDisplayTitle()">
+  <div [attr.id]="childEntity.ID" aria-labelledby="headingOne">
+    <div style="padding: 0rem 0.6rem">
+      <app-child-option
+        *ngIf="isEntitySelectable()"
+        [childEntity]="childEntity"
+        [parentEntity]="parentEntity"
+      ></app-child-option>
+      <div
+        *ngIf="childEntity.ConfiguredValue && !isEntitySelectable()"
+        class="mt-2 mb-2 d-grid"
+      >
+        <button
+          (click)="open(content)"
+          class="btn btn-outline-primary btn-large"
+        >
+          Configure {{ childEntity.Name }}
+        </button>
+      </div>
+    </div>
+    <ng-container *ngFor="let iterateChildEntity of childEntity.ChildEntity">
+      <app-child-entity
+        [childEntity]="iterateChildEntity"
+        [parentEntity]="childEntity"
+      ></app-child-entity>
+    </ng-container>
+  </div>
+</ng-container>
+<div
+  class="accordion"
+  id="accordionExample"
+  *ngIf="shouldDisplay() && shouldDisplayTitle()"
+>
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne" *ngIf="shouldDisplayTitle()">
       <button
@@ -20,11 +52,11 @@
       </button>
     </h2>
     <div
+      class="accordion-body"
       [attr.id]="childEntity.ID"
-      class="accordion-collapse collapse show"
       aria-labelledby="headingOne"
     >
-      <div class="accordion-body" style="padding: 0rem 0.6rem">
+      <div>
         <app-child-option
           *ngIf="isEntitySelectable()"
           [childEntity]="childEntity"
