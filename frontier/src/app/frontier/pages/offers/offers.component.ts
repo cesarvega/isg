@@ -125,7 +125,12 @@ export class OffersComponent implements OnInit {
   }
 
   reviewOffers() {
-    this.gotProductsSelected(this.addProducts)
+    try {
+      this.gotProductsSelected(this.offers)
+    } catch (error) {
+      this.error = error;
+      return;
+    }
     this.showReviewPage = true;
   }
 
@@ -133,7 +138,7 @@ export class OffersComponent implements OnInit {
     this.loading = true;
     this.showReviewPage = false;
     try {
-      this.gotProductsSelected(this.addProducts)
+      this.gotProductsSelected(this.offers)
       if (this.removeProducts.length > 0) {
         let quote = await this.getQuote(this.quoteId);
         await this.sendRemoveProductsApi(this.removeProducts, quote);
