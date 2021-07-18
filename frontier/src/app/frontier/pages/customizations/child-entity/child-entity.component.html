@@ -2,12 +2,12 @@
   <div [attr.id]="childEntity.ID" aria-labelledby="headingOne">
     <div style="padding: 0rem 0.6rem">
       <app-child-option
-        *ngIf="isEntitySelectable()"
+        *ngIf="isEntitySelectable() && childEntity.Price"
         [childEntity]="childEntity"
         [parentEntity]="parentEntity"
       ></app-child-option>
       <div
-        *ngIf="childEntity.ConfiguredValue && !isEntitySelectable()"
+        *ngIf="childEntity.ConfiguredValue && !childEntity.Price"
         class="mt-2 mb-2 d-grid"
       >
         <button
@@ -56,21 +56,6 @@
       [attr.id]="childEntity.ID"
       aria-labelledby="headingOne"
     >
-      <div>
-        <app-child-option
-          *ngIf="isEntitySelectable()"
-          [childEntity]="childEntity"
-          [parentEntity]="parentEntity"
-        ></app-child-option>
-        <div *ngIf="childEntity.ConfiguredValue" class="d-grid gap-2 m-2">
-          <button
-            (click)="open(content)"
-            class="btn btn-outline-primary btn-large"
-          >
-            Configure {{ childEntity.Name }}
-          </button>
-        </div>
-      </div>
       <ng-container *ngFor="let iterateChildEntity of childEntity.ChildEntity">
         <app-child-entity
           class="mx-2"
