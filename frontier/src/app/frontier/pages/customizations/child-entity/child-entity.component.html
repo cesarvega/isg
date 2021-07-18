@@ -2,7 +2,9 @@
   <div [attr.id]="childEntity.ID" aria-labelledby="headingOne">
     <div style="padding: 0rem 0.6rem">
       <app-child-option
-        *ngIf="isEntitySelectable() && childEntity.Price"
+        *ngIf="
+          (isEntitySelectable() && childEntity.Price) || childEntity.ChildEntity
+        "
         [childEntity]="childEntity"
         [parentEntity]="parentEntity"
       ></app-child-option>
@@ -12,9 +14,15 @@
       >
         <button
           (click)="open(content)"
-          class="btn btn-outline-primary btn-large"
+          ngClass="{{
+            childEntity.Active ? 'btn btn-success' : 'btn btn-outline-primary'
+          }}"
         >
-          Configure {{ childEntity.Name }}
+          {{
+            childEntity.Active
+              ? childEntity.Name + " configurated correctly"
+              : "Configure " + childEntity.Name
+          }}
         </button>
       </div>
     </div>

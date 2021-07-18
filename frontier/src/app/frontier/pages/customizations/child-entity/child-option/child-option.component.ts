@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChildEntity } from '../../../../utils/store/interfaces/quote';
+import { ChildEntityConfigurationComponent } from '../child-entity-configuration/child-entity-configuration.component';
 
 @Component({
   selector: 'app-child-option',
@@ -14,7 +16,7 @@ export class ChildOptionComponent implements OnInit {
   faSquare = faSquare;
   faCheckSquare = faCheckSquare;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +43,8 @@ export class ChildOptionComponent implements OnInit {
   selectOpttion() {
     if (!this.childEntity.Active) {
       this.childEntity.Active = this.canActivate();
+      if (this.childEntity.ConfiguredValue)
+        this.openConfigurationForm();
     }
     else {
       this.childEntity.Active = false;
@@ -79,6 +83,11 @@ export class ChildOptionComponent implements OnInit {
         counter++
     }
     return counter;
+  }
+
+  openConfigurationForm() {
+    const modalRef = this.modalService.open(ChildEntityConfigurationComponent);
+    modalRef.componentInstance.childEntity = this.childEntity;
   }
 
 }

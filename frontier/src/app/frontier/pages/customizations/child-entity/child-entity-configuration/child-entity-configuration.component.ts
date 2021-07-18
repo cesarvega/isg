@@ -32,7 +32,9 @@ export class ChildEntityConfigurationComponent implements OnInit {
     this.submitted = true;
     if (this.configurationForm.valid) {
       this.childEntity.ConfiguredValue = this.configurationValues;
-      console.log(this.childEntity.ConfiguredValue);
+      if (this.childEntity.hasOwnProperty('Active')) {
+        this.childEntity.Active = true;
+      }
       this.activeModal.close('Close click')
     }
   }
