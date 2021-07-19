@@ -26,8 +26,6 @@ export const displayCreditCheckStep = (step: StepInterface, currentStep: StepInt
 export const displayCustomizationsStep = (step: StepInterface, currentStep: StepInterface) => {
     if (!displayStep(step, currentStep))
         return false;
-    if (currentStep.name === Steps.disclosuresStep.name)
-        return true
     return false;
 }
 

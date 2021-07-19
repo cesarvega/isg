@@ -1,0 +1,77 @@
+<form
+  [ngClass]="this.submitted ? 'was-validated' : ''"
+  novalidate=""
+  #billingAddressForm="ngForm"
+>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label for="address" class="form-label">* Street Address:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="addressLine1"
+        id="address"
+        [(ngModel)]="address.addressLine1"
+        placeholder="1234 Main St"
+        required
+      />
+      <div class="invalid-feedback">Please enter your address.</div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="address2" class="form-label">Apt / Suite Number: </label>
+      <input
+        name="addressLine2"
+        [(ngModel)]="address.addressLine2"
+        type="text"
+        class="form-control"
+        id="address2"
+        placeholder="Apt 101"
+      />
+    </div>
+
+    <div class="col-md-5">
+      <label for="country" class="form-label">* City</label>
+      <input
+        [(ngModel)]="address.city"
+        type="text"
+        required
+        name="city"
+        class="form-control"
+        id="address2"
+        placeholder="New York"
+      />
+      <div class="invalid-feedback">City field is required.</div>
+    </div>
+
+    <div class="col-md-3">
+      <label for="zip" class="form-label">* Zip Code</label>
+      <input
+        type="text"
+        name="zipCode"
+        [(ngModel)]="address.zipCode"
+        class="form-control"
+        id="zip"
+        placeholder="12345"
+        required
+      />
+      <div class="invalid-feedback">Zip Code field is required.</div>
+    </div>
+    <div class="col-md-4">
+      <label for="state" class="form-label">* State</label>
+      <select
+        name="stateProvince"
+        class="form-select"
+        [(ngModel)]="address.stateProvince"
+        id="state"
+        required
+      >
+        <option value="">Choose a State</option>
+        <option [value]="state.value" *ngFor="let state of states">
+          {{ state.name }}
+        </option>
+      </select>
+      <div class="invalid-feedback">Please provide a valid state.</div>
+    </div>
+  </div>
+</form>
