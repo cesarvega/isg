@@ -14,6 +14,8 @@ const backBalance: AddressFormInterface = {
   zipCode: '46835',
   alias: 'Back Balance'
 };
+
+
 const testFL: AddressFormInterface = {
   addressLine1: '1339 Capri Dr',
   addressLine2: '',
@@ -38,9 +40,46 @@ const testMultiple: AddressFormInterface = {
   zipCode: '86404',
   alias: 'Multiple Address AZ'
 };
+
+const cooperAZ: AddressFormInterface = {
+  addressLine1: '2352 ACOMA DR',
+  addressLine2: '',
+  city: 'BULLHEAD CITY',
+  stateProvince: 'AZ',
+  zipCode: '86442',
+  alias: 'cooperAZ'
+};
+const fiosCA: AddressFormInterface = {
+  addressLine1: '6566 DOLBOW WY',
+  addressLine2: '',
+  city: 'ARBUCKLE',
+  stateProvince: 'CA',
+  zipCode: '95912',
+  alias: 'fiosCA'
+};
+const vantageCooperCT: AddressFormInterface = {
+  addressLine1: '23 BAILEY RD',
+  addressLine2: '',
+  city: 'ANDOVER',
+  stateProvince: 'CT',
+  zipCode: '06232',
+  alias: 'vantageCooperCT'
+};
+const vantageFiberOptic: AddressFormInterface = {
+  addressLine1: '902 W PETTIT AVE',
+  addressLine2: '',
+  city: 'FORT WAYNE',
+  stateProvince: 'IN',
+  zipCode: '46807',
+  alias: 'vantageFiberOptic'
+};
 export const frontierTestAddresses: ReadonlyArray<AddressFormInterface> = [
   testFL,
   testVA,
   testMultiple,
-  backBalance
+  backBalance,
+  cooperAZ,
+  fiosCA,
+  vantageCooperCT,
+  vantageFiberOptic
 ]
