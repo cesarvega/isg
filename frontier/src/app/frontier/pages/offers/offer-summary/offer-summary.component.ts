@@ -8,6 +8,7 @@ import { OffersInterface } from 'src/app/frontier/utils/services/interfaces/prod
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faTty } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-offer-summary',
   templateUrl: './offer-summary.component.html',
@@ -22,6 +23,7 @@ export class OfferSummaryComponent implements OnInit {
   faArrowRight = faArrowRight;
   faVoice = faTty;
   faPlus = faPlus
+  faMinus = faMinus;
   @Output() goBack = new EventEmitter();
   @Output() submitOffers = new EventEmitter();
   @Input() offers: OffersInterface[];
