@@ -40,7 +40,12 @@ export class AccountComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true
-    if (this.accountForm.valid && this.isBillingAddressValid(this.billingAddress)) {
+    if (this.accountForm.valid) {
+      if (this.showBillingAddressForm) {
+        if (!this.isBillingAddressValid(this.billingAddress)) {
+          return;
+        }
+      }
       let values = this.accountForm.value;
       values.billingAddress = this.billingAddress;
       this.submitAccountForm.emit(values);
