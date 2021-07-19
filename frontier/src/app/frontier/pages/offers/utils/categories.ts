@@ -22,8 +22,8 @@ export const categories: Category[] = [
         icon: "faVoice"
     },
     {
-        name: "Add Ons",
+        name: "Frontier Secure",
         value: addOnsServiceType,
-        icon: "faPlus"
+        icon: "faShieldAlt"
     }
 ]

@@ -3,6 +3,7 @@ import { faWifi } from '@fortawesome/free-solid-svg-icons';
 import { faTty } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Category } from '../utils/categories';
+import { faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-categories',
@@ -16,6 +17,7 @@ export class CategoriesComponent implements OnInit {
   faWifi = faWifi;
   faVoice = faTty;
   faPlus = faPlus
+  faShieldAlt = faShieldAlt;
   constructor() { }
 
   ngOnInit(): void {
@@ -38,8 +40,8 @@ export class CategoriesComponent implements OnInit {
         return faWifi;
       case "faVoice":
         return this.faVoice;
-      case "faPlus":
-        return this.faPlus;
+      case "faShieldAlt":
+        return this.faShieldAlt;
     }
   }
 
