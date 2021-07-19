@@ -48,6 +48,9 @@ export class IdentityComponent implements OnInit {
       if (this.loading) {
         this.verifyIdentityForm.disable();
       }
+      else {
+        this.verifyIdentityForm.enable();
+      }
     }
 
   }
