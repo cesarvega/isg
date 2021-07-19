@@ -8,6 +8,7 @@ import { DisclosureInterface } from '../../utils/services/interfaces/disclosures
 import { SnapshotStore } from '../../utils/services/state.service';
 import { Steps } from '../../utils/steps';
 import { setStepAction } from '../../utils/store/actions';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -17,7 +18,7 @@ import { setStepAction } from '../../utils/store/actions';
   styleUrls: ['./disclosure.component.css']
 })
 export class DisclosureComponent implements OnInit {
-
+  production = environment.production;
   quoteId: string;
   disclosures: DisclosureInterface[];
   loading: boolean = false;
@@ -53,6 +54,12 @@ export class DisclosureComponent implements OnInit {
 
   toggleDisclosure(disclosureName: string) {
     this.accordionComponent.toggle(disclosureName)
+  }
+
+  acceptAllDisclosures() {
+    for (let disclosure of this.disclosures) {
+      disclosure.status = "ACCEPT"
+    }
   }
 
   async submitDisclosures() {

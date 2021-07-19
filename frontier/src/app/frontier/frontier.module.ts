@@ -43,6 +43,7 @@ import { NoPaymentComponent } from './pages/billing/no-payment/no-payment.compon
 import { OfferSummaryComponent } from './pages/offers/offer-summary/offer-summary.component';
 import { BillingAddressComponent } from './pages/credit-check/account/billing-address/billing-address.component';
 import { TestCaseSelectorComponent } from './common/test-case-selector/test-case-selector.component';
+import { LoaderComponent } from './common/loader/loader.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -81,6 +82,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     OfferSummaryComponent,
     BillingAddressComponent,
     TestCaseSelectorComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,

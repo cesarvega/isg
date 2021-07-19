@@ -1,13 +1,5 @@
 <app-error-message [error]="error"></app-error-message>
-<div *ngIf="loading" style="display: flex; justify-content: center">
-  <div
-    class="spinner-border text-primary"
-    role="status"
-    style="width: 4rem; height: 4rem"
-  >
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</div>
+<app-loader [loading]="loading"></app-loader>
 <ng-container *ngIf="!loading">
   <div class="alert alert-info" role="alert">
     <h6 class="alert-heading">Disclosures</h6>
@@ -45,6 +37,13 @@
   </ngb-accordion>
 
   <div class="mt-4">
+    <button
+      class="btn btn-info"
+      *ngIf="!production"
+      (click)="acceptAllDisclosures()"
+    >
+      Accept all disclosures
+    </button>
     <app-continue-button (onContinueEvent)="submitDisclosures()">
     </app-continue-button>
   </div>
