@@ -17,7 +17,6 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SecurityChallengeQuestionsRequestInterface } from './challenge-questions/helpers/interfaces/securityChallengeQuestionRequest.interface';
 
 @Component({
   selector: 'app-credit-check',
@@ -81,9 +80,9 @@ export class CreditCheckComponent implements OnInit {
     this.submitCreditCheckInformation(identityForm, this.accountFormValues)
   }
 
-  onSelectTestCase() {
+  onSelectTestCase(selectedTestCase) {
     let testCase: creditCheckInterface = this.creditCheckTestCases.find((testCase) => {
-      return testCase.alias === this.selectedTestCase
+      return testCase.alias === selectedTestCase
     })
     if (testCase) {
       this.accountFormValues = testCase.accountForm;

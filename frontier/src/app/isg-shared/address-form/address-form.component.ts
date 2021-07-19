@@ -7,6 +7,7 @@ import { Output, EventEmitter } from '@angular/core';
 import { AddressInterface } from '../interfaces/address';
 import { AddressFormInterface } from '../../frontier/utils/test-addresses';
 import { AddressSearchResponseItemInterface } from 'src/app/frontier/utils/services/interfaces/qualification/address-search-response';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-address-form',
@@ -17,6 +18,7 @@ export class AddressFormComponent implements OnInit {
 
   constructor(private addressFormBuilder: FormBuilder) { }
 
+  production = environment.production;
   @Input() selectedAddress: AddressSearchResponseItemInterface
   @Input() testAddresses: Array<AddressFormInterface>;
   @Input() loading: boolean;

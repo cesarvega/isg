@@ -158,22 +158,9 @@
       <button class="btn btn-danger" type="submit">Submit Payment</button>
     </div>
   </form>
-  <div class="col-md-4">
-    <label class="text-primary" style="font-weight: bold"
-      >Select a Test Address</label
-    >
-    <select
-      class="form-select mt-2"
-      [(ngModel)]="selectedTestPaymentAlias"
-      (change)="onSelectTestCase(selectedTestPaymentAlias)"
-    >
-      <option>Select Address</option>
-      <option
-        [value]="testPayment.alias"
-        *ngFor="let testPayment of testPayments"
-      >
-        {{ testPayment.alias }}
-      </option>
-    </select>
-  </div>
+  <app-test-case-selector
+    [testCases]="testPayments"
+    (selectTestCase)="onSelectTestCase($event)"
+  >
+  </app-test-case-selector>
 </ng-container>
