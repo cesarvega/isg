@@ -43,7 +43,7 @@ export class OfferSummaryComponent implements OnInit {
         return faWifi;
       case "Voice":
         return this.faVoice;
-      case "Broadband":
+      case "Frontier Secure":
         return this.faPlus;
     }
   }
