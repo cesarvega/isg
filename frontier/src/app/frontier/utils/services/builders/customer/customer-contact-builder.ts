@@ -21,7 +21,7 @@ export class CustomerContactBuilder {
       accountName: accountForm.firstName + " " + accountForm.lastName,
       firstName: accountForm.firstName,
       lastName: accountForm.lastName,
-      billing: { billingAddress: requestAddress },
+      billing: { billingAddress: accountForm.billingAddress ? accountForm.billingAddress : requestAddress },
       communicationPreferences: {
         item: [
           {

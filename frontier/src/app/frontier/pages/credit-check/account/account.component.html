@@ -64,6 +64,26 @@
     />
     <div class="invalid-feedback">Secondary Phone Number is required.</div>
   </div>
+  <div class="alert alert-primary" role="alert">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        (change)="showBillingAddressForm = !showBillingAddressForm"
+        [checked]="showBillingAddressForm"
+        id="differntBillingAddress"
+      />
+      <label class="form-check-label" for="differntBillingAddress">
+        Is your billing address different that you service address?
+      </label>
+    </div>
+  </div>
+  <ng-container *ngIf="showBillingAddressForm">
+    <strong class="text-danger">Please enter your billing address</strong>
+    <app-billing-address [address]="billingAddress"></app-billing-address>
+  </ng-container>
+
   <div class="col-12 d-flex justify-content-end">
     <button type="submit" class="btn btn-danger">Continue</button>
   </div>
