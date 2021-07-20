@@ -1,4 +1,4 @@
-const urlPrefix = "/frontier/";
+const urlPrefix = "";
 
 export interface StepInterface {
   url: string,

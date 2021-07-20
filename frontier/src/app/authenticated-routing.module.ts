@@ -7,7 +7,7 @@ const routes: Routes = [
         component: MainComponent,
         children: [
             {
-                path: 'frontier',
+                path: '',
                 loadChildren: () => import('./frontier/frontier-routing.module')
                     .then(m => m.FrontierRoutingModule),
             },
