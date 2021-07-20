@@ -1,4 +1,4 @@
-const urlPrefix = "";
+const urlPrefix = "/";
 
 export interface StepInterface {
   url: string,

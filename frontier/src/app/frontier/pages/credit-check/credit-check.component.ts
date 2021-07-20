@@ -72,7 +72,7 @@ export class CreditCheckComponent implements OnInit {
 
   private async determineNumberPortability(phoneNumber) {
     const voiceProducts = this.selectedProducts.filter((product) => {
-      return product.serviceType = "Voice";
+      return product.serviceType === "Voice";
     });
     if (voiceProducts.length > 0) {
       this.loading = true;

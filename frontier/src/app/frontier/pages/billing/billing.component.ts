@@ -19,6 +19,8 @@ import { PaymentFormInterface } from './payment/interfaces/payment.form.interfac
 import { buildDepositCollectionRequest, getTotalPayment } from './payment/services/deposit-request-builder.service';
 import { buildRequestGeneratePaymentToken } from './payment/services/payment-builder.service';
 import { lineOfBusiness } from './payment/utils/line-of-business';
+import { environment } from 'src/environments/environment';
+import { posIdHoldTaskName } from '../../utils/taskNames';
 
 @Component({
   selector: 'app-billing',
@@ -54,6 +56,10 @@ export class BillingComponent implements OnInit {
       this.CorrelationId = this.snapShotStore.select(selectCorrelationId);
       // get tasks
       await this.getTasks();
+      // close post id task, only in dev environment
+      if (!environment.production) {
+        await this.taskApiService.closeTask(posIdHoldTaskName);
+      }
       // get deposit requirements
       this.depositRequirements = await this.getDepositRequirements();
       this.totalDueToday = getTotalPayment(this.depositRequirements);
