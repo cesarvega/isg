@@ -45,6 +45,12 @@
       <label class="form-check-label" for="flexCheckChecked"> No </label>
     </div>
   </div>
+  <ngb-alert
+    *ngIf="alertMessage"
+    [type]="success"
+    (closed)="alertMessage = null"
+    >{{ alertMessage }}</ngb-alert
+  >
   <ngb-accordion
     *ngIf="showForm"
     #accordion="ngbAccordion"
@@ -68,6 +74,7 @@
       </ng-template>
       <ng-template ngbPanelContent>
         <app-account
+          [loading]="loading"
           [accountFormValues]="accountFormValues"
           (submitAccountForm)="submitAccountForm($event)"
         ></app-account>

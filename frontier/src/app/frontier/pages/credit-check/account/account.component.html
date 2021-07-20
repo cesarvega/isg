@@ -85,6 +85,11 @@
   </ng-container>
 
   <div class="col-12 d-flex justify-content-end">
-    <button type="submit" class="btn btn-danger">Continue</button>
+    <button *ngIf="!loading" type="submit" class="btn btn-danger">
+      Continue
+    </button>
+    <div *ngIf="loading" class="spinner-border text-danger" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
 </form>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ClientService } from 'src/app/isg-shared/client/client.service';
 import { CustomerInterface } from '../interfaces/customer/customer';
-import { getCustomerURL, creditCheckURL } from '../endpoints/customer';
+import { getCustomerURL, creditCheckURL, getNumberPortabiltyURL } from '../endpoints/customer';
 import { Store } from '@ngrx/store';
 import { setCustomerAction, setCustomerForms, setCreditCheckResult } from '../../store/actions';
 import { AccountFormInterface, IdentityFormInterface } from '../interfaces/customer/credit-check-form';
@@ -12,6 +12,8 @@ import { getValueFromState } from '../../get-value-from-state';
 import { AddressInterface } from '../interfaces/customer/customer';
 import { map, tap } from 'rxjs/operators';
 import { mapCreditCheckInformation } from 'src/app/frontier/pages/credit-check/helpers/mapCreditCheckInformation';
+import { NumberPortabilityRequestInterface } from '../interfaces/customer/number-portability-request';
+import { NumberPortabilityResponse } from '../interfaces/customer/number-portability-response';
 
 
 @Injectable({
@@ -44,12 +46,12 @@ export class CustomerApiService {
     ).toPromise();
   }
 
-  async creditCheck(request = null) {
+  creditCheck(request = null) {
     let customer: CustomerInterface = getValueFromState(this.store.select(selectCustomer))
     let endpoint = creditCheckURL;
     endpoint = endpoint.replace("{accountUuid}", customer.accountUuid);
     endpoint = endpoint.replace("{quoteId}", this.quoteId);
-    return await this.clientService.post(endpoint, request).pipe(
+    return this.clientService.post(endpoint, request).pipe(
       map((response) => {
         response.creditScore.description = mapCreditCheckInformation(response.creditScore.rating);
         return response;
@@ -57,6 +59,18 @@ export class CustomerApiService {
       tap((creditCheckResult) => {
         this.store.dispatch(setCreditCheckResult({ creditCheckResult }))
       })).toPromise();
+  }
+
+  numberPortability(phoneNumber): Promise<NumberPortabilityResponse> {
+    const endpoint = getNumberPortabiltyURL(this.quoteId);
+    const request: NumberPortabilityRequestInterface = {
+      phoneNumbers: [
+        {
+          phoneNumber
+        }
+      ]
+    }
+    return this.clientService.put(endpoint, request).toPromise()
   }
 
 }

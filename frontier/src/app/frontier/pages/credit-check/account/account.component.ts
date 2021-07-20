@@ -10,6 +10,7 @@ import { AccountFormInterface } from '../../../utils/services/interfaces/custome
 })
 export class AccountComponent implements OnInit {
   @Input() accountFormValues: any;
+  @Input() loading;
   accountForm: FormGroup;
   selectedTestCase: string;
   showBillingAddressForm = false;

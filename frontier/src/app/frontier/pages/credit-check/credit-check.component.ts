@@ -17,6 +17,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { OffersInterface } from '../../utils/services/interfaces/products/offers-interface';
 
 @Component({
   selector: 'app-credit-check',
@@ -39,6 +40,8 @@ export class CreditCheckComponent implements OnInit {
   @ViewChild('accordion') accordionComponent: NgbAccordion;
   creditCheckResult$: Observable<CreditCheckResultInterface>;
   displayChallengeQuestionsForm = false;
+  selectedProducts: OffersInterface[] = [];
+  alertMessage: string;
 
   constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
     , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: SnapshotStore, private store: Store<any>) {
@@ -55,6 +58,7 @@ export class CreditCheckComponent implements OnInit {
     this.address = this.stateService.select(selectSelectedAddress)
     this.accountFormValues = this.stateService.getFrontierState().accountForm;
     this.identityFormValues = this.stateService.getFrontierState().identityForm;
+    this.selectedProducts = this.stateService.getFrontierState().selectedProducts;
   }
 
   ngAfterViewInit() {
@@ -66,8 +70,22 @@ export class CreditCheckComponent implements OnInit {
     return await this.tasksApiService.getTasks();
   }
 
+  private async determineNumberPortability(phoneNumber) {
+    const voiceProducts = this.selectedProducts.filter((product) => {
+      return product.serviceType = "Voice";
+    });
+    if (voiceProducts.length > 0) {
+      this.loading = true;
+      const response = await this.customerApiService.numberPortability(phoneNumber);
+      this.loading = false;
+      if (response.isPortable) {
+        this.alertMessage = `Congratulations your Phone Number ${response.phoneNumber} is Portable`;
+      }
+    }
+  }
 
-  submitAccountForm(accountForm) {
+  async submitAccountForm(accountForm) {
+    await this.determineNumberPortability(accountForm.phoneNumber);
     this.accountFormValues = accountForm;
     this.accordionComponent.toggle("create-account-panel");
     if (this.accordionComponent.activeIds.length == 0) {
