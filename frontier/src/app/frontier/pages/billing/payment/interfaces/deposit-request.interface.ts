@@ -1,4 +1,5 @@
 export interface DepositRequestInterface {
+    accountId?: AccountIdInterface,
     lineOfBusiness: string,
     payment: PaymentInterface,
     emailAddress: string,
@@ -17,15 +18,16 @@ export interface PaymentInterface {
 export interface ApportioningInterface {
     accountId: AccountIdInterface,
     amount: number,
-    reason: ReasonInterface
+    reason: ReasonInterface,
 }
 
 export interface AccountIdInterface {
     phoneNumber: PhoneNumberInterface,
+    uuid: string
 }
 export interface PhoneNumberInterface {
-    phoneNumber: string,
-    sequenceNumber: string,
+    phoneNumber: number,
+    sequenceNumber: number,
 }
 
 export interface ReasonInterface {

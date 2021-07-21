@@ -10,7 +10,7 @@ import { SnapshotStore } from '../../utils/services/state.service';
 import { Steps } from '../../utils/steps';
 import { setStepAction } from '../../utils/store/actions';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
-import { selectCorrelationId, selectCustomer, selectCustomerCreditCheckResult, selectDepositRequirements } from '../../utils/store/selectors';
+import { selectCorrelationId, selectCustomer, selectCustomerCreditCheckResult, selectDepositRequirements, selectFrontier } from '../../utils/store/selectors';
 import { customerNeedsDepositHelper } from './helpers/customer-needs-deposit';
 import { DepositCollectionResponseInterface } from './payment/interfaces/deposit-collection-response.interface';
 import { DepositRequestInterface } from './payment/interfaces/deposit-request.interface';
@@ -43,6 +43,7 @@ export class BillingComponent implements OnInit {
   CorrelationId: string;
   customerNeedsDeposit = true;
   totalDueToday = 0;
+  isBusiness: boolean;
 
   constructor(private depositApiService: DepositeApiService, private snapShotStore: SnapshotStore, private taskApiService: TasksApiService, private router: Router) {
 
@@ -55,6 +56,7 @@ export class BillingComponent implements OnInit {
     try {
       this.customer = this.snapShotStore.select(selectCustomer);
       this.CorrelationId = this.snapShotStore.select(selectCorrelationId);
+      this.isBusiness = this.snapShotStore.getFrontierState().isBusiness;
       // get tasks
       await this.getTasks();
       // close post id task, only in dev environment
@@ -95,15 +97,7 @@ export class BillingComponent implements OnInit {
     return depositRequirements
   }
 
-  private getEmailFromCustomer = (customer: CustomerInterface) => {
-    const primaryContact: ContactInterface = customer.contacts.item.find((contactItem) => {
-      return contactItem.primary;
-    });
-    if (primaryContact) {
-      return primaryContact.emailAddresses.item[0].address;
-    }
-    return '';
-  }
+
 
   async submitPayment(paymentFormValues) {
     this.loading = true;
@@ -112,7 +106,7 @@ export class BillingComponent implements OnInit {
       const fundingAccountToken = await this.generatePaymentToken(paymentFormValues, lineOfBusiness, this.CorrelationId);
       // deposit collection
       await this.depositCollection(this.depositRequirements, fundingAccountToken,
-        paymentFormValues, this.getEmailFromCustomer(this.customer));
+        paymentFormValues, this.customer);
 
       this.redirectToSchedule();
 
@@ -124,7 +118,8 @@ export class BillingComponent implements OnInit {
   }
 
   depositCollection(depositRequirements, fundingAccountToken: string, payment: PaymentFormInterface, email) {
-    const request: DepositRequestInterface = buildDepositCollectionRequest(depositRequirements, fundingAccountToken, payment, email);
+    const request: DepositRequestInterface = buildDepositCollectionRequest(depositRequirements,
+      fundingAccountToken, payment, this.customer, this.isBusiness);
     return this.depositApiService.depositCollection(request);
   }
 

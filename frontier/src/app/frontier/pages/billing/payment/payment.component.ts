@@ -5,11 +5,9 @@ import { DepositeApiService } from '../../../utils/services/api/deposit-api.serv
 import { ErrorInterface } from '../../../utils/services/interfaces/common/error-interface';
 import { CustomerInterface } from '../../../utils/services/interfaces/customer/customer';
 import { PaymentFormInterface } from './interfaces/payment.form.interface';
-import { buildRequestGeneratePaymentToken } from './services/payment-builder.service';
 import { paymentTestCases } from './test-cases/payment.test.cases';
 import { customerTypes } from './utils/customer.types';
 import { buildDepositCollectionRequest, getTotalPayment } from './services/deposit-request-builder.service';
-import { DepositRequestInterface } from './interfaces/deposit-request.interface';
 import { Output, EventEmitter } from '@angular/core';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { DepositResponse } from './interfaces/deposit-requirements-response.interface';
@@ -82,16 +80,5 @@ export class PaymentComponent implements OnInit {
       this.submitPayment.emit(this.paymentForm.value);
     }
   }
-
-  depositCollection(depositRequirements, fundingAccountToken: string, payment: PaymentFormInterface, email) {
-    const request: DepositRequestInterface = buildDepositCollectionRequest(depositRequirements, fundingAccountToken, payment, email);
-    return this.depositApiService.depositCollection(request);
-  }
-
-  async generatePaymentToken(formValues, lineOfBusiness, CorrelationId: string) {
-    const request = buildRequestGeneratePaymentToken(formValues, lineOfBusiness, CorrelationId);
-    return await this.depositApiService.generatePaymentToken(this.customer.accountUuid, request);
-  }
-
 
 }

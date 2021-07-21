@@ -13,6 +13,7 @@ import { DepositCollectionResponseInterface } from "../../../pages/billing/payme
 import { CreditCheckResultInterface } from '../../services/interfaces/customer/credit-check-result';
 import { SubmitOrderResponseInterface } from '../../services/interfaces/order/submit-order-response.interface';
 export interface Frontier {
+  isBusiness?: boolean;
   transactionId: string,
   currentStep: any
   loading: boolean,
