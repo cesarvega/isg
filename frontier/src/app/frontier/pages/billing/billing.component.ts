@@ -10,7 +10,7 @@ import { SnapshotStore } from '../../utils/services/state.service';
 import { Steps } from '../../utils/steps';
 import { setStepAction } from '../../utils/store/actions';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
-import { selectCorrelationId, selectCustomer, selectDepositRequirements } from '../../utils/store/selectors';
+import { selectCorrelationId, selectCustomer, selectCustomerCreditCheckResult, selectDepositRequirements } from '../../utils/store/selectors';
 import { customerNeedsDepositHelper } from './helpers/customer-needs-deposit';
 import { DepositCollectionResponseInterface } from './payment/interfaces/deposit-collection-response.interface';
 import { DepositRequestInterface } from './payment/interfaces/deposit-request.interface';
@@ -21,6 +21,7 @@ import { buildRequestGeneratePaymentToken } from './payment/services/payment-bui
 import { lineOfBusiness } from './payment/utils/line-of-business';
 import { environment } from 'src/environments/environment';
 import { posIdHoldTaskName } from '../../utils/taskNames';
+import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
 
 @Component({
   selector: 'app-billing',
@@ -58,7 +59,10 @@ export class BillingComponent implements OnInit {
       await this.getTasks();
       // close post id task, only in dev environment
       if (!environment.production) {
-        await this.taskApiService.closeTask(posIdHoldTaskName);
+        const creditCheckResult: CreditCheckResultInterface = this.snapShotStore.select(selectCustomerCreditCheckResult);
+        if (creditCheckResult.creditScore.rating === "P" || creditCheckResult.creditScore.rating === "Z") {
+          await this.taskApiService.closeTask(posIdHoldTaskName);
+        }
       }
       // get deposit requirements
       this.depositRequirements = await this.getDepositRequirements();
