@@ -15,12 +15,12 @@ import { getTaskByNameFromState, isTaskClosedSelector } from '../../store/comple
 export class TasksApiService {
   taskEndpoint: TaskEndpoint
 
-  constructor(private clientService: ClientService, private store: Store<any>, private stateService: SnapshotStore) {
+  constructor(private clientService: ClientService, private store: Store<any>, private snapShotStore: SnapshotStore) {
     this.taskEndpoint = new TaskEndpoint()
   }
 
   async getTasks(): Promise<TaskInterface[]> {
-    let quoteId = this.stateService.getQuoteId();
+    let quoteId = this.snapShotStore.getQuoteId();
     let endpoint = this.taskEndpoint.getTasksEndpoint(quoteId);
     return this.clientService.getAll(endpoint).pipe(
       map((response) => {
@@ -33,11 +33,11 @@ export class TasksApiService {
   }
 
   async closeTask(taskName: string) {
-    let quoteId = this.stateService.getQuoteId();
-    let isTaskClosed = this.stateService.select(isTaskClosedSelector(taskName))
+    let quoteId = this.snapShotStore.getQuoteId();
+    let isTaskClosed = this.snapShotStore.select(isTaskClosedSelector(taskName))
     if (isTaskClosed)
       return
-    let task = this.stateService.select(getTaskByNameFromState(taskName));
+    let task = this.snapShotStore.select(getTaskByNameFromState(taskName));
     if (!task) {
       throw new Error(`Task: ${taskName} not foun`)
     }

@@ -31,17 +31,17 @@ export class CustomizationsComponent implements OnInit {
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
 
-  constructor(private stateService: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
+  constructor(private snapShotStore: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router) {
-    this.quoteId = stateService.getQuoteId();
-    this.selectOfferTask = stateService.select(getTaskByNameFromState(offerTaskIdName))
-    this.numberPortabilityTask = stateService.select(getTaskByNameFromState(numberPortabilityTaskName))
-    this.wasQuoteValidated = stateService.select(selectWasQuoteValidated);
-    this.wereDisclosuresAccepted = stateService.select(selectWereDisclosuresAccepted)
+    this.quoteId = snapShotStore.getQuoteId();
+    this.selectOfferTask = snapShotStore.select(getTaskByNameFromState(offerTaskIdName))
+    this.numberPortabilityTask = snapShotStore.select(getTaskByNameFromState(numberPortabilityTaskName))
+    this.wasQuoteValidated = snapShotStore.select(selectWasQuoteValidated);
+    this.wereDisclosuresAccepted = snapShotStore.select(selectWereDisclosuresAccepted)
   }
 
   ngOnInit(): void {
-    this.stateService.dispatch(removeAllCustomizations(null));
+    this.snapShotStore.dispatch(removeAllCustomizations(null));
     this.getQuote()
   }
 
@@ -118,7 +118,7 @@ export class CustomizationsComponent implements OnInit {
 
 
   private redirectToDisclosures() {
-    this.stateService.dispatch(setStepAction({ step: Steps.disclosuresStep }))
+    this.snapShotStore.dispatch(setStepAction({ step: Steps.disclosuresStep }))
     this.router.navigate([Steps.disclosuresStep.url]);
   }
 }

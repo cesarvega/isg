@@ -26,10 +26,10 @@ export class DisclosureComponent implements OnInit {
   @ViewChild('accordion') accordionComponent: NgbAccordion;
 
   constructor(
-    private disclosuresApiService: DisclosuresApiService, private stateService: SnapshotStore, private router: Router, private store: Store<any>) { }
+    private disclosuresApiService: DisclosuresApiService, private snapShotStore: SnapshotStore, private router: Router, private store: Store<any>) { }
 
   ngOnInit(): void {
-    this.quoteId = this.stateService.getQuoteId();
+    this.quoteId = this.snapShotStore.getQuoteId();
     this.getDiscloures()
   }
 

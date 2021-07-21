@@ -45,7 +45,7 @@ export class OffersComponent implements OnInit {
 
   public getParsedAddress = getParsedAddress;
 
-  constructor(private store: Store<any>, private stateService: SnapshotStore, private productsApiService: ProductsApiService, private router: Router, private quoteApiService: QuoteApiService, private productBuilder: ProductsBuilder) {
+  constructor(private store: Store<any>, private snapShotStore: SnapshotStore, private productsApiService: ProductsApiService, private router: Router, private quoteApiService: QuoteApiService, private productBuilder: ProductsBuilder) {
 
   }
 
@@ -58,7 +58,7 @@ export class OffersComponent implements OnInit {
   async initComponent() {
     this.loading = true;
     try {
-      this.quoteId = this.stateService.getQuoteId();
+      this.quoteId = this.snapShotStore.getQuoteId();
       await this.getOffers();
       this.selectCategoriesOnInit();
     } catch (error) {
@@ -150,7 +150,7 @@ export class OffersComponent implements OnInit {
       }
       if (this.addProducts.length > 0)
         await this.sendAddProductsApi(this.addProducts, this.quoteId);
-      this.stateService.dispatch(setStepAction({ step: Steps.creditCheckStep }))
+      this.snapShotStore.dispatch(setStepAction({ step: Steps.creditCheckStep }))
       this.router.navigate([Steps.creditCheckStep.url]);
     } catch (error) {
       this.loading = false;

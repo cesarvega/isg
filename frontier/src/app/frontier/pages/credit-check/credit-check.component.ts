@@ -11,13 +11,14 @@ import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Steps } from '../../utils/steps';
 import { SnapshotStore } from '../../utils/services/state.service';
-import { creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
+import { changeCustomerDetailsTaskName, creditCheckTaskName, customerDetailsTaskName } from '../../utils/taskNames';
 import { creditCheckTestCases } from './test-cases';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { OffersInterface } from '../../utils/services/interfaces/products/offers-interface';
+import { getTasksByNameLocal } from '../../utils/store/complexSelectors/taks';
 
 @Component({
   selector: 'app-credit-check',
@@ -44,7 +45,7 @@ export class CreditCheckComponent implements OnInit {
   alertMessage: string;
 
   constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
-    , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private stateService: SnapshotStore, private store: Store<any>) {
+    , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private snapShotStore: SnapshotStore, private store: Store<any>) {
   }
 
   displayCreditCheckResult(creditCheckResult) {
@@ -54,11 +55,11 @@ export class CreditCheckComponent implements OnInit {
 
   ngOnInit(): void {
     this.creditCheckResult$ = this.store.select(selectCustomerCreditCheckResult)
-    this.quoteId = this.stateService.select(selectQuoteId);
-    this.address = this.stateService.select(selectSelectedAddress)
-    this.accountFormValues = this.stateService.getFrontierState().accountForm;
-    this.identityFormValues = this.stateService.getFrontierState().identityForm;
-    this.selectedProducts = this.stateService.getFrontierState().selectedProducts;
+    this.quoteId = this.snapShotStore.select(selectQuoteId);
+    this.address = this.snapShotStore.select(selectSelectedAddress)
+    this.accountFormValues = this.snapShotStore.getFrontierState().accountForm;
+    this.identityFormValues = this.snapShotStore.getFrontierState().identityForm;
+    this.selectedProducts = this.snapShotStore.getFrontierState().selectedProducts;
   }
 
   ngAfterViewInit() {
@@ -113,8 +114,12 @@ export class CreditCheckComponent implements OnInit {
 
     try {
       await this.customerApiService.updateCustomer(identityForm, accountForm, this.address.address);
-      await this.getTasks();
-      await this.tasksApiService.closeTask(customerDetailsTaskName);
+      const tasks = await this.getTasks();
+      if (getTasksByNameLocal(tasks, customerDetailsTaskName)) {
+        await this.tasksApiService.closeTask(customerDetailsTaskName);
+      } else {
+        await this.tasksApiService.closeTask(changeCustomerDetailsTaskName);
+      }
       let creditCheckResponse = await this.customerApiService.creditCheck(null);
       if (creditCheckResponse.fraudPrevention && creditCheckResponse.fraudPrevention.length > 0) {
         return;
@@ -148,7 +153,7 @@ export class CreditCheckComponent implements OnInit {
   }
 
   navigateToCustomization() {
-    this.stateService.dispatch(setStepAction({ step: Steps.customizationStep }))
+    this.snapShotStore.dispatch(setStepAction({ step: Steps.customizationStep }))
     this.router.navigate([Steps.customizationStep.url]);
 
   }

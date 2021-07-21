@@ -18,11 +18,11 @@ import { getValueFromState } from '../../get-value-from-state';
 export class DepositeApiService {
   depositEndpoints = new DepositEndpoints();
 
-  constructor(private clientService: ClientService, private store: Store<any>, private stateService: SnapshotStore) {
+  constructor(private clientService: ClientService, private store: Store<any>, private snapShotStore: SnapshotStore) {
   }
 
   async getDepositRequirements(): Promise<DepositResponse> {
-    const quoteId = this.stateService.getQuoteId();
+    const quoteId = this.snapShotStore.getQuoteId();
     const url = this.depositEndpoints.getDepositRequirementEndpoint();
     return await this.clientService.getAll(url, { quoteId }).
       pipe(
@@ -34,7 +34,7 @@ export class DepositeApiService {
 
   // tslint:disable-next-line:typedef
   async depositCollection(request: DepositRequestInterface) {
-    const quoteId = this.stateService.getQuoteId();
+    const quoteId = this.snapShotStore.getQuoteId();
     const url = this.depositEndpoints.getDepositEndpoint(quoteId);
     return await this.clientService.post(url, request).pipe(
       tap((depositCollectionResponse) => {

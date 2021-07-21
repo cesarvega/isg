@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SnapshotStore } from './state.service';
 
-describe('StateService', () => {
+describe('snapShotStore', () => {
   let service: SnapshotStore;
 
   beforeEach(() => {

@@ -10,10 +10,10 @@ import { BillingEndpoints } from './endpoints/billing-endpoints';
 export class BillingApiService {
   billingEndpoints = new BillingEndpoints();
 
-  constructor(private stateService: SnapshotStore, private clientService: ClientService) { }
+  constructor(private snapShotStore: SnapshotStore, private clientService: ClientService) { }
 
   getBillPreview() {
-    let quoteId = this.stateService.getQuoteId();
+    let quoteId = this.snapShotStore.getQuoteId();
     let params = { quoteId };
     let endpoint = this.billingEndpoints.getBillPreviewEndpoint();
     return this.clientService.getAll(endpoint, params).pipe(map((billingPreviewResponse) => {
