@@ -61,6 +61,8 @@ const buildApportioning = (depositRequirements: DepositResponse, customer: Custo
       }
     }
   )
+  if (!depositRequirements.backBalances)
+    return apportioningItems
   for (let backBalance of depositRequirements.backBalances) {
     const apportioning: ApportioningInterface = {
       accountId,
