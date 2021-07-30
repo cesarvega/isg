@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AccountFormInterface } from 'src/app/frontier/utils/services/interfaces/customer/credit-check-form';
+import { CreditFormInterface } from 'src/app/frontier/utils/services/interfaces/customer/credit-check-form';
 
 @Component({
   selector: 'app-customer-information',
@@ -8,7 +8,7 @@ import { AccountFormInterface } from 'src/app/frontier/utils/services/interfaces
 })
 export class CustomerInformationComponent implements OnInit {
 
-  @Input() accountForm: AccountFormInterface;
+  @Input() creditForm: CreditFormInterface;
   @Input() parsedAddress: string;
 
   constructor() { }

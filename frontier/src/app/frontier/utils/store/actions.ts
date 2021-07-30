@@ -33,4 +33,5 @@ export const setSubmitOrderResponse = createAction('setSubmitOrderResponse', pro
 export const setCustomization = createAction('setCustomization', props<{ customization: ChildEntity }>());
 export const removeCustomization = createAction('removeCustomization', props<{ customization }>());
 export const removeAllCustomizations = createAction('removeAllCustomizations', props<any>());
+export const setCreditForm = createAction('setCreditForm', props<{ creditForm }>());
 

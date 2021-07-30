@@ -30,7 +30,8 @@ import {
   setSubmitOrderResponse,
   setCustomization,
   removeCustomization,
-  removeAllCustomizations
+  removeAllCustomizations,
+  setCreditForm
 } from './actions';
 import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../steps';
@@ -66,7 +67,8 @@ export const initialState: Frontier = {
   depositCollectionResponse: null,
   creditCheckResult: null,
   order: null,
-  selectedCustomizations: []
+  selectedCustomizations: [],
+  creditForm: null
 };
 
 const _counterReducer = createReducer(
@@ -106,6 +108,7 @@ const _counterReducer = createReducer(
     })
   })),
   on(removeAllCustomizations, (state) => ({ ...state, selectedCustomizations: [] })),
+  on(setCreditForm, (state, { creditForm }) => ({ ...state, creditForm })),
 );
 export function FrontierReducer(state, action) {
   return _counterReducer(state, action);

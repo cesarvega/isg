@@ -22,8 +22,8 @@ export const selectCorrelationId = (state: AppState) => state.frontier.Correlati
 export const selectFundingAccountToken = (state: AppState) => state.frontier.fundingAccountToken;
 export const selectDepositCollectionResponse = (state: AppState) => state.frontier.depositCollectionResponse;
 export const selectCustomerCreditCheckResult = (state: AppState) => state.frontier.creditCheckResult;
-export const selectAccountForm = (state: AppState) => state.frontier.accountForm;
 export const selectSelectedAddressValues = (state: AppState) => state.frontier.selectedAddress.address;
 export const selectOrder = (state: AppState) => state.frontier.order;
 export const selectSelectedCustomizations = (state: AppState) => state.frontier.selectedCustomizations;
+export const selectCreditForm = (state: AppState) => state.frontier.creditForm;
 

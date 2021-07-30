@@ -3,8 +3,8 @@ import { ClientService } from 'src/app/isg-shared/client/client.service';
 import { CustomerInterface } from '../interfaces/customer/customer';
 import { getCustomerURL, creditCheckURL, getNumberPortabiltyURL } from '../endpoints/customer';
 import { Store } from '@ngrx/store';
-import { setCustomerAction, setCustomerForms, setCreditCheckResult } from '../../store/actions';
-import { AccountFormInterface, IdentityFormInterface } from '../interfaces/customer/credit-check-form';
+import { setCustomerAction, setCustomerForms, setCreditCheckResult, setCreditForm } from '../../store/actions';
+import { CreditFormInterface } from '../interfaces/customer/credit-check-form';
 import { selectCustomer, selectQuoteId } from '../../store/selectors';
 import { Subscription } from 'rxjs';
 import { CustomerContactBuilder } from '../builders/customer/customer-contact-builder';
@@ -34,13 +34,13 @@ export class CustomerApiService {
     this.quoteSubscription.unsubscribe();
   }
 
-  updateCustomer(identityForm: IdentityFormInterface, accountForm: AccountFormInterface, address: AddressInterface) {
+  updateCustomer(creditForm: CreditFormInterface, address: AddressInterface) {
     let previousCustomer = getValueFromState(this.store.select(selectCustomer));
-    let customer = this.customerContactBuilder.buildAccountAndVerifyInformation(accountForm, identityForm, previousCustomer, address);
+    let customer = this.customerContactBuilder.buildAccountAndVerifyInformation(creditForm, previousCustomer, address);
     let endpoint = getCustomerURL + "/" + customer.accountUuid;
     return this.clientService.patch(endpoint, this.quoteId, customer).pipe(
       tap(() => {
-        this.store.dispatch(setCustomerForms({ accountForm, identityForm }))
+        this.store.dispatch(setCreditForm({ creditForm }))
         this.store.dispatch(setCustomerAction({ customer }))
       })
     ).toPromise();

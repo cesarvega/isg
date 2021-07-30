@@ -4,20 +4,20 @@
   </h5>
   <ul
     class="list-group list-group-flush mt-3"
-    *ngIf="accountForm$ | async as accountForm"
+    *ngIf="creditForm$ | async as creditForm"
   >
     <li class="list-group-item">
       <strong>Service at: </strong>{{ selectedAddress$ | async }}
     </li>
     <li class="list-group-item">
       <strong>Customer: </strong>
-      {{ accountForm.firstName + " " + accountForm.lastName }}
+      {{ creditForm.firstName + " " + creditForm.lastName }}
     </li>
     <li class="list-group-item">
-      <strong>Customer Phone: </strong> {{ accountForm.phoneNumber }}
+      <strong>Customer Phone: </strong> {{ creditForm.phoneNumber }}
     </li>
     <li class="list-group-item">
-      <strong>Customer Email: </strong> {{ accountForm.email }}
+      <strong>Customer Email: </strong> {{ creditForm.email }}
     </li>
   </ul>
   <div>

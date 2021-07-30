@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerApiService } from '../../utils/services/api/customer-api.service';
 import { CustomerContactBuilder } from '../../utils/services/builders/customer/customer-contact-builder';
-import { IdentityFormInterface, AccountFormInterface, creditCheckInterface } from '../../utils/services/interfaces/customer/credit-check-form';
+import { CreditFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
 import { selectCustomerCreditCheckResult, selectQuoteId, selectSelectedAddress } from '../../utils/store/selectors';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
 import { setStepAction } from '../../utils/store/actions';
@@ -32,8 +32,6 @@ export class CreditCheckComponent implements OnInit {
   quoteId;
   customerDetailTask: TaskInterface;
   address;
-  accountFormValues: any = null;
-  identityFormValues: any = null;
   loading: Boolean = false;
   error: ErrorInterface = null;
   selectedTestCase: string;
@@ -43,6 +41,7 @@ export class CreditCheckComponent implements OnInit {
   displayChallengeQuestionsForm = false;
   selectedProducts: OffersInterface[] = [];
   alertMessage: string;
+  creditFormValues: CreditFormInterface;
 
   constructor(private customerApiService: CustomerApiService, private customerContactBuilder: CustomerContactBuilder
     , private tasksApiService: TasksApiService, private route: ActivatedRoute, private router: Router, private snapShotStore: SnapshotStore, private store: Store<any>) {
@@ -57,16 +56,9 @@ export class CreditCheckComponent implements OnInit {
     this.creditCheckResult$ = this.store.select(selectCustomerCreditCheckResult)
     this.quoteId = this.snapShotStore.select(selectQuoteId);
     this.address = this.snapShotStore.select(selectSelectedAddress)
-    this.accountFormValues = this.snapShotStore.getFrontierState().accountForm;
-    this.identityFormValues = this.snapShotStore.getFrontierState().identityForm;
     this.selectedProducts = this.snapShotStore.getFrontierState().selectedProducts;
   }
 
-  ngAfterViewInit() {
-    if (this.identityFormValues && this.accordionComponent) {
-      this.accordionComponent.toggle("verify-identity-panel");
-    }
-  }
   async getTasks() {
     return await this.tasksApiService.getTasks();
   }
@@ -85,35 +77,22 @@ export class CreditCheckComponent implements OnInit {
     }
   }
 
-  async submitAccountForm(accountForm) {
-    await this.determineNumberPortability(accountForm.phoneNumber);
-    this.accountFormValues = accountForm;
-    this.accordionComponent.toggle("create-account-panel");
-    if (this.accordionComponent.activeIds.length == 0) {
-      this.accordionComponent.toggle("verify-identity-panel");
-    }
-  }
-
-  submitIdentityForm(identityForm) {
-    this.identityFormValues = identityForm;
-    this.submitCreditCheckInformation(identityForm, this.accountFormValues)
-  }
 
   onSelectTestCase(selectedTestCase) {
-    let testCase: creditCheckInterface = this.creditCheckTestCases.find((testCase) => {
+    let testCase: CreditFormInterface = this.creditCheckTestCases.find((testCase) => {
       return testCase.alias === selectedTestCase
     })
     if (testCase) {
-      this.accountFormValues = testCase.accountForm;
-      this.identityFormValues = testCase.identityForm;
+      this.creditFormValues = testCase;
     }
   }
 
-  private async submitCreditCheckInformation(identityForm: IdentityFormInterface, accountForm: AccountFormInterface) {
+
+  private async submitCreditCheckInformation(creditForm: CreditFormInterface) {
     this.loading = true;
 
     try {
-      await this.customerApiService.updateCustomer(identityForm, accountForm, this.address.address);
+      await this.customerApiService.updateCustomer(creditForm, this.address.address);
       const tasks = await this.getTasks();
       if (getTasksByNameLocal(tasks, customerDetailsTaskName)) {
         await this.tasksApiService.closeTask(customerDetailsTaskName);

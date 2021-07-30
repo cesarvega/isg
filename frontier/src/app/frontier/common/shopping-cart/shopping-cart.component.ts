@@ -4,12 +4,12 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DepositResponse } from '../../pages/billing/payment/interfaces/deposit-requirements-response.interface';
 import { getTotalPayment } from '../../pages/billing/payment/services/deposit-request-builder.service';
-import { AccountFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
+import { CreditFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
 import { OffersInterface } from '../../utils/services/interfaces/products/offers-interface';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
 import { selectMonthlyCustomizations, selectOneTimeCustomizations } from '../../utils/store/complexSelectors/customization-selectors';
 import { ChildEntity } from '../../utils/store/interfaces/quote';
-import { selectAccountForm, selectDepositRequirements, selectSelectedCustomizations, selectSelectedProducts } from '../../utils/store/selectors';
+import { selectCreditForm, selectDepositRequirements, selectSelectedCustomizations, selectSelectedProducts } from '../../utils/store/selectors';
 
 @Component({
   selector: 'shopping-cart',
@@ -19,7 +19,7 @@ import { selectAccountForm, selectDepositRequirements, selectSelectedCustomizati
 export class ShoppingCartComponent implements OnInit {
 
   faBars = faBars;
-  accountForm$: Observable<AccountFormInterface>;
+  creditForm$: Observable<CreditFormInterface>;
   selectedAddress$: Observable<string>;
   selectedProducts$: Observable<OffersInterface[]>;
   depositResponse$: Observable<DepositResponse>;
@@ -28,7 +28,7 @@ export class ShoppingCartComponent implements OnInit {
 
 
   constructor(private store: Store<any>) {
-    this.accountForm$ = this.store.select(selectAccountForm);
+    this.creditForm$ = this.store.select(selectCreditForm);
     this.selectedAddress$ = this.store.select(selectParsedAddress);
     this.selectedProducts$ = this.store.select(selectSelectedProducts);
     this.depositResponse$ = this.store.select(selectDepositRequirements);

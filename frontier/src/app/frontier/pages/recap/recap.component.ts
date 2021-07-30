@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
 import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
-import { AccountFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
+import { CreditFormInterface } from '../../utils/services/interfaces/customer/credit-check-form';
 import { Steps } from '../../utils/steps';
 import { setStepAction } from '../../utils/store/actions';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
-import { selectAccountForm } from '../../utils/store/selectors';
+import { selectCreditForm } from '../../utils/store/selectors';
 import { acceptQuoteTaskName, billPreviewTaskName } from '../../utils/taskNames';
 import { BillingApiService } from '../confirmation/services/billing-api.service';
 
@@ -24,13 +24,13 @@ export class RecapComponent implements OnInit {
   error: ErrorInterface;
   loading = false;
   billPreviewHtml;
-  accountForm$: Observable<AccountFormInterface>;
+  creditForm$: Observable<CreditFormInterface>;
   selectedParsedAddress$: Observable<string>
 
   constructor(private billingApiService: BillingApiService, private sanitizer: DomSanitizer,
     private taskApiService: TasksApiService, private quoteApiService: QuoteApiService
     , private store: Store<any>, private router: Router) {
-    this.accountForm$ = this.store.select(selectAccountForm);
+    this.creditForm$ = this.store.select(selectCreditForm);
     this.selectedParsedAddress$ = this.store.select(selectParsedAddress);
   }
 

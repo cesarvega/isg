@@ -11,8 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OfferDetailComponent } from './pages/offers/offer-detail/offer-detail.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreditCheckComponent } from './pages/credit-check/credit-check.component';
-import { AccountComponent } from './pages/credit-check/account/account.component';
-import { IdentityComponent } from './pages/credit-check/identity/identity.component';
+import { CreditFormComponent } from './pages/credit-check/creditForm/creditForm.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CustomizationsComponent } from './pages/customizations/customizations.component';
@@ -41,7 +40,7 @@ import { ContinueButtonComponent } from './common/continue-button/continue-butto
 import { ChallengeQuestionsComponent } from './pages/credit-check/challenge-questions/challenge-questions.component';
 import { NoPaymentComponent } from './pages/billing/no-payment/no-payment.component';
 import { OfferSummaryComponent } from './pages/offers/offer-summary/offer-summary.component';
-import { BillingAddressComponent } from './pages/credit-check/account/billing-address/billing-address.component';
+import { BillingAddressComponent } from './pages/credit-check/creditForm/billing-address/billing-address.component';
 import { TestCaseSelectorComponent } from './common/test-case-selector/test-case-selector.component';
 import { LoaderComponent } from './common/loader/loader.component';
 
@@ -59,8 +58,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     TabsMenuComponent,
     OfferDetailComponent,
     CreditCheckComponent,
-    AccountComponent,
-    IdentityComponent,
+    CreditFormComponent,
     CustomizationsComponent,
     ChildEntityComponent,
     AddressSelectorComponent,

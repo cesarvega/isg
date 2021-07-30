@@ -1,17 +1,17 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChange } from '@angular/core';
 import { FormBuilder, AbstractControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { CreditFormInterface } from 'src/app/frontier/utils/services/interfaces/customer/credit-check-form';
 import { AddressInterface } from 'src/app/isg-shared/interfaces/address';
-import { AccountFormInterface } from '../../../utils/services/interfaces/customer/credit-check-form';
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  selector: 'app-credit-form',
+  templateUrl: './creditForm.component.html',
+  styleUrls: ['./creditForm.component.css']
 })
-export class AccountComponent implements OnInit {
-  @Input() accountFormValues: any;
+export class CreditFormComponent implements OnInit {
+  @Input() creditFormValues: any;
   @Input() loading;
-  accountForm: FormGroup;
+  creditForm: FormGroup;
   selectedTestCase: string;
   showBillingAddressForm = false;
   billingAddress: AddressInterface = {
@@ -23,33 +23,37 @@ export class AccountComponent implements OnInit {
     zipCode: ""
   }
 
-  constructor(private accountFormBuilder: FormBuilder) { }
+  constructor(private creditFormBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    let { firstName, lastName, email, phoneNumber, secondaryPhoneNumber } = this.accountFormValues ?? {}
-    this.accountForm = this.accountFormBuilder.group({
+    let { firstName, lastName, email, phoneNumber, secondaryPhoneNumber, dateOfBirth, ssn } = this.creditFormValues ?? {}
+    this.creditForm = this.creditFormBuilder.group({
       firstName: [firstName, [Validators.required, Validators.maxLength(200)]],
       lastName: [lastName, [Validators.required, Validators.maxLength(200)]],
       email: [email, [Validators.required, Validators.email]],
       phoneNumber: [phoneNumber, [Validators.required]],
       secondaryPhoneNumber: [secondaryPhoneNumber, [Validators.required]],
+      dateOfBirth: [dateOfBirth, [Validators.required]],
+      ssn: [ssn, [Validators.required]],
     });
   }
-  @Output() submitAccountForm = new EventEmitter<any>();
+  @Output() submitCreditForm = new EventEmitter<any>();
   submitted: Boolean = false;
+
+
 
 
   onSubmit() {
     this.submitted = true
-    if (this.accountForm.valid) {
+    if (this.creditForm.valid) {
       if (this.showBillingAddressForm) {
         if (!this.isBillingAddressValid(this.billingAddress)) {
           return;
         }
       }
-      let values = this.accountForm.value;
+      let values = this.creditForm.value;
       values.billingAddress = this.billingAddress;
-      this.submitAccountForm.emit(values);
+      this.submitCreditForm.emit(values);
     }
   }
 
@@ -69,14 +73,22 @@ export class AccountComponent implements OnInit {
   }
 
 
-  private patchValue(testCase: AccountFormInterface) {
-    if (this.accountForm)
-      this.accountForm.patchValue({ ...testCase });
+  private patchValue(testCase: CreditFormInterface) {
+    if (this.creditForm)
+      this.creditForm.patchValue({ ...testCase });
   }
 
   ngOnChanges(changes: { [property: string]: SimpleChange }) {
-    if (changes['accountFormValues'] && this.accountForm) {
-      this.patchValue(this.accountFormValues)
+    if (changes['creditFormValues'] && this.creditForm) {
+      this.patchValue(this.creditFormValues)
+    }
+    if (changes['loading'] && this.creditForm) {
+      if (this.loading) {
+        this.creditForm.disable();
+      }
+      else {
+        this.creditForm.enable();
+      }
     }
   }
 
