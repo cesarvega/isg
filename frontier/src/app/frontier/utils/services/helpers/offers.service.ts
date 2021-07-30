@@ -27,6 +27,8 @@ export class OffersService {
 
 
   getReducedPrice(priceTerm: PriceTerm): number {
+    if (!priceTerm.hasOwnProperty("discount"))
+      return parseFloat(priceTerm.amount);
     if (priceTerm.discount.length > 0) {
       let discount = this.getBestDiscount(priceTerm);
       let discountedPrice = parseFloat(priceTerm.amount) + parseFloat(discount.amount);
