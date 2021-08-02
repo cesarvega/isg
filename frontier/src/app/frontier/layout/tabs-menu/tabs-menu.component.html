@@ -1,66 +1,60 @@
-<div class="card">
-  <div class="card-body">
-    <ul ngbNav [activeId]="router.url" class="nav nav-pills nav-fill">
-      <li
-        [disabled]="
-          !displayQualificationStep(qualificationStep, currentStep$ | async)
-        "
-        [ngbNavItem]="qualificationStep.url"
-      >
-        <a ngbNavLink routerLink="addressSearch">Qualification</a>
-      </li>
-      <li
-        [ngbNavItem]="offerStep.url"
-        [disabled]="!displayOffersStep(offerStep, currentStep$ | async)"
-      >
-        <a ngbNavLink routerLink="offers">Offers</a>
-      </li>
-      <li
-        [ngbNavItem]="creditCheckStep.url"
-        [disabled]="
-          !displayCreditCheckStep(creditCheckStep, currentStep$ | async)
-        "
-      >
-        <a ngbNavLink routerLink="credit-check">Credit Check</a>
-      </li>
-      <li
-        [ngbNavItem]="customizationStep.url"
-        [disabled]="
-          !displayCustomizationsStep(customizationStep, currentStep$ | async)
-        "
-      >
-        <a ngbNavLink routerLink="customizations">Customization</a>
-      </li>
-      <li
-        [ngbNavItem]="disclosureStep.url"
-        [disabled]="!displayDisclosures(disclosureStep, currentStep$ | async)"
-      >
-        <a ngbNavLink routerLink="disclosures">Disclosures</a>
-      </li>
-      <li
-        [ngbNavItem]="billingStep.url"
-        [disabled]="!displayBilling(disclosureStep, currentStep$ | async)"
-      >
-        <a ngbNavLink routerLink="billing">Billing</a>
-      </li>
-      <li
-        [ngbNavItem]="scheduleStep.url"
-        [disabled]="!displaySchedule(scheduleStep, currentStep$ | async)"
-      >
-        <a ngbNavLink routerLink="schedule">Schedule</a>
-      </li>
-      <li
-        [ngbNavItem]="recapStep.url"
-        [disabled]="!isStepEnabled(recapStep, currentStep$ | async)"
-      >
-        <a ngbNavLink routerLink="recap">Recap</a>
-      </li>
-      <li
-        [ngbNavItem]="confirmationStep.url"
-        [disabled]="!isStepEnabled(confirmationStep, currentStep$ | async)"
-      >
-        <a ngbNavLink routerLink="confirmation">Confirmation</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<ul ngbNav [activeId]="router.url" class="nav nav-pills nav-fill">
+  <li
+    [disabled]="
+      !displayQualificationStep(qualificationStep, currentStep$ | async)
+    "
+    [ngbNavItem]="qualificationStep.url"
+  >
+    <a ngbNavLink routerLink="addressSearch">Qualification</a>
+  </li>
+  <li
+    [ngbNavItem]="offerStep.url"
+    [disabled]="!displayOffersStep(offerStep, currentStep$ | async)"
+  >
+    <a ngbNavLink routerLink="offers">Offers</a>
+  </li>
+  <li
+    [ngbNavItem]="creditCheckStep.url"
+    [disabled]="!displayCreditCheckStep(creditCheckStep, currentStep$ | async)"
+  >
+    <a ngbNavLink routerLink="credit-check">Credit Check</a>
+  </li>
+  <li
+    [ngbNavItem]="customizationStep.url"
+    [disabled]="
+      !displayCustomizationsStep(customizationStep, currentStep$ | async)
+    "
+  >
+    <a ngbNavLink routerLink="customizations">Customization</a>
+  </li>
+  <li
+    [ngbNavItem]="disclosureStep.url"
+    [disabled]="!displayDisclosures(disclosureStep, currentStep$ | async)"
+  >
+    <a ngbNavLink routerLink="disclosures">Disclosures</a>
+  </li>
+  <li
+    [ngbNavItem]="billingStep.url"
+    [disabled]="!displayBilling(disclosureStep, currentStep$ | async)"
+  >
+    <a ngbNavLink routerLink="billing">Billing</a>
+  </li>
+  <li
+    [ngbNavItem]="scheduleStep.url"
+    [disabled]="!displaySchedule(scheduleStep, currentStep$ | async)"
+  >
+    <a ngbNavLink routerLink="schedule">Schedule</a>
+  </li>
+  <li
+    [ngbNavItem]="recapStep.url"
+    [disabled]="!isStepEnabled(recapStep, currentStep$ | async)"
+  >
+    <a ngbNavLink routerLink="recap">Recap</a>
+  </li>
+  <li
+    [ngbNavItem]="confirmationStep.url"
+    [disabled]="!isStepEnabled(confirmationStep, currentStep$ | async)"
+  >
+    <a ngbNavLink routerLink="confirmation">Confirmation</a>
+  </li>
+</ul>

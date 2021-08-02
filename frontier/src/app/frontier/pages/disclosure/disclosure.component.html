@@ -5,13 +5,32 @@
     <h6 class="alert-heading">Disclosures</h6>
     <p>Please accept all disclosures to continue</p>
   </div>
+  <ul
+    ngbNav
+    #nav="ngbNav"
+    [(activeId)]="activeDisclosure"
+    class="nav nav-pills nav-fill"
+  >
+    <li *ngFor="let disclosure of disclosures" [ngbNavItem]="disclosure.name">
+      <a ngbNavLink>{{ disclosure.name }}</a>
+      <ng-template ngbNavContent>
+        <app-disclosure-item
+          (onAcceptDisclosure)="toggleDisclosure($event)"
+          [disclosure]="disclosure"
+        ></app-disclosure-item>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
   <div *ngIf="loading" class="d-flex justify-content-center">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
-  <ngb-accordion #accordion="ngbAccordion" closeOthers="true">
+  <!-- <ngb-accordion #accordion="ngbAccordion" closeOthers="true">
     <ng-container *ngFor="let disclosure of disclosures">
       <ngb-panel id="{{ disclosure.name }}" title="{{ disclosure.name }}">
         <ng-template ngbPanelHeader>
@@ -34,7 +53,7 @@
         </ng-template>
       </ngb-panel>
     </ng-container>
-  </ngb-accordion>
+  </ngb-accordion> -->
 
   <div class="mt-4">
     <button
@@ -44,7 +63,10 @@
     >
       Accept all disclosures
     </button>
-    <app-continue-button (onContinueEvent)="submitDisclosures()">
+    <app-continue-button
+      *ngIf="showContinueButton()"
+      (onContinueEvent)="submitDisclosures()"
+    >
     </app-continue-button>
   </div>
 </ng-container>

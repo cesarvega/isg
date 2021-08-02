@@ -9,14 +9,19 @@
     (after-load-complete)="afterPdfLoad()"
     style="display: block; height: 300px"
   ></pdf-viewer>
-  <div class="d-grid gap-2 mt-2" *ngIf="pdfLoaded && !isDisclosureAccepted()">
-    <button
-      (click)="acceptDisclosure()"
-      class="btn btn-outline-danger"
-      type="button"
-    >
-      Accept Disclosure
-    </button>
+  <app-continue-button
+    *ngIf="pdfLoaded && !isDisclosureAccepted()"
+    (onContinueEvent)="acceptDisclosure()"
+    [name]="'Accept disclosure'"
+  >
+  </app-continue-button>
+
+  <div
+    *ngIf="isDisclosureAccepted()"
+    class="alert alert-success text-center"
+    role="alert"
+  >
+    <strong> Disclosure Accepted !</strong>
   </div>
 </ng-container>
 

@@ -23,6 +23,7 @@ export class DisclosureComponent implements OnInit {
   disclosures: DisclosureInterface[];
   loading: boolean = false;
   error: ErrorInterface;
+  activeDisclosure;
   @ViewChild('accordion') accordionComponent: NgbAccordion;
 
   constructor(
@@ -37,6 +38,9 @@ export class DisclosureComponent implements OnInit {
     this.loading = true;
     try {
       this.disclosures = await this.disclosuresApiService.getDisclosures(this.quoteId);
+      if (this.disclosures.length > 0) {
+        this.activeDisclosure = this.disclosures[0].name;
+      }
     } catch (error) {
       this.error = error;
       this.disclosures = []
@@ -53,13 +57,27 @@ export class DisclosureComponent implements OnInit {
   }
 
   toggleDisclosure(disclosureName: string) {
-    this.accordionComponent.toggle(disclosureName)
+    const currentIndex = this.disclosures.findIndex((iterateDisclosure) => {
+      return iterateDisclosure.name === disclosureName;
+    })
+    const length = this.disclosures.length - 1;
+    if (currentIndex < length) {
+      const newIndex = currentIndex + 1;
+      this.activeDisclosure = this.disclosures[newIndex].name
+    }
   }
 
   acceptAllDisclosures() {
     for (let disclosure of this.disclosures) {
       disclosure.status = "ACCEPT"
     }
+  }
+
+  showContinueButton() {
+    const lengthDisclosuresAccepted = this.disclosures.filter((disclosure) => {
+      return disclosure.status === "ACCEPT";
+    }).length;
+    return lengthDisclosuresAccepted === this.disclosures.length
   }
 
   async submitDisclosures() {
