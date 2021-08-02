@@ -1,6 +1,8 @@
+import { AddressInterface } from "src/app/isg-shared/interfaces/address";
+
 export interface CreditFormInterface {
   alias?: string,
-  billingAddress?: any;
+  previousAddress?: AddressInterface;
   firstName: string,
   lastName: string,
   email: string,

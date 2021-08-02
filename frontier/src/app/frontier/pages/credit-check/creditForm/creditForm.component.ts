@@ -52,7 +52,9 @@ export class CreditFormComponent implements OnInit {
         }
       }
       let values = this.creditForm.value;
-      values.billingAddress = this.billingAddress;
+      if (this.showBillingAddressForm) {
+        values.previousAddress = this.billingAddress;
+      }
       this.submitCreditForm.emit(values);
     }
   }

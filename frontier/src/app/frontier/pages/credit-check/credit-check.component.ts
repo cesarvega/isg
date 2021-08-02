@@ -19,6 +19,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { OffersInterface } from '../../utils/services/interfaces/products/offers-interface';
 import { getTasksByNameLocal } from '../../utils/store/complexSelectors/taks';
+import { buildPreviousAddressRequest } from './helpers/previous-address-request.builder';
 
 @Component({
   selector: 'app-credit-check',
@@ -99,7 +100,11 @@ export class CreditCheckComponent implements OnInit {
       } else {
         await this.tasksApiService.closeTask(changeCustomerDetailsTaskName);
       }
-      let creditCheckResponse = await this.customerApiService.creditCheck(null);
+      let request;
+      if (creditForm.previousAddress) {
+        request = buildPreviousAddressRequest(creditForm.previousAddress);
+      }
+      let creditCheckResponse = await this.customerApiService.creditCheck(request);
       if (creditCheckResponse.fraudPrevention && creditCheckResponse.fraudPrevention.length > 0) {
         return;
       }

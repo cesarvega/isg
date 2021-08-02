@@ -12,37 +12,29 @@
 >
 </app-challenge-questions>
 <ng-container *ngIf="!displayCreditCheckResult(creditCheckResult$ | async)">
-  <div class="alert alert-info" role="alert" *ngIf="!loading">
+  <div class="alert alert-info" role="alert">
     <h6 class="alert-heading">
       <fa-icon class="mr-2" [icon]="faComment"></fa-icon> Mandatory verbatim
       disclosure:*
     </h6>
     <hr />
     <p>
-      To continue, I may need to use your existing credit information on file
-      with other AT&T Companies. Is that ok?
+      Before I start your order, I will need to initiate a credit check or use
+      your existing credit information on file with Frontier companies. Is that
+      okay?
     </p>
     <div class="form-check">
       <input
+        [disabled]="loading"
         class="form-check-input"
         type="checkbox"
-        (change)="showForm = true"
+        (change)="showForm = !showForm"
         [checked]="showForm"
         id="flexCheckDefault"
       />
       <label class="form-check-label" for="flexCheckDefault">
         Yes, Credit Check authorization granted
       </label>
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        [checked]="showForm === false"
-        (change)="showForm = false"
-        id="flexCheckChecked"
-      />
-      <label class="form-check-label" for="flexCheckChecked"> No </label>
     </div>
   </div>
   <ngb-alert
