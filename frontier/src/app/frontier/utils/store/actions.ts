@@ -34,4 +34,5 @@ export const setCustomization = createAction('setCustomization', props<{ customi
 export const removeCustomization = createAction('removeCustomization', props<{ customization }>());
 export const removeAllCustomizations = createAction('removeAllCustomizations', props<any>());
 export const setCreditForm = createAction('setCreditForm', props<{ creditForm }>());
+export const addProduct = createAction('addProduct', props<{ product }>());
 

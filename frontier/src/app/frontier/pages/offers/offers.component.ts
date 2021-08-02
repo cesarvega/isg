@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { selectOffers, selectQuote, selectQuoteId } from '../../utils/store/selectors';
+import { selectOffers, selectQuote, selectQuoteId, selectSelectedProducts } from '../../utils/store/selectors';
 import { OffersInterface } from '../../utils/services/interfaces/products/offers-interface';
 import { ProductsApiService } from '../../utils/services/api/products-api.service';
 import { UserInterface } from '../../utils/services/interfaces/common/user-interface';
 import { ProductsBuilder } from '../../utils/services/builders/products-builder';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
-import { removeProductAction, setStepAction, selectProductsAction } from '../../utils/store/actions';
+import { removeProductAction, setStepAction, selectProductsAction, addProduct } from '../../utils/store/actions';
 import { Steps } from '../../utils/steps';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { QuoteInterface } from '../../utils/store/interfaces/quote';
 import { AlertInterface } from '../../utils/services/interfaces/common/alert-interface';
@@ -16,7 +16,7 @@ import { SnapshotStore } from '../../utils/services/state.service';
 import { Store } from '@ngrx/store';
 import { getParsedAddress } from '../address-search/helpers/get-parsed-adress';
 import { selectParsedAddress } from '../../utils/store/complexSelectors/address-parsed-selector';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { broadbandServiceType, categories, Category } from './utils/categories';
 import { filterProducts } from './utils/filter-products';
 
@@ -36,12 +36,13 @@ export class OffersComponent implements OnInit {
   constOffers: OffersInterface[] = [];
   error: ErrorInterface = null
   offerTask
-  addProducts: OffersInterface[] = [];
   removeProducts: OffersInterface[] = [];
   alert: AlertInterface;
   faExclamationTriangle = faExclamationTriangle;
   selectedParsedAdress$: Observable<string>;
   showReviewPage = false;
+  addProducts: OffersInterface[];
+  addProductsSubscription: Subscription;
 
   public getParsedAddress = getParsedAddress;
 
@@ -51,8 +52,14 @@ export class OffersComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedParsedAdress$ = this.store.select(selectParsedAddress);
+    this.addProductsSubscription = this.store.select(selectSelectedProducts).subscribe((products) => {
+      this.addProducts = products;
+    })
     this.initComponent();
+  }
 
+  ngOnDestroy() {
+    this.addProductsSubscription.unsubscribe();
   }
 
   async initComponent() {
@@ -105,7 +112,7 @@ export class OffersComponent implements OnInit {
 
   select(product: OffersInterface) {
     product.selected = true;
-    this.addProducts.push(product);
+    this.store.dispatch(addProduct({ product }))
   }
 
 
@@ -165,9 +172,11 @@ export class OffersComponent implements OnInit {
     this.addProducts = this.addProducts.filter((iterateProduct) => {
       return iterateProduct.id != product.id
     })
+    this.store.dispatch(removeProductAction({ id: product.id }))
     if (product.addedApi)
       this.removeProducts.push(product)
   }
+
 
   async sendAddProductsApi(addProducts, quoteId) {
     await this.productsApiService.addProduct(addProducts, quoteId);

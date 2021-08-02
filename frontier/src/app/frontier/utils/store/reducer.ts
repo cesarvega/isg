@@ -31,13 +31,15 @@ import {
   setCustomization,
   removeCustomization,
   removeAllCustomizations,
-  setCreditForm
+  setCreditForm,
+  addProduct
 } from './actions';
-import { ErrorInterface } from '../services/interfaces/common/error-interface';
 import { Steps } from '../steps';
 import { OffersInterface } from '../services/interfaces/products/offers-interface';
 
-
+export function FrontierReducer(state, action) {
+  return _counterReducer(state, action);
+}
 
 export const initialState: Frontier = {
   currentStep: Steps.qualificationStep,
@@ -75,7 +77,6 @@ const _counterReducer = createReducer(
   initialState,
   on(addressSearchRequestAction, (state, addressSearchRequest) => ({ ...state, addressSearchRequest, loading: true, error: null })),
   on(addressSearchResponseAction, (state, addressSearchResponse) => ({ ...state, addressSearchResponse, loading: false, error: null })),
-  on(setErrorAction, (state, error) => ({ ...state, loading: false, error: parseHttperror(error) })),
   on(setTransactionIdAction, (state, { transactionId }) => ({ ...state, transactionId })),
   on(setSelectedAddressAction, (state, selectedAddress) => ({ ...state, selectedAddress })),
   on(setCreateQuoteRequestAction, (state, createQuoteRequest) => ({ ...state, createQuoteRequest })),
@@ -109,35 +110,13 @@ const _counterReducer = createReducer(
   })),
   on(removeAllCustomizations, (state) => ({ ...state, selectedCustomizations: [] })),
   on(setCreditForm, (state, { creditForm }) => ({ ...state, creditForm })),
+  on(addProduct, (state, { product }) => ({ ...state, selectedProducts: state.selectedProducts.concat(product) })),
 );
-export function FrontierReducer(state, action) {
-  return _counterReducer(state, action);
-}
 
 function removeProducts(productId: string, products: OffersInterface[]) {
   return products.filter((product) => {
     return product.id != productId
   })
-}
-
-function parseHttperror(error) {
-  if (error.status == 422) {
-    let parsedError = error.error;
-    if (parsedError.errors) {
-      let fixedErrors = Object.values(parsedError.errors);
-      fixedErrors = fixedErrors.map((error) => {
-        return error[0]
-      })
-      let errorInterface: ErrorInterface = {
-        errors: fixedErrors,
-        message: parsedError.message
-      }
-      return errorInterface;
-    }
-  }
-  else {
-    return { message: error.message, errors: [] }
-  }
 }
 
 
