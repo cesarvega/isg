@@ -26,28 +26,17 @@ export class ChildEntityComponent implements OnInit {
     return this.childEntity.hasOwnProperty('Active')
   }
 
-  shouldDisplayTitle() {
+  isEntityCategory() {
     return !(this.isEntityConfigurable() || this.isEntitySelectable())
+  }
 
+  entityHasPrice() {
+    return this.childEntity.hasOwnProperty('Price');
   }
 
   isEntityConfigurable() {
     return this.childEntity.hasOwnProperty('ConfiguredValue')
   }
-
-
-
-  shouldDisplay() {
-    if (!this.childEntity.ChildEntity && !this.childEntity.hasOwnProperty('Active') && !this.childEntity.hasOwnProperty("ConfiguredValue"))
-      return false
-    if (!this.childEntity.ChildEntity && (this.childEntity.Active && !this.childEntity.ChangedManually) && !this.parentEntity)
-      return false
-    if (!this.childEntity.ChildEntity)
-      return true
-    return this.getChildrenSelectedOptions() != this.childEntity.ChildEntity.length;
-  }
-
-
 
   getChildrenSelectedOptions(): Number {
     let counter = 0;

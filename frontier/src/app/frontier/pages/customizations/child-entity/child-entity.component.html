@@ -1,4 +1,4 @@
-<ng-container *ngIf="!shouldDisplayTitle()">
+<ng-container *ngIf="!isEntityCategory()">
   <div [attr.id]="childEntity.ID" aria-labelledby="headingOne">
     <div style="padding: 0rem 0.6rem">
       <app-child-option
@@ -34,13 +34,9 @@
     </ng-container>
   </div>
 </ng-container>
-<div
-  class="accordion"
-  id="accordionExample"
-  *ngIf="shouldDisplay() && shouldDisplayTitle()"
->
+<div class="accordion" id="accordionExample" *ngIf="isEntityCategory()">
   <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne" *ngIf="shouldDisplayTitle()">
+    <h2 class="accordion-header" id="headingOne">
       <button
         [ngClass]="
           childEntityHelperService.isCustomizationCompleteFunctional(
