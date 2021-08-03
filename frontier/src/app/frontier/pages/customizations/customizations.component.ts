@@ -5,7 +5,7 @@ import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { removeAllCustomizations, setStepAction } from '../../utils/store/actions';
 import { parseHttperror } from '../../utils/helper-functions';
 import { ProductsApiService } from '../../utils/services/api/products-api.service';
-import { Item } from '../../utils/store/interfaces/quote';
+import { ChildEntity, Item } from '../../utils/store/interfaces/quote';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
@@ -30,6 +30,7 @@ export class CustomizationsComponent implements OnInit {
   numberPortabilityTask: TaskInterface
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
+  active = 1;
 
   constructor(private snapShotStore: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router) {
@@ -57,6 +58,14 @@ export class CustomizationsComponent implements OnInit {
     return item.completed
   }
 
+  showSubmitButton() {
+    if (this.items.length < 1)
+      return false
+    const length = this.items.length;
+    const lastElement = this.items[length - 1];
+    return this.active === lastElement.id && this.isItemConfigurationCompleted(lastElement)
+  }
+
 
 
   async getQuote() {
@@ -64,6 +73,9 @@ export class CustomizationsComponent implements OnInit {
       this.loading = true;
       let quote = await this.quoteApiService.getQuote(this.quoteId, true, true);
       this.items = quote.items;
+      if (this.items.length > 0) {
+        this.active = this.items[0].id;
+      }
     } catch (error) {
       this.error = parseHttperror(error);
     }
@@ -74,6 +86,22 @@ export class CustomizationsComponent implements OnInit {
     for (let item of this.items) {
       if (!item.completed)
         throw new Error("Need to complete required customizations");
+    }
+    return true
+  }
+
+  continueCustomization(item: Item) {
+    if (this.isItemConfigurationCompleted(item)) {
+      const currentIndex = this.items.findIndex((iterateItem) => {
+        return iterateItem.id === item.id
+      })
+      if (currentIndex < this.items.length - 1) {
+        this.active = this.items[currentIndex + 1].id;
+      }
+    }
+    else {
+      this.error = { message: "Need to select all required fields", errors: [] };
+      window.scroll(0, 0);
     }
   }
 
