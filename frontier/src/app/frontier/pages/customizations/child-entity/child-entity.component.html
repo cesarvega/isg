@@ -1,72 +1,29 @@
-<ng-container *ngIf="!isEntityCategory()">
-  <div [attr.id]="childEntity.ID" aria-labelledby="headingOne">
-    <div style="padding: 0rem 0.6rem">
-      <app-child-option
-        *ngIf="
-          (isEntitySelectable() && childEntity.Price) || childEntity.ChildEntity
-        "
-        [childEntity]="childEntity"
-        [parentEntity]="parentEntity"
-      ></app-child-option>
-      <div
-        *ngIf="childEntity.ConfiguredValue && !childEntity.Price"
-        class="mt-2 mb-2 d-grid"
-      >
-        <button
-          (click)="open(content)"
-          ngClass="{{
-            childEntity.Active ? 'btn btn-success' : 'btn btn-outline-primary'
-          }}"
-        >
-          {{
-            childEntity.Active
-              ? childEntity.Name + " configurated correctly"
-              : childEntity.Name
-          }}
-        </button>
-      </div>
-    </div>
+<div class="card" *ngIf="childEntity.isContainer">
+  <div
+    class="card-header text-link"
+    [ngClass]="
+      childEntityHelperService.isCustomizationCompleteFunctional(childEntity)
+        ? 'success'
+        : 'error'
+    "
+  >
+    {{ childEntity.Name }}
+  </div>
+  <div class="card-body">
     <ng-container *ngFor="let iterateChildEntity of childEntity.ChildEntity">
-      <app-child-entity
+      <app-child-option
+        *ngIf="iterateChildEntity.hasAction"
         [childEntity]="iterateChildEntity"
         [parentEntity]="childEntity"
-      ></app-child-entity>
+      ></app-child-option>
     </ng-container>
   </div>
-</ng-container>
-<div class="accordion" id="accordionExample" *ngIf="isEntityCategory()">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button
-        [ngClass]="
-          childEntityHelperService.isCustomizationCompleteFunctional(
-            childEntity
-          )
-            ? 'success'
-            : 'error'
-        "
-        class="accordion-button"
-        type="button"
-        data-bs-toggle="collapse"
-        [attr.data-bs-target]="'#' + childEntity.ID"
-        aria-expanded="true"
-        aria-controls="collapseOne"
-      >
-        {{ childEntity.Name }}
-      </button>
-    </h2>
-    <div class="accordion-collapse collapse show" [attr.id]="childEntity.ID">
-      <div class="accordion-body" aria-labelledby="headingOne">
-        <ng-container
-          *ngFor="let iterateChildEntity of childEntity.ChildEntity"
-        >
-          <app-child-entity
-            class="mx-2"
-            [childEntity]="iterateChildEntity"
-            [parentEntity]="childEntity"
-          ></app-child-entity>
-        </ng-container>
-      </div>
-    </div>
-  </div>
 </div>
+
+<ng-container *ngFor="let iterateChildEntity of childEntity.ChildEntity">
+  <app-child-entity
+    class="mx-2"
+    [childEntity]="iterateChildEntity"
+    [parentEntity]="childEntity"
+  ></app-child-entity>
+</ng-container>

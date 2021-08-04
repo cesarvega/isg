@@ -54,10 +54,12 @@ export interface ChildEntity {
   ConfiguredValue,
   Mandatory,
   Active,
+  hasAction?,
   minimumActiveChildEntities,
   maximumActiveChildEntities,
   Price: Price[],
-  ChildEntity: ChildEntity[]
+  ChildEntity: ChildEntity[],
+  isContainer?
 }
 
 export interface ConfiguredValue {

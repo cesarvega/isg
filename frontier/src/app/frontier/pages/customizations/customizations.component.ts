@@ -14,6 +14,8 @@ import { ChildEntityHelperService } from './child-entity-helper.service';
 import { Steps } from '../../utils/steps';
 import { Router } from '@angular/router';
 import { selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../../utils/store/selectors';
+import { CustomizationsMapper } from './helpers/customizations-mapper';
+import { fakeQuote } from './fake-quote';
 
 @Component({
   selector: 'app-customizations',
@@ -25,12 +27,13 @@ export class CustomizationsComponent implements OnInit {
   quoteId: string
   loading: Boolean = false
   error: ErrorInterface
-  items: Item[] = []
+  items = []
   selectOfferTask: TaskInterface
   numberPortabilityTask: TaskInterface
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
   active = 1;
+  customizationMapper = new CustomizationsMapper();
 
   constructor(private snapShotStore: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router) {
@@ -71,8 +74,11 @@ export class CustomizationsComponent implements OnInit {
   async getQuote() {
     try {
       this.loading = true;
-      let quote = await this.quoteApiService.getQuote(this.quoteId, true, true);
+      let quote = fakeQuote
       this.items = quote.items;
+      for (let item of this.items) {
+        item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomsizations(item.productConfiguration.ChildEntity)
+      }
       if (this.items.length > 0) {
         this.active = this.items[0].id;
       }
