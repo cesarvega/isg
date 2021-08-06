@@ -5,10 +5,12 @@ import { environment } from 'src/environments/environment';
 import { createQuoteURL, generateTransactionIdURL, getCompleteTaskURL, validateQuoteURL, getValidateQuoteURL, getQuoteURL, getSubmitQuoteURL } from '../endpoints/qualification';
 import { AddressSearchResponseItemInterface } from '../interfaces/qualification/address-search-response';
 import { CreateQuoteInterface } from '../interfaces/qualification/create-quote';
-import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setSelectedAddressAction, setSubmitOrderResponse, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
-import { tap } from 'rxjs/operators';
+import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setQuoteAction, setSelectedAddressAction, setSubmitOrderResponse, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
+import { map, tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { selectQuoteId } from '../../store/selectors';
+import { CustomizationsMapper } from 'src/app/frontier/pages/customizations/helpers/customizations-mapper';
+import { fakeQuote } from 'src/app/frontier/pages/customizations/fake-quote';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ import { selectQuoteId } from '../../store/selectors';
 export class QuoteApiService {
   quoteIdSubscription$: Subscription;
   quoteId: string;
+  customizationMapper = new CustomizationsMapper();
 
   constructor(private store: Store<any>, private clientService: ClientService) {
     this.store.select(selectQuoteId).subscribe((quoteId) => {
@@ -64,11 +67,29 @@ export class QuoteApiService {
   }
 
   async getQuote(quoteId, includeConfiguration, includeNotes) {
+    // const quote = fakeQuote;
+    // for (let item of quote.items) {
+    //   item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomsizations(item.productConfiguration.ChildEntity)
+    // }
+    // this.store.dispatch(setQuoteAction({ quote }))
+    // return
     let quoteURL = getQuoteURL;
     quoteURL = quoteURL.replace("{quoteId}", quoteId)
     let params = { includeConfiguration, includeNotes }
     return await this.clientService
-      .getAll(quoteURL, params)
+      .getAll(quoteURL, params).pipe(
+        map((response) => {
+          if (response) {
+            for (let item of response.items) {
+              item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomsizations(item.productConfiguration.ChildEntity)
+            }
+          }
+          return response;
+        }),
+        tap((response) => {
+          this.store.dispatch(setQuoteAction({ quote: response }))
+        })
+      )
       .toPromise();
   }
 
