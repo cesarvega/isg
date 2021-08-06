@@ -32,3 +32,21 @@
     </ng-container>
   </div>
 </div>
+<ng-container *ngIf="childEntity.Active && childEntity.ChildEntity">
+  <ng-container *ngFor="let iterateChildEntity of childEntity.ChildEntity">
+    <div
+      class="m-3"
+      *ngIf="
+        iterateChildEntity.hasOwnProperty('ConfiguredValue') ||
+        iterateChildEntity.ChildEntity
+      "
+    >
+      <app-child-option [childEntity]="iterateChildEntity"> </app-child-option>
+    </div>
+  </ng-container>
+</ng-container>
+
+<app-child-entity-configuration
+  [childEntity]="childEntity"
+  [showConfiguration]="showConfiguration"
+></app-child-entity-configuration>

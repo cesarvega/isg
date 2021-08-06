@@ -16,6 +16,7 @@ export class ChildOptionComponent implements OnInit {
   @Input() parentEntity: ChildEntity
   faSquare = faSquare;
   faCheckSquare = faCheckSquare;
+  showConfiguration = false;
 
   constructor(private modalService: NgbModal, private childEntityService: ChildEntityService) { }
 
@@ -37,16 +38,18 @@ export class ChildOptionComponent implements OnInit {
   }
 
   selectOption() {
-    debugger
+    if (this.showConfiguration) {
+      this.showConfiguration = false;
+    }
     if (!this.childEntity.Active) {
       if (this.canActivate()) {
         this.childEntityService.selectCustomization(this.childEntity);
       }
-      if (this.childEntity.ConfiguredValue)
+      if (this.childEntity.ConfiguredValue) {
         this.openConfigurationForm();
+      }
     }
     else {
-      debugger
       this.childEntity.Active = false;
       this.childEntityService.removeCustomization(this.childEntity);
     }
@@ -87,8 +90,7 @@ export class ChildOptionComponent implements OnInit {
   }
 
   openConfigurationForm() {
-    const modalRef = this.modalService.open(ChildEntityConfigurationComponent);
-    modalRef.componentInstance.childEntity = this.childEntity;
+    this.showConfiguration = true;
   }
 
 }
