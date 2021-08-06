@@ -1,4 +1,5 @@
 import { ChildEntity } from "src/app/frontier/utils/store/interfaces/quote";
+import { unsuedCustomizations } from "./unused-customizations";
 
 export class CustomizationsMapper {
 
@@ -11,7 +12,7 @@ export class CustomizationsMapper {
     mapHelper(customizations, parent) {
         for (let customization of customizations) {
             if (parent) {
-                if (this.hasAction(customization) && !this.hasAction(parent)) {
+                if (this.hasAction(customization) && !this.hasAction(parent) && !this.isUnusedCustomization(parent)) {
                     parent.isContainer = true;
                     customization.hasAction = true;
                 }
@@ -20,6 +21,10 @@ export class CustomizationsMapper {
                 this.mapHelper(customization.ChildEntity, customization);
             }
         }
+    }
+
+    isUnusedCustomization(customization: ChildEntity) {
+        return unsuedCustomizations.includes(customization.Name)
     }
 
 
