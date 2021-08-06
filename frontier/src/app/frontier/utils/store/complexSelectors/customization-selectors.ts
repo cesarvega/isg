@@ -12,11 +12,14 @@ export const selectMonthlyCustomizations = createSelector(
     (customizations: ChildEntity[]) => {
         let items: ChildEntity[] = [];
         for (let customization of customizations) {
-            for (let price of customization.Price) {
-                if (price.rateRecurring) {
-                    items.push(customization)
+            if (customization.Price) {
+                for (let price of customization.Price) {
+                    if (price.rateRecurring) {
+                        items.push(customization)
+                    }
                 }
             }
+
         }
         return items;
     }
@@ -28,9 +31,11 @@ export const selectOneTimeCustomizations = createSelector(
     (customizations: ChildEntity[]) => {
         let items: ChildEntity[] = [];
         for (let customization of customizations) {
-            for (let price of customization.Price) {
-                if (price.rateNonRecurring) {
-                    items.push(customization)
+            if (customization.Price) {
+                for (let price of customization.Price) {
+                    if (price.rateNonRecurring) {
+                        items.push(customization)
+                    }
                 }
             }
         }
