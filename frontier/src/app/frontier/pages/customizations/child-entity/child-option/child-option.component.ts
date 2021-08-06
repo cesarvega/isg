@@ -22,11 +22,6 @@ export class ChildOptionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  shouldDisplayOption() {
-    return this.childEntity.hasOwnProperty('Active')
-  }
-
   isCustomizationComplete() {
     return (this.childEntity.minimumActiveChildEntities >= this.getChildrenSelectedOptions() || !this.parentEntity)
   }
@@ -41,7 +36,8 @@ export class ChildOptionComponent implements OnInit {
     return counter;
   }
 
-  selectOpttion() {
+  selectOption() {
+    debugger
     if (!this.childEntity.Active) {
       if (this.canActivate()) {
         this.childEntityService.selectCustomization(this.childEntity);
@@ -50,6 +46,8 @@ export class ChildOptionComponent implements OnInit {
         this.openConfigurationForm();
     }
     else {
+      debugger
+      this.childEntity.Active = false;
       this.childEntityService.removeCustomization(this.childEntity);
     }
   }

@@ -1,23 +1,21 @@
-<div class="row p-2" style="cursor: pointer" (click)="selectOpttion()">
+<div class="row p-2">
   <div class="col-md-9">
-    <fa-icon
-      *ngIf="!childEntity.Active"
-      style="font-size: 20px"
-      class="mx-2"
-      [icon]="faSquare"
-    ></fa-icon>
-    <fa-icon
-      style="font-size: 20px"
-      *ngIf="childEntity.Active"
-      class="mx-2"
-      [icon]="faCheckSquare"
-    ></fa-icon>
-    <strong *ngIf="!childEntity.ConfiguredValue" class="form-check-label">{{
-      childEntity.Name
-    }}</strong>
-    <button *ngIf="childEntity.ConfiguredValue" class="btn btn-link">
-      {{ childEntity.Name }}
-    </button>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        (change)="selectOption()"
+        [checked]="childEntity.Active"
+        id="{{ childEntity.ID }}"
+      />
+      <label
+        style="cursor: pointer"
+        class="form-check-label"
+        for="{{ childEntity.ID }}"
+      >
+        {{ childEntity.Name }}
+      </label>
+    </div>
   </div>
   <div class="col-md-3">
     <ng-container *ngFor="let price of childEntity.Price">
