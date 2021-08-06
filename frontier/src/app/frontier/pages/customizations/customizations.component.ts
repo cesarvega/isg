@@ -34,6 +34,7 @@ export class CustomizationsComponent implements OnInit {
   wereDisclosuresAccepted: boolean = false;
   active = 1;
   customizationMapper = new CustomizationsMapper();
+  showResults = false;
 
   constructor(private snapShotStore: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router) {
@@ -110,6 +111,8 @@ export class CustomizationsComponent implements OnInit {
       window.scroll(0, 0);
     }
   }
+
+
 
 
   async submitCustomizations() {

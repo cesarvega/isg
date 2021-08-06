@@ -1,69 +1,37 @@
 <app-error-message [error]="error"></app-error-message>
 <app-loader [loading]="loading"></app-loader>
 <ng-container *ngIf="!loading">
-  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav nav-pills nav-fill">
-    <li [ngbNavItem]="item.id" class="me-2" *ngFor="let item of items">
-      <a ngbNavLink>{{ item.name }}</a>
-      <ng-template ngbNavContent>
-        <app-child-entity
-          *ngFor="let childEntity of item.productConfiguration.ChildEntity"
-          [childEntity]="childEntity"
-          [parentEntity]="null"
-        ></app-child-entity>
-        <div class="mt-3">
-          <app-continue-button
-            *ngIf="!showSubmitButton()"
-            (onContinueEvent)="continueCustomization(item)"
-          ></app-continue-button>
-        </div>
-      </ng-template>
-    </li>
-  </ul>
-  <div [ngbNavOutlet]="nav" class="mt-2"></div>
-  <app-continue-button
-    *ngIf="showSubmitButton()"
-    [name]="'SubmitCustomizations'"
-    (onContinueEvent)="submitCustomizations()"
-  >
-  </app-continue-button>
-</ng-container>
-
-<!-- <div *ngIf="!loading">
-  <div class="accordion" id="accordionExample">
-    <div
-      class="accordion-item"
-      *ngFor="let item of items; let itemIndex = index"
+  <app-customization-result *ngIf="showResults"> </app-customization-result>
+  <ng-conainter *ngIf="!showResults">
+    <ul
+      ngbNav
+      #nav="ngbNav"
+      [(activeId)]="active"
+      class="nav nav-pills nav-fill"
     >
-      <h2 class="accordion-header" id="headingOne">
-        <button
-          [ngClass]="isItemConfigurationCompleted(item) ? 'success' : 'error'"
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          [attr.data-bs-target]="'#item' + itemIndex"
-          aria-expanded="true"
-          aria-controls="collapseOne"
-        >
-          {{ item.name }}
-        </button>
-      </h2>
-      <div
-        [attr.id]="'item' + itemIndex"
-        class="accordion-collapse collapse"
-        aria-labelledby="headingOne"
-      >
-        <div class="accordion-body">
+      <li [ngbNavItem]="item.id" class="me-2" *ngFor="let item of items">
+        <a ngbNavLink>{{ item.name }}</a>
+        <ng-template ngbNavContent>
           <app-child-entity
             *ngFor="let childEntity of item.productConfiguration.ChildEntity"
             [childEntity]="childEntity"
             [parentEntity]="null"
           ></app-child-entity>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="mt-3">
-    <app-continue-button (onContinueEvent)="submitCustomizations()">
+          <div class="mt-3">
+            <app-continue-button
+              *ngIf="!showSubmitButton()"
+              (onContinueEvent)="continueCustomization(item)"
+            ></app-continue-button>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    <app-continue-button
+      *ngIf="showSubmitButton()"
+      [name]="'Review Customizations'"
+      (onContinueEvent)="showResults = true"
+    >
     </app-continue-button>
-  </div>
-</div> -->
+  </ng-conainter>
+</ng-container>
