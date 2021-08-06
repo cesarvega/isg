@@ -1,4 +1,4 @@
-<div class="card" *ngIf="childEntity.isContainer">
+<div class="card" *ngIf="childEntity.isContainer && childrenHasAction()">
   <div
     class="card-header text-link"
     [ngClass]="

@@ -17,11 +17,16 @@ export class CustomizationsMapper {
                     customization.hasAction = true;
                 }
             }
+            if (this.isUnusedCustomization(customization)) {
+                customization.hasAction = false;
+            }
             if (this.hasChildren(customization)) {
                 this.mapHelper(customization.ChildEntity, customization);
             }
         }
     }
+
+
 
     isUnusedCustomization(customization: ChildEntity) {
         return unsuedCustomizations.includes(customization.Name)

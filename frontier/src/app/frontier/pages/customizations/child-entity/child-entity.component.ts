@@ -21,6 +21,13 @@ export class ChildEntityComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  childrenHasAction() {
+    if (!this.childEntity.ChildEntity)
+      return false
+    return this.childEntity.ChildEntity.filter((iterateChildEntity) => {
+      return iterateChildEntity.hasAction
+    }).length > 0
+  }
 
   isEntitySelectable() {
     return this.childEntity.hasOwnProperty('Active')
