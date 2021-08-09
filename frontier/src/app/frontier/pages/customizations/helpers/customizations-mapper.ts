@@ -3,7 +3,7 @@ import { unsuedCustomizations } from "./unused-customizations";
 
 export class CustomizationsMapper {
 
-    mapCustomsizations(customizations): ChildEntity[] {
+    mapCustomizations(customizations) {
         this.mapHelper(customizations, null)
         return customizations;
 

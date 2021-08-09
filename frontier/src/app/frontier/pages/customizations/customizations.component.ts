@@ -5,7 +5,7 @@ import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { removeAllCustomizations, setStepAction } from '../../utils/store/actions';
 import { parseHttperror } from '../../utils/helper-functions';
 import { ProductsApiService } from '../../utils/services/api/products-api.service';
-import { ChildEntity, Item } from '../../utils/store/interfaces/quote';
+import { Item, QuoteInterface } from '../../utils/store/interfaces/quote';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
@@ -13,9 +13,9 @@ import { offerTaskIdName, numberPortabilityTaskName, quoteValidationTaskName } f
 import { ChildEntityHelperService } from './child-entity-helper.service';
 import { Steps } from '../../utils/steps';
 import { Router } from '@angular/router';
-import { selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../../utils/store/selectors';
-import { CustomizationsMapper } from './helpers/customizations-mapper';
-import { fakeQuote } from './fake-quote';
+import { selectQuote, selectQuoteItems, selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../../utils/store/selectors';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-customizations',
@@ -27,22 +27,22 @@ export class CustomizationsComponent implements OnInit {
   quoteId: string
   loading: Boolean = false
   error: ErrorInterface
-  items = []
   selectOfferTask: TaskInterface
   numberPortabilityTask: TaskInterface
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
   active = 1;
-  customizationMapper = new CustomizationsMapper();
   showResults = false;
+  items: Observable<Item[]>;
 
   constructor(private snapShotStore: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
-    private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router) {
+    private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router, private store: Store<any>) {
     this.quoteId = snapShotStore.getQuoteId();
     this.selectOfferTask = snapShotStore.select(getTaskByNameFromState(offerTaskIdName))
     this.numberPortabilityTask = snapShotStore.select(getTaskByNameFromState(numberPortabilityTaskName))
     this.wasQuoteValidated = snapShotStore.select(selectWasQuoteValidated);
     this.wereDisclosuresAccepted = snapShotStore.select(selectWereDisclosuresAccepted)
+    this.items = this.store.select(selectQuoteItems);
   }
 
   ngOnInit(): void {
@@ -62,11 +62,11 @@ export class CustomizationsComponent implements OnInit {
     return item.completed
   }
 
-  showSubmitButton() {
-    if (this.items.length < 1)
+  showSubmitButton(items) {
+    if (items.length < 1)
       return false
-    const length = this.items.length;
-    const lastElement = this.items[length - 1];
+    const length = items.length;
+    const lastElement = items[length - 1];
     return this.active === lastElement.id && this.isItemConfigurationCompleted(lastElement)
   }
 
@@ -75,35 +75,33 @@ export class CustomizationsComponent implements OnInit {
   async getQuote() {
     try {
       this.loading = true;
-      let quote = fakeQuote
-      this.items = quote.items;
-      for (let item of this.items) {
-        item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomsizations(item.productConfiguration.ChildEntity)
-      }
-      if (this.items.length > 0) {
-        this.active = this.items[0].id;
-      }
+      this.quoteApiService.getQuote(this.quoteId, true, true);
+      // this.items = quote.items;
+
+      // if (this.items.length > 0) {
+      //   this.active = this.items[0].id;
+      // }
     } catch (error) {
       this.error = parseHttperror(error);
     }
     this.loading = false;
   }
 
-  areIteamsReadyToSubmit() {
-    for (let item of this.items) {
+  areIteamsReadyToSubmit(items) {
+    for (let item of items) {
       if (!item.completed)
         throw new Error("Need to complete required customizations");
     }
     return true
   }
 
-  continueCustomization(item: Item) {
+  continueCustomization(item: Item, items) {
     if (this.isItemConfigurationCompleted(item)) {
-      const currentIndex = this.items.findIndex((iterateItem) => {
+      const currentIndex = items.findIndex((iterateItem) => {
         return iterateItem.id === item.id
       })
-      if (currentIndex < this.items.length - 1) {
-        this.active = this.items[currentIndex + 1].id;
+      if (currentIndex < items.length - 1) {
+        this.active = items[currentIndex + 1].id;
       }
     }
     else {
@@ -115,14 +113,14 @@ export class CustomizationsComponent implements OnInit {
 
 
 
-  async submitCustomizations() {
+  async submitCustomizations(items) {
 
     try {
-      this.areIteamsReadyToSubmit()
+      this.areIteamsReadyToSubmit(items)
       this.loading = true;
 
       // submit customizations
-      for (let item of this.items) {
+      for (let item of items) {
         delete item.completed;
         await this.productApiService.updateProduct(item, this.quoteId, item.id)
       }
