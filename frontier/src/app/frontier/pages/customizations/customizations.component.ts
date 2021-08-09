@@ -76,11 +76,6 @@ export class CustomizationsComponent implements OnInit {
     try {
       this.loading = true;
       this.quoteApiService.getQuote(this.quoteId, true, true);
-      // this.items = quote.items;
-
-      // if (this.items.length > 0) {
-      //   this.active = this.items[0].id;
-      // }
     } catch (error) {
       this.error = parseHttperror(error);
     }

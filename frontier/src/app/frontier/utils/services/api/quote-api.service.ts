@@ -81,7 +81,7 @@ export class QuoteApiService {
         map((response) => {
           if (response) {
             for (let item of response.items) {
-              item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomsizations(item.productConfiguration.ChildEntity)
+              item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomizations(item.productConfiguration.ChildEntity)
             }
           }
           return response;
