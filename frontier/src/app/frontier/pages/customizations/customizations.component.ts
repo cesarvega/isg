@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { selectQuote, selectQuoteItems, selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../../utils/store/selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { getValueFromObservable } from '../../utils/get-value-from-state';
 
 @Component({
   selector: 'app-customizations',
@@ -31,7 +32,7 @@ export class CustomizationsComponent implements OnInit {
   numberPortabilityTask: TaskInterface
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
-  active = 1;
+  activeItem: Item = null;
   showResults = false;
   items: Observable<Item[]>;
 
@@ -67,7 +68,7 @@ export class CustomizationsComponent implements OnInit {
       return false
     const length = items.length;
     const lastElement = items[length - 1];
-    return this.active === lastElement.id && this.isItemConfigurationCompleted(lastElement)
+    return this.activeItem.id === lastElement.id && this.isItemConfigurationCompleted(lastElement)
   }
 
 
@@ -76,28 +77,21 @@ export class CustomizationsComponent implements OnInit {
     try {
       this.loading = true;
       const quote = await this.quoteApiService.getQuote(this.quoteId, true, true);
-      this.active = quote.items[0].id;
+      this.activeItem = quote.items[0];
     } catch (error) {
       this.error = parseHttperror(error);
     }
     this.loading = false;
   }
 
-  areIteamsReadyToSubmit(items) {
-    for (let item of items) {
-      if (!item.completed)
-        throw new Error("Need to complete required customizations");
-    }
-    return true
-  }
-
-  continueCustomization(item: Item, items) {
-    if (this.isItemConfigurationCompleted(item)) {
+  continueCustomization() {
+    const items = getValueFromObservable(this.items);
+    if (this.isItemConfigurationCompleted(this.activeItem)) {
       const currentIndex = items.findIndex((iterateItem) => {
-        return iterateItem.id === item.id
+        return iterateItem.id === this.activeItem.id
       })
       if (currentIndex < items.length - 1) {
-        this.active = items[currentIndex + 1].id;
+        this.activeItem = items[currentIndex + 1];
       }
     }
     else {
@@ -109,10 +103,10 @@ export class CustomizationsComponent implements OnInit {
 
 
 
-  async submitCustomizations(items) {
+  async submitCustomizations() {
 
     try {
-      this.areIteamsReadyToSubmit(items)
+      let items = getValueFromObservable(this.items);
       this.loading = true;
 
       // submit customizations

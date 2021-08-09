@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { Store } from '@ngrx/store';
-import { getValueFromState } from '../../utils/get-value-from-state';
+import { getValueFromObservable } from '../../utils/get-value-from-state';
 import { ScheduleApiService } from '../../utils/services/api/schedule-api.service';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { ErrorInterface } from '../../utils/services/interfaces/common/error-interface';
@@ -37,7 +37,7 @@ export class ScheduleComponent implements OnInit {
   async ngOnInit() {
     this.loading = true;
     try {
-      this.customer = getValueFromState(this.store.select(selectCustomer));
+      this.customer = getValueFromObservable(this.store.select(selectCustomer));
       let events = await this.getSchedule();
       this.calendarOptions.events = events;
       await this.getTasks;

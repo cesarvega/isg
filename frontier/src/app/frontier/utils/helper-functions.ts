@@ -13,6 +13,12 @@ export function parseHttperror(error: HttpErrorResponse) {
         message: parsedError.message
       }
       return errorInterface;
+    } else {
+      let errorInterface: ErrorInterface = {
+        errors: [],
+        message: parsedError.message
+      }
+      return errorInterface;
     }
   }
   else {

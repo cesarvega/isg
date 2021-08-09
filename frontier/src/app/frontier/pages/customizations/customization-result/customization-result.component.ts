@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,6 +11,9 @@ export class CustomizationResultComponent implements OnInit {
 
   faArrowLeft = faArrowLeft
   faArrowRight = faArrowRight
+
+  @Output() goBack = new EventEmitter();
+  @Output() submitCustomizations = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {

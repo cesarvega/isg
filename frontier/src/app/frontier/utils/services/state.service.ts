@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Frontier } from '../store/interfaces/app.state';
 import { selectQuoteId, selectFrontier } from '../store/selectors';
-import { getValueFromState } from '../get-value-from-state';
+import { getValueFromObservable } from '../get-value-from-state';
 
 @Injectable({
   providedIn: 'root'
@@ -25,15 +25,15 @@ export class SnapshotStore {
 
 
   getState() {
-    return getValueFromState(this.store)
+    return getValueFromObservable(this.store)
   }
 
   getQuoteId() {
-    return getValueFromState(this.store.select(selectQuoteId))
+    return getValueFromObservable(this.store.select(selectQuoteId))
   }
 
   select(selector) {
-    return getValueFromState(this.store.select(selector))
+    return getValueFromObservable(this.store.select(selector))
   }
 
   dispatch(action) {

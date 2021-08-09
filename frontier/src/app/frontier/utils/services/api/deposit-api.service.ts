@@ -9,7 +9,7 @@ import { DepositRequestInterface } from '../../../pages/billing/payment/interfac
 import { SnapshotStore } from '../state.service';
 import { DepositResponse } from 'src/app/frontier/pages/billing/payment/interfaces/deposit-requirements-response.interface';
 import { selectQuoteId } from '../../store/selectors';
-import { getValueFromState } from '../../get-value-from-state';
+import { getValueFromObservable } from '../../get-value-from-state';
 
 
 @Injectable({

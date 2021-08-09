@@ -8,7 +8,7 @@ import { CreditFormInterface } from '../interfaces/customer/credit-check-form';
 import { selectCustomer, selectQuoteId } from '../../store/selectors';
 import { Subscription } from 'rxjs';
 import { CustomerContactBuilder } from '../builders/customer/customer-contact-builder';
-import { getValueFromState } from '../../get-value-from-state';
+import { getValueFromObservable } from '../../get-value-from-state';
 import { AddressInterface } from '../interfaces/customer/customer';
 import { map, tap } from 'rxjs/operators';
 import { mapCreditCheckInformation } from 'src/app/frontier/pages/credit-check/helpers/mapCreditCheckInformation';
@@ -35,7 +35,7 @@ export class CustomerApiService {
   }
 
   updateCustomer(creditForm: CreditFormInterface, address: AddressInterface) {
-    let previousCustomer = getValueFromState(this.store.select(selectCustomer));
+    let previousCustomer = getValueFromObservable(this.store.select(selectCustomer));
     let customer = this.customerContactBuilder.buildAccountAndVerifyInformation(creditForm, previousCustomer, address);
     let endpoint = getCustomerURL + "/" + customer.accountUuid;
     return this.clientService.patch(endpoint, this.quoteId, customer).pipe(
@@ -47,7 +47,7 @@ export class CustomerApiService {
   }
 
   creditCheck(request = null) {
-    let customer: CustomerInterface = getValueFromState(this.store.select(selectCustomer))
+    let customer: CustomerInterface = getValueFromObservable(this.store.select(selectCustomer))
     let endpoint = creditCheckURL;
     endpoint = endpoint.replace("{accountUuid}", customer.accountUuid);
     endpoint = endpoint.replace("{quoteId}", this.quoteId);
