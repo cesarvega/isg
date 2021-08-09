@@ -9,20 +9,8 @@ export const selectAddressSearchRequest = (state: AppState) => state.frontier
 
 export const selectMonthlyCustomizations = createSelector(
     selectSelectedCustomizations,
-    selectQuoteItems,
-    (customizations: ChildEntity[], configuration: Item[]) => {
+    (customizations: ChildEntity[]) => {
         let items: ChildEntity[] = [];
-        for (let item of configuration) {
-            for (let customization of item.productConfiguration.ChildEntity) {
-                if (customization.Price) {
-                    for (let price of customization.Price) {
-                        if (price.rateRecurring) {
-                            items.push(customization)
-                        }
-                    }
-                }
-            }
-        }
         for (let customization of customizations) {
             if (customization.Price) {
                 for (let price of customization.Price) {

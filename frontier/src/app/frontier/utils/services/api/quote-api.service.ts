@@ -5,12 +5,13 @@ import { environment } from 'src/environments/environment';
 import { createQuoteURL, generateTransactionIdURL, getCompleteTaskURL, validateQuoteURL, getValidateQuoteURL, getQuoteURL, getSubmitQuoteURL } from '../endpoints/qualification';
 import { AddressSearchResponseItemInterface } from '../interfaces/qualification/address-search-response';
 import { CreateQuoteInterface } from '../interfaces/qualification/create-quote';
-import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setQuoteAction, setSelectedAddressAction, setSubmitOrderResponse, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
+import { setCreateQuoteRequestAction, setCreateQuoteResponseAction, setCustomerAction, setCustomizations, setQuoteAction, setSelectedAddressAction, setSubmitOrderResponse, setTransactionIdAction, validateQuoteAction } from '../../store/actions';
 import { map, tap } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { selectQuoteId } from '../../store/selectors';
 import { CustomizationsMapper } from 'src/app/frontier/pages/customizations/helpers/customizations-mapper';
 import { fakeQuote } from 'src/app/frontier/pages/customizations/fake-quote';
+import { GetActiveCustomizations } from 'src/app/frontier/pages/customizations/helpers/get-active-customizations';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class QuoteApiService {
   quoteIdSubscription$: Subscription;
   quoteId: string;
   customizationMapper = new CustomizationsMapper();
+  getActiveCustomizations = new GetActiveCustomizations();
 
   constructor(private store: Store<any>, private clientService: ClientService) {
     this.store.select(selectQuoteId).subscribe((quoteId) => {
@@ -67,12 +69,18 @@ export class QuoteApiService {
   }
 
   async getQuote(quoteId, includeConfiguration, includeNotes) {
-    // const quote = fakeQuote;
-    // for (let item of quote.items) {
-    //   item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomsizations(item.productConfiguration.ChildEntity)
-    // }
-    // this.store.dispatch(setQuoteAction({ quote }))
-    // return
+    const quote = fakeQuote;
+    for (let item of quote.items) {
+      item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomizations(item.productConfiguration.ChildEntity)
+    }
+    this.store.dispatch(setQuoteAction({ quote }))
+    let activeCustomizations = [];
+    for (let item of quote.items) {
+      const itemActiveCustomizations = this.getActiveCustomizations.getActiveCustomizations(item.productConfiguration.ChildEntity)
+      activeCustomizations.push(...itemActiveCustomizations);
+    }
+    this.store.dispatch(setCustomizations({ customizations: activeCustomizations }))
+    return quote;
     let quoteURL = getQuoteURL;
     quoteURL = quoteURL.replace("{quoteId}", quoteId)
     let params = { includeConfiguration, includeNotes }
@@ -87,6 +95,12 @@ export class QuoteApiService {
           return response;
         }),
         tap((response) => {
+          let activeCustomizations = [];
+          for (let item of response.items) {
+            const itemActiveCustomizations = this.customizationMapper.mapCustomizations(item.productConfiguration.ChildEntity)
+            activeCustomizations.push(...itemActiveCustomizations);
+          }
+          this.store.dispatch(setCustomizations({ customizations: activeCustomizations }))
           this.store.dispatch(setQuoteAction({ quote: response }))
         })
       )

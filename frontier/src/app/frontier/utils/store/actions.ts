@@ -35,4 +35,5 @@ export const removeCustomization = createAction('removeCustomization', props<{ c
 export const removeAllCustomizations = createAction('removeAllCustomizations', props<any>());
 export const setCreditForm = createAction('setCreditForm', props<{ creditForm }>());
 export const addProduct = createAction('addProduct', props<{ product }>());
+export const setCustomizations = createAction('setCustomizations', props<{ customizations: ChildEntity[] }>());
 

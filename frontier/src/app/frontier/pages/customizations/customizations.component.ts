@@ -75,7 +75,8 @@ export class CustomizationsComponent implements OnInit {
   async getQuote() {
     try {
       this.loading = true;
-      this.quoteApiService.getQuote(this.quoteId, true, true);
+      const quote = await this.quoteApiService.getQuote(this.quoteId, true, true);
+      this.active = quote.items[0].id;
     } catch (error) {
       this.error = parseHttperror(error);
     }
