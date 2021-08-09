@@ -3,6 +3,7 @@
 <ng-container *ngIf="!loading">
   <app-customization-result
     (goBack)="showResults = false"
+    [selectedCustomizations]="selectedCustomizations | async"
     (submitCustomizations)="submitCustomizations(items)"
     *ngIf="showResults"
   >

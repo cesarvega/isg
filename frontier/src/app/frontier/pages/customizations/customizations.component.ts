@@ -5,7 +5,7 @@ import { QuoteApiService } from '../../utils/services/api/quote-api.service';
 import { removeAllCustomizations, setStepAction } from '../../utils/store/actions';
 import { parseHttperror } from '../../utils/helper-functions';
 import { ProductsApiService } from '../../utils/services/api/products-api.service';
-import { Item, QuoteInterface } from '../../utils/store/interfaces/quote';
+import { ChildEntity, Item, QuoteInterface } from '../../utils/store/interfaces/quote';
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
@@ -13,7 +13,7 @@ import { offerTaskIdName, numberPortabilityTaskName, quoteValidationTaskName } f
 import { ChildEntityHelperService } from './child-entity-helper.service';
 import { Steps } from '../../utils/steps';
 import { Router } from '@angular/router';
-import { selectQuote, selectQuoteItems, selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../../utils/store/selectors';
+import { selectQuote, selectQuoteItems, selectSelectedCustomizations, selectWasQuoteValidated, selectWereDisclosuresAccepted } from '../../utils/store/selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getValueFromObservable } from '../../utils/get-value-from-state';
@@ -35,6 +35,7 @@ export class CustomizationsComponent implements OnInit {
   activeItem: Item = null;
   showResults = false;
   items: Observable<Item[]>;
+  selectedCustomizations: Observable<ChildEntity[]>;
 
   constructor(private snapShotStore: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router, private store: Store<any>) {
@@ -44,6 +45,7 @@ export class CustomizationsComponent implements OnInit {
     this.wasQuoteValidated = snapShotStore.select(selectWasQuoteValidated);
     this.wereDisclosuresAccepted = snapShotStore.select(selectWereDisclosuresAccepted)
     this.items = this.store.select(selectQuoteItems);
+    this.selectedCustomizations = this.store.select(selectSelectedCustomizations);
   }
 
   ngOnInit(): void {
