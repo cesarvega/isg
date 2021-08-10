@@ -3,7 +3,8 @@
 <ng-container *ngIf="!loading">
   <app-customization-result
     (goBack)="showResults = false"
-    [selectedCustomizations]="selectedCustomizations | async"
+    [monthlyCustomizations]="monthlyCustomizations | async"
+    [oneTimeCustomizations]="oneTimeCustomizations | async"
     (submitCustomizations)="submitCustomizations(items)"
     *ngIf="showResults"
   >

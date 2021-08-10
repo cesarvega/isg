@@ -17,6 +17,7 @@ import { selectQuote, selectQuoteItems, selectSelectedCustomizations, selectWasQ
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getValueFromObservable } from '../../utils/get-value-from-state';
+import { selectMonthlyCustomizations, selectOneTimeCustomizations } from '../../utils/store/complexSelectors/customization-selectors';
 
 @Component({
   selector: 'app-customizations',
@@ -35,7 +36,8 @@ export class CustomizationsComponent implements OnInit {
   activeItem: Item = null;
   showResults = false;
   items: Observable<Item[]>;
-  selectedCustomizations: Observable<ChildEntity[]>;
+  monthlyCustomizations: Observable<ChildEntity[]>;
+  oneTimeCustomizations: Observable<ChildEntity[]>;
 
   constructor(private snapShotStore: SnapshotStore, private quoteApiService: QuoteApiService, private productApiService: ProductsApiService,
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router, private store: Store<any>) {
@@ -45,7 +47,8 @@ export class CustomizationsComponent implements OnInit {
     this.wasQuoteValidated = snapShotStore.select(selectWasQuoteValidated);
     this.wereDisclosuresAccepted = snapShotStore.select(selectWereDisclosuresAccepted)
     this.items = this.store.select(selectQuoteItems);
-    this.selectedCustomizations = this.store.select(selectSelectedCustomizations);
+    this.monthlyCustomizations = this.store.select(selectMonthlyCustomizations);
+    this.oneTimeCustomizations = this.store.select(selectOneTimeCustomizations);
   }
 
   ngOnInit(): void {
