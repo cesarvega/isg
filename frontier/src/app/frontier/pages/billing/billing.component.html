@@ -16,5 +16,8 @@
   </app-no-payment>
   <app-billing-address
     *ngIf="totalDueToday <= 0 || wasPaymentSubmitted"
+    (redirect)="redirectToSchedule()"
+    [loading]="loading"
+    [error]="error"
   ></app-billing-address>
 </div>

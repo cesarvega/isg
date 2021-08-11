@@ -85,7 +85,7 @@ export const initialState: Frontier = {
   order: null,
   selectedCustomizations: [],
   creditForm: null,
-  customerData: null
+  customerDataResponse: null
 };
 
 const _counterReducer = createReducer(
@@ -127,7 +127,7 @@ const _counterReducer = createReducer(
   on(setCreditForm, (state, { creditForm }) => ({ ...state, creditForm })),
   on(addProduct, (state, { product }) => ({ ...state, selectedProducts: state.selectedProducts.concat(product) })),
   on(setCustomizations, (state, { customizations }) => ({ ...state, selectedCustomizations: customizations })),
-  on(setCustomerData, (state, { customerData }) => ({ ...state, customerData })),
+  on(setCustomerData, (state, { customerData }) => ({ ...state, customerDataResponse: customerData })),
 );
 
 function removeProducts(productId: string, products: OffersInterface[]) {

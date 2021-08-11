@@ -27,4 +27,5 @@ export const selectOrder = (state: AppState) => state.frontier.order;
 export const selectSelectedCustomizations = (state: AppState) => state.frontier.selectedCustomizations;
 export const selectQuoteItems = (state: AppState) => state.frontier.quote.items;
 export const selectCreditForm = (state: AppState) => state.frontier.creditForm;
+export const selectCustomerDataResponse = (state: AppState) => state.frontier.customerDataResponse;
 

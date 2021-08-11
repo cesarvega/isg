@@ -14,6 +14,7 @@ import { map, tap } from 'rxjs/operators';
 import { mapCreditCheckInformation } from 'src/app/frontier/pages/credit-check/helpers/mapCreditCheckInformation';
 import { NumberPortabilityRequestInterface } from '../interfaces/customer/number-portability-request';
 import { NumberPortabilityResponse } from '../interfaces/customer/number-portability-response';
+import { CustomerDataInterface } from '../../store/interfaces/customer-data';
 
 
 @Injectable({
@@ -42,6 +43,15 @@ export class CustomerApiService {
       tap((response) => {
         this.store.dispatch(setCreditForm({ creditForm }))
         this.store.dispatch(setCustomerAction({ customer }))
+        this.store.dispatch(setCustomerData({ customerData: response }))
+      })
+    ).toPromise();
+  }
+
+  updateCustomerData(data, customer: CustomerInterface) {
+    let endpoint = getCustomerURL + "/" + customer.accountUuid;
+    return this.clientService.patch(endpoint, this.quoteId, data).pipe(
+      tap((response) => {
         this.store.dispatch(setCustomerData({ customerData: response }))
       })
     ).toPromise();

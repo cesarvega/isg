@@ -3,6 +3,8 @@ export interface CustomerDataInterface {
 }
 
 export interface PartyAccountViewInterface {
+    PartyRoleBillingAddress_1_PostalAddress_rowidObject: string,
+    PartyRoleBillingAddress_1_rowidObject: string,
     PartyRoleBillingAddress_1_PostalAddress_key: KeyInterface
 }
 

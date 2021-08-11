@@ -1,20 +1,48 @@
-<div class="alert alert-primary" role="alert">
-  <div class="form-check">
-    <input
-      class="form-check-input"
-      type="checkbox"
-      value=""
-      [disabled]="loading"
-      (change)="showBillingAddressForm = !showBillingAddressForm"
-      [checked]="showBillingAddressForm"
-      id="differntBillingAddress"
-    />
-    <label class="form-check-label" for="differntBillingAddress">
-      Is your billing address different that you service address?
-    </label>
+<app-loader [loading]="loading"></app-loader>
+<app-error-message [error]="error"></app-error-message>
+<ng-container *ngIf="!loading">
+  <div class="alert alert-primary" role="alert">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        [disabled]="loading"
+        (change)="showBillingAddressForm = !showBillingAddressForm"
+        [checked]="showBillingAddressForm"
+        id="differntBillingAddress"
+      />
+      <label class="form-check-label" for="differntBillingAddress">
+        Is your billing address different that you service address?
+      </label>
+    </div>
   </div>
-</div>
-<ng-container *ngIf="showBillingAddressForm">
-  <app-additional-address [address]="billingAddress"></app-additional-address>
+  <div *ngIf="showBillingAddressForm" class="mb-3">
+    <form
+      [formGroup]="creditForm"
+      (ngSubmit)="onContinue()"
+      class="needs-validation"
+      [ngClass]="this.submitted ? 'was-validated' : ''"
+      novalidate=""
+      class="row g-3"
+    >
+      <app-additional-address
+        [address]="billingAddress"
+      ></app-additional-address>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-danger">
+          Continue <fa-icon [icon]="faArrowRight"></fa-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="d-flex justify-content-end" *ngIf="errorOnUpdateAddress">
+    <button class="btn btn-primary" (click)="redirect.emit()">
+      Continue to Schedule
+    </button>
+  </div>
+  <app-continue-button
+    *ngIf="!showBillingAddressForm"
+    (onContinueEvent)="redirect.emit()"
+  ></app-continue-button>
 </ng-container>
-<app-continue-button (onContinueEvent)="onContinue()"></app-continue-button>

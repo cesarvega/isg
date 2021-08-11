@@ -47,6 +47,6 @@ export interface Frontier {
   order: SubmitOrderResponseInterface,
   creditForm: CreditFormInterface,
   selectedCustomizations: ChildEntity[];
-  customerData: CustomerDataInterface;
+  customerDataResponse: CustomerDataInterface;
 }
 
