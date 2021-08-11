@@ -3,6 +3,7 @@ import { FormBuilder, AbstractControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { CreditFormInterface } from 'src/app/frontier/utils/services/interfaces/customer/credit-check-form';
 import { AddressInterface } from 'src/app/isg-shared/interfaces/address';
+import { isAddressValid } from './billing-address/helpers/is-address-valid';
 @Component({
   selector: 'app-credit-form',
   templateUrl: './creditForm.component.html',
@@ -47,7 +48,7 @@ export class CreditFormComponent implements OnInit {
     this.submitted = true
     if (this.creditForm.valid) {
       if (this.showBillingAddressForm) {
-        if (!this.isBillingAddressValid(this.billingAddress)) {
+        if (!isAddressValid(this.billingAddress)) {
           return;
         }
       }
@@ -59,20 +60,6 @@ export class CreditFormComponent implements OnInit {
     }
   }
 
-  isBillingAddressValid(address: AddressInterface) {
-    // validate fields not emptu
-    const { addressLine1, city, stateProvince, zipCode } = address;
-    if (!addressLine1 || !city || !stateProvince || !zipCode) {
-      return false;
-    }
-    //validate zip code
-    let zipCodeRegex: RegExp = /^\d{5}(?:[-\s]\d{4})?$/;
-    const expressionMatched = zipCodeRegex.test(zipCode);
-    if (!expressionMatched) {
-      return false;
-    }
-    return true;
-  }
 
 
   private patchValue(testCase: CreditFormInterface) {
