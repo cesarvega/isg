@@ -6,11 +6,11 @@ import { ErrorInterface } from '../../../utils/services/interfaces/common/error-
 import { CustomerInterface } from '../../../utils/services/interfaces/customer/customer';
 import { PaymentFormInterface } from './interfaces/payment.form.interface';
 import { paymentTestCases } from './test-cases/payment.test.cases';
-import { customerTypes } from './utils/customer.types';
-import { buildDepositCollectionRequest, getTotalPayment } from './services/deposit-request-builder.service';
+import { getTotalPayment } from './services/deposit-request-builder.service';
 import { Output, EventEmitter } from '@angular/core';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { DepositResponse } from './interfaces/deposit-requirements-response.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-payment',
@@ -19,9 +19,9 @@ import { DepositResponse } from './interfaces/deposit-requirements-response.inte
 })
 export class PaymentComponent implements OnInit {
 
+  customerType = environment.customerType;
   faComment = faComment;
   error: ErrorInterface;
-  customerTypes = customerTypes;
   submitted = false;
   testPayments: ReadonlyArray<PaymentFormInterface> = paymentTestCases;
   selectedTestPaymentAlias: string;
@@ -38,7 +38,7 @@ export class PaymentComponent implements OnInit {
     this.paymentForm = this.formBuilder.group({
       firstName: [this.customer?.firstName, [Validators.required]],
       lastName: [this.customer?.lastName, [Validators.required]],
-      customerType: ['', [Validators.required]],
+      customerType: [this.customerType, [Validators.required]],
       cardNumber: ['', [Validators.required, Validators.maxLength(16)]],
       expirationDate: ['', Validators.required],
       nameOnCard: ['', [Validators.required, Validators.maxLength(200)]],

@@ -68,25 +68,6 @@
           <div class="invalid-feedback">Last Name is required.</div>
         </div>
       </div>
-      <div class="col-md-6">
-        <label for="customerType" class="form-label">* Customer Type</label>
-        <select
-          class="form-select"
-          id="customerType"
-          required
-          formControlName="customerType"
-        >
-          <option value="">Select an option</option>
-          <option
-            [value]="customerType.value"
-            *ngFor="let customerType of customerTypes"
-          >
-            {{ customerType.name }}
-          </option>
-        </select>
-        <div class="invalid-feedback">Please select a customer type.</div>
-      </div>
-
       <div class="row g-2">
         <div class="col-md-6">
           <label for="nameOnCard" class="form-label">* Name on card:</label>
