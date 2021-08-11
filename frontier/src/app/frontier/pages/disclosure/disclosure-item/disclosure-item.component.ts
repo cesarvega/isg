@@ -14,6 +14,7 @@ export class DisclosureItemComponent implements OnInit {
   acceptedStatus = "ACCEPT";
   pdfLoaded = false;
   constructor(private elRef: ElementRef) { }
+  customerAgrees = false;
 
   ngOnInit(): void {
   }
@@ -35,6 +36,12 @@ export class DisclosureItemComponent implements OnInit {
       ng2Container.style.position = "unset";
   }
 
+  onChangeCheckbox() {
+    this.customerAgrees = !this.customerAgrees;
+    if (this.customerAgrees) {
+      this.acceptDisclosure();
+    }
+  }
 
   acceptDisclosure() {
     this.disclosure.status = this.acceptedStatus

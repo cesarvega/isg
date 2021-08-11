@@ -1,7 +1,10 @@
 <div class="alert alert-primary" role="alert">
   <h4>Customizations selection summary</h4>
 </div>
-<ul class="list-group list-group-flush my-3">
+<ul
+  *ngIf="monthlyCustomizations.length > 0"
+  class="list-group list-group-flush my-3"
+>
   <li class="list-group-item">
     <div class="d-flex text-orangered justify-content-between">
       <h4 class="text-danger"><fa-icon [icon]="faBars"></fa-icon> Monthly:</h4>
@@ -25,7 +28,10 @@
   </li>
 </ul>
 
-<ul class="list-group list-group-flush my-3">
+<ul
+  *ngIf="oneTimeCustomizations.length > 0"
+  class="list-group list-group-flush my-3"
+>
   <li class="list-group-item">
     <div class="d-flex text-orangered justify-content-between">
       <h4 class="text-danger"><fa-icon [icon]="faBars"></fa-icon> One Time:</h4>

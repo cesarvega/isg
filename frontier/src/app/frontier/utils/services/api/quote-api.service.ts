@@ -69,18 +69,6 @@ export class QuoteApiService {
   }
 
   async getQuote(quoteId, includeConfiguration, includeNotes) {
-    const quote = fakeQuote;
-    for (let item of quote.items) {
-      item.productConfiguration.ChildEntity = this.customizationMapper.mapCustomizations(item.productConfiguration.ChildEntity)
-    }
-    this.store.dispatch(setQuoteAction({ quote }))
-    let activeCustomizations = [];
-    for (let item of quote.items) {
-      const itemActiveCustomizations = this.getActiveCustomizations.getActiveCustomizations(item.productConfiguration.ChildEntity)
-      activeCustomizations.push(...itemActiveCustomizations);
-    }
-    this.store.dispatch(setCustomizations({ customizations: activeCustomizations }))
-    return quote;
     let quoteURL = getQuoteURL;
     quoteURL = quoteURL.replace("{quoteId}", quoteId)
     let params = { includeConfiguration, includeNotes }

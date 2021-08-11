@@ -9,12 +9,29 @@
     (after-load-complete)="afterPdfLoad()"
     style="display: block; height: 300px"
   ></pdf-viewer>
-  <app-continue-button
+  <div
+    class="d-flex justify-content-end"
     *ngIf="pdfLoaded && !isDisclosureAccepted()"
-    (onContinueEvent)="acceptDisclosure()"
-    [name]="'Accept disclosure'"
   >
-  </app-continue-button>
+    <div class="form-check alert alert-warning ps-5">
+      <input
+        (onContinueEvent)="acceptDisclosure()"
+        class="form-check-input"
+        type="checkbox"
+        (change)="onChangeCheckbox()"
+        [checked]="customerAgrees"
+        value=""
+        id="flexCheckDefault"
+      />
+      <label
+        class="form-check-label"
+        for="flexCheckDefault"
+        style="font-weight: bold; cursor: pointer"
+      >
+        Does the customer agree with this?
+      </label>
+    </div>
+  </div>
 
   <div
     *ngIf="isDisclosureAccepted()"
