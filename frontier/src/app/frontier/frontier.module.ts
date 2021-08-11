@@ -40,7 +40,7 @@ import { ContinueButtonComponent } from './common/continue-button/continue-butto
 import { ChallengeQuestionsComponent } from './pages/credit-check/challenge-questions/challenge-questions.component';
 import { NoPaymentComponent } from './pages/billing/no-payment/no-payment.component';
 import { OfferSummaryComponent } from './pages/offers/offer-summary/offer-summary.component';
-import { BillingAddressComponent } from './pages/credit-check/creditForm/billing-address/billing-address.component';
+import { AdditionalAddressComponent } from './pages/credit-check/creditForm/additional-address/additional-address.component';
 import { TestCaseSelectorComponent } from './common/test-case-selector/test-case-selector.component';
 import { LoaderComponent } from './common/loader/loader.component';
 import { CustomizationResultComponent } from './pages/customizations/customization-result/customization-result.component';
@@ -79,7 +79,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ChallengeQuestionsComponent,
     NoPaymentComponent,
     OfferSummaryComponent,
-    BillingAddressComponent,
+    AdditionalAddressComponent,
     TestCaseSelectorComponent,
     LoaderComponent,
     CustomizationResultComponent,

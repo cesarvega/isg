@@ -3,7 +3,7 @@ import { FormBuilder, AbstractControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { CreditFormInterface } from 'src/app/frontier/utils/services/interfaces/customer/credit-check-form';
 import { AddressInterface } from 'src/app/isg-shared/interfaces/address';
-import { isAddressValid } from './billing-address/helpers/is-address-valid';
+import { isAddressValid } from './additional-address/helpers/is-address-valid';
 @Component({
   selector: 'app-credit-form',
   templateUrl: './creditForm.component.html',
