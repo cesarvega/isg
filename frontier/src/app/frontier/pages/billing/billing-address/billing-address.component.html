@@ -1,0 +1,20 @@
+<div class="alert alert-primary" role="alert">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      [disabled]="loading"
+      (change)="showBillingAddressForm = !showBillingAddressForm"
+      [checked]="showBillingAddressForm"
+      id="differntBillingAddress"
+    />
+    <label class="form-check-label" for="differntBillingAddress">
+      Is your billing address different that you service address?
+    </label>
+  </div>
+</div>
+<ng-container *ngIf="showBillingAddressForm">
+  <app-additional-address [address]="billingAddress"></app-additional-address>
+</ng-container>
+<app-continue-button (onContinueEvent)="onContinue()"></app-continue-button>

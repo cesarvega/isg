@@ -14,4 +14,7 @@
     (continueEvent)="redirectToSchedule()"
   >
   </app-no-payment>
+  <app-billing-address
+    *ngIf="totalDueToday <= 0 || wasPaymentSubmitted"
+  ></app-billing-address>
 </div>

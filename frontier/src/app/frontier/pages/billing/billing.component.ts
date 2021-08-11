@@ -44,6 +44,7 @@ export class BillingComponent implements OnInit {
   customerNeedsDeposit = true;
   totalDueToday = 0;
   isBusiness: boolean;
+  wasPaymentSubmitted = false;
 
   constructor(private depositApiService: DepositeApiService, private snapShotStore: SnapshotStore, private taskApiService: TasksApiService, private router: Router) {
 
@@ -108,8 +109,7 @@ export class BillingComponent implements OnInit {
       await this.depositCollection(this.depositRequirements, fundingAccountToken,
         paymentFormValues, this.customer);
 
-      this.redirectToSchedule();
-
+      this.wasPaymentSubmitted = true;
     } catch (error) {
       this.error = error;
       this.loading = false;

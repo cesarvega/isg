@@ -44,6 +44,7 @@ import { AdditionalAddressComponent } from './pages/credit-check/creditForm/addi
 import { TestCaseSelectorComponent } from './common/test-case-selector/test-case-selector.component';
 import { LoaderComponent } from './common/loader/loader.component';
 import { CustomizationResultComponent } from './pages/customizations/customization-result/customization-result.component';
+import { BillingAddressComponent } from './pages/billing/billing-address/billing-address.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -83,6 +84,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     TestCaseSelectorComponent,
     LoaderComponent,
     CustomizationResultComponent,
+    BillingAddressComponent,
   ],
   imports: [
     CommonModule,
