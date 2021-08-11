@@ -13,6 +13,7 @@ import { DepositCollectionResponseInterface } from "../../../pages/billing/payme
 import { CreditCheckResultInterface } from '../../services/interfaces/customer/credit-check-result';
 import { SubmitOrderResponseInterface } from '../../services/interfaces/order/submit-order-response.interface';
 import { CreditFormInterface } from '../../services/interfaces/customer/credit-check-form';
+import { CustomerDataInterface } from './customer-data';
 export interface Frontier {
   isBusiness?: boolean;
   transactionId: string,
@@ -46,5 +47,6 @@ export interface Frontier {
   order: SubmitOrderResponseInterface,
   creditForm: CreditFormInterface,
   selectedCustomizations: ChildEntity[];
+  customerData: CustomerDataInterface;
 }
 

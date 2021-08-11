@@ -33,7 +33,8 @@ import {
   removeAllCustomizations,
   setCreditForm,
   addProduct,
-  setCustomizations
+  setCustomizations,
+  setCustomerData
 } from './actions';
 import { Steps } from '../steps';
 import { OffersInterface } from '../services/interfaces/products/offers-interface';
@@ -83,7 +84,8 @@ export const initialState: Frontier = {
   creditCheckResult: null,
   order: null,
   selectedCustomizations: [],
-  creditForm: null
+  creditForm: null,
+  customerData: null
 };
 
 const _counterReducer = createReducer(
@@ -125,6 +127,7 @@ const _counterReducer = createReducer(
   on(setCreditForm, (state, { creditForm }) => ({ ...state, creditForm })),
   on(addProduct, (state, { product }) => ({ ...state, selectedProducts: state.selectedProducts.concat(product) })),
   on(setCustomizations, (state, { customizations }) => ({ ...state, selectedCustomizations: customizations })),
+  on(setCustomerData, (state, { customerData }) => ({ ...state, customerData })),
 );
 
 function removeProducts(productId: string, products: OffersInterface[]) {

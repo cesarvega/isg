@@ -3,7 +3,7 @@ import { ClientService } from 'src/app/isg-shared/client/client.service';
 import { CustomerInterface } from '../interfaces/customer/customer';
 import { getCustomerURL, creditCheckURL, getNumberPortabiltyURL } from '../endpoints/customer';
 import { Store } from '@ngrx/store';
-import { setCustomerAction, setCustomerForms, setCreditCheckResult, setCreditForm } from '../../store/actions';
+import { setCustomerAction, setCustomerForms, setCreditCheckResult, setCreditForm, setCustomerData } from '../../store/actions';
 import { CreditFormInterface } from '../interfaces/customer/credit-check-form';
 import { selectCustomer, selectQuoteId } from '../../store/selectors';
 import { Subscription } from 'rxjs';
@@ -39,9 +39,10 @@ export class CustomerApiService {
     let customer = this.customerContactBuilder.buildAccountAndVerifyInformation(creditForm, previousCustomer, address);
     let endpoint = getCustomerURL + "/" + customer.accountUuid;
     return this.clientService.patch(endpoint, this.quoteId, customer).pipe(
-      tap(() => {
+      tap((response) => {
         this.store.dispatch(setCreditForm({ creditForm }))
         this.store.dispatch(setCustomerAction({ customer }))
+        this.store.dispatch(setCustomerData({ customerData: response }))
       })
     ).toPromise();
   }
