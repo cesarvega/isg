@@ -9,7 +9,7 @@ import { ChildEntity, Item, QuoteInterface } from '../../utils/store/interfaces/
 import { TaskInterface } from '../../utils/store/interfaces/task-interface';
 import { TasksApiService } from '../../utils/services/api/tasks-api.service.';
 import { getTaskByNameFromState } from '../../utils/store/complexSelectors/taks';
-import { offerTaskIdName, numberPortabilityTaskName, quoteValidationTaskName } from '../../utils/taskNames';
+import { numberPortabilityTaskName, offerTaskIdName, quoteValidationTaskName } from '../../utils/taskNames';
 import { ChildEntityHelperService } from './child-entity-helper.service';
 import { Steps } from '../../utils/steps';
 import { Router } from '@angular/router';
@@ -30,7 +30,6 @@ export class CustomizationsComponent implements OnInit {
   loading: Boolean = false
   error: ErrorInterface
   selectOfferTask: TaskInterface
-  numberPortabilityTask: TaskInterface
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
   activeItem: Item = null;
@@ -43,7 +42,6 @@ export class CustomizationsComponent implements OnInit {
     private tasksApiService: TasksApiService, public childEntityHelperService: ChildEntityHelperService, private router: Router, private store: Store<any>) {
     this.quoteId = snapShotStore.getQuoteId();
     this.selectOfferTask = snapShotStore.select(getTaskByNameFromState(offerTaskIdName))
-    this.numberPortabilityTask = snapShotStore.select(getTaskByNameFromState(numberPortabilityTaskName))
     this.wasQuoteValidated = snapShotStore.select(selectWasQuoteValidated);
     this.wereDisclosuresAccepted = snapShotStore.select(selectWereDisclosuresAccepted)
     this.items = this.store.select(selectQuoteItems);

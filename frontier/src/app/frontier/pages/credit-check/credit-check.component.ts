@@ -64,20 +64,6 @@ export class CreditCheckComponent implements OnInit {
     return await this.tasksApiService.getTasks();
   }
 
-  private async determineNumberPortability(phoneNumber) {
-    const voiceProducts = this.selectedProducts.filter((product) => {
-      return product.serviceType === "Voice";
-    });
-    if (voiceProducts.length > 0) {
-      this.loading = true;
-      const response = await this.customerApiService.numberPortability(phoneNumber);
-      this.loading = false;
-      if (response.isPortable) {
-        this.alertMessage = `Congratulations your Phone Number ${response.phoneNumber} is Portable`;
-      }
-    }
-  }
-
 
   onSelectTestCase(selectedTestCase) {
     let testCase: CreditFormInterface = this.creditCheckTestCases.find((testCase) => {
