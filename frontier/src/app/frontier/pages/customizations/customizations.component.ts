@@ -33,6 +33,7 @@ export class CustomizationsComponent implements OnInit {
   wasQuoteValidated: boolean = false;
   wereDisclosuresAccepted: boolean = false;
   activeItem: Item = null;
+  activeId: string;
   showResults = false;
   items: Observable<Item[]>;
   monthlyCustomizations: Observable<ChildEntity[]>;
@@ -81,6 +82,7 @@ export class CustomizationsComponent implements OnInit {
       this.loading = true;
       const quote = await this.quoteApiService.getQuote(this.quoteId, true, true);
       this.activeItem = quote.items[0];
+      this.activeId = this.activeItem.id;
     } catch (error) {
       this.error = parseHttperror(error);
     }
@@ -95,6 +97,7 @@ export class CustomizationsComponent implements OnInit {
       })
       if (currentIndex < items.length - 1) {
         this.activeItem = items[currentIndex + 1];
+        this.activeId = this.activeItem.id;
       }
     }
     else {

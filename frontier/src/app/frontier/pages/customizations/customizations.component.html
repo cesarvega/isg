@@ -13,13 +13,13 @@
     <ul
       ngbNav
       #nav="ngbNav"
-      [(activeId)]="activeItem.id"
+      [(activeId)]="activeId"
       class="nav nav-pills nav-fill"
     >
       <li
+        *ngFor="let item of items | async"
         [ngbNavItem]="item.id"
         class="me-2"
-        *ngFor="let item of items | async"
       >
         <a ngbNavLink>{{ item.name }}</a>
         <ng-template ngbNavContent>
