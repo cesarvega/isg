@@ -28,7 +28,7 @@
     />
     <div class="invalid-feedback">Legal Last Name is required.</div>
   </div>
-  <div class="col-12">
+  <div class="col-md-6">
     <label for="inputAddress" class="form-label">Email Address</label>
     <input
       required
@@ -40,6 +40,7 @@
     <div class="invalid-feedback">Must be an email.</div>
     <div class="invalid-feedback">Email address is required.</div>
   </div>
+  <div class="clearfix"></div>
   <div class="col-md-6">
     <label for="inputAddress2" class="form-label">Primary Phone Number</label>
     <input
@@ -109,7 +110,7 @@
     </div>
   </div>
   <ng-container *ngIf="showBillingAddressForm && !loading">
-    <strong class="text-danger">Please enter your billing address</strong>
+    <strong class="text-danger mb-2">Please enter your previous address</strong>
     <app-additional-address [address]="billingAddress"></app-additional-address>
   </ng-container>
 

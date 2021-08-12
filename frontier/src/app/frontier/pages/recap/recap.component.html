@@ -1,9 +1,9 @@
 <app-error-message [error]="error"></app-error-message>
 <app-loader [loading]="loading"></app-loader>
 <div *ngIf="!loading" class="p-3" style="height: 2400px">
-  <h5 class="text-danger" style="padding-left: 1rem">
-    Please review your order
-  </h5>
+  <div class="alert alert-info" role="alert">
+    <h5 style="font-weight: bold">Please read information to the customer</h5>
+  </div>
   <app-customer-information
     [parsedAddress]="selectedParsedAddress$ | async"
     [creditForm]="creditForm$ | async"
