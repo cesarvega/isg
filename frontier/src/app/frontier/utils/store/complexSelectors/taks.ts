@@ -25,7 +25,7 @@ export const isTaskClosedSelector = (taskName) => {
   );
 }
 
-export const getTasksByNameLocal = (tasks: TaskInterface[], taskName) => {
+export const getTasksByNameLocal = (tasks: TaskInterface[], taskName: string) => {
   return tasks.find((task) => {
     return task.specName == taskName;
   })

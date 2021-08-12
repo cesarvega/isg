@@ -20,8 +20,9 @@ import { buildDepositCollectionRequest, getTotalPayment } from './payment/servic
 import { buildRequestGeneratePaymentToken } from './payment/services/payment-builder.service';
 import { lineOfBusiness } from './payment/utils/line-of-business';
 import { environment } from 'src/environments/environment';
-import { posIdHoldTaskName } from '../../utils/taskNames';
+import { autoPayTaskName, posIdHoldTaskName } from '../../utils/taskNames';
 import { CreditCheckResultInterface } from '../../utils/services/interfaces/customer/credit-check-result';
+import { getTasksByNameLocal } from '../../utils/store/complexSelectors/taks';
 
 @Component({
   selector: 'app-billing',
@@ -45,6 +46,7 @@ export class BillingComponent implements OnInit {
   totalDueToday = 0;
   isBusiness: boolean;
   wasPaymentSubmitted = false;
+  needsAutoPay = false;
 
   constructor(private depositApiService: DepositeApiService, private snapShotStore: SnapshotStore, private taskApiService: TasksApiService, private router: Router) {
 
@@ -59,7 +61,12 @@ export class BillingComponent implements OnInit {
       this.CorrelationId = this.snapShotStore.select(selectCorrelationId);
       this.isBusiness = this.snapShotStore.getFrontierState().isBusiness;
       // get tasks
-      await this.getTasks();
+      const tasks = await this.getTasks();
+      // check if needs to set up auto pay
+      if (getTasksByNameLocal(tasks, autoPayTaskName)) {
+        this.needsAutoPay = true;
+      }
+
       // close post id task, only in dev environment
       if (!environment.production) {
         const creditCheckResult: CreditCheckResultInterface = this.snapShotStore.select(selectCustomerCreditCheckResult);

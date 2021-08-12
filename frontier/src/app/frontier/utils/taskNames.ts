@@ -8,3 +8,4 @@ export const reserveTaskName = "scheduleTask"
 export const acceptQuoteTaskName = "acceptQuoteTask";
 export const billPreviewTaskName = "billPreviewTask";
 export const changeCustomerDetailsTaskName = "changeCustomerDetailsTask"
+export const autoPayTaskName = "autoPayTask"
