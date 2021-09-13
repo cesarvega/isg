@@ -54,8 +54,17 @@ export class OffersComponent implements OnInit {
     this.selectedParsedAdress$ = this.store.select(selectParsedAddress);
     this.addProductsSubscription = this.store.select(selectSelectedProducts).subscribe((products) => {
       this.addProducts = products;
-    })
+    });
     this.initComponent();
+  }
+
+  private existCategory( category ){
+    for (let offer of this.offers) {
+      if ( offer.serviceType === category.value ){
+          return category;
+      }
+    }
+    return false;
   }
 
   ngOnDestroy() {
@@ -67,6 +76,7 @@ export class OffersComponent implements OnInit {
     try {
       this.quoteId = this.snapShotStore.getQuoteId();
       await this.getOffers();
+      this.categories = this.categories.filter(category => this.existCategory( category ) );
       this.selectCategoriesOnInit();
     } catch (error) {
       this.loading = false;
@@ -123,12 +133,14 @@ export class OffersComponent implements OnInit {
     let offersSelected = offers.filter((offer: OffersInterface) => {
       if (offer.selected && offer.serviceType === broadbandServiceType)
         hasBroadBandProduct = true;
-      return offer.selected == true
-    })
-    if (!offersSelected.length)
-      throw new Error("Need to select at least one product");
-    if (!hasBroadBandProduct)
-      throw new Error("Need to select an Internet Product");
+      return offer.selected === true;
+    });
+    if (!offersSelected.length) {
+      throw new Error('Need to select at least one product');
+    }
+    if (!hasBroadBandProduct) {
+      throw new Error('Need to select an Internet Product');
+    }
   }
 
   reviewOffers() {
@@ -143,8 +155,8 @@ export class OffersComponent implements OnInit {
 
   getSelectedOffersForReview() {
     return this.constOffers.filter((offer) => {
-      return offer.selected
-    })
+      return offer.selected;
+    });
   }
   async onContinue() {
     this.loading = true;
@@ -170,11 +182,12 @@ export class OffersComponent implements OnInit {
   async removeProduct(product: OffersInterface) {
     product.selected = false;
     this.addProducts = this.addProducts.filter((iterateProduct) => {
-      return iterateProduct.id != product.id
-    })
-    this.store.dispatch(removeProductAction({ id: product.id }))
-    if (product.addedApi)
-      this.removeProducts.push(product)
+      return iterateProduct.id !== product.id;
+    });
+    this.store.dispatch(removeProductAction({ id: product.id }));
+    if (product.addedApi) {
+      this.removeProducts.push(product);
+    }
   }
 
 
