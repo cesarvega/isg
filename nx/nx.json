@@ -30,9 +30,21 @@
     "earthlink": {
       "tags": []
     },
+    "earthlink-address": {
+      "tags": []
+    },
     "earthlink-e2e": {
       "tags": [],
       "implicitDependencies": ["earthlink"]
+    },
+    "earthlink-offers": {
+      "tags": []
+    },
+    "earthlink-shared": {
+      "tags": []
+    },
+    "earthlink-utilities": {
+      "tags": []
     }
   }
 }

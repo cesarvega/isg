@@ -1,0 +1,170 @@
+<h3>
+    <i class="fa fa-bars"></i>
+    Address Qualification
+  </h3>
+  <div>
+    <div class="row justify-content-left">
+      <div class="col-md-9">
+          <div *ngIf="invalid" class="alert alert-danger">
+            Please, check and fix input errors.
+          </div>
+        <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="addressLine1">Address Line:</label>
+                <input type="text" class="form-control" formControlName="addressLine1" required id="addressLine1">
+                <div *ngIf="formdata.controls['addressLine1'].invalid && formdata.controls['addressLine1'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['addressLine1'].errors.required">
+                    Address is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <label for="addressLine2">Unit Type & Unit Number:</label>
+                <input type="text" formControlName="addressLine2" class="form-control" name="addressLine2" id="addressLine2">
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" formControlName="city" class="form-control" name="city" id="city" required>
+                <div *ngIf="formdata.controls['city'].invalid && formdata.controls['city'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['city'].errors.required">
+                    City is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">State:</label>
+                <select formControlName="state" class="form-control" id="state" required>
+                  <option [value]="state.name" *ngFor="let state of states">{{ state.value }}</option>
+                </select>
+                <div *ngIf="formdata.controls['state'].invalid && formdata.controls['state'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['state'].invalid">
+                    Wrong/Bad State format.
+                  </div>
+                  <div *ngIf="formdata.controls['state'].errors.required">
+                    State is required.
+                  </div>
+                </div>
+  
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="zipCode">Zip Code:</label>
+                <input formControlName="zipCode" type="text" class="form-control" name="zipCode" id="zipCode">
+                <div *ngIf="formdata.controls['zipCode'].invalid && formdata.controls['zipCode'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['zipCode'].invalid">
+                    Invalid Zip code format.
+                  </div>
+                  <div *ngIf="formdata.controls['zipCode'].errors.required">
+                    Zip code is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="isBusiness">Is Business</label>
+                <input formControlName="isBusiness" type="checkbox" class="form-control chkBox" name="isBusiness" id="isBusiness">
+              </div>
+            </div>
+          </div>
+  
+  <!--        @include( 'components.customer_information')-->
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="inputFirstName">First Name *</label>
+                <input formControlName="inputFirstName" type="text" class="form-control" name="inputFirstName" id="inputFirstName" >
+                <div *ngIf="formdata.controls['inputFirstName'].invalid && formdata.controls['inputFirstName'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['inputFirstName'].errors.required">
+                    First Name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="inputLastName">Last Name *</label>
+                <input formControlName="inputLastName" type="text" class="form-control" name="inputLastName" id="inputLastName">
+                <div *ngIf="formdata.controls['inputLastName'].invalid && formdata.controls['inputLastName'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['inputLastName'].errors.required">
+                    Last Name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="inputEmail">Email *</label>
+                <input type="text" formControlName="inputEmail" class="form-control" id="inputEmail" ngModel>
+                <div *ngIf="formdata.controls['inputEmail'].invalid && formdata.controls['inputEmail'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['inputEmail'].invalid">
+                    Wrong/Bad Email format.
+                  </div>
+                  <div *ngIf="formdata.controls['inputEmail'].errors.required">
+                    Email is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="inputPhone">Phone *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="inputPhone"
+                  id="inputPhone"
+                  placeholder="(___)-___-____"
+                  formControlName="inputPhone"
+                >
+                <div *ngIf="formdata.controls['inputPhone'].invalid && formdata.controls['inputPhone'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['inputPhone'].errors.required">
+                    First Name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row text-center">
+            <div class="col-4">&nbsp;</div>
+            <div class="col-4 m-4" *ngIf="!submitted">
+              <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-info">
+            </div>
+            <div *ngIf="submitted">
+              
+            </div>
+            <div class="col-4"></div>
+          </div>
+  
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+  

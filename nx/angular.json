@@ -94,6 +94,31 @@
         }
       }
     },
+    "earthlink-address": {
+      "projectType": "library",
+      "root": "libs/earthlink/address",
+      "sourceRoot": "libs/earthlink/address/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/address"],
+          "options": {
+            "jestConfig": "libs/earthlink/address/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/address/src/**/*.ts",
+              "libs/earthlink/address/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "earthlink-e2e": {
       "root": "apps/earthlink-e2e",
       "sourceRoot": "apps/earthlink-e2e/src",
@@ -117,6 +142,81 @@
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["apps/earthlink-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "earthlink-offers": {
+      "projectType": "library",
+      "root": "libs/earthlink/offers",
+      "sourceRoot": "libs/earthlink/offers/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/offers"],
+          "options": {
+            "jestConfig": "libs/earthlink/offers/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/offers/src/**/*.ts",
+              "libs/earthlink/offers/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "earthlink-shared": {
+      "projectType": "library",
+      "root": "libs/earthlink/shared",
+      "sourceRoot": "libs/earthlink/shared/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/shared"],
+          "options": {
+            "jestConfig": "libs/earthlink/shared/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/shared/src/**/*.ts",
+              "libs/earthlink/shared/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "earthlink-utilities": {
+      "projectType": "library",
+      "root": "libs/earthlink/utilities",
+      "sourceRoot": "libs/earthlink/utilities/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/utilities"],
+          "options": {
+            "jestConfig": "libs/earthlink/utilities/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/utilities/src/**/*.ts",
+              "libs/earthlink/utilities/src/**/*.html"
+            ]
           }
         }
       }
