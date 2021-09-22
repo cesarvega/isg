@@ -16,6 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@nx/earthlink/address": ["libs/earthlink/address/src/index.ts"],
+      "@nx/earthlink/api": ["libs/earthlink/api/src/index.ts"],
+      "@nx/earthlink/config": ["libs/earthlink/config/src/index.ts"],
       "@nx/earthlink/offers": ["libs/earthlink/offers/src/index.ts"],
       "@nx/earthlink/shared": ["libs/earthlink/shared/src/index.ts"],
       "@nx/earthlink/utilities": ["libs/earthlink/utilities/src/index.ts"]

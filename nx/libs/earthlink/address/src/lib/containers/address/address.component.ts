@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { states } from '@nx/earthlink/utilities';
-import { testAddress } from './address';
 
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+import { SYSTEM_CONFIG } from '@nx/earthlink/config';
+import { ENDPOINT } from '@nx/earthlink/api';
 
 @Component({
   selector: 'nx-address',
@@ -11,80 +14,118 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./address.component.scss']
 })
 export class AddressComponent implements OnInit {
-
-  headers = new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/json, text/plain, */*'
-  });
-
-  options = { headers: this.headers };
-  
-  formdata:any;
+  formdata: any;
   states = states;
-  testAddress = testAddress;
-  
+  //testAddress = testAddress;
+  addressLine1: any;
+  addressLine2: any;
+  city: any;
+  state: any;
+  zipCode: any;
+  isBusiness: any;
+  inputFirstName: any;
+  inputLastName: any;
+  inputEmail: any;
+  inputPhone: any;
+
+
   submitted = false;
   invalid = false;
+  objErrors:any=null;
 
-
-  constructor( 
+  constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-  ) {
-    this.myForm()
+    //private route: ActivatedRoute,
+    private router: Router,
+    ) {}
+
+  createFormControls(){
+    this.addressLine1 = new FormControl ('', Validators.required);
+    this.addressLine2 = new FormControl('');
+    this.city = new FormControl('', Validators.required);
+    this.state = new FormControl ('',
+      [
+        Validators.required,
+        //Validators.pattern("[a-z]{2}")
+      ]
+    );
+    this.zipCode = new FormControl ('',
+      [
+        Validators.required,
+        Validators.pattern("[0-9]{5}")
+      ]
+    );
+    this.isBusiness = new FormControl ('') ,
+    this.inputFirstName = new FormControl ('', Validators.required );
+    this.inputLastName  = new FormControl ('', Validators.required);
+    this.inputEmail = new FormControl ('',
+      [
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+      ]
+    );
+    this.inputPhone = new FormControl ('',
+      [
+        Validators.required,
+        Validators.pattern("[0-9]{10}")
+      ],
+    );
   }
 
-  myForm(){
-    this.formdata = this.fb.group({
-      addressLine1: ['', Validators.required],
-      addressLine2: [''],
-      city: ['', Validators.required],
-      state: ['',
-        [
-          Validators.required,
-          //Validators.pattern("[a-z]{2}")
-        ]
-      ],
-      zipCode: ['',
-        [
-          Validators.required,
-          Validators.pattern("[0-9]{5}")
-        ]
-      ],
-      isBusiness: [''],
-      inputFirstName: ['', Validators.required ],
-      inputLastName: ['', Validators.required],
-      inputEmail: ['',
-        [
-          Validators.required,
-          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
-        ]
-      ],
-      inputPhone: ['',
-        [
-          Validators.required,
-          Validators.pattern("[0-9]{10}")
-        ],
-       ],
+  createForm(){
+    this.formdata = new FormGroup({
+      addressLine1: this.addressLine1,
+      addressLine2: this.addressLine2,
+      city: this.city,
+      state: this.state,
+      zipCode: this.zipCode,
+      isBusiness: this.isBusiness,
+      inputFirstName: this.inputFirstName,
+      inputLastName: this.inputLastName,
+      inputEmail: this.inputEmail,
+      inputPhone: this.inputPhone
     })
   }
 
+  handleError( errors:any )
+  {
+    this.objErrors = errors.error;
+    console.log( JSON.stringify(this.objErrors.errors) );
+  }
+
+  toOffers(){
+    this.http.get(SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path).subscribe(
+      () => this.router.navigate([ENDPOINT.offers.navigate]),
+      (error) => this.handleError( error )
+    )
+  }
+
   onSubmit(){
+    
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    let options = { headers: headers };
+
     if( this.formdata.valid ) {
       this.invalid = false;
-      //this.submitted = true;
-//https://isg-br-webdev/wc/carlos/infinity-sales/app/web/index.php/EarthLink/entry/pre-qual-address
-      this.http.post('https://isg-br-webdev/wc/carlos/infinity-sales/app/web/index.php/EarthLink/entry/pre-qual-address', this.testAddress, this.options).subscribe(
-        (response) => console.log(response),
-        (error) => console.log(error)
+      this.submitted = true;
+
+      const request = this.formdata.value;
+      
+      this.http.post(SYSTEM_CONFIG.API_URL + ENDPOINT.address.path, request, options).subscribe(
+        () => this.toOffers(),
+        (error) => this.handleError( error )
       )
     }else {
-      console.log('invalid');
+      console.log('invalid form');
       this.invalid = true;
     }
   }
 
   ngOnInit(): void {
+    this.createFormControls();
+    this.createForm();
   }
-
 }

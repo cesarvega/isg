@@ -31,7 +31,15 @@ import { AppComponent } from './app.component';
           import('@nx/earthlink/address').then(
             (module) => module.EarthlinkAddressModule
           ),
-      }
+      },
+      {
+        path: 'offers',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('@nx/earthlink/offers').then(
+            (module) => module.EarthlinkOffersModule
+          ),
+      },
     ]),
   ],
   providers: [],

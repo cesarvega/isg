@@ -33,6 +33,12 @@
     "earthlink-address": {
       "tags": []
     },
+    "earthlink-api": {
+      "tags": []
+    },
+    "earthlink-config": {
+      "tags": []
+    },
     "earthlink-e2e": {
       "tags": [],
       "implicitDependencies": ["earthlink"]

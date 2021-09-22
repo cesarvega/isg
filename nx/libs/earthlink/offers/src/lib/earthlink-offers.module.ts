@@ -8,7 +8,7 @@ import { OffersFormComponent } from './components/offers-form/offers-form.compon
   imports: [
     CommonModule,
     RouterModule.forChild([
-      /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
+      {path: '', pathMatch: 'full', component: OffersComponent}
     ]),
   ],
   declarations: [

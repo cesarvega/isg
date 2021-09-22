@@ -119,6 +119,56 @@
         }
       }
     },
+    "earthlink-api": {
+      "projectType": "library",
+      "root": "libs/earthlink/api",
+      "sourceRoot": "libs/earthlink/api/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/api"],
+          "options": {
+            "jestConfig": "libs/earthlink/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/api/src/**/*.ts",
+              "libs/earthlink/api/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "earthlink-config": {
+      "projectType": "library",
+      "root": "libs/earthlink/config",
+      "sourceRoot": "libs/earthlink/config/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/config"],
+          "options": {
+            "jestConfig": "libs/earthlink/config/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/config/src/**/*.ts",
+              "libs/earthlink/config/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "earthlink-e2e": {
       "root": "apps/earthlink-e2e",
       "sourceRoot": "apps/earthlink-e2e/src",
