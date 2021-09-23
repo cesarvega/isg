@@ -53,7 +53,7 @@
               <div class="form-group">
                 <label for="state">State:</label>
                 <select formControlName="state" class="form-control" id="state" required>
-                  <option [value]="state.name" *ngFor="let state of states">{{ state.value }}</option>
+                  <option [value]="state.value" *ngFor="let state of states">{{ state.name }}</option>
                 </select>
                 <div *ngIf="formdata.controls['state'].invalid && formdata.controls['state'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['state'].invalid">

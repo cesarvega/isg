@@ -29,43 +29,47 @@ export class AddressComponent implements OnInit {
   inputEmail: any;
   inputPhone: any;
 
-
   submitted = false;
   invalid = false;
   objErrors:any=null;
 
   constructor(
-    //private fb: FormBuilder,
+    
     private http: HttpClient,
-    //private route: ActivatedRoute,
     private router: Router,
+    
     ) {}
 
   createFormControls(){
     this.addressLine1 = new FormControl ('', Validators.required);
     this.addressLine2 = new FormControl('');
     this.city = new FormControl('', Validators.required);
+
     this.state = new FormControl ('',
       [
         Validators.required,
         //Validators.pattern("[a-z]{2}")
       ]
     );
+
     this.zipCode = new FormControl ('',
       [
         Validators.required,
         Validators.pattern("[0-9]{5}")
       ]
     );
+
     this.isBusiness = new FormControl ('') ,
     this.inputFirstName = new FormControl ('', Validators.required );
     this.inputLastName  = new FormControl ('', Validators.required);
+    
     this.inputEmail = new FormControl ('',
       [
         Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
       ]
     );
+
     this.inputPhone = new FormControl ('',
       [
         Validators.required,
@@ -85,7 +89,7 @@ export class AddressComponent implements OnInit {
       inputFirstName: this.inputFirstName,
       inputLastName: this.inputLastName,
       inputEmail: this.inputEmail,
-      inputPhone: this.inputPhone
+      inputPhone: this.inputPhone,
     })
   }
   
@@ -102,17 +106,13 @@ export class AddressComponent implements OnInit {
 
   }
 
-  toOffers(){
-    this.http.get(SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path).subscribe(
-      () => this.router.navigate([ENDPOINT.offers.navigate]),
-      (error) => this.handleError( error )
-    )
-  }
 
   onSubmit(){
     
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzMjQyMTg5MSwiZXhwIjoxNjMyNDI1NDkxLCJuYmYiOjE2MzI0MjE4OTEsImp0aSI6IlhwOVVJa01RQkM3cW5ZSW4iLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.4vOLBNAcRwR7GZHw0dyRMSh_biXOx_1aNJ_kYkS8aSI',
+      'Accept': 'application/json'
     });
     let options = { headers: headers };
 
@@ -120,10 +120,14 @@ export class AddressComponent implements OnInit {
       this.invalid = false;
       //this.submitted = true;
 
-      const request = this.formdata.value;
+      // this.formdata.patchValue({
+      //   api_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzMjQyMTg5MSwiZXhwIjoxNjMyNDI1NDkxLCJuYmYiOjE2MzI0MjE4OTEsImp0aSI6IlhwOVVJa01RQkM3cW5ZSW4iLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.4vOLBNAcRwR7GZHw0dyRMSh_biXOx_1aNJ_kYkS8aSI'
+      // })
+
+    const request = this.formdata.value;
       
       this.http.post(SYSTEM_CONFIG.API_URL + ENDPOINT.address.path, request, options).subscribe(
-        () => this.toOffers(),
+        () => this.router.navigate([ENDPOINT.offers.navigate]),
         (error) => this.handleError( error )
       )
     }else {

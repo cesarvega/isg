@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { ENDPOINT } from '@nx/earthlink/api';
@@ -12,7 +13,9 @@ import { ENDPOINT } from '@nx/earthlink/api';
 export class OffersComponent implements OnInit {
 
   constructor(
+    
     private http: HttpClient,
+    private router: Router,
   ) {
     this.Validate();
    }
@@ -40,20 +43,36 @@ export class OffersComponent implements OnInit {
   preSelectedProduct = {
     name: "any prod name",
     description: "a prod description",
-    equipmentDescription: "Equipmen description",
+    equipmentDescription: "Equipment description",
     terms: "bla bla blaterms",
 
   }
 
    Validate(){
-    this.http.get( SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path ).subscribe(
-      () => console.log('valid session'),
-      (error) => alert( error )
-    )    
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzMjQyMTg5MSwiZXhwIjoxNjMyNDI1NDkxLCJuYmYiOjE2MzI0MjE4OTEsImp0aSI6IlhwOVVJa01RQkM3cW5ZSW4iLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.4vOLBNAcRwR7GZHw0dyRMSh_biXOx_1aNJ_kYkS8aSI',
+      'Accept': 'application/json'
+    });
+    let options = { headers: headers };
+    this.http.get(
+      SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path
+      ,options).subscribe(
+      () => this.router.navigate([ENDPOINT.offers.navigate]),
+      // (error) => this.handleError( error )
+      () => this.router.navigate([ENDPOINT.address.navigate])
+    )   
+  }
+  
+  handleError( result:any )
+  {
+    const arr:any = Object.keys(result).map(function(k) { return result[k] });
+    console.log( arr );
+
+
   }
 
   ngOnInit(): void {
- 
   }
 
 }
