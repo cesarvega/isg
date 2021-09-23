@@ -48,14 +48,14 @@ import { AppComponent } from './app.component';
           ),
       },
       {
-        path: 'earthlink-logout',
+        path: 'logout',
         loadChildren: () =>
           import('@nx/earthlink/logout').then(
             (module) => module.EarthlinkLogoutModule
           ),
       },
       {
-        path: 'earthlink-login',
+        path: 'login',
         loadChildren: () =>
           import('@nx/earthlink/login').then(
             (module) => module.EarthlinkLoginModule

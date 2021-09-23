@@ -1,4 +1,4 @@
-<div class="row">
+<div *ngIf="visibleApp" class="row" ng-app="visibleApp">
     <div class="col-md-12">
         <h3>
             <i class="fa fa-bars"></i>
@@ -145,4 +145,7 @@
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="!visibleApp">
+    Loading... spinner
 </div>

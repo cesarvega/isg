@@ -36,6 +36,11 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  setData(data:any){
+    localStorage.setItem('token', data.token );
+    this.router.navigate([ENDPOINT.address.navigate]);
+  }
+
   onSubmit(){
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -45,7 +50,7 @@ export class LoginComponent implements OnInit {
     const request = this.formdata.value;
  
     this.http.post( SYSTEM_CONFIG.API_URL + ENDPOINT.login.path, request, options).subscribe(
-      () => this.router.navigate([ENDPOINT.address.navigate]),
+      (response) => this.setData(response),
       (error) => console.log( error)
     )
   }

@@ -9,10 +9,10 @@ export const ENDPOINT = {
     },
     login: {
         path: "api/login",
-        navigate: "api/address"
+        navigate: "login"
     },
     logout: {
         path: "api/logout",
-        navigate: "api/logout"
+        navigate: "login"
     },
 };

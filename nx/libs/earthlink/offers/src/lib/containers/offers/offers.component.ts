@@ -17,14 +17,20 @@ export class OffersComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
   ) {
+    if( localStorage.getItem('token')){
+      this.token = localStorage.getItem('token');
+    }
     this.Validate();
-   }
+  }
+  
+  token:any = null;
 
+  visibleApp = false;
   errorMsg = { 
     message : 'na',
     show: false,
   };
- 
+
   product = 
     {
       name : "product A",
@@ -48,17 +54,20 @@ export class OffersComponent implements OnInit {
 
   }
 
-   Validate(){
+  Validate(){
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzMjQyMTg5MSwiZXhwIjoxNjMyNDI1NDkxLCJuYmYiOjE2MzI0MjE4OTEsImp0aSI6IlhwOVVJa01RQkM3cW5ZSW4iLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.4vOLBNAcRwR7GZHw0dyRMSh_biXOx_1aNJ_kYkS8aSI',
+      'Authorization': 'Bearer ' + this.token,
       'Accept': 'application/json'
     });
+
     let options = { headers: headers };
-    this.http.get(
-      SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path
-      ,options).subscribe(
-      () => this.router.navigate([ENDPOINT.offers.navigate]),
+    this.http.get(SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path, options).subscribe(
+      () => {
+        this.router.navigate([ENDPOINT.offers.navigate]);
+        this.visibleApp = true;
+      
+      },
       // (error) => this.handleError( error )
       () => this.router.navigate([ENDPOINT.address.navigate])
     )   
