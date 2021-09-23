@@ -11,6 +11,9 @@
     "../../libs/earthlink/offers/src/index.ts",
     "../../libs/earthlink/shared/src/index.ts",
     "../../libs/earthlink/shared/src/index.ts",
-    "../../libs/earthlink/utilities/src/index.ts"
+    "../../libs/earthlink/utilities/src/index.ts",
+    "../../libs/earthlink/login/src/index.ts",
+    "../../libs/earthlink/logout/src/index.ts",
+    "../../libs/earthlink/login/src/index.ts"
   ]
 }

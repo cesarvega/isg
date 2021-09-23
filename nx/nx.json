@@ -43,6 +43,12 @@
       "tags": [],
       "implicitDependencies": ["earthlink"]
     },
+    "earthlink-login": {
+      "tags": []
+    },
+    "earthlink-logout": {
+      "tags": []
+    },
     "earthlink-offers": {
       "tags": []
     },

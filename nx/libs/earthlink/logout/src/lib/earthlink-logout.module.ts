@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { LogoutFormComponent } from './containers/logout-form/logout-form.component';
 
 @NgModule({
   imports: [
@@ -12,13 +11,7 @@ import { FooterComponent } from './components/footer/footer.component';
     ]),
   ],
   declarations: [
-    HeaderComponent,
-    FooterComponent,
-
+    LogoutFormComponent
   ],
-  exports:[
-    HeaderComponent,
-    FooterComponent,
-  ]
 })
-export class EarthlinkSharedModule {}
+export class EarthlinkLogoutModule {}

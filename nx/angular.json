@@ -196,6 +196,56 @@
         }
       }
     },
+    "earthlink-login": {
+      "projectType": "library",
+      "root": "libs/earthlink/login",
+      "sourceRoot": "libs/earthlink/login/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/login"],
+          "options": {
+            "jestConfig": "libs/earthlink/login/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/login/src/**/*.ts",
+              "libs/earthlink/login/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "earthlink-logout": {
+      "projectType": "library",
+      "root": "libs/earthlink/logout",
+      "sourceRoot": "libs/earthlink/logout/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/logout"],
+          "options": {
+            "jestConfig": "libs/earthlink/logout/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/logout/src/**/*.ts",
+              "libs/earthlink/logout/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "earthlink-offers": {
       "projectType": "library",
       "root": "libs/earthlink/offers",

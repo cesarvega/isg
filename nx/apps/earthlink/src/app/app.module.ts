@@ -8,13 +8,12 @@ import { RouterModule } from '@angular/router';
 //import { FontAwesome } from '@fortawesome/angular-FontAwesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EarthlinkSharedModule } from '@nx/earthlink/shared';
+import { EarthlinkLoginModule } from '@nx/earthlink/login';
 
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -22,10 +21,11 @@ import { AppComponent } from './app.component';
     FormsModule,
     EarthlinkSharedModule,
     ReactiveFormsModule,
+    EarthlinkLoginModule,
     RouterModule.forRoot([
       { path: '', pathMatch: 'full', redirectTo: 'address' },
-      { 
-        path: 'address', 
+      {
+        path: 'address',
         pathMatch: 'full',
         loadChildren: () =>
           import('@nx/earthlink/address').then(
@@ -38,6 +38,27 @@ import { AppComponent } from './app.component';
         loadChildren: () =>
           import('@nx/earthlink/offers').then(
             (module) => module.EarthlinkOffersModule
+          ),
+      },
+      {
+        path: 'login',
+        loadChildren: () =>
+          import('@nx/earthlink/login').then(
+            (module) => module.EarthlinkLoginModule
+          ),
+      },
+      {
+        path: 'earthlink-logout',
+        loadChildren: () =>
+          import('@nx/earthlink/logout').then(
+            (module) => module.EarthlinkLogoutModule
+          ),
+      },
+      {
+        path: 'earthlink-login',
+        loadChildren: () =>
+          import('@nx/earthlink/login').then(
+            (module) => module.EarthlinkLoginModule
           ),
       },
     ]),

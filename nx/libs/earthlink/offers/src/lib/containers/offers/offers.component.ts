@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { SYSTEM_CONFIG } from '@nx/earthlink/config';
+import { ENDPOINT } from '@nx/earthlink/api';
 
 @Component({
   selector: 'nx-offers',
@@ -11,7 +13,9 @@ export class OffersComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+    this.Validate();
+   }
 
   errorMsg = { 
     message : 'na',
@@ -41,12 +45,15 @@ export class OffersComponent implements OnInit {
 
   }
 
-  apiCall(){
-    
+   Validate(){
+    this.http.get( SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path ).subscribe(
+      () => console.log('valid session'),
+      (error) => alert( error )
+    )    
   }
 
   ngOnInit(): void {
-
+ 
   }
 
 }

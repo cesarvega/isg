@@ -1,0 +1,6 @@
+<form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
+    <label>username</label>
+    <input class="control-form" formControlName="email" name="username" type="text">
+    <label>Pwd</label><input class="control-form" formControlName="password" name="pwd" type="text">
+    <input type="submit" value="submit">
+</form>

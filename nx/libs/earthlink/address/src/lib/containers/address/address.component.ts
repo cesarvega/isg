@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { states } from '@nx/earthlink/utilities';
 
-import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { Validators, FormGroup, FormControl } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { ENDPOINT } from '@nx/earthlink/api';
-import { keyframes } from '@angular/animations';
+
 
 @Component({
   selector: 'nx-address',
@@ -35,7 +35,7 @@ export class AddressComponent implements OnInit {
   objErrors:any=null;
 
   constructor(
-    private fb: FormBuilder,
+    //private fb: FormBuilder,
     private http: HttpClient,
     //private route: ActivatedRoute,
     private router: Router,
@@ -118,7 +118,7 @@ export class AddressComponent implements OnInit {
 
     if( this.formdata.valid ) {
       this.invalid = false;
-      this.submitted = true;
+      //this.submitted = true;
 
       const request = this.formdata.value;
       
