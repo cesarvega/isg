@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { ENDPOINT } from '@nx/earthlink/api';
+import { keyframes } from '@angular/animations';
 
 @Component({
   selector: 'nx-address',
@@ -87,11 +88,18 @@ export class AddressComponent implements OnInit {
       inputPhone: this.inputPhone
     })
   }
+  
+  // keys() : Array<string>{
+  //     return Object.keys(Array.of(this.objErrors));
+  // }
 
-  handleError( errors:any )
+  handleError( result:any )
   {
-    this.objErrors = errors.error;
-    console.log( JSON.stringify(this.objErrors.errors) );
+    //this.objErrors = Object.entries( result.error.errors );
+    const arr:any = Object.keys(result).map(function(k) { return result[k] });
+    console.log( arr );
+    this.objErrors = Array.of(arr);
+
   }
 
   toOffers(){
