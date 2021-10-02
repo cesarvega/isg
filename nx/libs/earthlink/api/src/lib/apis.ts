@@ -1,7 +1,8 @@
 export const ENDPOINT = {
     address: {
         path: "api/address",
-        navigate: "address"
+        navigate: "address",
+        get: "api/get",
     },
     offers: {
         path: "api/offers",

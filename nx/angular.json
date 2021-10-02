@@ -196,6 +196,31 @@
         }
       }
     },
+    "earthlink-env": {
+      "projectType": "library",
+      "root": "libs/earthlink/env",
+      "sourceRoot": "libs/earthlink/env/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/env"],
+          "options": {
+            "jestConfig": "libs/earthlink/env/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/env/src/**/*.ts",
+              "libs/earthlink/env/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "earthlink-login": {
       "projectType": "library",
       "root": "libs/earthlink/login",

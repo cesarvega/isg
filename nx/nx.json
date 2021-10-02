@@ -43,6 +43,9 @@
       "tags": [],
       "implicitDependencies": ["earthlink"]
     },
+    "earthlink-env": {
+      "tags": []
+    },
     "earthlink-login": {
       "tags": []
     },

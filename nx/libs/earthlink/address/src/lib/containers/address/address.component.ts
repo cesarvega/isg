@@ -5,8 +5,10 @@ import { Validators, FormGroup, FormControl } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { SYSTEM_CONFIG } from '@nx/earthlink/config';
+//import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { ENDPOINT } from '@nx/earthlink/api';
+import { ApiService } from '@nx/earthlink/shared';
+import { AddressService } from '../../services/address.service';
 
 
 @Component({
@@ -15,6 +17,14 @@ import { ENDPOINT } from '@nx/earthlink/api';
   styleUrls: ['./address.component.scss']
 })
 export class AddressComponent implements OnInit {
+
+  uuid: any='';
+  headers = new HttpHeaders;
+  addressState = {
+    error: null,
+    loading: false,
+  }
+
   formdata: any;
   states = states;
   token: any;
@@ -38,7 +48,9 @@ export class AddressComponent implements OnInit {
     
     private http: HttpClient,
     private router: Router,
-
+    //private apiService: ApiService,
+    private addressService: AddressService,
+    //private store: Store<any>
     ) {
       this.token = localStorage.getItem('token');
       if( this.token == null ){
@@ -86,16 +98,16 @@ export class AddressComponent implements OnInit {
 
   createForm(){
     this.formdata = new FormGroup({
-      addressLine1: this.addressLine1,
-      addressLine2: this.addressLine2,
+      address_line1: this.addressLine1,
+      address_line2: this.addressLine2,
       city: this.city,
       state: this.state,
-      zipCode: this.zipCode,
-      isBusiness: this.isBusiness,
-      inputFirstName: this.inputFirstName,
-      inputLastName: this.inputLastName,
-      inputEmail: this.inputEmail,
-      inputPhone: this.inputPhone,
+      zip_code: this.zipCode,
+      is_business: this.isBusiness,
+      first_name: this.inputFirstName,
+      last_name: this.inputLastName,
+      email: this.inputEmail,
+      phone: this.inputPhone,
     })
   }
   
@@ -113,33 +125,45 @@ export class AddressComponent implements OnInit {
   }
 
 
-  onSubmit(){
+  async onSubmit(){
     
-    let headers = new HttpHeaders({
+    this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.token,
       'Accept': 'application/json'
     });
-    let options = { headers: headers };
 
     if( this.formdata.valid ) {
       this.invalid = false;
       this.submitted = true;
       // To do : shows up a spinner
 
-    const request = this.formdata.value;
-      
-      this.http.post(SYSTEM_CONFIG.API_URL + ENDPOINT.address.path, request, options).subscribe(
-        () => this.router.navigate([ENDPOINT.offers.navigate]),
-        (error) => this.handleError( error )
-      )
-    }else {
-      console.log('invalid form');
-      this.invalid = true;
+      const data = this.formdata.value;
+      await this.addressService.serviceQualification( data, this.headers );
+      if( !this.addressState.error ){
+        this.router.navigate([ENDPOINT.offers.navigate]);
+      }
     }
   }
 
   ngOnInit(): void {
+
+    if( localStorage.getItem('uuid') ){
+      this.headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token,
+        'Accept': 'application/json'
+      });
+
+
+      this.uuid = new FormControl( localStorage.getItem('uuid') );
+      this.formdata = new FormGroup({
+        uuid: this.uuid,
+      });
+
+      console.log( this.formdata.value );
+      this.addressService.getAddress( this.formdata.value, this.headers);
+    }
     this.createFormControls();
     this.createForm();
   }

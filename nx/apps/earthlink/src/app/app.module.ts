@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
     EarthlinkSharedModule,
     ReactiveFormsModule,
     EarthlinkLoginModule,
+    StoreModule.forRoot( {} ),
     RouterModule.forRoot([
       { path: '', pathMatch: 'full', redirectTo: 'address' },
       {
@@ -59,6 +60,13 @@ import { AppComponent } from './app.component';
         loadChildren: () =>
           import('@nx/earthlink/login').then(
             (module) => module.EarthlinkLoginModule
+          ),
+      },
+      {
+        path: 'earthlink-env',
+        loadChildren: () =>
+          import('@nx/earthlink/env').then(
+            (module) => module.EarthlinkEnvModule
           ),
       },
     ]),

@@ -18,6 +18,7 @@
       "@nx/earthlink/address": ["libs/earthlink/address/src/index.ts"],
       "@nx/earthlink/api": ["libs/earthlink/api/src/index.ts"],
       "@nx/earthlink/config": ["libs/earthlink/config/src/index.ts"],
+      "@nx/earthlink/env": ["libs/earthlink/env/src/index.ts"],
       "@nx/earthlink/login": ["libs/earthlink/login/src/index.ts"],
       "@nx/earthlink/logout": ["libs/earthlink/logout/src/index.ts"],
       "@nx/earthlink/offers": ["libs/earthlink/offers/src/index.ts"],
