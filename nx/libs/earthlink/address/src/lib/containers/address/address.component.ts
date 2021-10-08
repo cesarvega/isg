@@ -8,13 +8,13 @@ import { Actions, ofType } from '@ngrx/effects';
 /**********************************************************/
 
 import { states } from '@nx/earthlink/utilities';
-import { getEarthlinkAddressError, getEarthlinkAddressState, getError } from '../../+state/address/earthlink-address.selectors';
+import { getCurrentAddress } from '../../+state/address/earthlink-address.selectors';
 import { AddressService } from '../../services/address.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
 import { setParams, errorAction, addressResponse } from '../../+state/address/earthlink-address.actions';
-import { buildAddressFromParams } from './helpers/buildAddressFromParams';
+//import { buildAddressFromParams } from './helpers/buildAddressFromParams';
 import { takeUntil } from 'rxjs/operators';
 //import { AddressSelectors } from '@nx/earthlink/address';
 @Component({
@@ -24,7 +24,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 
 export class AddressComponent implements OnInit {
-address$: any;
+address$: any = null;
 headers = new HttpHeaders;
 token: any;
 invalid: boolean = false;
@@ -35,11 +35,11 @@ submitted: boolean=false;
 
 faStar = faStar
 testCases = testCases;
-addressState:any = {
-  error: null,
-  loading: false,
-  customerType: "NEW"
-};
+// addressState:any = {
+//   error: null,
+//   loading: false,
+//   customerType: "NEW"
+// };
 stateSubscription: Subscription | undefined;
 initialData: Address = {};
 submittedAddress: Address = {}
@@ -71,6 +71,7 @@ objErrors:any = [];
         this.router.navigate(["/login"]);
       }
 
+      //address.action: errorAction
       updates$.pipe(
         ofType(errorAction))
         .pipe(takeUntil(this.destroy$))
@@ -159,25 +160,38 @@ objErrors:any = [];
       params = queryParams;
     })
     this.store.dispatch(setParams({ params }))
-    this.address$ = this.store.select(getEarthlinkAddressState);
-    debugger;
-    this.initialData = buildAddressFromParams(this.address$);
+    this.stateSubscription = this.store.select(getCurrentAddress).subscribe((address) => {
+      this.address$ = address;
+    })
     
+
     this.createFormControls();
     this.createForm();
-  }
-  
-  isExistingCustomer() {
-    //return this.addressState.customerType === "SLI";
+
+    /****if the store has an address, populate the form*****/
+    if( this.address$){
+      this.formdata.setValue(
+        {
+          address_line1 : this.address$.address_line1,
+          address_line2 : this.address$.address_line2,
+          city : this.address$.city,
+          state : this.address$.state,
+          zip_code : this.address$.zip_code,
+          is_business : this.address$.is_business,
+          first_name : this.address$.first_name,
+          last_name  : this.address$.last_name,
+          email : this.address$.email,
+          phone : this.address$.phone,
+          uuid: 'uuid'
+        }
+      )
+    }
   }
 
   handleError( result:any )
   {
-    //this.isError = Object.entries( result.error.errors );
     const arr:any = Object.keys(result).map(function(k) { return result[k] });
     console.log( arr );
-    //this.isError = Array.of(arr);
-
   }
 
   async onSubmit(){
@@ -191,14 +205,10 @@ objErrors:any = [];
     this.submittedAddress = address;
     await this.addressService.generateTransaction(this.headers);
     await this.addressService.serviceQualification(address, this.headers);
-    // if (this.isExistingCustomer()) {
-    //   //return
-    // }
-    if (!this.addressState.error) {
+
+    if (!this.isError$) {
       this.store.dispatch(addressResponse(address));
       this.router.navigate(["/offers"]);
-    }else{
-      this.isError$.next(true);//this.store.select(getEarthlinkAddressError);
     }
   }
 }

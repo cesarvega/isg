@@ -57,6 +57,7 @@ export class AddressService {
         // return response;
       }),
       tap((response) => {
+        console.log(response);
         const products = mapResponse(response);
         const earthLinkTransactionId = getTransactionId(response);
         this.store.dispatch(addressResponse({ response: response }))

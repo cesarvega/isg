@@ -12,7 +12,8 @@ export const EARTHLINK_ADDRESS_FEATURE_KEY = 'address';
 export interface State extends EntityState<EarthlinkAddressEntity> {
   selectedId?: string | number; // which EarthlinkAddress record has been selected
   loading: boolean; // has the EarthlinkAddress list been loaded
-  error?: string | null; // last known error (if any)
+  error?: string | null; // last known error (if any),
+  request: any | {};
 }
 
 export interface EarthlinkAddressPartialState {
@@ -25,13 +26,11 @@ export const earthlinkAddressAdapter: EntityAdapter<EarthlinkAddressEntity> =
 export const initialState: State = earthlinkAddressAdapter.getInitialState({
   // set initial required properties
   error: null,
-  request: { 
-    address_line1: "", address_line2: "", city: "",
-    state: "", zip: "", first_name: "", last_name: "",
-    email: "", phone: "", is_business: "", alt_phone: "", error: "", uuid: ""
-  //  AddressLine1: "": "", AddressLine2: "", City: "", State: "", Zip: { ZipCode: "" } 
-  
-  },
+  request: null,
+    // address_line1: "", address_line2: "", city: "",
+    // state: "", zip: "", first_name: "", last_name: "",
+    // email: "", phone: "", is_business: "", alt_phone: "", error: "", uuid: ""
+  //},
   response: null,
   transaction: "",
   earthLinkTransactionId: "",
