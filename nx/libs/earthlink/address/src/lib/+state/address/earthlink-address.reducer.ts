@@ -25,7 +25,13 @@ export const earthlinkAddressAdapter: EntityAdapter<EarthlinkAddressEntity> =
 export const initialState: State = earthlinkAddressAdapter.getInitialState({
   // set initial required properties
   error: null,
-  request: { AddressLine1: "", AddressLine2: "", City: "", State: "", Zip: { ZipCode: "" } },
+  request: { 
+    address_line1: "", address_line2: "", city: "",
+    state: "", zip: "", first_name: "", last_name: "",
+    email: "", phone: "", is_business: "", alt_phone: "", error: "", uuid: ""
+  //  AddressLine1: "": "", AddressLine2: "", City: "", State: "", Zip: { ZipCode: "" } 
+  
+  },
   response: null,
   transaction: "",
   earthLinkTransactionId: "",
@@ -36,44 +42,65 @@ export const initialState: State = earthlinkAddressAdapter.getInitialState({
 });
 
 const earthlinkAddressReducer = createReducer(
-  initialState,
-  on(AddressActions.setTransaction, ( state, { transaction }) =>({
-    ...state,
-    loading: false,
-    error: null,
-    transaction
-  })),
-  on(AddressActions.setEarthLinkTransactionId, (state, { earthLinkTransactionId }) =>({
-    ...state,
-    earthLinkTransactionId
-  })),
-  on(AddressActions.addressRequest, (state, { address }) => ({
-    ...state,
-    loading: true,
-    request: addressRequest,
-  })),
-  on(AddressActions.init, (state) => ({
-    ...state,
-    loaded: false,
-    error: null,
-  })),
-  on(AddressActions.loadEarthlinkAddressSuccess,
-    (state, { response }) =>
-      earthlinkAddressAdapter.setAll(response, {
+    initialState,
+    on(AddressActions.setTransaction, ( state, { transaction }) =>({
         ...state,
-        loaded: true,
+        loading: false,
+        error: null,
+        transaction
       })
-  ),
-  on(AddressActions.loadEarthlinkAddressFailure,
-    (state, { error }) => ({ ...state, error })
-  ),
-  on(AddressActions.loading, (state) => ({
-    ...state,
-    loading: true
-  }),
+    ),
+    on(AddressActions.setEarthLinkTransactionId, (state, { earthLinkTransactionId }) =>({
+        ...state,
+        earthLinkTransactionId
+      })
+    ),
+    on(AddressActions.addressRequest, (state, { address }) => ({
+        ...state,
+        loading: true,
+        request: address,
+      })
+    ),
+    on(AddressActions.addressResponse, (state, { response }) => ({
+        ...state,
+        loading: false,
+        response
+      })
+    ),
+    on(AddressActions.init, (state) => ({
+        ...state,
+        loaded: false,
+        error: null,
+      })
+    ),
+    on(AddressActions.loadEarthlinkAddressSuccess,
+      (state, { response }) =>
+        earthlinkAddressAdapter.setAll(response, {
+          ...state,
+          loaded: true,
+        })
+    ),
+    on(AddressActions.loadEarthlinkAddressFailure,
+      (state, { error }) => ({ ...state, error })
+    ),
+    on(AddressActions.loading, (state) => ({
+        ...state,
+        loading: true
+      })
+    ),
+    on(AddressActions.setCustomerType, (state, { customerType }) =>({
+        ...state,
+        customerType
+      })
+    ),
+    on(AddressActions.errorAction, (state, { error}) => ({
+        ...state,
+        error
+      })
+    ),
+
 
   )
-);
 
 export function reducer(state: State | undefined, action: Action) {
   return earthlinkAddressReducer(state, action);

@@ -42,7 +42,7 @@ export class AddressService {
       tap((response) => {
         const products = mapResponse(response);
         const earthLinkTransactionId = getTransactionId(response);
-        this.store.dispatch(addressResponse({ response: products }))
+        this.store.dispatch(addressResponse({ response: response }))
         this.store.dispatch(setEarthLinkTransactionId({ earthLinkTransactionId }))
       }, (error) => {
         this.store.dispatch(errorAction({ error }))

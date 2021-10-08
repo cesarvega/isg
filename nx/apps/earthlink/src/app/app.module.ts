@@ -14,6 +14,9 @@ import { EarthlinkLoginModule } from '@nx/earthlink/login';
 import { AppComponent } from './app.component';
 import { environment } from '@nx/earthlink/env';
 
+import * as fromAddress from '@nx/earthlink/address';
+import { from } from 'rxjs';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -26,6 +29,10 @@ import { environment } from '@nx/earthlink/env';
     EarthlinkLoginModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    StoreModule.forFeature(
+      fromAddress.EARTHLINK_ADDRESS_FEATURE_KEY,
+      fromAddress.reducer
+    ),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule.forRoot([
       { path: '', pathMatch: 'full', redirectTo: 'address' },

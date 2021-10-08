@@ -13,9 +13,9 @@ import { AddressService } from '../../services/address.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
-import { setParams, addressRequest } from '../../+state/address/earthlink-address.actions';
+import { setParams, addressRequest, addressResponse } from '../../+state/address/earthlink-address.actions';
 import { buildAddressFromParams } from './helpers/buildAddressFromParams';
-
+import { AddressSelectors } from '@nx/earthlink/address';
 @Component({
   selector: 'nx-address',
   templateUrl: './address.component.html',
@@ -23,12 +23,13 @@ import { buildAddressFromParams } from './helpers/buildAddressFromParams';
 })
 
 export class AddressComponent implements OnInit {
+address$ = this.store.select(AddressSelectors.getAllEarthlinkAddress)
 
 headers = new HttpHeaders;
 token: any;
 invalid: boolean = false;
 objErrors: any = [];
-formdata!: FormGroup;
+formdata!: any;
 states: any=states;
 submitted: boolean=false;
 
@@ -135,7 +136,8 @@ uuidStr: any = '';
       params = queryParams;
     })
     this.store.dispatch(setParams({ params }))
-    this.initialData = buildAddressFromParams(params);
+    debugger;
+    this.initialData = buildAddressFromParams(this.address$);
 
     this.createFormControls();
     this.createForm();
@@ -166,10 +168,10 @@ uuidStr: any = '';
     await this.addressService.generateTransaction(this.headers);
     await this.addressService.serviceQualification(address, this.headers);
     if (this.isExistingCustomer()) {
-      return
+      //return
     }
     if (!this.addressState.error) {
-      this.store.dispatch(addressRequest(address));
+      this.store.dispatch(addressResponse(address));
       this.router.navigate(["/offers"]);
     }
   }

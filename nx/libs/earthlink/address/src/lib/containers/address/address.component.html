@@ -8,7 +8,7 @@
           <div *ngIf="invalid" class="alert alert-danger">
             Please, check and fix input errors.
           </div>
-          <div *ngIf="objErrors" class="alert alert-danger">
+          <div *ngIf="objErrors.count > 0" class="alert alert-danger">
             <ul>
               <li *ngFor = "let err of objErrors">{{ err }}</li>
             </ul>
@@ -19,11 +19,11 @@
               <div class="form-group">
                 <label for="addressLine1">Address Line:</label>
                 <input type="text" class="form-control" formControlName="address_line1" required id="addressLine1">
-                <!-- <div *ngIf="formdata.controls['address_line1'].invalid && formdata.controls['address_line1'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['address_line1'].invalid && formdata.controls['address_line1'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['address_line1'].errors.required">
                     Address is required.
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -42,11 +42,11 @@
               <div class="form-group">
                 <label for="city">City:</label>
                 <input type="text" formControlName="city" class="form-control" name="city" id="city" required>
-                <!-- <div *ngIf="formdata.controls['city'].invalid && formdata.controls['city'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['city'].invalid && formdata.controls['city'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['city'].errors.required">
                     City is required.
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
             <div class="col-md-4">
@@ -55,14 +55,14 @@
                 <select formControlName="state" class="form-control" id="state" required>
                   <option [value]="state.value" *ngFor="let state of states">{{ state.name }}</option>
                 </select>
-                <!-- <div *ngIf="formdata.controls['state'].invalid && formdata.controls['state'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['state'].invalid && formdata.controls['state'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['state'].invalid">
                     Wrong/Bad State format.
                   </div>
                   <div *ngIf="formdata.controls['state'].errors.required">
                     State is required.
                   </div>
-                </div> -->
+                </div>
   
               </div>
             </div>
@@ -70,14 +70,14 @@
               <div class="form-group">
                 <label for="zip_code">Zip Code:</label>
                 <input formControlName="zip_code" type="text" class="form-control" name="zip_code" id="zip_code">
-                <!-- <div *ngIf="formdata.controls['zip_code'].invalid && formdata.controls['zip_code'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['zip_code'].invalid && formdata.controls['zip_code'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['zip_code'].invalid">
                     Invalid Zip code format.
                   </div>
                   <div *ngIf="formdata.controls['zip_code'].errors.required">
                     Zip code is required.
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -97,11 +97,11 @@
               <div class="form-group">
                 <label for="first_name">First Name *</label>
                 <input formControlName="first_name" type="text" class="form-control" name="first_name" id="first_name" >
-                <!-- <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['first_name'].errors.required">
                     First Name is required.
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
   
@@ -109,11 +109,11 @@
               <div class="form-group">
                 <label for="last_name">Last Name *</label>
                 <input formControlName="last_name" type="text" class="form-control" name="last_name" id="last_name">
-                <!-- <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['last_name'].errors.required">
                     Last Name is required.
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
   
@@ -121,14 +121,14 @@
               <div class="form-group">
                 <label for="email">Email *</label>
                 <input type="text" formControlName="email" class="form-control" id="email" ngModel>
-                <!-- <div *ngIf="formdata.controls['email'].invalid && formdata.controls['email'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['email'].invalid && formdata.controls['email'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['email'].invalid">
                     Wrong/Bad Email format.
                   </div>
                   <div *ngIf="formdata.controls['email'].errors.required">
                     Email is required.
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
   
@@ -146,11 +146,11 @@
                   placeholder="(___)-___-____"
                   formControlName="phone"
                 >
-                <!-- <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched" class="alert alert-danger">
+                <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['phone'].errors.required">
                     First Name is required.
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
