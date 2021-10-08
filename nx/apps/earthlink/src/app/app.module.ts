@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 //import { FontAwesome } from '@fortawesome/angular-FontAwesome';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EarthlinkSharedModule } from '@nx/earthlink/shared';
 import { EarthlinkLoginModule } from '@nx/earthlink/login';
 
 import { AppComponent } from './app.component';
+import { environment } from '@nx/earthlink/env';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +24,9 @@ import { AppComponent } from './app.component';
     EarthlinkSharedModule,
     ReactiveFormsModule,
     EarthlinkLoginModule,
-    StoreModule.forRoot( {} ),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule.forRoot([
       { path: '', pathMatch: 'full', redirectTo: 'address' },
       {

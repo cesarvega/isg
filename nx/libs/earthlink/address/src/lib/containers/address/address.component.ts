@@ -1,62 +1,77 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators, FormGroup, FormControl  } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+
+/**********************************************************/
+
 import { states } from '@nx/earthlink/utilities';
-
-import { Validators, FormGroup, FormControl } from "@angular/forms";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
-
-//import { SYSTEM_CONFIG } from '@nx/earthlink/config';
-import { ENDPOINT } from '@nx/earthlink/api';
-import { ApiService } from '@nx/earthlink/shared';
+import { getEarthlinkAddressState } from '../../+state/address/earthlink-address.selectors';
 import { AddressService } from '../../services/address.service';
-
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { testCases } from './test-cases';
+import { Address } from './interfaces/address';
+import { setParams, addressRequest } from '../../+state/address/earthlink-address.actions';
+import { buildAddressFromParams } from './helpers/buildAddressFromParams';
 
 @Component({
   selector: 'nx-address',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss']
 })
+
 export class AddressComponent implements OnInit {
 
-  uuid: any='';
-  headers = new HttpHeaders;
-  addressState = {
-    error: null,
-    loading: false,
-  }
+headers = new HttpHeaders;
+token: any;
+invalid: boolean = false;
+objErrors: any = [];
+formdata!: FormGroup;
+states: any=states;
+submitted: boolean=false;
 
-  formdata: any;
-  states = states;
-  token: any;
+faStar = faStar
+testCases = testCases;
+addressState = {
+  error: null,
+  loading: false,
+  customerType: "NEW"
+};
+stateSubscription: Subscription | undefined;
+initialData: Address = {};
+submittedAddress: Address = {}
 
-  addressLine1: any;
-  addressLine2: any;
-  city: any;
-  state: any;
-  zipCode: any;
-  isBusiness: any;
-  inputFirstName: any;
-  inputLastName: any;
-  inputEmail: any;
-  inputPhone: any;
+addressLine1: any;
+addressLine2: any;
+city: any;
+state: any;
+zipCode: any;
+isBusiness: any;
+inputFirstName: any;
+inputLastName: any;
+inputEmail: any;
+inputPhone: any;
+uuid: any;
+uuidStr: any = '';
 
-  submitted = false;
-  invalid = false;
-  objErrors:any=null;
+
+
+
 
   constructor(
-    
-    private http: HttpClient,
-    private router: Router,
-    //private apiService: ApiService,
     private addressService: AddressService,
-    //private store: Store<any>
-    ) {
-      this.token = localStorage.getItem('token');
-      if( this.token == null ){
-        this.router.navigate([ENDPOINT.login.navigate]);
-      }
+    private store: Store<any>, 
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { 
+    this.token = localStorage.getItem('token');
+    if( this.token == null ){
+      //this.router.navigate([ENDPOINT.login.navigate]);
     }
+  }
+
 
   createFormControls(){
     this.addressLine1 = new FormControl ('', Validators.required);
@@ -94,6 +109,8 @@ export class AddressComponent implements OnInit {
         Validators.pattern("[0-9]{10}")
       ],
     );
+
+    this.uuid = new FormControl( this.uuidStr );
   }
 
   createForm(){
@@ -108,12 +125,25 @@ export class AddressComponent implements OnInit {
       last_name: this.inputLastName,
       email: this.inputEmail,
       phone: this.inputPhone,
+      uuid: this.uuid,
     })
   }
+
+  ngOnInit(): void {
+    let params;
+    this.route.queryParams.subscribe((queryParams) => {
+      params = queryParams;
+    })
+    this.store.dispatch(setParams({ params }))
+    this.initialData = buildAddressFromParams(params);
+
+    this.createFormControls();
+    this.createForm();
+  }
   
-  // keys() : Array<string>{
-  //     return Object.keys(Array.of(this.objErrors));
-  // }
+  isExistingCustomer() {
+    return this.addressState.customerType === "SLI";
+  }
 
   handleError( result:any )
   {
@@ -124,47 +154,23 @@ export class AddressComponent implements OnInit {
 
   }
 
-
   async onSubmit(){
-    
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.token,
       'Accept': 'application/json'
     });
 
-    if( this.formdata.valid ) {
-      this.invalid = false;
-      this.submitted = true;
-      // To do : shows up a spinner
-
-      const data = this.formdata.value;
-      await this.addressService.serviceQualification( data, this.headers );
-      if( !this.addressState.error ){
-        this.router.navigate([ENDPOINT.offers.navigate]);
-      }
+    const address = this.formdata.value;
+    this.submittedAddress = address;
+    await this.addressService.generateTransaction(this.headers);
+    await this.addressService.serviceQualification(address, this.headers);
+    if (this.isExistingCustomer()) {
+      return
     }
-  }
-
-  ngOnInit(): void {
-
-    if( localStorage.getItem('uuid') ){
-      this.headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.token,
-        'Accept': 'application/json'
-      });
-
-
-      this.uuid = new FormControl( localStorage.getItem('uuid') );
-      this.formdata = new FormGroup({
-        uuid: this.uuid,
-      });
-
-      console.log( this.formdata.value );
-      this.addressService.getAddress( this.formdata.value, this.headers);
+    if (!this.addressState.error) {
+      this.store.dispatch(addressRequest(address));
+      this.router.navigate(["/offers"]);
     }
-    this.createFormControls();
-    this.createForm();
   }
 }

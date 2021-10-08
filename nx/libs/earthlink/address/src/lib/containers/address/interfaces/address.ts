@@ -3,11 +3,18 @@ export interface Address {
     AddressLine2?: string,
     City?: string,
     State?: string,
-    ZipCode?: string,
-    FirtstName: string,
-    LastName: string,
-    Email: string,
-    Phone: string,
-    IsBusiness: boolean,
-    AltPhone: string
+    Zip?: Zip,
+    FirtstName?: string,
+    LastName?: string,
+    Email?: string,
+    Phone?: string,
+    IsBusiness?: boolean,
+    AltPhone?: string,
+    Uuid?: string,
+    Error?: any,
+    Reset?: boolean
+}
+
+interface Zip {
+    ZipCode: string,
 }
