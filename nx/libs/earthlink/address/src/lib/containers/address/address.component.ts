@@ -3,19 +3,20 @@ import { Validators, FormGroup, FormControl  } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-
+import { Subject, Subscription } from 'rxjs';
+import { Actions, ofType } from '@ngrx/effects';
 /**********************************************************/
 
 import { states } from '@nx/earthlink/utilities';
-import { getEarthlinkAddressState } from '../../+state/address/earthlink-address.selectors';
+import { getEarthlinkAddressError, getEarthlinkAddressState, getError } from '../../+state/address/earthlink-address.selectors';
 import { AddressService } from '../../services/address.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
-import { setParams, addressRequest, addressResponse } from '../../+state/address/earthlink-address.actions';
+import { setParams, errorAction, addressResponse } from '../../+state/address/earthlink-address.actions';
 import { buildAddressFromParams } from './helpers/buildAddressFromParams';
-import { AddressSelectors } from '@nx/earthlink/address';
+import { takeUntil } from 'rxjs/operators';
+//import { AddressSelectors } from '@nx/earthlink/address';
 @Component({
   selector: 'nx-address',
   templateUrl: './address.component.html',
@@ -23,19 +24,18 @@ import { AddressSelectors } from '@nx/earthlink/address';
 })
 
 export class AddressComponent implements OnInit {
-address$ = this.store.select(AddressSelectors.getAllEarthlinkAddress)
-
+address$: any;
 headers = new HttpHeaders;
 token: any;
 invalid: boolean = false;
-objErrors: any = [];
+
 formdata!: any;
 states: any=states;
 submitted: boolean=false;
 
 faStar = faStar
 testCases = testCases;
-addressState = {
+addressState:any = {
   error: null,
   loading: false,
   customerType: "NEW"
@@ -56,23 +56,46 @@ inputEmail: any;
 inputPhone: any;
 uuid: any;
 uuidStr: any = '';
-
-
-
-
+isError$ = new Subject<boolean>();
+objErrors:any = [];
 
   constructor(
     private addressService: AddressService,
     private store: Store<any>, 
     private router: Router,
     private route: ActivatedRoute,
+    updates$: Actions,
   ) { 
-    this.token = localStorage.getItem('token');
-    if( this.token == null ){
-      //this.router.navigate([ENDPOINT.login.navigate]);
-    }
-  }
+      this.token = localStorage.getItem('token');
+      if( this.token == null ){
+        this.router.navigate(["/login"]);
+      }
 
+      updates$.pipe(
+        ofType(errorAction))
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          this.isError$.next(true);
+          if(
+              data.hasOwnProperty('error')
+          ){
+            this.objErrors.push( data.error.error.status )
+          }else{
+            this.objErrors.push( 'The form was not sent. An error has ocurred.');
+          }
+        })
+    
+    // this.stateSubscription = this.store.select(getError).subscribe((data) => {
+    //   this.isError.push( data )
+    // })
+
+  }
+  
+  destroy$ = new Subject<boolean>();
+  ngOnDestroy(){
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   createFormControls(){
     this.addressLine1 = new FormControl ('', Validators.required);
@@ -136,23 +159,24 @@ uuidStr: any = '';
       params = queryParams;
     })
     this.store.dispatch(setParams({ params }))
+    this.address$ = this.store.select(getEarthlinkAddressState);
     debugger;
     this.initialData = buildAddressFromParams(this.address$);
-
+    
     this.createFormControls();
     this.createForm();
   }
   
   isExistingCustomer() {
-    return this.addressState.customerType === "SLI";
+    //return this.addressState.customerType === "SLI";
   }
 
   handleError( result:any )
   {
-    //this.objErrors = Object.entries( result.error.errors );
+    //this.isError = Object.entries( result.error.errors );
     const arr:any = Object.keys(result).map(function(k) { return result[k] });
     console.log( arr );
-    this.objErrors = Array.of(arr);
+    //this.isError = Array.of(arr);
 
   }
 
@@ -167,12 +191,14 @@ uuidStr: any = '';
     this.submittedAddress = address;
     await this.addressService.generateTransaction(this.headers);
     await this.addressService.serviceQualification(address, this.headers);
-    if (this.isExistingCustomer()) {
-      //return
-    }
+    // if (this.isExistingCustomer()) {
+    //   //return
+    // }
     if (!this.addressState.error) {
       this.store.dispatch(addressResponse(address));
       this.router.navigate(["/offers"]);
+    }else{
+      this.isError$.next(true);//this.store.select(getEarthlinkAddressError);
     }
   }
 }

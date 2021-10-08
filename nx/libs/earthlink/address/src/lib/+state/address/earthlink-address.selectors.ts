@@ -20,6 +20,7 @@ export const getEarthlinkAddressLoaded = createSelector(
 export const getEarthlinkAddressError = createSelector(
   getEarthlinkAddressState,
   (state: State) => state.error
+  
 );
 
 export const getAllEarthlinkAddress = createSelector(
@@ -42,3 +43,14 @@ export const getSelected = createSelector(
   getSelectedId,
   (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
 );
+
+
+export const getAddressState = createSelector(
+  getEarthlinkAddressState,
+  (state: State) => {error: state.error ? state.error : null}
+)
+
+export const getError = createSelector(
+  getEarthlinkAddressState,
+  (state: State) => state.error
+)

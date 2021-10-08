@@ -9,13 +9,30 @@ import { mapResponse } from './helpers/mapResponse';
 import { getTransactionId } from './helpers/getTransactionId';
 import { isServiceFound } from './helpers/serviceFound';
 import { noOffersFound } from './helpers/hasOffers';
+import { Subscription } from 'rxjs';
+import { getEarthlinkAddressState } from '../+state/address/earthlink-address.selectors';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddressService {
 
-  constructor(private apiService: ApiService, private store: Store<any>) { }
+  addressState = {
+    error: null,
+    loading: false,
+    customerType: "NEW"
+  };
+
+  stateSubscription: Subscription = new Subscription;
+  constructor(
+    private apiService: ApiService,
+    private store: Store<any>,
+  
+  ) {
+    this.stateSubscription = this.store.select(getEarthlinkAddressState).subscribe((addresState) => {
+      this.addressState = this.addressState
+    })
+   }
 
   serviceQualification(address: Address, headers: any) {
     this.store.dispatch(addressRequest({ address }))
@@ -55,7 +72,6 @@ export class AddressService {
     this.store.dispatch(loading())
     return this.apiService.post(transaction, { "provider": "earthlink" }, headers).pipe(
       tap((response: any) => {
-        debugger;
         const orderNumber = response.OrderNumber;
         this.store.dispatch(setTransaction({ transaction: orderNumber }))
       }, (error) => {
