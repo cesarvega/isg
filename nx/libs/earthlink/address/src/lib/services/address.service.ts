@@ -12,7 +12,7 @@ import { getTransactionId } from './helpers/getTransactionId';
 import { Subscription } from 'rxjs';
 import { getEarthlinkAddressState } from '../+state/address/earthlink-address.selectors';
 import { Offers } from '@nx/earthlink/offers';
-import { productsActionRequest } from '@nx/earthlink/offers';
+import { OffersService } from '@nx/earthlink/offers';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class AddressService {
     private apiService: ApiService,
     private store: Store<any>,
     private router: Router,
-  
+    private offersService: OffersService,
   ) {
     this.stateSubscription = this.store.select(getEarthlinkAddressState).subscribe((addresState) => {
       this.addressState = this.addressState
@@ -61,10 +61,12 @@ export class AddressService {
       }),
       tap((request) => {
         const products = request.availableProducts;
+        const productsIds = request.availableProductIds;
+
         const earthLinkTransactionId = getTransactionId(request);
         //update the offers store
-        this.store.dispatch(productsActionRequest({request: products}));
-        
+        this.offersService.productsActionRequestService({ request: products });
+        this.offersService.productIdsActionRequestService({ ids: productsIds })
         this.store.dispatch(setEarthLinkTransactionId({ earthLinkTransactionId }))
       }, (error) => {
         this.store.dispatch(errorAction({ error }))

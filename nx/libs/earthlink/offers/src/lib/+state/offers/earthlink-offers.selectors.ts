@@ -27,18 +27,18 @@ export const getAllEarthlinkOffers = createSelector(
   (state: State) => state
 );
 
-export const getEarthlinkOffersEntities = createSelector(
-  getEarthlinkOffersState,
-  (state: State) => selectEntities(state)
-);
+// export const getEarthlinkOffersEntities = createSelector(
+//   getEarthlinkOffersState,
+//   (state: State) => selectEntities(state)
+// );
 
 export const getSelectedId = createSelector(
   getEarthlinkOffersState,
   (state: State) => state.selectedId
 );
 
-export const getSelected = createSelector(
-  getEarthlinkOffersEntities,
-  getSelectedId,
-  (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
-);
+// export const getSelected = createSelector(
+//   getEarthlinkOffersEntities,
+//   getSelectedId,
+//   (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
+// );

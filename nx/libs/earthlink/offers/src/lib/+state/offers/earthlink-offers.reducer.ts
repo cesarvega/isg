@@ -10,7 +10,8 @@ export interface State extends EntityState<EarthlinkOffersEntity> {
   selectedId?: string | number; // which EarthlinkOffers record has been selected
   loaded: boolean; // has the EarthlinkOffers list been loaded
   error?: string | null; // last known error (if any),
-  //request: any | null;
+  request: any | null;
+  ids: any | null;
 }
 
 export interface EarthlinkOffersPartialState {
@@ -22,6 +23,7 @@ export const earthlinkOffersAdapter: EntityAdapter<EarthlinkOffersEntity> =
 
 export const initialState: State = earthlinkOffersAdapter.getInitialState({
   // set initial required properties
+  error: null,
   request: null,
   loaded: false,
 });
@@ -44,10 +46,14 @@ const earthlinkOffersReducer = createReducer(
   })),
     on(EarthlinkOffersActions.productsActionRequest, (state, { request }) => ({
       ...state,
-      loading: true,
-      request: request
-    }) 
-  )
+      loaded: true,
+      request,
+  })),
+  on(EarthlinkOffersActions.productIdsActionRequest, (state, {ids }) => ({
+    ...state,
+    loaded: true,
+    ids: ids,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

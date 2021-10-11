@@ -17,3 +17,8 @@ export const productsActionRequest = createAction(
   'productsActionRequest',
   props< { request: any }>()
 )
+
+export const productIdsActionRequest = createAction(
+  'productIdsActionRequest',
+  props< { ids: any }>()
+)

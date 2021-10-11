@@ -17,6 +17,7 @@ import { errorAction, addressResponse } from '../../+state/address/earthlink-add
 //import { buildAddressFromParams } from './helpers/buildAddressFromParams';
 import { takeUntil, timestamp } from 'rxjs/operators';
 import { validatePhoneNumber } from '@nx/earthlink/shared';
+import { productsActionRequest } from '@nx/earthlink/offers';
 //import { AddressSelectors } from '@nx/earthlink/address';
 @Component({
   selector: 'nx-address',
@@ -197,6 +198,7 @@ objErrors:any = [];
     this.formdata.addControl( 'submitted', new FormControl( true ) );
     const address = this.formdata.value;
     this.submittedAddress = address;
+    this.store.dispatch(productsActionRequest( { request: null } ));
     await this.addressService.generateTransaction(this.headers);
     await this.addressService.serviceQualification(address, this.headers);
 

@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { environment } from '@nx/earthlink/env';
 
 import * as fromAddress from '@nx/earthlink/address';
+import * as fromOffers from '@nx/earthlink/offers';
 import { from } from 'rxjs';
 
 @NgModule({
@@ -32,6 +33,10 @@ import { from } from 'rxjs';
     StoreModule.forFeature(
       fromAddress.EARTHLINK_ADDRESS_FEATURE_KEY,
       fromAddress.reducer
+    ),
+    StoreModule.forFeature(
+      fromOffers.EARTHLINK_OFFERS_FEATURE_KEY,
+      fromOffers.reducer
     ),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule.forRoot([
