@@ -5,6 +5,7 @@ import * as EarthlinkOffersActions from './earthlink-offers.actions';
 import { EarthlinkOffersEntity } from './earthlink-offers.models';
 
 export const EARTHLINK_OFFERS_FEATURE_KEY = 'earthlinkOffers';
+export const EARTHLINK_ADDRESS_FEATURE_KEY = 'earthlinkAddress';
 
 export interface State extends EntityState<EarthlinkOffersEntity> {
   selectedId?: string | number; // which EarthlinkOffers record has been selected

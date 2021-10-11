@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+//import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { SYSTEM_CONFIG } from '@nx/earthlink/config';
-import { ENDPOINT } from '@nx/earthlink/api';
+import { select, Store } from '@ngrx/store';
+//import { SYSTEM_CONFIG } from '@nx/earthlink/config';
+//import { ENDPOINT } from '@nx/earthlink/api';
 import { Subscription } from 'rxjs';
 import { getAllEarthlinkOffers } from '../../+state/offers/earthlink-offers.selectors';
+import { getParsedAddress, getProducts } from '@nx/earthlink/offers';
 @Component({
   selector: 'nx-offers',
   templateUrl: './offers.component.html',
@@ -15,10 +16,11 @@ export class OffersComponent implements OnInit {
 
   stateSubscription: Subscription | undefined;
   offers$: any = null;
-
+  parsedAddress$ = this.store.pipe(select(getParsedAddress));
+  products$ = this.store.pipe(select(getProducts));
   constructor(
     private store: Store,
-    private http: HttpClient,
+    //private http: HttpClient,
     private router: Router,
   ) {
     // if( localStorage.getItem('token')){
