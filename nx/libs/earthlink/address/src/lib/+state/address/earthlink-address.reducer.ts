@@ -7,7 +7,7 @@ import { addressRequest } from '@nx/earthlink/address';
 import * as AddressActions from './earthlink-address.actions';
 import { EarthlinkAddressEntity } from './earthlink-address.models';
 
-export const EARTHLINK_ADDRESS_FEATURE_KEY = 'address';
+export const EARTHLINK_ADDRESS_FEATURE_KEY = 'earthlinkAddress';
 
 export interface State extends EntityState<EarthlinkAddressEntity> {
   selectedId?: string | number; // which EarthlinkAddress record has been selected
@@ -27,10 +27,6 @@ export const initialState: State = earthlinkAddressAdapter.getInitialState({
   // set initial required properties
   error: null,
   request: null,
-    // address_line1: "", address_line2: "", city: "",
-    // state: "", zip: "", first_name: "", last_name: "",
-    // email: "", phone: "", is_business: "", alt_phone: "", error: "", uuid: ""
-  //},
   response: null,
   transaction: "",
   earthLinkTransactionId: "",

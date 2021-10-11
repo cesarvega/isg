@@ -12,7 +12,8 @@ export interface Address {
     AltPhone?: string,
     Uuid?: string,
     Error?: any,
-    Reset?: boolean
+    Reset?: boolean,
+    Submitted?: boolean,
 }
 
 interface Zip {

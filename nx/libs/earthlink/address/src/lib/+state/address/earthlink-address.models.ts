@@ -12,8 +12,9 @@ export interface EarthlinkAddressEntity {
   last_name: string
   email: string
   phone: string
-  is_business: boolean
+  is_business?: boolean
   alt_phone?: string
   error?: string
   uuid?: string
+  submitted?: boolean
 }

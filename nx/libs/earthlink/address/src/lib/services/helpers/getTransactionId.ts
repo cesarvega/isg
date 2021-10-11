@@ -1,4 +1,4 @@
 export const getTransactionId = (response:any) => {
-    return '123456';//response.ServiceQualResponse.Header.transactionID
+    return response.orderNumber;//response.ServiceQualResponse.Header.transactionID
 
 }

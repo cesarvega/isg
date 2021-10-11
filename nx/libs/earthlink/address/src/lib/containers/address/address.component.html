@@ -120,7 +120,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="email">Email *</label>
-                <input type="text" formControlName="email" class="form-control" id="email" ngModel>
+                <input type="text" formControlName="email" class="form-control" id="email">
                 <div *ngIf="formdata.controls['email'].invalid && formdata.controls['email'].touched" class="alert alert-danger">
                   <div *ngIf="formdata.controls['email'].invalid">
                     Wrong/Bad Email format.
@@ -147,23 +147,33 @@
                   formControlName="phone"
                 >
                 <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched" class="alert alert-danger">
+                  <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched">
+                    Invalid phone number.
+                  </div>
                   <div *ngIf="formdata.controls['phone'].errors.required">
-                    First Name is required.
+                    Phone number is required.
                   </div>
                 </div>
               </div>
             </div>
           </div>
   
-          <div class="row text-center">
-            <div class="col-4">&nbsp;</div>
-            <div class="col-4 m-4" *ngIf="!submitted">
-              <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-info">
+          <div class="m-4 p-1">
+            <div class="m-4 p-1" *ngIf="!submitted">
+              <div class="row">
+                <div class="col text-right">
+                  <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-info">
+                </div>
+              </div>
             </div>
-            <div *ngIf="submitted">
-              
+            <div class="m-4 p-1 form-group" *ngIf="submitted">
+              <div class="row">
+                <div class="col text-right">
+                  <input type="button" value="Update my Info" class="form-control btn btn-warning">
+                  <input type="button" value="Continue" class="form-control btn btn-info">
+                </div>
+              </div>
             </div>
-            <div class="col-4"></div>
           </div>
   
         </form>

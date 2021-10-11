@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { Store } from '@ngrx/store';
 import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { ENDPOINT } from '@nx/earthlink/api';
-
+import { Subscription } from 'rxjs';
+import { getAllEarthlinkOffers } from '../../+state/offers/earthlink-offers.selectors';
 @Component({
   selector: 'nx-offers',
   templateUrl: './offers.component.html',
@@ -12,15 +13,18 @@ import { ENDPOINT } from '@nx/earthlink/api';
 })
 export class OffersComponent implements OnInit {
 
+  stateSubscription: Subscription | undefined;
+  offers$: any = null;
+
   constructor(
-    
+    private store: Store,
     private http: HttpClient,
     private router: Router,
   ) {
-    if( localStorage.getItem('token')){
-      this.token = localStorage.getItem('token');
-    }
-    this.Validate();
+    // if( localStorage.getItem('token')){
+    //   this.token = localStorage.getItem('token');
+    // }
+    // this.Validate();
   }
   
   token:any = null;
@@ -54,24 +58,24 @@ export class OffersComponent implements OnInit {
 
   }
 
-  Validate(){
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token,
-      'Accept': 'application/json'
-    });
+  // Validate(){
+  //   let headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ' + this.token,
+  //     'Accept': 'application/json'
+  //   });
 
-    let options = { headers: headers };
-    this.http.get(SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path, options).subscribe(
-      () => {
-        this.router.navigate([ENDPOINT.offers.navigate]);
-        this.visibleApp = true;
+  //   let options = { headers: headers };
+  //   this.http.get(SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path, options).subscribe(
+  //     () => {
+  //       this.router.navigate([ENDPOINT.offers.navigate]);
+  //       this.visibleApp = true;
       
-      },
-      // (error) => this.handleError( error )
-      () => this.router.navigate([ENDPOINT.address.navigate])
-    )   
-  }
+  //     },
+  //     // (error) => this.handleError( error )
+  //     () => this.router.navigate([ENDPOINT.address.navigate])
+  //   )   
+  // }
   
   handleError( result:any )
   {
@@ -82,6 +86,15 @@ export class OffersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.stateSubscription = this.store.select(getAllEarthlinkOffers).subscribe((offers) =>{
+      this.offers$ = offers;
+    })
+
+    if( !this.offers$.request ){
+      this.router.navigate(['/address']);
+    }else{
+      this.visibleApp = true;
+    }
   }
 
 }

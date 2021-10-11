@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl  } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, Subscription } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
@@ -10,12 +10,13 @@ import { Actions, ofType } from '@ngrx/effects';
 import { states } from '@nx/earthlink/utilities';
 import { getCurrentAddress } from '../../+state/address/earthlink-address.selectors';
 import { AddressService } from '../../services/address.service';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+//import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
-import { setParams, errorAction, addressResponse } from '../../+state/address/earthlink-address.actions';
+import { errorAction, addressResponse } from '../../+state/address/earthlink-address.actions';
 //import { buildAddressFromParams } from './helpers/buildAddressFromParams';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, timestamp } from 'rxjs/operators';
+import { validatePhoneNumber } from '@nx/earthlink/shared';
 //import { AddressSelectors } from '@nx/earthlink/address';
 @Component({
   selector: 'nx-address',
@@ -30,16 +31,12 @@ token: any;
 invalid: boolean = false;
 
 formdata!: any;
-states: any=states;
-submitted: boolean=false;
+states: any = states;
+submitted: any = false;
 
-faStar = faStar
+//faStar = faStar
 testCases = testCases;
-// addressState:any = {
-//   error: null,
-//   loading: false,
-//   customerType: "NEW"
-// };
+
 stateSubscription: Subscription | undefined;
 initialData: Address = {};
 submittedAddress: Address = {}
@@ -63,7 +60,7 @@ objErrors:any = [];
     private addressService: AddressService,
     private store: Store<any>, 
     private router: Router,
-    private route: ActivatedRoute,
+    //private route: ActivatedRoute,
     updates$: Actions,
   ) { 
       this.token = localStorage.getItem('token');
@@ -72,7 +69,7 @@ objErrors:any = [];
       }
 
       //address.action: errorAction
-      updates$.pipe(
+      this.stateSubscription = updates$.pipe(
         ofType(errorAction))
         .pipe(takeUntil(this.destroy$))
         .subscribe((data) => {
@@ -85,12 +82,9 @@ objErrors:any = [];
             this.objErrors.push( 'The form was not sent. An error has ocurred.');
           }
         })
-    
-    // this.stateSubscription = this.store.select(getError).subscribe((data) => {
-    //   this.isError.push( data )
-    // })
-
-  }
+      
+      this.stateSubscription.unsubscribe;
+    }
   
   destroy$ = new Subject<boolean>();
   ngOnDestroy(){
@@ -131,7 +125,9 @@ objErrors:any = [];
     this.inputPhone = new FormControl ('',
       [
         Validators.required,
-        Validators.pattern("[0-9]{10}")
+        Validators.minLength(10),
+        Validators.maxLength(10),
+        validatePhoneNumber
       ],
     );
 
@@ -151,19 +147,16 @@ objErrors:any = [];
       email: this.inputEmail,
       phone: this.inputPhone,
       uuid: this.uuid,
+      submitted: this.submitted,
     })
   }
 
   ngOnInit(): void {
-    let params;
-    this.route.queryParams.subscribe((queryParams) => {
-      params = queryParams;
-    })
-    this.store.dispatch(setParams({ params }))
+    /********** Pulling the addres from the store ********************/
     this.stateSubscription = this.store.select(getCurrentAddress).subscribe((address) => {
       this.address$ = address;
     })
-    
+    this.stateSubscription.unsubscribe();
 
     this.createFormControls();
     this.createForm();
@@ -185,6 +178,7 @@ objErrors:any = [];
           uuid: 'uuid'
         }
       )
+      this.submitted = this.address$.submitted;
     }
   }
 
@@ -200,15 +194,20 @@ objErrors:any = [];
       'Authorization': 'Bearer ' + this.token,
       'Accept': 'application/json'
     });
-
+    this.formdata.addControl( 'submitted', new FormControl( true ) );
     const address = this.formdata.value;
     this.submittedAddress = address;
     await this.addressService.generateTransaction(this.headers);
     await this.addressService.serviceQualification(address, this.headers);
 
-    if (!this.isError$) {
-      this.store.dispatch(addressResponse(address));
+    if (!this.isError$.hasError) {
+      this.submitted = true;
       this.router.navigate(["/offers"]);
     }
+  }
+
+  ngOnChanges(){
+    if( !!this.formdata && this.formdata.dirty ){
+    alert('changes');}
   }
 }
