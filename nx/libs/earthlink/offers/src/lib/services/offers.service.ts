@@ -20,13 +20,13 @@ export class OffersService {
 
   }
 
-  productsActionRequestService(request: any){
-    this.store.dispatch(productsActionRequest({ request: request }))
+  productsActionRequestService(products: any){
+    this.store.dispatch(productsActionRequest({ products: products }))
     
   }
 
-  productIdsActionRequestService( request: any ){
-    this.store.dispatch(productIdsActionRequest( { ids: request }))
+  productIdsActionRequestService( ids: any ){
+    this.store.dispatch(productIdsActionRequest( { ids }))
   }
   
 }

@@ -6,7 +6,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-//import { FontAwesome } from '@fortawesome/angular-FontAwesome';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-FontAwesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EarthlinkSharedModule } from '@nx/earthlink/shared';
 import { EarthlinkLoginModule } from '@nx/earthlink/login';
@@ -16,11 +19,22 @@ import { environment } from '@nx/earthlink/env';
 
 import * as fromAddress from '@nx/earthlink/address';
 import * as fromOffers from '@nx/earthlink/offers';
-import { from } from 'rxjs';
+import * as fromAccount from '@nx/earthlink/account';
+import * as fromBilling from '@nx/earthlink/billing';
+import * as fromConfirmation from '@nx/earthlink/confirmation';
 
+
+import { from } from 'rxjs';
+import {
+  faCoffee,
+  faIcons,
+  fas,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    FontAwesomeModule,
     HttpClientModule,
     BrowserModule,
     CommonModule,
@@ -38,6 +52,19 @@ import { from } from 'rxjs';
       fromOffers.EARTHLINK_OFFERS_FEATURE_KEY,
       fromOffers.reducer
     ),
+    StoreModule.forFeature(
+      fromAccount.EARTHLINK_ACCOUNT_FEATURE_KEY,
+      fromAccount.reducer
+    ),
+    StoreModule.forFeature(
+      fromBilling.EARTHLINK_BILLING_FEATURE_KEY,
+      fromBilling.reducer
+    ),
+    StoreModule.forFeature(
+      fromConfirmation.EARTHLINK_CONFIRMATION_FEATURE_KEY,
+      fromConfirmation.reducer
+    ),
+
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule.forRoot([
       { path: '', pathMatch: 'full', redirectTo: 'address' },
@@ -72,17 +99,24 @@ import { from } from 'rxjs';
           ),
       },
       {
-        path: 'login',
+        path: 'earthlink-account',
         loadChildren: () =>
-          import('@nx/earthlink/login').then(
-            (module) => module.EarthlinkLoginModule
+          import('@nx/earthlink/account').then(
+            (module) => module.EarthlinkAccountModule
           ),
       },
       {
-        path: 'earthlink-env',
+        path: 'earthlink-billing',
         loadChildren: () =>
-          import('@nx/earthlink/env').then(
-            (module) => module.EarthlinkEnvModule
+          import('@nx/earthlink/billing').then(
+            (module) => module.EarthlinkBillingModule
+          ),
+      },
+      {
+        path: 'earthlink-confirmation',
+        loadChildren: () =>
+          import('@nx/earthlink/confirmation').then(
+            (module) => module.EarthlinkConfirmationModule
           ),
       },
     ]),
@@ -90,4 +124,11 @@ import { from } from 'rxjs';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+    library.addIcons(faCoffee);
+    library.addIcons(faIcons);
+    library.addIcons(faSpinner);
+  }
+}

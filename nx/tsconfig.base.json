@@ -15,9 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@nx/earthlink/account": ["libs/earthlink/account/src/index.ts"],
       "@nx/earthlink/address": ["libs/earthlink/address/src/index.ts"],
       "@nx/earthlink/api": ["libs/earthlink/api/src/index.ts"],
+      "@nx/earthlink/billing": ["libs/earthlink/billing/src/index.ts"],
       "@nx/earthlink/config": ["libs/earthlink/config/src/index.ts"],
+      "@nx/earthlink/confirmation": [
+        "libs/earthlink/confirmation/src/index.ts"
+      ],
       "@nx/earthlink/env": ["libs/earthlink/env/src/index.ts"],
       "@nx/earthlink/login": ["libs/earthlink/login/src/index.ts"],
       "@nx/earthlink/logout": ["libs/earthlink/logout/src/index.ts"],

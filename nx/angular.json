@@ -94,6 +94,31 @@
         }
       }
     },
+    "earthlink-account": {
+      "projectType": "library",
+      "root": "libs/earthlink/account",
+      "sourceRoot": "libs/earthlink/account/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/account"],
+          "options": {
+            "jestConfig": "libs/earthlink/account/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/account/src/**/*.ts",
+              "libs/earthlink/account/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "earthlink-address": {
       "projectType": "library",
       "root": "libs/earthlink/address",
@@ -144,6 +169,31 @@
         }
       }
     },
+    "earthlink-billing": {
+      "projectType": "library",
+      "root": "libs/earthlink/billing",
+      "sourceRoot": "libs/earthlink/billing/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/billing"],
+          "options": {
+            "jestConfig": "libs/earthlink/billing/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/billing/src/**/*.ts",
+              "libs/earthlink/billing/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "earthlink-config": {
       "projectType": "library",
       "root": "libs/earthlink/config",
@@ -164,6 +214,31 @@
             "lintFilePatterns": [
               "libs/earthlink/config/src/**/*.ts",
               "libs/earthlink/config/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "earthlink-confirmation": {
+      "projectType": "library",
+      "root": "libs/earthlink/confirmation",
+      "sourceRoot": "libs/earthlink/confirmation/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/earthlink/confirmation"],
+          "options": {
+            "jestConfig": "libs/earthlink/confirmation/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/earthlink/confirmation/src/**/*.ts",
+              "libs/earthlink/confirmation/src/**/*.html"
             ]
           }
         }

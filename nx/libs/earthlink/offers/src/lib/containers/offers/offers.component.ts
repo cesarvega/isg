@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-//import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-//import { SYSTEM_CONFIG } from '@nx/earthlink/config';
-//import { ENDPOINT } from '@nx/earthlink/api';
 import { Subscription } from 'rxjs';
 import { getAllEarthlinkOffers } from '../../+state/offers/earthlink-offers.selectors';
 import { getParsedAddress, getProducts } from '@nx/earthlink/offers';
+
 @Component({
   selector: 'nx-offers',
   templateUrl: './offers.component.html',
@@ -18,6 +16,7 @@ export class OffersComponent implements OnInit {
   offers$: any = null;
   parsedAddress$ = this.store.pipe(select(getParsedAddress));
   products$ = this.store.pipe(select(getProducts));
+  selectedProduct: any = null;
   constructor(
     private store: Store,
     //private http: HttpClient,
@@ -37,28 +36,6 @@ export class OffersComponent implements OnInit {
     show: false,
   };
 
-  product = 
-    {
-      name : "product A",
-    priceMonthly: "123.45",
-    equipmentPrice: "234,56",
-    contract: 3,
-    etfFee: 12.34,
-    installationPrice: 34.56,
-    activationFee: 12.34,
-    downSpeed: 12,
-    upSpeed:2,
-    description: "ANy description",
-    id:1234567
-  };
-  
-  preSelectedProduct = {
-    name: "any prod name",
-    description: "a prod description",
-    equipmentDescription: "Equipment description",
-    terms: "bla bla blaterms",
-
-  }
 
   // Validate(){
   //   let headers = new HttpHeaders({

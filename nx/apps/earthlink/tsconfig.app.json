@@ -15,6 +15,11 @@
     "../../libs/earthlink/login/src/index.ts",
     "../../libs/earthlink/logout/src/index.ts",
     "../../libs/earthlink/login/src/index.ts",
-    "../../libs/earthlink/env/src/index.ts"
+    "../../libs/earthlink/env/src/index.ts",
+    "../../libs/account/src/index.ts",
+    "../../libs/earthlink/account/src/index.ts",
+    "../../libs/earthlink/account/src/index.ts",
+    "../../libs/earthlink/billing/src/index.ts",
+    "../../libs/earthlink/confirmation/src/index.ts"
   ]
 }

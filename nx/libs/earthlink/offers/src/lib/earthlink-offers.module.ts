@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import * as fromEarthlinkOffers from './+state/offers/earthlink-offers.reducer';
 import { EarthlinkOffersEffects } from './+state/offers/earthlink-offers.effects';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { EarthlinkOffersEffects } from './+state/offers/earthlink-offers.effects
     ),
     EffectsModule.forFeature([EarthlinkOffersEffects]),
   ],
-  declarations: [OffersComponent, OffersFormComponent],
+  declarations: [OffersComponent, OffersFormComponent, ConfirmationComponent],
 })
 export class EarthlinkOffersModule {}

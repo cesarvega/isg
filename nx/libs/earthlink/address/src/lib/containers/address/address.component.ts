@@ -198,7 +198,7 @@ objErrors:any = [];
     this.formdata.addControl( 'submitted', new FormControl( true ) );
     const address = this.formdata.value;
     this.submittedAddress = address;
-    this.store.dispatch(productsActionRequest( { request: null } ));
+    //this.store.dispatch(productsActionRequest( { request: null } ));
     await this.addressService.generateTransaction(this.headers);
     await this.addressService.serviceQualification(address, this.headers);
 

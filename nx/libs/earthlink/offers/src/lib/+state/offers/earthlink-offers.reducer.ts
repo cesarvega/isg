@@ -11,8 +11,7 @@ export interface State extends EntityState<EarthlinkOffersEntity> {
   selectedId?: string | number; // which EarthlinkOffers record has been selected
   loaded: boolean; // has the EarthlinkOffers list been loaded
   error?: string | null; // last known error (if any),
-  request: any | null;
-  ids: any | null;
+  request: any | {}
 }
 
 export interface EarthlinkOffersPartialState {
@@ -27,6 +26,7 @@ export const initialState: State = earthlinkOffersAdapter.getInitialState({
   error: null,
   request: null,
   loaded: false,
+  ids: null
 });
 
 const earthlinkOffersReducer = createReducer(
@@ -36,24 +36,24 @@ const earthlinkOffersReducer = createReducer(
     loaded: false,
     error: null,
   })),
-  on(
-    EarthlinkOffersActions.loadEarthlinkOffersSuccess,
-    (state, { earthlinkOffers }) =>
-      earthlinkOffersAdapter.setAll(earthlinkOffers, { ...state, loaded: true })
-  ),
+  // on(
+  //   EarthlinkOffersActions.loadEarthlinkOffersSuccess,
+  //   (state, { earthlinkOffers }) =>
+  //     earthlinkOffersAdapter.setAll(earthlinkOffers, { ...state, loaded: true })
+  // ),
   on(EarthlinkOffersActions.loadEarthlinkOffersFailure, (state, { error }) => ({
     ...state,
     error,
   })),
-    on(EarthlinkOffersActions.productsActionRequest, (state, { request }) => ({
+    on(EarthlinkOffersActions.productsActionRequest, (state, { products }) => ({
       ...state,
       loaded: true,
-      request,
+      request: products,
   })),
-  on(EarthlinkOffersActions.productIdsActionRequest, (state, {ids }) => ({
+  on(EarthlinkOffersActions.productIdsActionRequest, (state, { ids }) => ({
     ...state,
     loaded: true,
-    ids: ids,
+    ids,
   }))
 );
 

@@ -15,7 +15,7 @@ export const loadEarthlinkOffersFailure = createAction(
 
 export const productsActionRequest = createAction(
   'productsActionRequest',
-  props< { request: any }>()
+  props< { products: any }>()
 )
 
 export const productIdsActionRequest = createAction(

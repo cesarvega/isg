@@ -30,13 +30,22 @@
     "earthlink": {
       "tags": []
     },
+    "earthlink-account": {
+      "tags": []
+    },
     "earthlink-address": {
       "tags": []
     },
     "earthlink-api": {
       "tags": []
     },
+    "earthlink-billing": {
+      "tags": []
+    },
     "earthlink-config": {
+      "tags": []
+    },
+    "earthlink-confirmation": {
       "tags": []
     },
     "earthlink-e2e": {

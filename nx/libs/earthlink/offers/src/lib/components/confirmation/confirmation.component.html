@@ -1,0 +1,58 @@
+<section id="modal">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="modaltitle">
+            <i class="fas fa-trophy"></i> Redeem Your Reward
+          </div>
+          <div class="modalsub">
+            Before moving forward, please agree to our reward redemption
+            requirements.
+          </div>
+          <div class="modalbody">
+            Visa Reward Card Offers: Not redeemable for cash. Up to $200 pro-rated
+            early termination fee applies. Must maintain service for 90 days after
+            install and pay first bill in full. Must redeem within 75 days of
+            notification. Card delivered 30 days after redemption and expires 6
+            months after issuance. Visit <b>RewardCenter.Frontier.com</b> for
+            cardholder agreement. The Frontier Visa Reward Card is issued by The
+            Bancorp Bank pursuant to a license from Visa U.S.A. Inc. and can be
+            used everywhere Visa debit cards are accepted. No cash access. The
+            Bancorp Bank; Member FDIC. The Bancorp Bank does not endorse or
+            sponsor and is not affiliated in any way with any product or service
+            offered by Frontier Communications.
+          </div>
+          <input
+            type="checkbox"
+            [disabled]="loading"
+            (change)="agreeCheckBox = !agreeCheckBox"
+            class="modalcheck"
+            id="check1"
+            name="check1"
+            onchange="document.getElementById('gonext').disabled = !this.checked;"
+          />
+          <label for="check1" class="modalchecktext"
+            >I agree to the Terms of Service and disclosures above.</label
+          ><br />
+          <div class="modalbuttons">
+            <a
+              class="float-left mt-3"
+              (click)="showPlans.emit()"
+              style="cursor: pointer"
+            >
+              <i class="faIcon"></i> Back to Plans </a
+            ><button
+              id="gonext"
+              class="float-right"
+              (click)="submit.emit()"
+              [disabled]="loading || !agreeCheckBox"
+            >
+              <i class="faIcon" *ngIf="loading" ></i>
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
