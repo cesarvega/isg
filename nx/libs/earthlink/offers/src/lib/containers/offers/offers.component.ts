@@ -12,16 +12,24 @@ import { getParsedAddress, getProducts } from '@nx/earthlink/offers';
 })
 export class OffersComponent implements OnInit {
 
+  congrats: any = null
   stateSubscription: Subscription | undefined;
   offers$: any = null;
   parsedAddress$: any = null;
-  products$ = this.store.pipe(select(getProducts));
+  //products$ = this.store.pipe(select(getProducts));
   selectedProduct: any = null;
   constructor(
     private store: Store,
     //private http: HttpClient,
     private router: Router,
-  ) { }
+  ) { 
+    this.stateSubscription = this.store.select(getAllEarthlinkOffers).subscribe((offers) =>{
+      if( offers && offers.availableProducts ){
+        this.offers$ = offers.availableProducts;
+        //console.log(this.offers$)
+      }
+    });
+  }
   
   token:any = null;
 
@@ -36,11 +44,7 @@ export class OffersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.stateSubscription = this.store.select(getAllEarthlinkOffers).subscribe((offers) =>{
-      this.offers$ = offers;
-    })
-
-    if( !this.offers$.request ){
+    if( !this.offers$ ){
       this.router.navigate(['/address']);
     }else{
       this.parsedAddress$ = this.store.pipe(select(getParsedAddress));

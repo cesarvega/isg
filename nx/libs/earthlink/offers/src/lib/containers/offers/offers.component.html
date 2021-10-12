@@ -5,9 +5,9 @@
   [error]="productState.error"
   (closeError)="closeError()"
 ></isg-cart-error> -->
-<section id="selectPlan" class="">
+<section id="selectPlan" class="container-fluid">
   <div class="container">
-    <div class="row my-md-5 my-3">
+    <div class="row my-md-5 my-3" *ngIf="congrats">
       <div
         class="col-12 col-md-5 col-lg-7 col-xl-7 my-auto text-center text-md-left text-lg-left text-xl-left"
       >
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-4 mb-5">
+    <div class="row mt-4 mb-5" *ngIf="congrats">
       <div class="col-md-8 col-12 text-md-left text-center">
         <span class="d-none">Get Visa Reward Card</span>
       </div>
@@ -56,14 +56,98 @@
     </div>
     <div class="row pricegrid">
       <div
-        class="col-md-6 col-lg-6 col-xl-6 col-12 singleplan d-flex"
-        *ngFor="let product of products$ | async"
+        class="col-md-4 col-lg-4 col-xl-4 col-12 singleplan d-flex"
+        *ngFor="let product of offers$"
       >
-        <!-- <isg-cart-product-view
-          [paramPhoneNumber]="getParamPhoneNumber(paramPhoneNumber$ | async)"
-          [product]="product"
-          (selectProduct)="onSelectProduct($event)"
-        ></isg-cart-product-view> -->
+        <div class="col-md-8 ng-scope">
+          <div class="panel panel-warning" ng-class="selectedProduct.id == product.id?'panel-success':'panel-warning'">
+              <div class="panel-heading">
+                  <div class="panel-title" style="text-align: center; min-height: 44px;">
+                      <strong class="ng-binding">{{ product.name }}</strong>
+                  </div>
+              </div>
+              <div class="panel-body" style="text-align: center;">
+                  <div class="price" style="min-height: 86px;">
+                      <span>$</span>
+                      <span class="integer-part ng-binding">{{ product.priceMonthly}}</span>
+                      <span class="ng-binding">.95/mo</span>
+                      <br>
+                      <i class="fa fa-plus" style="color: black;"></i>
+                      <br>
+                      <span class="ng-binding">${{ product.equipmentPrice }}/equipment monthly</span>
+                  </div>
+                  <div class="installation">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <strong>Contract Term</strong>
+                              <br>
+                              <span style="color: orangered;" class="ng-binding">
+                                  {{ product.contract }} Month(s)
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="installation">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <strong>Early Termination Fee</strong>
+                              <br>
+                              <span style="color: orangered;" class="ng-binding">
+                                  ${{ product.etfFee }}
+                              </span>
+                          </div>
+                          <div class="col-md-6">
+                              <strong>Installation service fee</strong>
+                              <br>
+                              <span style="color: orangered;" class="ng-binding">${{ product.installationPrice }}</span>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <strong>Activation Fee</strong>
+                              <br>
+                              <span style="color: orangered;" class="ng-binding">
+                                  ${{ product.activationFee }}
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="speed">
+                      <span class="title">Speeds up to</span>
+                      <div class="clearfix"></div>
+                      <div class="col-md-6">
+                          <span>Download</span>
+                          <span class="speed-unit ng-binding">{{ product.downSpeed }}</span>
+                          <span class="ng-binding">Mbps</span>
+                      </div>
+                      <div class="col-md-6">
+                          <span>Upload</span>
+                          <span class="speed-unit ng-binding">{{ product.upSpeed}}</span>
+                          <span class="ng-binding">Mbps</span>
+                      </div>
+                      <div class="clearfix"></div>
+                      <br>
+                  </div>
+                  <div class="product-description ng-binding">
+                      {{ product.description }}
+                  </div>
+                  <br><br>
+                  [ <a href="#" ng-click="seeAllDetails(product, $event)">Term and Conditions</a> ]
+                  <br>
+                  <span style="font-style: italic; font-size: 0.9em; color: gray;" class="ng-binding">Product Id: 172</span>
+              </div>
+              <div class="panel-footer">
+                  <!-- ngIf: !selectedProduct || selectedProduct.id !== product.id -->
+                  <button class="btn btn-block btn-success ng-scope" ng-click="selectProduct(product)" 
+                    ng-disabled="runningSelectingProduct" ng-if="!selectedProduct || selectedProduct.id !== product.id">
+                      Select
+                  </button>
+                  <!-- end ngIf: !selectedProduct || selectedProduct.id !== product.id
+                  ngIf: selectedProduct.id == product.id -->
+              </div>
+          </div>
+      </div>
       </div>
     </div>
     <div class="row mb-5">

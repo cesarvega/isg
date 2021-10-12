@@ -1,0 +1,203 @@
+.panel-warning{
+    background-color: #faebcc;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+.ng-scope{
+    border: solid 1px #faebcc;
+    border-radius: 5px;
+}
+
+.panel-body{
+    padding: 15px;
+    background-color: #fff;
+
+}
+
+.panel-warning > .panel-heading {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+div.price {
+    color: orangered;
+    font-weight: bold;
+    padding-bottom: 15px;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+nav.navbar {
+    min-height: 0;
+}
+
+nav.navbar-default ul {
+    padding-bottom: 0;
+}
+
+nav.navbar-default ul li.active, nav.navbar-default ul li.active a {
+    background: orange;
+    /*background: #337ab7;*/
+    color: white !important;
+}
+
+nav.navbar-default ul li.current, nav.navbar-default ul li.current a {
+    background: orangered;
+    color: white !important;
+}
+
+nav.navbar-default ul li, nav.navbar-default ul li a {
+    background: #EEE;
+    font-weight: bold;
+    color: black;
+    border-right: 1px solid #FFF;
+}
+
+div.price {
+    color: orangered;
+    font-weight: bold;
+    padding-bottom: 15px;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+}
+
+div.price span.integer-part
+{
+    font-size: 2.5em;
+}
+
+div.price span.oldprice
+{
+    display: block;
+    color: red;
+    text-decoration-line: line-through;
+}
+
+div.speed {
+    padding-bottom: 15px;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+}
+
+div.installation {
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+
+div.speed span.title
+{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+div.speed span.speed-unit
+{
+    font-size: 2em;
+    display: block;
+    font-weight: bold;
+    color: #EB772A;
+}
+
+div.speed span.data
+{
+    font-style: italic;
+}
+
+div.product-description {
+    font-style: italic;
+    font-size: 0.9em;
+    min-height: 100px;
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
+.panel-success {
+    border-color: orangered;
+}
+
+.panel-success > .panel-heading {
+    color: white;
+    background-color: orangered;
+    border-color: orangered;
+}
+
+div.invalid div.help-block {
+    color: red;
+}
+
+div.invalid label {
+    color: red;
+}
+
+div.invalid input {
+    border: 1px solid red;
+}
+
+div.invalid select {
+    border: 1px solid red;
+}
+
+/*Dish Qualification dot-light signaling*/
+.dot-success {
+    height: 25px;
+    width: 25px;
+    background-color: #86c233;
+    border-radius: 50%;
+    display: inline-block;
+    float: right;
+}
+
+.dot-existing-customer {
+    height: 25px;
+    width: 25px;
+    /*background-color: #d80000;*/
+    cursor: pointer;
+    border-radius: 50%;
+    display: inline-block;
+    float: right;
+}
+
+.dot-dish-error {
+    height: 25px;
+    width: 25px;
+    background-color: #2b2b2b;
+    border-radius: 50%;
+    display: inline-block;
+    float: right;
+}
+
+.chkBox {
+    border: none;
+    -webkit-box-shadow: none !important;
+    width: 20px;
+    margin: -6px 0 0 10px !important;
+}
+
+.leftFloat {
+    float: left;
+}
+

@@ -25,7 +25,7 @@ export const getEarthlinkOffersError = createSelector(
 
 export const getAllEarthlinkOffers = createSelector(
   getEarthlinkOffersState,
-  (state: State) => state
+  (state: State) => state.request
 );
 
 export const getEarthlinkOffersEntities = createSelector(
