@@ -23,7 +23,6 @@ import * as fromAccount from '@nx/earthlink/account';
 import * as fromBilling from '@nx/earthlink/billing';
 import * as fromConfirmation from '@nx/earthlink/confirmation';
 
-
 import { from } from 'rxjs';
 import {
   faCoffee,
@@ -117,6 +116,13 @@ import {
         loadChildren: () =>
           import('@nx/earthlink/confirmation').then(
             (module) => module.EarthlinkConfirmationModule
+          ),
+      },
+      {
+        path: 'earthlink-state',
+        loadChildren: () =>
+          import('@nx/earthlink/state').then(
+            (module) => module.EarthlinkStateModule
           ),
       },
     ]),

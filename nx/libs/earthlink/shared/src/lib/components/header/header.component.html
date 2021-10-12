@@ -1,15 +1,70 @@
-<div class="container-fluid">
-  <a routerLink="login">
-    <img src="assets/img/earthlink_logo.png">
-  </a>
-</div>
-<nav class="navbar navbar-expand-lg p-0 ">
-  <div class="container" ng-reflect-ng-class="[object Object]" ng-reflect-ng-style="[object Object]">
-    <a _ngcontent-c1="" class="navbar-brand logo-link" routerLink="address">Address</a>
-    <a _ngcontent-c1="" class="navbar-brand logo-link" routerLink="offers">Products</a>
-    <a _ngcontent-c1="" class="navbar-brand logo-link" routerLink="./">Account</a>
-    <a _ngcontent-c1="" class="navbar-brand logo-link" routerLink="./">Billing & Recap</a>
-    <a _ngcontent-c1="" class="navbar-brand logo-link" routerLink="./">Confirmation</a>
-    <a _ngcontent-c1="" class="navbar-brand logo-link" routerLink="logout">Logout</a>
+<header>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-5 p-0">
+        <div class="navbar-brand">
+            <a class="logo" routerLink="login">
+              <img src="assets/img/earthlink_logo.png">
+            </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-7 p-0 d-none d-md-block d-lg-block d-xl-block text-left">
+
+
+        <span class="steps">
+          <ng-template class="menu" routerLinkActive="active"
+            [ngIf]="addressCheckState.osnResponse"
+            [ngIfElse]="elseAddressBlock">
+            <span class="menu ready" routerLinkActive="active">
+              <a routerLink="address">Address</a>
+            </span>
+          </ng-template>
+
+          <ng-template class="menu" routerLinkActive="active" #elseAddressBlock>
+            <span class="menu" routerLinkActive="active">
+              <a routerLink="address" routerLinkActive="active">Address</a>
+            </span>
+          </ng-template>
+        </span>
+
+
+        <span class="steps">
+          <ng-template class="menu" routerLinkActive="active"
+            [ngIf]="offersCheckState.osnResponse"
+            [ngIfElse]="offersElseBlock">
+            <span class="menu ready" routerLinkActive="active">
+              <a routerLink="offers">Products</a>
+            </span>
+          </ng-template>
+
+          <ng-template class="menu" #offersElseBlock>
+            <span class="menu" routerLinkActive="active">
+              Products
+            </span>  
+          </ng-template>
+        </span>
+
+
+        <span class="steps">
+          <ng-template class="menu" routerLinkActive="active"
+            [ngIf]="accountCheckState.osnResponse"
+            [ngIfElse]="accountElseBlock">
+            <span class="menu ready" routerLinkActive="active">
+              <a routerLink="account">Account</a>
+            </span>
+          </ng-template>
+
+          <ng-template class="menu" #accountElseBlock>
+            <span class="menu" routerLinkActive="active">
+              Account
+            </span>
+          </ng-template>
+
+          <!-- <span class="menu" routerLinkActive="active"><a [class.ready] = "accountCheckState.osnResponse" routerLink="account">Account</a></span> -->
+        </span>
+      </div>
+    </div>
   </div>
-</nav>
+</header>

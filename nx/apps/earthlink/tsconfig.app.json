@@ -20,6 +20,7 @@
     "../../libs/earthlink/account/src/index.ts",
     "../../libs/earthlink/account/src/index.ts",
     "../../libs/earthlink/billing/src/index.ts",
-    "../../libs/earthlink/confirmation/src/index.ts"
+    "../../libs/earthlink/confirmation/src/index.ts",
+    "../../libs/earthlink/state/src/index.ts"
   ]
 }

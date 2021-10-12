@@ -14,47 +14,18 @@ export class OffersComponent implements OnInit {
 
   stateSubscription: Subscription | undefined;
   offers$: any = null;
-  parsedAddress$ = this.store.pipe(select(getParsedAddress));
+  parsedAddress$: any = null;
   products$ = this.store.pipe(select(getProducts));
   selectedProduct: any = null;
   constructor(
     private store: Store,
     //private http: HttpClient,
     private router: Router,
-  ) {
-    // if( localStorage.getItem('token')){
-    //   this.token = localStorage.getItem('token');
-    // }
-    // this.Validate();
-  }
+  ) { }
   
   token:any = null;
 
   visibleApp = false;
-  errorMsg = { 
-    message : 'na',
-    show: false,
-  };
-
-
-  // Validate(){
-  //   let headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ' + this.token,
-  //     'Accept': 'application/json'
-  //   });
-
-  //   let options = { headers: headers };
-  //   this.http.get(SYSTEM_CONFIG.API_URL + ENDPOINT.offers.path, options).subscribe(
-  //     () => {
-  //       this.router.navigate([ENDPOINT.offers.navigate]);
-  //       this.visibleApp = true;
-      
-  //     },
-  //     // (error) => this.handleError( error )
-  //     () => this.router.navigate([ENDPOINT.address.navigate])
-  //   )   
-  // }
   
   handleError( result:any )
   {
@@ -72,6 +43,7 @@ export class OffersComponent implements OnInit {
     if( !this.offers$.request ){
       this.router.navigate(['/address']);
     }else{
+      this.parsedAddress$ = this.store.pipe(select(getParsedAddress));
       this.visibleApp = true;
     }
   }

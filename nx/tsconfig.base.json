@@ -28,6 +28,7 @@
       "@nx/earthlink/logout": ["libs/earthlink/logout/src/index.ts"],
       "@nx/earthlink/offers": ["libs/earthlink/offers/src/index.ts"],
       "@nx/earthlink/shared": ["libs/earthlink/shared/src/index.ts"],
+      "@nx/earthlink/state": ["libs/earthlink/state/src/index.ts"],
       "@nx/earthlink/utilities": ["libs/earthlink/utilities/src/index.ts"]
     }
   },

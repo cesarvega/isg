@@ -1,0 +1,28 @@
+.ready{
+    background-color: orange;
+}
+.active{
+    background-color: #ff4500;
+}
+
+.text-left{
+    text-align: left;
+}
+
+
+a{
+    display: inline-flex;
+    margin: .5rem;
+    width:fit-content;
+    margin: .5rem;
+    padding: .5rem;
+    color: #fff;
+    text-decoration: none;
+}
+a.logo{
+    background-color: transparent;
+}
+
+.menu.ready{
+    cursor: pointer;
+}
