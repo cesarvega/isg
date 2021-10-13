@@ -33,193 +33,194 @@
             </div>
         </div>
     </div>
-  <div class="container">
-    <div class="row">
-      <h3>
-        <fa-icon [icon]="faBars"></fa-icon> Address Qualification
-      </h3>
-    </div>
-    <hr />
-    <div>
-      <div class="row justify-content-left">
-        <div>
-            <div *ngIf="invalid" class="alert alert-danger">
-              Please, check and fix input errors.
-            </div>
-            <div *ngIf="isError$ | async" class="alert alert-danger">
-              <ul>
-                <li *ngFor = "let err of objErrors">{{ err }}</li>
-              </ul>
-            </div>
-          <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group col-md-6">
-                  <label for="addressLine1">Address Line:</label>
-                  <input type="text" class="form-control" formControlName="address_line1" required id="addressLine1">
-                  <div *ngIf="formdata.controls['address_line1'].invalid && formdata.controls['address_line1'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['address_line1'].errors.required">
-                      Address is required.
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <h3>
+          <fa-icon [icon]="faBars"></fa-icon> Address Qualification
+        </h3>
+      </div>
+      <hr />
+      <div>
+        <div class="row justify-content-left">
+          <div>
+              <div *ngIf="invalid" class="alert alert-danger">
+                Please, check and fix input errors.
+              </div>
+              <div *ngIf="isError$ | async" class="alert alert-danger">
+                <ul>
+                  <li *ngFor = "let err of objErrors">{{ err }}</li>
+                </ul>
+              </div>
+            <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group col-md-6">
+                    <label for="addressLine1">Address Line:</label>
+                    <input type="text" class="form-control" formControlName="address_line1" required id="addressLine1">
+                    <div *ngIf="formdata.controls['address_line1'].invalid && formdata.controls['address_line1'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['address_line1'].errors.required">
+                        Address is required.
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-    
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="address_line2">Unit Type & Unit Number:</label>
-                  <input type="text" formControlName="address_line2" class="form-control" name="address_line2" id="address_line2">
+      
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="address_line2">Unit Type & Unit Number:</label>
+                    <input type="text" formControlName="address_line2" class="form-control" name="address_line2" id="address_line2">
+                  </div>
                 </div>
               </div>
-            </div>
-    
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="city">City:</label>
-                  <input type="text" formControlName="city" class="form-control" name="city" id="city" required>
-                  <div *ngIf="formdata.controls['city'].invalid && formdata.controls['city'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['city'].errors.required">
-                      City is required.
+      
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" formControlName="city" class="form-control" name="city" id="city" required>
+                    <div *ngIf="formdata.controls['city'].invalid && formdata.controls['city'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['city'].errors.required">
+                        City is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="state">State:</label>
+                    <select formControlName="state" class="form-control" id="state" required>
+                      <option [value]="state.value" *ngFor="let state of states">{{ state.name }}</option>
+                    </select>
+                    <div *ngIf="formdata.controls['state'].invalid && formdata.controls['state'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['state'].invalid">
+                        Wrong/Bad State format.
+                      </div>
+                      <div *ngIf="formdata.controls['state'].errors.required">
+                        State is required.
+                      </div>
+                    </div>
+      
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="zip_code">Zip Code:</label>
+                    <input formControlName="zip_code" type="text" class="form-control" name="zip_code" id="zip_code">
+                    <div *ngIf="formdata.controls['zip_code'].invalid && formdata.controls['zip_code'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['zip_code'].invalid">
+                        Invalid Zip code format.
+                      </div>
+                      <div *ngIf="formdata.controls['zip_code'].errors.required">
+                        Zip code is required.
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="state">State:</label>
-                  <select formControlName="state" class="form-control" id="state" required>
-                    <option [value]="state.value" *ngFor="let state of states">{{ state.name }}</option>
-                  </select>
-                  <div *ngIf="formdata.controls['state'].invalid && formdata.controls['state'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['state'].invalid">
-                      Wrong/Bad State format.
-                    </div>
-                    <div *ngIf="formdata.controls['state'].errors.required">
-                      State is required.
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="zip_code">Zip Code:</label>
-                  <input formControlName="zip_code" type="text" class="form-control" name="zip_code" id="zip_code">
-                  <div *ngIf="formdata.controls['zip_code'].invalid && formdata.controls['zip_code'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['zip_code'].invalid">
-                      Invalid Zip code format.
-                    </div>
-                    <div *ngIf="formdata.controls['zip_code'].errors.required">
-                      Zip code is required.
-                    </div>
+      
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="is_business">Is Business</label>
+                    <input formControlName="is_business" type="checkbox" class="form-control chkBox" name="is_business" id="is_business">
                   </div>
                 </div>
               </div>
-            </div>
-    
-            <div class="row">
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="is_business">Is Business</label>
-                  <input formControlName="is_business" type="checkbox" class="form-control chkBox" name="is_business" id="is_business">
-                </div>
-              </div>
-            </div>
-    
-            <hr />
-    <!--        @include( 'components.customer_information')-->
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="first_name">First Name *</label>
-                  <input formControlName="first_name" type="text" class="form-control" name="first_name" id="first_name" >
-                  <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['first_name'].errors.required">
-                      First Name is required.
+      
+              <hr />
+      <!--        @include( 'components.customer_information')-->
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="first_name">First Name *</label>
+                    <input formControlName="first_name" type="text" class="form-control" name="first_name" id="first_name" >
+                    <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['first_name'].errors.required">
+                        First Name is required.
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-    
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="last_name">Last Name *</label>
-                  <input formControlName="last_name" type="text" class="form-control" name="last_name" id="last_name">
-                  <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['last_name'].errors.required">
-                      Last Name is required.
+      
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="last_name">Last Name *</label>
+                    <input formControlName="last_name" type="text" class="form-control" name="last_name" id="last_name">
+                    <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['last_name'].errors.required">
+                        Last Name is required.
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-    
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="email">Email *</label>
-                  <input type="text" formControlName="email" class="form-control" id="email">
-                  <div *ngIf="formdata.controls['email'].invalid && formdata.controls['email'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['email'].invalid">
-                      Wrong/Bad Email format.
+      
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="text" formControlName="email" class="form-control" id="email">
+                    <div *ngIf="formdata.controls['email'].invalid && formdata.controls['email'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['email'].invalid">
+                        Wrong/Bad Email format.
+                      </div>
+                      <div *ngIf="formdata.controls['email'].errors.required">
+                        Email is required.
+                      </div>
                     </div>
-                    <div *ngIf="formdata.controls['email'].errors.required">
-                      Email is required.
+                  </div>
+                </div>
+      
+              </div>
+      
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="phone">Phone *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="phone"
+                      id="phone"
+                      placeholder="(___)-___-____"
+                      formControlName="phone"
+                    >
+                    <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched" class="alert alert-danger">
+                      <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched">
+                        Invalid phone number.
+                      </div>
+                      <div *ngIf="formdata.controls['phone'].errors.required">
+                        Phone number is required.
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-    
-            </div>
-    
-            <div class="row">
-              <div class="col-md-8">
-                <div class="form-group">
-                  <label for="phone">Phone *</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="phone"
-                    id="phone"
-                    placeholder="(___)-___-____"
-                    formControlName="phone"
-                  >
-                  <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched" class="alert alert-danger">
-                    <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched">
-                      Invalid phone number.
+      
+              <hr />
+              <div class="footMessage">
+                <fa-icon [icon]="faComment"> </fa-icon> We will use this number only to call or send you messages about your account and/or EarthLink products or services. You are not required to provide a phone number, but it will enable us to provide you with better customer service. You may opt-out of receiving such calls or messages at any time by adjusting your contact preferences through My Account or by texting STOP in response to any text message you receive from EarthLink. Do I have your express consent to receive automated calls, text messages and pre-recorded messages from EarthLink at this number in connection with your account and our products and services?
+              </div>
+              <div class="m-4 p-1">
+                <div class="m-4 p-1" *ngIf="!submitted">
+                  <div class="row">
+                    <div class="col text-right">
+                      <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-info">
                     </div>
-                    <div *ngIf="formdata.controls['phone'].errors.required">
-                      Phone number is required.
+                  </div>
+                </div>
+                <div class="m-4 p-1 form-group" *ngIf="submitted">
+                  <div class="row">
+                    <div class="col text-right">
+                      <input type="button" value="Continue to Products" routerLink="/offers" class="form-control btn btn-info">
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-    
-            <hr />
-            <div class="footMessage">
-              <fa-icon [icon]="faComment"> </fa-icon> We will use this number only to call or send you messages about your account and/or EarthLink products or services. You are not required to provide a phone number, but it will enable us to provide you with better customer service. You may opt-out of receiving such calls or messages at any time by adjusting your contact preferences through My Account or by texting STOP in response to any text message you receive from EarthLink. Do I have your express consent to receive automated calls, text messages and pre-recorded messages from EarthLink at this number in connection with your account and our products and services?
-            </div>
-            <div class="m-4 p-1">
-              <div class="m-4 p-1" *ngIf="!submitted">
-                <div class="row">
-                  <div class="col text-right">
-                    <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-info">
-                  </div>
-                </div>
-              </div>
-              <div class="m-4 p-1 form-group" *ngIf="submitted">
-                <div class="row">
-                  <div class="col text-right">
-                    <input type="button" value="Update my Info" class="form-control btn btn-warning">
-                    <input type="button" value="Continue" class="form-control btn btn-info">
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-          </form>
+      
+            </form>
+          </div>
         </div>
       </div>
     </div>

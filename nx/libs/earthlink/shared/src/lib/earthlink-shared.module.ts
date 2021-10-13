@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -14,11 +14,12 @@ import { FooterComponent } from './components/footer/footer.component';
   declarations: [
     HeaderComponent,
     FooterComponent,
-
+    CartDetailsComponent,
   ],
   exports:[
     HeaderComponent,
     FooterComponent,
+    CartDetailsComponent,
   ]
 })
 export class EarthlinkSharedModule {}

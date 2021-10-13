@@ -5,9 +5,10 @@ import { AddressComponent } from './containers/address/address.component';
 import { AddressFormComponent } from './components/address-form/address-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { EarthlinkSharedModule } from '@nx/earthlink/shared';
 @NgModule({
   imports: [
+    EarthlinkSharedModule,
     FontAwesomeModule,
     CommonModule,
     RouterModule.forChild([
