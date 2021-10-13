@@ -26,3 +26,13 @@ a.logo{
 .menu.ready{
     cursor: pointer;
 }
+
+li.nav-item {
+    width: 14rem;
+    text-align: center;
+    border-right: solid 2px #fff;
+}
+
+.nav-item.ready,.nav-item.active{
+    color: #fff !important;
+}

@@ -54,6 +54,18 @@ nav.navbar {
     min-height: 0;
 }
 
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+}
+
 nav.navbar-default ul {
     padding-bottom: 0;
 }
@@ -138,6 +150,12 @@ div.product-description {
 .panel-success {
     border-color: orangered;
 }
+.panel-heading {
+    padding: 10px 13px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
 
 .panel-success > .panel-heading {
     color: white;
@@ -201,3 +219,8 @@ div.invalid select {
     float: left;
 }
 
+@media (min-width: 768px){
+    .navbar {
+        border-radius: 4px;
+    }
+}

@@ -6,7 +6,7 @@
   (closeError)="closeError()"
 ></isg-cart-error> -->
 <section id="selectPlan" class="container-fluid">
-  <div class="container">
+  <div class="col-md-9">
     <div class="row my-md-5 my-3" *ngIf="congrats">
       <div
         class="col-12 col-md-5 col-lg-7 col-xl-7 my-auto text-center text-md-left text-lg-left text-xl-left"
@@ -56,10 +56,10 @@
     </div>
     <div class="row pricegrid">
       <div
-        class="col-md-4 col-lg-4 col-xl-4 col-12 singleplan d-flex"
+        class="col-md-5 col-lg-4 col-xl-4 col-12 singleplan d-flex"
         *ngFor="let product of offers$"
       >
-        <div class="col-md-8 ng-scope">
+        <div class="col-md-12 ng-scope">
           <div class="panel panel-warning" ng-class="selectedProduct.id == product.id?'panel-success':'panel-warning'">
               <div class="panel-heading">
                   <div class="panel-title" style="text-align: center; min-height: 44px;">
@@ -116,12 +116,12 @@
                   <div class="speed">
                       <span class="title">Speeds up to</span>
                       <div class="clearfix"></div>
-                      <div class="col-md-6">
+                      <div>
                           <span>Download</span>
                           <span class="speed-unit ng-binding">{{ product.downSpeed }}</span>
                           <span class="ng-binding">Mbps</span>
                       </div>
-                      <div class="col-md-6">
+                      <div>
                           <span>Upload</span>
                           <span class="speed-unit ng-binding">{{ product.upSpeed}}</span>
                           <span class="ng-binding">Mbps</span>

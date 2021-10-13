@@ -8,7 +8,7 @@ import { getAddressState, getBillingState, getAccountState, getProductState } fr
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  isCollapsed: any = false;
   addressCheckStateSubscription: Subscription | undefined;
   addressCheckState = { osnResponse: null, error: null };
 

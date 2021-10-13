@@ -9,10 +9,62 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <nav class="navbar-expand-lg navbar-light bg-light">
+      <!-- <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+    
+      <div class="collapse navbar-collapse" id="navbarColor03" *ngIf="!isCollapsed">
+        <ul class="navbar-nav mr-auto">
+          <ng-template 
+            [ngIf]="addressCheckState.osnResponse"
+            [ngIfElse]="elseAddressBlock">
+            <li class="nav-item ready" routerLinkActive="active" routerLink="address">
+              <span class="nav-link">Address</span>
+              <!-- <a class="nav-link" >Address</a> -->
+            </li>            
+          </ng-template>
+          <ng-template #elseAddressBlock>
+            <li class="nav-item steps" routerLinkActive="active" routerLink="address">
+              <span class="nav-link">Address</span>
+              <!-- <a class="nav-link" routerLink="address">Address</a> -->
+            </li>             
+          </ng-template>
+
+
+          <ng-template 
+          [ngIf]="offersCheckState.osnResponse"
+          [ngIfElse]="elseOffersBlock">
+            <li class="nav-item ready steps" routerLinkActive="active" routerLink="offers">
+              <span class="nav-link">Offers</span>
+              <!-- <a class="nav-link" routerLinkActive="active" routerLink="offers">Offers</a> -->
+            </li>
+          </ng-template>
+          <ng-template #elseOffersBlock>
+            <li class="nav-item " routerLinkActive="active" routerLink="offers">
+              <span class="nav-link">Offers</span>
+              <!-- <a class="nav-link steps">Offers</a> -->
+            </li>
+          </ng-template>
+
+
+
+
+          <li class="nav-item steps">
+            <a class="nav-link" href="#">Account</a>
+          </li>
+          <li class="nav-item steps">
+            <a class="nav-link" href="#">Billing</a>
+          </li>
+          <li class="nav-item steps">
+            <a class="nav-link" href="#">Confirmation</a>
+          </li>          
+        </ul>
+      </div>
+    </nav>
+    <!-- <div class="row">
       <div class="col-7 p-0 d-none d-md-block d-lg-block d-xl-block text-left">
-
-
         <span class="steps">
           <ng-template class="menu" routerLinkActive="active"
             [ngIf]="addressCheckState.osnResponse"
@@ -60,11 +112,10 @@
             <span class="menu" routerLinkActive="active">
               Account
             </span>
-          </ng-template>
-
+          </ng-template>-->
           <!-- <span class="menu" routerLinkActive="active"><a [class.ready] = "accountCheckState.osnResponse" routerLink="account">Account</a></span> -->
-        </span>
+        <!-- </span>
       </div>
-    </div>
+    </div> -->
   </div>
 </header>
