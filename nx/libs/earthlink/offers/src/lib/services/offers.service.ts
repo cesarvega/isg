@@ -4,7 +4,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Offers } from './products';
-import { productsActionRequest, productIdsActionRequest } from '../../lib/+state/offers/earthlink-offers.actions';
+import { productsActionRequest, productIdsActionRequest, orderDetailsActionRequest } from '../../lib/+state/offers/earthlink-offers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +29,8 @@ export class OffersService {
     this.store.dispatch(productIdsActionRequest( { ids }))
   }
   
+
+  orderDetailActionRequestService( order: any ){
+    this.store.dispatch(orderDetailsActionRequest( { order }))
+  }
 }

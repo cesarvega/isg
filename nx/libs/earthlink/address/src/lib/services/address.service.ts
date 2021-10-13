@@ -60,10 +60,12 @@ export class AddressService {
         // return response;
       }),
       tap((request) => {
+        const order = request.orderNumber;
         const availableProducts = request.availableProducts;
         const availableProductsIds = request.availableProductIds;
         const earthLinkTransactionId = getTransactionId(request);
         //update the offers store
+        this.offersService.orderDetailActionRequestService({ order });
         this.offersService.productsActionRequestService({ availableProducts });
         this.offersService.productIdsActionRequestService({ availableProductsIds })
         this.store.dispatch(setEarthLinkTransactionId({ earthLinkTransactionId }))

@@ -22,3 +22,8 @@ export const productIdsActionRequest = createAction(
   'productIdsActionRequest',
   props< { ids: any }>()
 )
+
+export const orderDetailsActionRequest = createAction(
+  'orderDetailsActionRequest',
+  props<{ order: any }>()
+)

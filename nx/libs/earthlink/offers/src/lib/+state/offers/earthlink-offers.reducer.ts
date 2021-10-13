@@ -26,7 +26,8 @@ export const initialState: State = earthlinkOffersAdapter.getInitialState({
   error: null,
   request: null,
   loaded: false,
-  ids: null
+  ids: null,
+  order: null
 });
 
 const earthlinkOffersReducer = createReducer(
@@ -54,6 +55,10 @@ const earthlinkOffersReducer = createReducer(
     ...state,
     loaded: true,
     ids,
+  })),
+  on(EarthlinkOffersActions.orderDetailsActionRequest, (state, { order }) => ({
+    ...state,
+    order
   }))
 );
 
