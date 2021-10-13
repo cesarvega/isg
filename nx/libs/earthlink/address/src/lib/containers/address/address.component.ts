@@ -19,6 +19,7 @@ import { takeUntil, timestamp } from 'rxjs/operators';
 import { validatePhoneNumber } from '@nx/earthlink/shared';
 import { productsActionRequest } from '@nx/earthlink/offers';
 //import { AddressSelectors } from '@nx/earthlink/address';
+import { faBars, faComment } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'nx-address',
   templateUrl: './address.component.html',
@@ -26,6 +27,9 @@ import { productsActionRequest } from '@nx/earthlink/offers';
 })
 
 export class AddressComponent implements OnInit {
+  faBars = faBars;
+  faComment = faComment;
+  
 address$: any = null;
 headers = new HttpHeaders;
 token: any;

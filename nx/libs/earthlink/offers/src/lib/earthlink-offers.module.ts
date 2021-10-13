@@ -8,9 +8,11 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromEarthlinkOffers from './+state/offers/earthlink-offers.reducer';
 import { EarthlinkOffersEffects } from './+state/offers/earthlink-offers.effects';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
+    FontAwesomeModule,
     CommonModule,
     RouterModule.forChild([
       { path: '', pathMatch: 'full', component: OffersComponent },

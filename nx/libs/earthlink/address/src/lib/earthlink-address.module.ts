@@ -4,8 +4,11 @@ import { RouterModule } from '@angular/router';
 import { AddressComponent } from './containers/address/address.component';
 import { AddressFormComponent } from './components/address-form/address-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   imports: [
+    FontAwesomeModule,
     CommonModule,
     RouterModule.forChild([
       {path: '', pathMatch: 'full', component: AddressComponent}

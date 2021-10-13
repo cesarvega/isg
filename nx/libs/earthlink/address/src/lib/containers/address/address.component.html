@@ -1,13 +1,48 @@
 <section id="checkAvailability">
+  <div class="modal fade" id="suggested_address" tabindex="-1" role="dialog" aria-labelledby="multiAddressModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title alert alert-warning" id="multi_addressesModalLabel">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        EarthLink returned suggested addresses. Please choose one from below:
+                    </h4>
+                </div>
+                <form name="multiAddressForm" novalidate="" ng-submit="submitMultiAddress()" class="ng-pristine ng-valid">
+                    <div class="modal-body" style="max-height: 600px; overflow-y: scroll;">
+
+                        <ul class="list-group">
+                            <!-- ngRepeat: item in suggested_addresses -->
+                        </ul>
+
+                        <!--<div style="color:red" ng-show="inputError.show">
+                            {{inputError.msg}}
+                        </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Close
+                            </button>-->
+                            <!--<button type="submit" class="btn btn-ctl-dark" ng-disabled="!multiAddressFormData.AddressStruct">
+                                Requalify address
+                            </button>-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
   <div class="container">
     <div class="row">
-      <h4>
-        Address Qualification
-      </h4>
+      <h3>
+        <fa-icon [icon]="faBars"></fa-icon> Address Qualification
+      </h3>
     </div>
+    <hr />
     <div>
       <div class="row justify-content-left">
-        <div class="col-md-9">
+        <div>
             <div *ngIf="invalid" class="alert alert-danger">
               Please, check and fix input errors.
             </div>
@@ -19,7 +54,7 @@
           <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group col-md-6">
                   <label for="addressLine1">Address Line:</label>
                   <input type="text" class="form-control" formControlName="address_line1" required id="addressLine1">
                   <div *ngIf="formdata.controls['address_line1'].invalid && formdata.controls['address_line1'].touched" class="alert alert-danger">
@@ -32,7 +67,7 @@
             </div>
     
             <div class="row">
-              <div class="col-md-7">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="address_line2">Unit Type & Unit Number:</label>
                   <input type="text" formControlName="address_line2" class="form-control" name="address_line2" id="address_line2">
@@ -69,7 +104,7 @@
     
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label for="zip_code">Zip Code:</label>
                   <input formControlName="zip_code" type="text" class="form-control" name="zip_code" id="zip_code">
@@ -94,6 +129,7 @@
               </div>
             </div>
     
+            <hr />
     <!--        @include( 'components.customer_information')-->
             <div class="row">
               <div class="col-md-4">
@@ -161,6 +197,10 @@
               </div>
             </div>
     
+            <hr />
+            <div class="footMessage">
+              <fa-icon [icon]="faComment"> </fa-icon> We will use this number only to call or send you messages about your account and/or EarthLink products or services. You are not required to provide a phone number, but it will enable us to provide you with better customer service. You may opt-out of receiving such calls or messages at any time by adjusting your contact preferences through My Account or by texting STOP in response to any text message you receive from EarthLink. Do I have your express consent to receive automated calls, text messages and pre-recorded messages from EarthLink at this number in connection with your account and our products and services?
+            </div>
             <div class="m-4 p-1">
               <div class="m-4 p-1" *ngIf="!submitted">
                 <div class="row">

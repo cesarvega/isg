@@ -6,10 +6,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {
-  FontAwesomeModule,
-  FaIconLibrary,
-} from '@fortawesome/angular-FontAwesome';
+// import {
+//   FontAwesomeModule,
+//   FaIconLibrary,
+// } from '@fortawesome/angular-FontAwesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EarthlinkSharedModule } from '@nx/earthlink/shared';
 import { EarthlinkLoginModule } from '@nx/earthlink/login';
@@ -24,16 +24,11 @@ import * as fromBilling from '@nx/earthlink/billing';
 import * as fromConfirmation from '@nx/earthlink/confirmation';
 
 import { from } from 'rxjs';
-import {
-  faCoffee,
-  faIcons,
-  fas,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    FontAwesomeModule,
+    //FontAwesomeModule,
     HttpClientModule,
     BrowserModule,
     CommonModule,
@@ -98,31 +93,24 @@ import {
           ),
       },
       {
-        path: 'earthlink-account',
+        path: 'account',
         loadChildren: () =>
           import('@nx/earthlink/account').then(
             (module) => module.EarthlinkAccountModule
           ),
       },
       {
-        path: 'earthlink-billing',
+        path: 'billing',
         loadChildren: () =>
           import('@nx/earthlink/billing').then(
             (module) => module.EarthlinkBillingModule
           ),
       },
       {
-        path: 'earthlink-confirmation',
+        path: 'confirmation',
         loadChildren: () =>
           import('@nx/earthlink/confirmation').then(
             (module) => module.EarthlinkConfirmationModule
-          ),
-      },
-      {
-        path: 'earthlink-state',
-        loadChildren: () =>
-          import('@nx/earthlink/state').then(
-            (module) => module.EarthlinkStateModule
           ),
       },
     ]),
@@ -131,10 +119,7 @@ import {
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(library: FaIconLibrary) {
-    library.addIconPacks(fas);
-    library.addIcons(faCoffee);
-    library.addIcons(faIcons);
-    library.addIcons(faSpinner);
+  constructor() {
+
   }
 }

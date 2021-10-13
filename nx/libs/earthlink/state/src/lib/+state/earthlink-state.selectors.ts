@@ -23,9 +23,13 @@ export const getBillingState = createFeatureSelector<any>(
     BILLING_FEATURE_KEY
 );
 
-export const getInstallationState = createFeatureSelector<any>(
+export const getConfirmationState = createFeatureSelector<any>(
     CONFIRMATION_FEATURE_KEY
-);
+)
+
+// export const getInstallationState = createFeatureSelector<any>(
+//     CONFIRMATION_FEATURE_KEY
+// );
 
 export const getParamPhoneNumber: any = createSelector(
     getAddressState,

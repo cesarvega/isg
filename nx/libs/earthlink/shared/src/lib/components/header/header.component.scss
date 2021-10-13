@@ -36,3 +36,25 @@ li.nav-item {
 .nav-item.ready,.nav-item.active{
     color: #fff !important;
 }
+.bg-light{
+    background-color: transparent !important;
+}
+
+li.nav-item {
+    background-color: #fcfcfc;
+}
+
+li.nav-item.ready{
+    background-color: orange;
+}
+li.nav-item.active{
+    background-color: #ff4500;
+}
+
+ul.navbar-nav.mr-auto {
+    height: 40px;
+}
+
+.cursorNotAllowed{
+    cursor: not-allowed;
+}

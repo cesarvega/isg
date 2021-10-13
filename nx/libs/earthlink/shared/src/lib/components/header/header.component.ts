@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { getAddressState, getBillingState, getAccountState, getProductState } from '@nx/earthlink/state';
+import { getAddressState, getBillingState, getAccountState, getProductState, getConfirmationState } from '@nx/earthlink/state';
 @Component({
   selector: 'nx-header',
   templateUrl: './header.component.html',
@@ -20,13 +20,17 @@ export class HeaderComponent implements OnInit {
 
 
   billingCheckStateSubscription: Subscription | undefined;
+  billingCheckState = { osnResponse: null, error: null };
+
   confirmationCheckStateSubscription: Subscription | undefined;
+  confirmationCheckState = { osnResponse: null, error: null };
+
   constructor(
     private store: Store,
 
   ) { 
     this.addressCheckStateSubscription = this.store.select(getAddressState).subscribe((addressCheckState) =>{
-      if( addressCheckState){
+      if( addressCheckState.request ){
         this.addressCheckState.osnResponse = addressCheckState.request;
       }
     });
@@ -40,6 +44,18 @@ export class HeaderComponent implements OnInit {
     this.accountCheckStateSubscription = this.store.select(getAccountState).subscribe((accountState) =>{
       if( accountState.request ){
         this.accountCheckState.osnResponse = accountState.request;
+      }
+    })
+
+    this.billingCheckStateSubscription = this.store.select(getBillingState).subscribe((billingState) =>{
+      if( billingState.request ){
+        this.billingCheckState.osnResponse = billingState.request;
+      }
+    })
+
+    this.confirmationCheckStateSubscription = this.store.select(getConfirmationState).subscribe((confirmationState) => {
+      if( confirmationState.request ){
+        this.confirmationCheckState.osnResponse = confirmationState.request;
       }
     })
   }

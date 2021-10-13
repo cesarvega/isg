@@ -38,28 +38,68 @@
           [ngIfElse]="elseOffersBlock">
             <li class="nav-item ready steps" routerLinkActive="active" routerLink="offers">
               <span class="nav-link">Offers</span>
-              <!-- <a class="nav-link" routerLinkActive="active" routerLink="offers">Offers</a> -->
             </li>
           </ng-template>
           <ng-template #elseOffersBlock>
-            <li class="nav-item " routerLinkActive="active" routerLink="offers">
-              <span class="nav-link">Offers</span>
-              <!-- <a class="nav-link steps">Offers</a> -->
+            <li class="nav-item">
+              <span class="nav-link cursorNotAllowed">Offers</span>
             </li>
           </ng-template>
 
 
+          <ng-template
+            [ngIf]="accountCheckState.osnResponse"
+            [ngIfElse]="elseAccountBlock">
+            <li class="nav-item" routerLinkActive="active" routerLink="account">
+              <span class="nav-link" routerLinkActive="active" routerLink="account">
+                Account
+              </span>
+            </li>
+          </ng-template>
+          <ng-template #elseAccountBlock>
+            <li class="nav-item cursorNotAllowed">
+              <span class="nav-link">
+                Account
+              </span>
+            </li>
+          </ng-template>
 
 
-          <li class="nav-item steps">
-            <a class="nav-link" href="#">Account</a>
-          </li>
-          <li class="nav-item steps">
-            <a class="nav-link" href="#">Billing</a>
-          </li>
-          <li class="nav-item steps">
-            <a class="nav-link" href="#">Confirmation</a>
-          </li>          
+          <ng-template
+            [ngIf]="billingCheckState.osnResponse"
+            [ngIfElse]="elseBillingBlock">
+            <li class="nav-item" routerLinkActive="active" routerLink="billing">
+              <span class="nav-link" routerLinkActive="active" routerLink="billing">
+                Billing
+              </span>
+            </li>
+          </ng-template>
+          <ng-template #elseBillingBlock>
+            <li class="nav-item cursorNotAllowed">
+              <span class="nav-link">
+                Billing
+              </span>
+            </li>
+          </ng-template>
+
+
+          <ng-template
+            [ngIf]="confirmationCheckState.osnResponse"
+            [ngIfElse]="elseConfirmationBlock">
+            <li class="nav-item" routerLinkActive="active" routerLink="confirmation">
+              <span class="nav-link" routerLinkActive="active" routerLink="confirmation">
+                Confirmation
+              </span>
+            </li>
+          </ng-template>
+          <ng-template #elseConfirmationBlock>
+            <li class="nav-item cursorNotAllowed">
+              <span class="nav-link">
+                Confirmation
+              </span>
+            </li>
+          </ng-template>
+       
         </ul>
       </div>
     </nav>
