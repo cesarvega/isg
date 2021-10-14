@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { getAllEarthlinkOffers } from '../../+state/offers/earthlink-offers.selectors';
 import { getParsedAddress, getProducts } from '@nx/earthlink/offers';
 import { faBars, faWifi, faMapMarkerAlt, faPencilAlt, faChartLine, faBolt } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'nx-offers',
   templateUrl: './offers.component.html',
@@ -22,12 +24,21 @@ export class OffersComponent implements OnInit {
   congrats: any = null
   stateSubscription: Subscription | undefined;
   offers$: any = null;
+
+  /***** MODAL *****/
+  productSelected: any = null;
+  productId: any = null;
+  modalReference: any = null;
+
   parsedAddress$: any = null;
   //products$ = this.store.pipe(select(getProducts));
   selectedProduct: any = null;
+
+  @ViewChild('editModal') editModal : TemplateRef<any> | undefined;
+
   constructor(
     private store: Store,
-    //private http: HttpClient,
+    private modalService: NgbModal,
     private router: Router,
   ) { 
     this.stateSubscription = this.store.select(getAllEarthlinkOffers).subscribe((offers) =>{
@@ -35,6 +46,7 @@ export class OffersComponent implements OnInit {
         this.offers$ = offers;
       }
     });
+    this.stateSubscription.unsubscribe;
   }
   
   token:any = null;
@@ -58,4 +70,16 @@ export class OffersComponent implements OnInit {
     }
   }
 
+  selectProduct( product: any ){
+    this.productId = product.id;
+  }
+
+  seeDetails( product: any ){
+    this.productSelected = product;
+    this.modalReference = this.modalService.open(this.editModal, { size: 'lg', backdrop: 'static'});
+  }
+
+  closeModal(){
+    this.modalReference.close();
+  }
 }

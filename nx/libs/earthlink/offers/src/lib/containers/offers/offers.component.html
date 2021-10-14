@@ -7,53 +7,32 @@
 ></isg-cart-error> -->
 <section id="selectPlan">
   <div class="row">
-    <div class="row my-md-5 my-3" *ngIf="congrats">
-      <div
-        class="col-12 col-md-5 col-lg-7 col-xl-7 my-auto text-center text-md-left text-lg-left text-xl-left"
-      >
-        <h4><b>Congrats! You qualify for a special offer.</b></h4>
-        <p class="subhead mb-0">
-          Your home is serviceable for FiberOptic Internet, so you're eligible
-          for exclusive deals.
-        </p>
-      </div>
-      <div class="col-12 col-md-7 col-lg-5 col-xl-5 d-flex savefive">
-        <div class="col-1 text-center my-auto left">
-          <fa-icon
-            [icon]="faWifi"
-            style="color: #e4ffe4; margin-top: auto; margin-bottom: auto"
-          ></fa-icon>
+    <ng-template #editModal let-modal role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+                <span aria-hidden="true">×</span>
+            </button>
         </div>
-        <div class="col-11 my-auto right h-100 d-flex">
-          <p class="mb-0 my-auto">
-            Save <b>$5</b> on internet each month with Auto Pay and enjoy
-            <b>free activation</b> when you order online. Plus, get your
-            <b>state-of-the-art Wi-Fi router</b> on us.
-          </p>
+        <div class="modal-body">
+            <div class="modal-title">
+              <h5 id="myModalLabel">
+                Product Details [ {{ productSelected.name }} ]
+              </h5>
+            </div>
+            <br>
+            <h5 style="text-decoration: underline;">Product Description</h5>
+            <div class="well ng-binding" >{{ productSelected.description }}</div>
+            <h5 style="text-decoration: underline;">Equipment Description</h5>
+            <div class="well ng-binding" >{{ productSelected.equipmentDescription }}</div>
+            <h5 style="text-decoration: underline;">Terms and conditions</h5>
+            <div class="well text-justify">{{ productSelected.terms }}</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Close</button>
         </div>
       </div>
-    </div>
-    <div class="row mt-4 mb-5" *ngIf="congrats">
-      <div class="col-md-8 col-12 text-md-left text-center">
-        <span class="d-none">Get Visa Reward Card</span>
-      </div>
-      <div class="col-md-4 col-12 text-md-left text-center">
-        <div class="mb-1 mt-md-0 mt-3">
-          <fa-icon [icon]="faMapMarkerAlt" style="margin-right: 4px"></fa-icon>
-          <b>Service address:</b>
-          <br />
-        </div>
-        <span class="editaddress">
-          <span id="addresslookup">{{ parsedAddress$ | async }}</span>
-          <span style="margin-left: 10px; font-size: 12px">
-            <a routerLink="/address" style="color: rgb(43, 126, 147)">
-              <fa-icon [icon]="faPencilAlt"></fa-icon>
-              Edit</a
-            ></span
-          >
-        </span>
-      </div>
-    </div>
+    </ng-template>
     <div>
       <div>
         <h3>
@@ -123,15 +102,17 @@
                     <div class="speed">
                         <span class="title">Speeds up to</span>
                         <div class="clearfix"></div>
-                        <div class="col-md-6"> 
-                            <span>Download</span>
-                            <span class="speed-unit ng-binding">{{ product.downSpeed/1000 }}</span>
-                            <span class="ng-binding">Mbps</span>
-                        </div>
-                        <div class="col-md-6">
-                            <span>Upload</span>
-                            <span class="speed-unit ng-binding">{{ product.upSpeed/1000 }}</span>
-                            <span class="ng-binding">Mbps</span>
+                        <div class="row">
+                          <div class="col-md-6"> 
+                              <span>Download</span>
+                              <span class="speed-unit ng-binding">{{ product.downSpeed/1000 }}</span>
+                              <span class="ng-binding">Mbps</span>
+                          </div>
+                          <div class="col-md-6">
+                              <span>Upload</span>
+                              <span class="speed-unit ng-binding">{{ product.upSpeed/1000 }}</span>
+                              <span class="ng-binding">Mbps</span>
+                          </div>
                         </div>
                         <div class="clearfix"></div>
                         <br>
@@ -140,13 +121,13 @@
                         {{ product.description }}
                     </div>
                     <br><br>
-                    [ <a href="#" ng-click="seeAllDetails(product, $event)">Term and Conditions</a> ]
+                    [ <a (click)="seeDetails(product)">Term and Conditions</a> ]
                     <br>
                     <span style="font-style: italic; font-size: 0.9em; color: gray;" class="ng-binding">Product Id: {{ product.id }}</span>
                 </div>
                 <div class="panel-footer">
                     <!-- ngIf: !selectedProduct || selectedProduct.id !== product.id -->
-                    <button class="btn btn-block btn-success ng-scope" ng-click="selectProduct(product)" 
+                    <button class="btn btn-block btn-success ng-scope" (click)="selectProduct(product)" 
                       ng-disabled="runningSelectingProduct" ng-if="!selectedProduct || selectedProduct.id !== product.id">
                         Select
                     </button>
@@ -155,47 +136,6 @@
                 </div>
             </div>
         </div>
-        </div>
-      </div>
-      <div class="row mb-5">
-        <div class="col-12 text-center">
-          <h4><b>What makes us different?</b></h4>
-        </div>
-      </div>
-      <div class="row mb-5">
-        <div
-          class="col-12 col-md-4 col-lg-4 col-xl-4 mb-4 mb-md-0 mb-lg-0 mb-xl-0"
-        >
-          <fa-icon [icon]="faChartLine" class="diffimg"></fa-icon>
-          <div class="difftext">
-            100% fiber-optic network<span class="diffsub"
-              >Tap into our 100% fiber-optic network and experience internet
-              speeds up to 25x faster than cable.</span
-            >
-          </div>
-        </div>
-        <div
-          class="col-12 col-md-4 col-lg-4 col-xl-4 mb-4 mb-md-0 mb-lg-0 mb-xl-04"
-        >
-          <fa-icon [icon]="faChartLine" class="diffimg"></fa-icon>
-          <div class="difftext">
-            No data caps or overage fees<span class="diffsub"
-              >We’ll never place limits on your internet access or charge you
-              extra for it. So go ahead, embrace the unstoppable.</span
-            >
-          </div>
-        </div>
-        <div
-          class="col-12 col-md-4 col-lg-4 col-xl-4 mb-4 mb-md-0 mb-lg-0 mb-xl-0"
-        >
-          <fa-icon [icon]="faBolt" class="diffimg"></fa-icon>
-          <div class="difftext">
-            No throttling<span class="diffsub"
-              >We’ll never slow your internet access down so your service will
-              always be superior. Enjoy worry-free surfing, streaming and browsing
-              with no lag.</span
-            >
-          </div>
         </div>
       </div>
     </div>

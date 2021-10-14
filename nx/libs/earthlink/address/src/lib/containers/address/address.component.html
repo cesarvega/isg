@@ -221,7 +221,7 @@
                 <fa-icon [icon]="faComment"> </fa-icon> We will use this number only to call or send you messages about your account and/or EarthLink products or services. You are not required to provide a phone number, but it will enable us to provide you with better customer service. You may opt-out of receiving such calls or messages at any time by adjusting your contact preferences through My Account or by texting STOP in response to any text message you receive from EarthLink. Do I have your express consent to receive automated calls, text messages and pre-recorded messages from EarthLink at this number in connection with your account and our products and services?
               </div>
               <div class="text-right" *ngIf="!submitted">
-                <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-secondary content-width">
+                <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-primary content-width">
               </div>
               <div class="text-right" *ngIf="submitted">
                 <button (click)="continueToOffers()" class="form-control btn btn-primary content-width">
