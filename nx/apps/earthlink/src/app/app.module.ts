@@ -24,6 +24,7 @@ import * as fromBilling from '@nx/earthlink/billing';
 import * as fromConfirmation from '@nx/earthlink/confirmation';
 
 import { from } from 'rxjs';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -114,6 +115,7 @@ import { from } from 'rxjs';
           ),
       },
     ]),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -56,6 +56,7 @@ inputFirstName: any;
 inputLastName: any;
 inputEmail: any;
 inputPhone: any;
+inputAltPhone: any;
 uuid: any;
 uuidStr: any = '';
 isError$ = new Subject<boolean>();
@@ -135,6 +136,7 @@ objErrors:any = [];
         validatePhoneNumber
       ],
     );
+    this.inputAltPhone = new FormControl('', validatePhoneNumber );
 
     this.uuid = new FormControl( this.uuidStr );
   }
@@ -151,6 +153,7 @@ objErrors:any = [];
       last_name: this.inputLastName,
       email: this.inputEmail,
       phone: this.inputPhone,
+      alt_phone: this.inputAltPhone,
       uuid: this.uuid,
       submitted: this.submitted,
     })
@@ -180,6 +183,7 @@ objErrors:any = [];
           last_name  : this.address$.last_name,
           email : this.address$.email,
           phone : this.address$.phone,
+          alt_phone: this.address$.alt_phone,
           uuid: 'uuid'
         }
       )      
@@ -188,7 +192,7 @@ objErrors:any = [];
       this.city.disable();
       this.state.disable();
       this.zipCode.disable();
-      
+      this.isBusiness.disable();
       this.submitted = this.address$.submitted;
     }
   }
@@ -224,12 +228,16 @@ objErrors:any = [];
   }
 
   continueToOffers(){
+    /****
+     * If the contact information was modified, update the Address Store data
+     */
     if( this.formdata.dirty ){
       this.addressLine1.enable();
       this.addressLine2.enable();
       this.city.enable();
       this.state.enable();
       this.zipCode.enable();
+      this.isBusiness.enable();
       this.formdata.addControl( 'submitted', new FormControl( true ) );
       let data = this.formdata.value;
       this.store.dispatch(addressRequest({ address: data }));

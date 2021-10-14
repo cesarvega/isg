@@ -5,6 +5,7 @@ import { qualify, transaction } from './endpoints';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import {  addressRequest, addressResponse, errorAction, loading, setCustomerType, setEarthLinkTransactionId, setTransaction } from '../+state/address/earthlink-address.actions';
+import { productsActionRequest, productIdsActionRequest } from '@nx/earthlink/offers';
 //import { mapResponse } from './helpers/mapResponse';
 import { getTransactionId } from './helpers/getTransactionId';
 //import { isServiceFound } from './helpers/serviceFound';
@@ -68,9 +69,11 @@ export class AddressService {
         
         //update the offers store
         //this.offersService.orderDetailActionRequestService({ order: order });
-        this.store.dispatch(orderDetailsActionRequest( { order} ));
+        this.store.dispatch(orderDetailsActionRequest( { order } ));
 
-        this.offersService.productsActionRequestService({ availableProducts });
+        //this.offersService.productsActionRequestService({ availableProducts });
+        this.store.dispatch(productsActionRequest({ products: availableProducts }))
+
         this.offersService.productIdsActionRequestService({ availableProductsIds })
         this.store.dispatch(setEarthLinkTransactionId({ earthLinkTransactionId }))
       }, (error) => {

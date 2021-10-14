@@ -24,9 +24,8 @@ export class OffersComponent implements OnInit {
     private router: Router,
   ) { 
     this.stateSubscription = this.store.select(getAllEarthlinkOffers).subscribe((offers) =>{
-      if( offers && offers.availableProducts ){
-        this.offers$ = offers.availableProducts;
-        //console.log(this.offers$)
+      if( offers ){
+        this.offers$ = offers;
       }
     });
   }

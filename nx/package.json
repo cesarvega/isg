@@ -16,6 +16,7 @@
     "@angular/compiler": "^12.2.0",
     "@angular/core": "^12.2.0",
     "@angular/forms": "^12.2.0",
+    "@angular/localize": "^12.2.0",
     "@angular/platform-browser": "^12.2.0",
     "@angular/platform-browser-dynamic": "^12.2.0",
     "@angular/router": "^12.2.0",
@@ -23,6 +24,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@ngrx/component-store": "~12.4.0",
     "@ngrx/effects": "^12.4.0",
     "@ngrx/entity": "^12.4.0",
@@ -31,6 +33,7 @@
     "@ngrx/store-devtools": "^12.4.0",
     "@nrwl/angular": "12.9.0",
     "angular-reactive-form": "^1.0.0",
+    "bootstrap": "^4.5.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
