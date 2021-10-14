@@ -72,3 +72,10 @@ export const getCurrentProduct = createSelector(
     return state.product;
   }
 )
+
+export const sendProductActionRequestResult = createSelector(
+  getEarthlinkOffersState,
+  (state: any) =>{
+    return state.error;
+  }
+)

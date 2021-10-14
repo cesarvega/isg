@@ -2,11 +2,12 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { getAllEarthlinkOffers } from '../../+state/offers/earthlink-offers.selectors';
+import { getAllEarthlinkOffers, getCurrentProduct, sendProductActionRequestResult  } from '../../+state/offers/earthlink-offers.selectors';
 import { getParsedAddress, sendProductActionRequest } from '@nx/earthlink/offers';
 import { faBars, faWifi, faMapMarkerAlt, faPencilAlt, faChartLine, faBolt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { getCurrentProduct } from '../../+state/offers/earthlink-offers.selectors';
+import { ProductState } from '../../+state/offers/earthlink-offers.reducer';
+
 @Component({
   selector: 'nx-offers',
   templateUrl: './offers.component.html',
@@ -26,7 +27,7 @@ export class OffersComponent implements OnInit {
   stateSubscription: Subscription | undefined;
   offers$: any = null;
   product$: any = null;
-
+  productState: ProductState = {};
   /***** MODAL *****/
   selectedProduct: any = null
   selectedProductId: any = null;
@@ -49,6 +50,13 @@ export class OffersComponent implements OnInit {
       }
     });
     this.stateSubscription.unsubscribe;
+
+    /****** Listening the State after send Product to the Store *****/
+    this.stateSubscription = this.store.select(sendProductActionRequestResult).subscribe((productState) => {
+      if( productState){
+        this.productState = productState;
+      }
+    });
   }
   
   token:any = null;
@@ -92,6 +100,9 @@ export class OffersComponent implements OnInit {
   sendProduct(){
     if( this.selectedProduct ){
       this.store.dispatch(sendProductActionRequest({ product: this.selectedProduct }));
+      if(!this.productState.error){
+        this.router.navigate(["/account"]);
+      }
     }
   }
 
@@ -102,5 +113,6 @@ export class OffersComponent implements OnInit {
         this.selectProductFunction( product );
       }
     })
+    this.stateSubscription.unsubscribe;
   }
 }

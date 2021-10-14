@@ -16,6 +16,15 @@ export interface State extends EntityState<EarthlinkOffersEntity> {
   response: any | null;
   product: any | null;
 }
+export interface ProductState{
+  selectedId?: string | number; // which EarthlinkOffers record has been selected
+  loaded?: boolean; // has the EarthlinkOffers list been loaded
+  error?: string | null; // last known error (if any),
+  request?: any | {};
+  orderNumber?: any | null;
+  response?: any | null;
+  product?: any | null;
+}
 
 export interface EarthlinkOffersPartialState {
   readonly [EARTHLINK_OFFERS_FEATURE_KEY]: State;

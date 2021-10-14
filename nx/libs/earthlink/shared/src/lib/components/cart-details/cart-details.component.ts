@@ -27,8 +27,8 @@ export class CartDetailsComponent {
         });
 
         this.addressCheckStateSubscription = this.store.select(getAddressState).subscribe((addressCheckState) =>{
-            if( addressCheckState.request ){
-                this.address$ = addressCheckState.request;
+            if( addressCheckState.response ){
+                this.address$ = addressCheckState.response;
             }
         });        
     }
