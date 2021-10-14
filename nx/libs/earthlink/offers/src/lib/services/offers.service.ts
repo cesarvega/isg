@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '@nx/earthlink/shared';
-import { tap, map, catchError } from 'rxjs/operators';
+//import { ApiService } from '@nx/earthlink/shared';
+//import { tap, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Offers } from './products';
+//import { Offers } from './products';
 import { productsActionRequest, productIdsActionRequest, orderDetailsActionRequest } from '../../lib/+state/offers/earthlink-offers.actions';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class OffersService {
   stateSubscription: Subscription = new Subscription;
 
   constructor(
-    private apiService: ApiService,
+    //private apiService: ApiService,
     private store: Store<any>,
   ) { 
 

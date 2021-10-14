@@ -13,7 +13,7 @@ import { AddressService } from '../../services/address.service';
 //import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
-import { errorAction, addressResponse } from '../../+state/address/earthlink-address.actions';
+import { addressRequest, errorAction } from '../../+state/address/earthlink-address.actions';
 //import { buildAddressFromParams } from './helpers/buildAddressFromParams';
 import { takeUntil, timestamp } from 'rxjs/operators';
 import { validatePhoneNumber } from '@nx/earthlink/shared';
@@ -222,4 +222,19 @@ objErrors:any = [];
     if( !!this.formdata && this.formdata.dirty ){
     alert('changes');}
   }
+
+  continueToOffers(){
+    if( this.formdata.dirty ){
+      this.addressLine1.enable();
+      this.addressLine2.enable();
+      this.city.enable();
+      this.state.enable();
+      this.zipCode.enable();
+      this.formdata.addControl( 'submitted', new FormControl( true ) );
+      let data = this.formdata.value;
+      this.store.dispatch(addressRequest({ address: data }));
+    }
+    this.router.navigate(['/offers']);
+  }
+
 }

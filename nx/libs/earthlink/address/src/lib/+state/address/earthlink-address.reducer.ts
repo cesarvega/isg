@@ -93,6 +93,11 @@ const earthlinkAddressReducer = createReducer(
         error
       })
     ),
+    on(AddressActions.infoUpdate, (state, { data }) => ({
+        ...state,
+        request: data.first_name,
+      })
+    )
 
 
   )

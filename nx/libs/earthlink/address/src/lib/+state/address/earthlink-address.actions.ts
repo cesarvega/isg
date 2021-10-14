@@ -59,3 +59,8 @@ export const loadEarthlinkAddressFailure = createAction(
   'loadEarthlinkAddressFailure',
   props<{ error: any }>()
 )
+
+export const infoUpdate = createAction(
+  'infoUpdate',
+  props<{ data: any }>()
+)

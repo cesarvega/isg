@@ -11,6 +11,7 @@ import { getTransactionId } from './helpers/getTransactionId';
 //import { noOffersFound } from './helpers/hasOffers';
 import { Subscription } from 'rxjs';
 import { getEarthlinkAddressState } from '../+state/address/earthlink-address.selectors';
+import { orderDetailsActionRequest } from '@nx/earthlink/offers';
 import { Offers } from '@nx/earthlink/offers';
 import { OffersService } from '@nx/earthlink/offers';
 import { Router } from '@angular/router';
@@ -64,8 +65,11 @@ export class AddressService {
         const availableProducts = request.availableProducts;
         const availableProductsIds = request.availableProductIds;
         const earthLinkTransactionId = getTransactionId(request);
+        
         //update the offers store
-        this.offersService.orderDetailActionRequestService({ order });
+        //this.offersService.orderDetailActionRequestService({ order: order });
+        this.store.dispatch(orderDetailsActionRequest( { order} ));
+
         this.offersService.productsActionRequestService({ availableProducts });
         this.offersService.productIdsActionRequestService({ availableProductsIds })
         this.store.dispatch(setEarthLinkTransactionId({ earthLinkTransactionId }))

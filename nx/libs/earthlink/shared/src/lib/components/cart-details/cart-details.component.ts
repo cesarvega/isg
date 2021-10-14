@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { Subscription } from "rxjs";
-import { getProductState } from '@nx/earthlink/state'
+import { getAddressState, getProductState } from '@nx/earthlink/state'
 
 @Component({
     selector: 'nx-cart-details',
@@ -9,6 +9,9 @@ import { getProductState } from '@nx/earthlink/state'
     styleUrls: ['./cart-details.component.scss']
 })
 export class CartDetailsComponent {
+    addressCheckStateSubscription: Subscription | undefined;
+    address$: any = null;
+
     stateSubscription: Subscription | undefined;
     offers$: any = null;
 
@@ -17,11 +20,17 @@ export class CartDetailsComponent {
 
     ){
         this.stateSubscription = this.store.select(getProductState).subscribe((offers) => {
-            if( offers.order ){
-                this.offers$ = {orderNumber: offers.order.order};
+            if( offers.orderNumber ){
+                this.offers$ = {orderNumber: offers.orderNumber};
             }
 
-        })
+        });
+
+        this.addressCheckStateSubscription = this.store.select(getAddressState).subscribe((addressCheckState) =>{
+            if( addressCheckState.request ){
+                this.address$ = addressCheckState.request;
+            }
+        });        
     }
 
 }

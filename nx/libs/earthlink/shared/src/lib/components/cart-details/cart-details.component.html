@@ -79,14 +79,14 @@
               <ul class="list-group">
                   <li class="list-group-item list-group-item-warning" ng-show="CartService.Cart.preQualResponse">
                       <strong>Address:</strong>
-                      <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
-                          201 DINGO RD UNT A Spring Lakes NC 28390 MOIANOU JOHN noemail@earthlink.com false
+                      <span *ngIf="address$" style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
+                          {{ address$.address_line1 }}
                       </span>
                   </li>
                   <li class="list-group-item list-group-item-warning" ng-show="CartService.Cart.preQualResponse">
                       <strong>Phone:</strong>
-                      <span class="pull-right ng-binding" style="font-weight: bold; font-size: 1.1em; color: orangered;">
-                          9547749444
+                      <span *ngIf="address$" class="pull-right ng-binding" style="font-weight: bold; font-size: 1.1em; color: orangered;">
+                          {{ address$.phone }}
                       </span>
                   </li>
                   <!-- <li class="list-group-item list-group-item-warning ng-hide" ng-show="CartService.Cart.selectedProduct">
