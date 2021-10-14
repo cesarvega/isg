@@ -6,10 +6,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-// import {
-//   FontAwesomeModule,
-//   FaIconLibrary,
-// } from '@fortawesome/angular-FontAwesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EarthlinkSharedModule } from '@nx/earthlink/shared';
 import { EarthlinkLoginModule } from '@nx/earthlink/login';

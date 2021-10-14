@@ -14,6 +14,7 @@ export interface State extends EntityState<EarthlinkAddressEntity> {
   loading: boolean; // has the EarthlinkAddress list been loaded
   error?: string | null; // last known error (if any),
   request: any | {};
+  response: any | null;
 }
 
 export interface EarthlinkAddressPartialState {
@@ -53,7 +54,7 @@ const earthlinkAddressReducer = createReducer(
     on(AddressActions.addressRequest, (state, { address }) => ({
         ...state,
         loading: true,
-        request: address,
+        response: address,
       })
     ),
     on(AddressActions.addressResponse, (state, { response }) => ({

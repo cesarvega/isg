@@ -1,13 +1,6 @@
-<nx-confirmation
-  *ngIf="selectedProduct"
-></nx-confirmation>
-<!-- <isg-cart-error
-  [error]="productState.error"
-  (closeError)="closeError()"
-></isg-cart-error> -->
 <section id="selectPlan">
   <div class="row">
-    <ng-template #editModal let-modal role="document">
+    <ng-template #editProductModal let-modal role="document">
       <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
@@ -17,16 +10,16 @@
         <div class="modal-body">
             <div class="modal-title">
               <h5 id="myModalLabel">
-                Product Details [ {{ productSelected.name }} ]
+                Product Details [ {{ selectedProduct.name }} ]
               </h5>
             </div>
             <br>
             <h5 style="text-decoration: underline;">Product Description</h5>
-            <div class="well ng-binding" >{{ productSelected.description }}</div>
+            <div class="well ng-binding" >{{ selectedProduct.description }}</div>
             <h5 style="text-decoration: underline;">Equipment Description</h5>
-            <div class="well ng-binding" >{{ productSelected.equipmentDescription }}</div>
+            <div class="well ng-binding" >{{ selectedProduct.equipmentDescription }}</div>
             <h5 style="text-decoration: underline;">Terms and conditions</h5>
-            <div class="well text-justify">{{ productSelected.terms }}</div>
+            <div class="well text-justify">{{ selectedProduct.terms }}</div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()">Close</button>
@@ -46,8 +39,8 @@
           *ngFor="let product of offers$"
         >
           <div>
-            <div class="panel panel-warning" ng-class="selectedProduct.id == product.id?'panel-success':'panel-warning'">
-                <div class="panel-heading">
+            <div [class]="( selectedProductId && selectedProductId == product.id ) ? 'panel active-panel-selected' : 'panel panel-warning'">
+                <div [class]="( selectedProductId && selectedProductId == product.id ) ? 'active active-panel' : 'panel-heading'">
                     <div class="panel-title" style="text-align: center; min-height: 44px;">
                         <strong class="ng-binding">{{ product.name }}</strong>
                     </div>
@@ -120,23 +113,26 @@
                     <div class="product-description ng-binding">
                         {{ product.description }}
                     </div>
-                    <br><br>
+                    <br>
                     [ <a (click)="seeDetails(product)">Term and Conditions</a> ]
                     <br>
                     <span style="font-style: italic; font-size: 0.9em; color: gray;" class="ng-binding">Product Id: {{ product.id }}</span>
                 </div>
                 <div class="panel-footer">
-                    <!-- ngIf: !selectedProduct || selectedProduct.id !== product.id -->
-                    <button class="btn btn-block btn-success ng-scope" (click)="selectProduct(product)" 
-                      ng-disabled="runningSelectingProduct" ng-if="!selectedProduct || selectedProduct.id !== product.id">
-                        Select
-                    </button>
-                    <!-- end ngIf: !selectedProduct || selectedProduct.id !== product.id
-                    ngIf: selectedProduct.id == product.id -->
+                  <button class="btn btn-block ng-scope" [class]="( selectedProductId && selectedProductId == product.id ) ? 'btn-warning' : 'btn-success '" (click)="selectProductFunction(product)" 
+                    [disabled]="selectedProductId && selectedProductId === product.id">
+                      Select
+                  </button>
                 </div>
             </div>
         </div>
         </div>
+      </div>
+      <hr />
+      <div class="text-right">
+        <button class="form-control btn btn-primary content-width" [disabled]="!selectedProduct" (click)="sendProduct()">
+          Submit <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
       </div>
     </div>
   </div>

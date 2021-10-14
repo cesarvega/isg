@@ -7,7 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import * as fromEarthlinkOffers from './+state/offers/earthlink-offers.reducer';
 import { EarthlinkOffersEffects } from './+state/offers/earthlink-offers.effects';
-import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+//import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
@@ -23,6 +23,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ),
     EffectsModule.forFeature([EarthlinkOffersEffects]),
   ],
-  declarations: [OffersComponent, OffersFormComponent, ConfirmationComponent],
+  declarations: [OffersComponent, OffersFormComponent],
 })
 export class EarthlinkOffersModule {}

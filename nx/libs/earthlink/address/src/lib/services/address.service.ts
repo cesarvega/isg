@@ -41,7 +41,6 @@ export class AddressService {
    }
 
   serviceQualification(address: Address, headers: any) {
-    //this.store.dispatch(addressRequest({ address }))
     return this.apiService.post( qualify, address, headers).pipe(
       map((response: any) => {
         let uuid = response.uuid;

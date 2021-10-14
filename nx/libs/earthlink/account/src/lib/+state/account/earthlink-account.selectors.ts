@@ -10,7 +10,7 @@ export const getEarthlinkAccountState = createFeatureSelector<State>(
   EARTHLINK_ACCOUNT_FEATURE_KEY
 );
 
-const { selectAll, selectEntities } = earthlinkAccountAdapter.getSelectors();
+//const { selectAll, selectEntities } = earthlinkAccountAdapter.getSelectors();
 
 export const getEarthlinkAccountLoaded = createSelector(
   getEarthlinkAccountState,
@@ -24,21 +24,21 @@ export const getEarthlinkAccountError = createSelector(
 
 export const getAllEarthlinkAccount = createSelector(
   getEarthlinkAccountState,
-  (state: State) => selectAll(state)
+  (state: State) => state.response
 );
 
-export const getEarthlinkAccountEntities = createSelector(
-  getEarthlinkAccountState,
-  (state: State) => selectEntities(state)
-);
+// export const getEarthlinkAccountEntities = createSelector(
+//   getEarthlinkAccountState,
+//   (state: State) => selectEntities(state)
+// );
 
 export const getSelectedId = createSelector(
   getEarthlinkAccountState,
   (state: State) => state.selectedId
 );
 
-export const getSelected = createSelector(
-  getEarthlinkAccountEntities,
-  getSelectedId,
-  (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
-);
+// export const getSelected = createSelector(
+//   getEarthlinkAccountEntities,
+//   getSelectedId,
+//   (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
+// );

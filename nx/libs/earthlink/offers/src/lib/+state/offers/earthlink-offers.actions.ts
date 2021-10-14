@@ -27,3 +27,8 @@ export const orderDetailsActionRequest = createAction(
   'orderDetailsActionRequest',
   props<{ order: any }>()
 )
+
+export const sendProductActionRequest = createAction(
+  'sendProductActionRequest',
+  props<{ product: any }>()
+) 

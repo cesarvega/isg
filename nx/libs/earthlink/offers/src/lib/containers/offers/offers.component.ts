@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { getAllEarthlinkOffers } from '../../+state/offers/earthlink-offers.selectors';
-import { getParsedAddress, getProducts } from '@nx/earthlink/offers';
-import { faBars, faWifi, faMapMarkerAlt, faPencilAlt, faChartLine, faBolt } from '@fortawesome/free-solid-svg-icons';
+import { getParsedAddress, sendProductActionRequest } from '@nx/earthlink/offers';
+import { faBars, faWifi, faMapMarkerAlt, faPencilAlt, faChartLine, faBolt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { getCurrentProduct } from '../../+state/offers/earthlink-offers.selectors';
 @Component({
   selector: 'nx-offers',
   templateUrl: './offers.component.html',
@@ -20,21 +20,23 @@ export class OffersComponent implements OnInit {
   faPencilAlt = faPencilAlt;
   faChartLine = faChartLine;
   faBolt = faBolt;
+  faArrowRight = faArrowRight;
 
   congrats: any = null
   stateSubscription: Subscription | undefined;
   offers$: any = null;
+  product$: any = null;
 
   /***** MODAL *****/
-  productSelected: any = null;
-  productId: any = null;
+  selectedProduct: any = null
+  selectedProductId: any = null;
   modalReference: any = null;
 
   parsedAddress$: any = null;
-  //products$ = this.store.pipe(select(getProducts));
-  selectedProduct: any = null;
 
-  @ViewChild('editModal') editModal : TemplateRef<any> | undefined;
+
+  /**** Modal ****/
+  @ViewChild('editProductModal') editProductModal : TemplateRef<any> | undefined;
 
   constructor(
     private store: Store,
@@ -65,21 +67,40 @@ export class OffersComponent implements OnInit {
     if( !this.offers$ ){
       this.router.navigate(['/address']);
     }else{
+      /**** Retrieve (if any) selected product****/
+      this.getProduct();
+      /*******************************************/
       this.parsedAddress$ = this.store.pipe(select(getParsedAddress));
       this.visibleApp = true;
     }
   }
 
-  selectProduct( product: any ){
-    this.productId = product.id;
+  selectProductFunction( product: any ){
+    this.selectedProduct = product;
+    this.selectedProductId = product.id;
   }
 
   seeDetails( product: any ){
-    this.productSelected = product;
-    this.modalReference = this.modalService.open(this.editModal, { size: 'lg', backdrop: 'static'});
+    this.selectedProduct = product;
+    this.modalReference = this.modalService.open(this.editProductModal, { size: 'lg', backdrop: 'static'});
   }
 
   closeModal(){
     this.modalReference.close();
+  }
+
+  sendProduct(){
+    if( this.selectedProduct ){
+      this.store.dispatch(sendProductActionRequest({ product: this.selectedProduct }));
+    }
+  }
+
+  /***** Retreiving selected product from the store *****/
+  getProduct(){
+    this.stateSubscription = this.store.select(getCurrentProduct).subscribe((product) => {
+      if( product ){
+        this.selectProductFunction( product );
+      }
+    })
   }
 }

@@ -1,1 +1,144 @@
-<p>containers works!</p>
+<div ng-view="" class="ng-scope">
+  <div class="row ng-scope">
+    <div class="col-md-12">
+        <form name="accountCreation" class="ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength">
+            <h3>
+                <fa-icon [icon]="faBars"></fa-icon>
+                Account Info
+            </h3>
+            <hr>
+            <div class="alert alert-danger ng-binding ng-hide" *ngIf="errors">
+                <strong>
+                    <i class="fa fa-exclamation-circle"></i>
+                    An error occurred:
+                </strong>
+                <hr>
+                
+                <hr ng-show="checkAvailabilityResponse.suggestedIds.length > 0" class="ng-hide">
+                <ul>
+                    <!-- ngRepeat: suggestedId in checkAvailabilityResponse.suggestedIds -->
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.firstName.$invalid)?'invalid':''">
+                        <label class="control-label" for="firstName">First Name: </label>
+                        <input type="text" id="firstName" name="firstName" class="form-control ng-pristine ng-valid ng-not-empty ng-valid-required ng-touched" required="required" ng-model="account.firstName">
+                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.firstName.$invalid">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.lastName.$invalid)?'invalid':''">
+                        <label class="control-label" for="lastName">Last Name: </label>
+                        <input type="text" id="lastName" name="lastName" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" required="required" ng-model="account.lastName">
+                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.lastName.$invalid">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.userName.$invalid)?'invalid':''">
+                        <label class="control-label" for="userName">User Name: </label>
+                        <input type="text" id="userName" name="userName" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required" ng-model="account.userName">
+                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.userName.$invalid">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="alert alert-success ng-hide" ng-show="checkAvailabilityResponse.valid">
+                        This user name is available.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="alert alert-info">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <strong>Password valid format</strong>
+                        <hr>
+                        <ul>
+                            <li>
+                                Password is required and a valid length from 8 to 12 characters.
+                            </li>
+                            <li>
+                                Password must contains at least one uppercase letter, one lowercase letter, a number and an special character of @ # $ %
+                            </li>
+                            <li>
+                                So, allowed characters are: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4" ng-class="(submitted &amp;&amp; accountCreation.password.$invalid)?'invalid':''">
+                <div class="form-group">
+                    <label class="control-label" for="password">Password: </label>
+                    <input type="text" id="password" name="password" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required" ng-model="account.password">
+                    <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.password.$error.required">
+                        <i class="fa fa-exclamation-circle"></i>
+                        This field is required
+                    </div>
+                    <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.password.$error.invalidFormat">
+                        <i class="fa fa-exclamation-circle"></i>
+                        Invalid field format
+                    </div>
+                </div>
+            </div>
+            </div>
+            <h3>
+                <i class="fa fa-bars"></i>
+                Contact Info
+            </h3>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="dayPhone" class="control-label">Day Phone Number:</label>
+                        <input type="text" id="dayPhone" name="dayPhone" required="required" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required ng-valid-maxlength" ng-disabled="freezePhones" ng-model="account.dayPhone" maxlength="14" placeholder="(___)-___-____" autocomplete="off" disabled="disabled">
+                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.dayPhone.$invalid">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="homePhone" class="control-label">Home Phone Number:</label>
+                        <input type="text" id="homePhone" name="homePhone" required="required" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required ng-valid-maxlength" ng-disabled="freezePhones" ng-model="account.homePhone" maxlength="14" placeholder="(___)-___-____" autocomplete="off" disabled="disabled">
+                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.homePhone.$invalid">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="alternativeEmail" class="control-label">Alternative Email:</label>
+                        <input type="text" id="alternativeEmail" name="alternativeEmail" required="required" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" ng-model="account.alternativeEmail">
+                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.alternativeEmail.$invalid">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary pull-right" ng-disabled="checkingAccount" ng-click="checkAccount()">
+                        Submit
+                        <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
+                        <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

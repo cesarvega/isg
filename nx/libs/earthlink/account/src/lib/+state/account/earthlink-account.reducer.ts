@@ -9,7 +9,8 @@ export const EARTHLINK_ACCOUNT_FEATURE_KEY = 'earthlinkAccount';
 export interface State extends EntityState<EarthlinkAccountEntity> {
   selectedId?: string | number; // which EarthlinkAccount record has been selected
   loaded: boolean; // has the EarthlinkAccount list been loaded
-  error?: string | null; // last known error (if any)
+  error?: string | null; // last known error (if any);
+  response: any | null;
 }
 
 export interface EarthlinkAccountPartialState {
@@ -22,6 +23,7 @@ export const earthlinkAccountAdapter: EntityAdapter<EarthlinkAccountEntity> =
 export const initialState: State = earthlinkAccountAdapter.getInitialState({
   // set initial required properties
   loaded: false,
+  response: null,
 });
 
 const earthlinkAccountReducer = createReducer(

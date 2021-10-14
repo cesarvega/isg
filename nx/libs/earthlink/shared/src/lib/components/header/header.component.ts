@@ -30,14 +30,14 @@ export class HeaderComponent implements OnInit {
 
   ) { 
     this.addressCheckStateSubscription = this.store.select(getAddressState).subscribe((addressCheckState) =>{
-      if( addressCheckState.request ){
-        this.addressCheckState.osnResponse = addressCheckState.request;
+      if( addressCheckState.response ){
+        this.addressCheckState.osnResponse = addressCheckState.response;
       }
     });
 
     this.offersCheckStateSubscription = this.store.select(getProductState).subscribe((productState) => {
-      if( productState.request ){
-        this.offersCheckState.osnResponse = productState.request;
+      if( productState.response ){
+        this.offersCheckState.osnResponse = productState.response;
       }
     })
 

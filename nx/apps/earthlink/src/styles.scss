@@ -143,3 +143,18 @@ body {
     color: #333;
     background-color: #fff;
 }
+
+.ready{
+    background-color: orange;
+}
+.active{
+    background-color: #ff4500;
+}
+
+.active-panel{
+    padding: 10px 13px;
+    color: #fff;
+}
+.active-panel-selected{
+    border-color: #ff4500;
+}

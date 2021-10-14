@@ -47,7 +47,7 @@ export const getSelected = createSelector(
 
 export const getCurrentAddress = createSelector(
   getEarthlinkAddressState,
-  (state: State) => state.request
+  (state: State) => state.response
 )
 
 export const getError = createSelector(

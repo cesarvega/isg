@@ -1,4 +1,4 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createAction, createFeatureSelector, createSelector } from '@ngrx/store';
 import {
   EARTHLINK_OFFERS_FEATURE_KEY,
   State,
@@ -25,24 +25,24 @@ export const getEarthlinkOffersError = createSelector(
 
 export const getAllEarthlinkOffers = createSelector(
   getEarthlinkOffersState,
-  (state: State) => state.request
+  (state: State) => state.response
 );
 
-export const getEarthlinkOffersEntities = createSelector(
-  getEarthlinkOffersState,
-  (state: State) => selectEntities(state)
-);
+// export const getEarthlinkOffersEntities = createSelector(
+//   getEarthlinkOffersState,
+//   (state: State) => selectEntities(state)
+// );
 
 export const getSelectedId = createSelector(
   getEarthlinkOffersState,
   (state: State) => state.selectedId
 );
 
-export const getSelected = createSelector(
-  getEarthlinkOffersEntities,
-  getSelectedId,
-  (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
-);
+// export const getSelected = createSelector(
+//   getEarthlinkOffersEntities,
+//   getSelectedId,
+//   (entities, selectedId) => (selectedId ? entities[selectedId] : undefined)
+// );
 
 export const getAddressState = createFeatureSelector<any>(
   EARTHLINK_ADDRESS_FEATURE_KEY
@@ -65,3 +65,10 @@ export const getProducts = createSelector(
     return state.request;
   }
 );
+
+export const getCurrentProduct = createSelector(
+  getEarthlinkOffersState,
+  (state: any) =>{
+    return state.product;
+  }
+)
