@@ -41,53 +41,6 @@ div.price {
     margin-bottom: 10px;
 }
 
-
-nav.navbar {
-    min-height: 0;
-}
-
-.navbar {
-    position: relative;
-    min-height: 50px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-}
-
-.navbar-default {
-    background-color: #f8f8f8;
-    border-color: #e7e7e7;
-}
-
-nav.navbar-default ul {
-    padding-bottom: 0;
-}
-
-nav.navbar-default ul li.active, nav.navbar-default ul li.active a {
-    background: orange;
-    /*background: #337ab7;*/
-    color: white !important;
-}
-
-nav.navbar-default ul li.current, nav.navbar-default ul li.current a {
-    background: orangered;
-    color: white !important;
-}
-
-nav.navbar-default ul li, nav.navbar-default ul li a {
-    background: #EEE;
-    font-weight: bold;
-    color: black;
-    border-right: 1px solid #FFF;
-}
-
-div.price {
-    color: orangered;
-    font-weight: bold;
-    padding-bottom: 15px;
-    border-bottom: 1px solid gray;
-    margin-bottom: 10px;
-}
-
 div.price span.integer-part
 {
     font-size: 2.5em;

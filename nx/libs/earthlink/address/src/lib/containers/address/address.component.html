@@ -224,7 +224,9 @@
                 <input [disabled]="formdata.invalid" type="submit" value="Submit" class="form-control btn btn-secondary content-width">
               </div>
               <div class="text-right" *ngIf="submitted">
-                <input type="button" value="Continue to Products" (click)="continueToOffers()" class="form-control btn btn-success content-width">
+                <button (click)="continueToOffers()" class="form-control btn btn-primary content-width">
+                  Go Products <fa-icon [icon]="faArrowRight"></fa-icon>
+                  </button>
               </div>
             </form>
           </div>
