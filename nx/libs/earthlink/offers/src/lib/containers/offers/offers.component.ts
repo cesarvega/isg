@@ -26,7 +26,7 @@ export class OffersComponent implements OnInit {
   congrats: any = null
   stateSubscription: Subscription | undefined;
   offers$: any = null;
-  product$: any = null;
+  //product$: any = null;
   productState: ProductState = {};
   /***** MODAL *****/
   selectedProduct: any = null
@@ -114,5 +114,15 @@ export class OffersComponent implements OnInit {
       }
     })
     this.stateSubscription.unsubscribe;
+  }
+
+  intPart( value: any ){
+    return parseInt( value )
+  }
+
+  decPart( value: any ){
+    let n = Math.abs( value );
+    let m = n - Math.floor( value );
+    return m.toFixed(2);
   }
 }

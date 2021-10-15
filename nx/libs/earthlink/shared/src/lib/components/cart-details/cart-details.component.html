@@ -77,37 +77,38 @@
           </div>
           <div class="panel-body">
               <ul class="list-group">
-                  <li class="list-group-item list-group-item-warning" ng-show="CartService.Cart.preQualResponse">
+                  <li class="list-group-item list-group-item-warning" *ngIf="address$">
                       <strong>Address:</strong>
                       <span *ngIf="address$" style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
                           {{ address$.address_line1 }}
                       </span>
                   </li>
-                  <li class="list-group-item list-group-item-warning" ng-show="CartService.Cart.preQualResponse">
+                  <li class="list-group-item list-group-item-warning" *ngIf="offers$">
                       <strong>Phone:</strong>
                       <span *ngIf="address$" class="pull-right ng-binding" style="font-weight: bold; font-size: 1.1em; color: orangered;">
                           {{ address$.phone }}
                       </span>
                   </li>
-                  <!-- <li class="list-group-item list-group-item-warning ng-hide" ng-show="CartService.Cart.selectedProduct">
+                  <li class="list-group-item list-group-item-warning ng-hide" *ngIf="product$">
                       <strong>Product:</strong>
                       <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
-                          
+                          {{ product$.name }}
                       </span>
                   </li>
-                  <li class="list-group-item list-group-item-warning ng-hide" ng-show="CartService.Cart.selectedProduct">
+                  
+                  <li class="list-group-item list-group-item-warning ng-hide" *ngIf="product$">
                       <strong>Monthly:</strong>
                       <span class="pull-right ng-binding" style="font-weight: bold; font-size: 1.1em; color: orangered;">
-                          
+                          ${{ monthly$ }}
                       </span>
                   </li>
-                  <li class="list-group-item ng-hide" ng-show="CartService.Cart.selectedProduct">
+                  <li class="list-group-item ng-hide" *ngIf="product$">
                       <div class="row">
                           <div class="col-md-9 ng-binding">
-                              
+                              {{ product$.name }}
                           </div>
                           <div class="col-md-3 ng-binding" style="text-align: right;">
-                              
+                              ${{ product$.priceMonthly }}
                           </div>
                       </div>
                       <div class="row">
@@ -115,47 +116,57 @@
                               Equipment Monthly
                           </div>
                           <div class="col-md-3 ng-binding" style="text-align: right;">
-                              
+                              ${{ product$.equipmentPrice }}
                           </div>
                       </div>
                   </li>
-                  <li class="list-group-item list-group-item-warning ng-hide" ng-show="CartService.Cart.selectedProduct">
+                  <li class="list-group-item list-group-item-warning ng-hide" *ngIf="product$">
                       <strong>One Time:</strong>
                       <span class="pull-right ng-binding" style="font-weight: bold; font-size: 1.1em; color: orangered;">
-                          
+                          ${{ product$.installationPrice + product$.priceOneTime }}
                       </span>
                   </li>
-                  <li class="list-group-item ng-hide" ng-show="CartService.Cart.selectedProduct">
+                  <li class="list-group-item ng-hide" *ngIf="product$ && product$.installationPrice">
                       <div class="row">
                           <div class="col-md-9">
                               Installation Fee
                           </div>
                           <div class="col-md-3 ng-binding" style="text-align: right;">
-                              
+                              ${{ product$.installationPrice }}
                           </div>
                       </div>
                   </li>
-                  <li class="list-group-item list-group-item-warning ng-hide" ng-show="CartService.Cart.account">
+                  <li class="list-group-item ng-hide" *ngIf="product$ && product$.priceOneTime">
+                    <div class="row">
+                        <div class="col-md-9">
+                            One Time
+                        </div>
+                        <div class="col-md-3 ng-binding" style="text-align: right;">
+                            ${{ product$.priceOneTime }}
+                        </div>
+                    </div>
+                </li>                  
+                  <li class="list-group-item list-group-item-warning ng-hide" *ngIf="account$">
                       <strong>Account Name:</strong>
                       <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
                             
                       </span>
                   </li>
-                  <li class="list-group-item list-group-item-warning ng-hide" ng-show="CartService.Cart.account">
+                  <li class="list-group-item list-group-item-warning ng-hide" *ngIf="account$">
                       <strong>Account User Name:</strong>
                       <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
                           
                       </span>
                   </li>
-                  <li class="list-group-item list-group-item-warning ng-hide" ng-show="CartService.Cart.account">
+                  <li class="list-group-item list-group-item-warning ng-hide" *ngIf="account$">
                       <strong>Alt Email Address:</strong>
                       <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
                           
                       </span>
-                  </li> -->
+                  </li>
               </ul>
           </div>
           <div class="panel-footer">
-              <button class="btn btn-danger" ng-click="restartOrder()">Restart</button>
+              <button [disabled]="!address$" class="btn btn-danger" (click)="restartOrder()">Restart</button>
           </div>
       </div>

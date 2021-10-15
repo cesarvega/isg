@@ -11,9 +11,13 @@ export const getAddressState = createFeatureSelector<any>(
     ADDRESS_FEATURE_KEY
 );
 
-export const getProductState = createFeatureSelector<any>(
+export const getOffersState = createFeatureSelector<any>(
     PRODUCT_FEATURE_KEY
 );
+
+export const getProductState = createFeatureSelector<any>(
+    PRODUCT_FEATURE_KEY,
+)
 
 export const getAccountState = createFeatureSelector<any>(
     ACCOUNT_FEATURE_KEY

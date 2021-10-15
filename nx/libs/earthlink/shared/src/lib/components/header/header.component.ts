@@ -41,9 +41,10 @@ export class HeaderComponent implements OnInit {
       }
     })
 
-    this.accountCheckStateSubscription = this.store.select(getAccountState).subscribe((accountState) =>{
-      if( accountState.request ){
-        this.accountCheckState.osnResponse = accountState.request;
+    /**** Checking if a product exists in offers.product ****/
+    this.accountCheckStateSubscription = this.store.select(getProductState).subscribe((productState) =>{
+      if( productState.product ){
+        this.accountCheckState.osnResponse = productState.product;
       }
     })
 

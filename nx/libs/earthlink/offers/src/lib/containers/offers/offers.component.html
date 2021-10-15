@@ -48,8 +48,8 @@
                 <div class="panel-body" style="text-align: center;">
                     <div class="price" style="min-height: 86px;">
                         <span>$</span>
-                        <span class="integer-part ng-binding">{{ product.priceMonthly}}</span>
-                        <span class="ng-binding">.95/mo</span>
+                        <span class="integer-part ng-binding">{{ intPart( product.priceMonthly ) }}</span>
+                        <span class="ng-binding">{{ decPart( product.priceMonthly) }}/mo</span>
                         <br>
                         <i class="fa fa-plus" style="color: black;"></i>
                         <br>
@@ -119,7 +119,7 @@
                     <span style="font-style: italic; font-size: 0.9em; color: gray;" class="ng-binding">Product Id: {{ product.id }}</span>
                 </div>
                 <div class="panel-footer">
-                  <button class="btn btn-block ng-scope" [class]="( selectedProductId && selectedProductId == product.id ) ? 'btn-warning' : 'btn-success '" (click)="selectProductFunction(product)" 
+                  <button class="btn btn-block ng-scope" [class]="( selectedProductId && selectedProductId == product.id ) ? 'btn-warning' : 'btn-success'" (click)="selectProductFunction(product)" 
                     [disabled]="selectedProductId && selectedProductId === product.id">
                       Select
                   </button>
@@ -130,9 +130,18 @@
       </div>
       <hr />
       <div class="text-right">
-        <button class="form-control btn btn-primary content-width" [disabled]="!selectedProduct" (click)="sendProduct()">
-          Submit <fa-icon [icon]="faArrowRight"></fa-icon>
+        <ng-template
+          [ngIf]="selectedProductId"
+          [ngIfElse]="elseSubmited">
+          <button class="form-control btn btn-primary content-width" [disabled]="!selectedProduct" (click)="sendProduct()">
+            Continuar <fa-icon [icon]="faArrowRight"></fa-icon>
           </button>
+        </ng-template>
+        <ng-template #elseSubmited>
+          <button class="form-control btn btn-primary content-width" [disabled]="!selectedProduct" (click)="sendProduct()">
+            Submit <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
+        </ng-template>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ComponentsComponent } from './components/components.component';
-import { ContainersComponent } from './containers/containers.component';
+import { ContainersComponent } from './containers/account/account.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import * as fromEarthlinkAccount from './+state/account/earthlink-account.reducer';
