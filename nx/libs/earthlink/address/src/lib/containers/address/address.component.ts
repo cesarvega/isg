@@ -6,26 +6,22 @@ import { Store } from '@ngrx/store';
 import { Subject, Subscription } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 /**********************************************************/
-
 import { states } from '@nx/earthlink/utilities';
 import { getCurrentAddress } from '../../+state/address/earthlink-address.selectors';
 import { AddressService } from '../../services/address.service';
-//import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
 import { addressRequest, errorAction } from '../../+state/address/earthlink-address.actions';
-//import { buildAddressFromParams } from './helpers/buildAddressFromParams';
 import { takeUntil, timestamp } from 'rxjs/operators';
 import { validatePhoneNumber } from '@nx/earthlink/shared';
-import { productsActionRequest } from '@nx/earthlink/offers';
-//import { AddressSelectors } from '@nx/earthlink/address';
 import { faBars, faComment, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
+
 @Component({
   selector: 'nx-address',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss']
 })
-
 export class AddressComponent implements OnInit {
   /** ICONS **/
   faBars = faBars;
@@ -68,7 +64,6 @@ objErrors:any = [];
     private addressService: AddressService,
     private store: Store<any>, 
     private router: Router,
-    //private route: ActivatedRoute,
     updates$: Actions,
   ) { 
       this.token = localStorage.getItem('token');
@@ -214,7 +209,6 @@ objErrors:any = [];
     this.formdata.addControl( 'submitted', new FormControl( true ) );
     const address = this.formdata.value;
     this.submittedAddress = address;
-    //this.store.dispatch(productsActionRequest( { request: null } ));
     await this.addressService.generateTransaction(this.headers);
     await this.addressService.serviceQualification(address, this.headers);
 

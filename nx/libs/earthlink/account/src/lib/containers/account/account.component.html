@@ -1,7 +1,7 @@
 <div ng-view="" class="ng-scope">
   <div class="row ng-scope">
     <div class="col-md-12">
-        <form name="accountCreation" class="ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength">
+        <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
             <h3>
                 <fa-icon [icon]="faBars"></fa-icon>
                 Account Info
@@ -21,23 +21,27 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.firstName.$invalid)?'invalid':''">
-                        <label class="control-label" for="firstName">First Name: </label>
-                        <input type="text" id="firstName" name="firstName" class="form-control ng-pristine ng-valid ng-not-empty ng-valid-required ng-touched" required="required" ng-model="account.firstName">
-                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.firstName.$invalid">
-                            <i class="fa fa-exclamation-circle"></i>
-                            This field is required
-                        </div>
+                    <div class="form-group">
+                        <label class="control-label" for="first_name">First Name: </label>
+                        <input type="text" id="first_name" name="first_name" class="form-control" formControlName="first_name">
+                        <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
+                            <div *ngIf="formdata.controls['first_name'].errors.required">
+                                <i class="fa fa-exclamation-circle"></i>
+                                This field is required
+                            </div>
+                        </div>             
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.lastName.$invalid)?'invalid':''">
                         <label class="control-label" for="lastName">Last Name: </label>
-                        <input type="text" id="lastName" name="lastName" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" required="required" ng-model="account.lastName">
-                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.lastName.$invalid">
-                            <i class="fa fa-exclamation-circle"></i>
-                            This field is required
-                        </div>
+                        <input type="text" id="lastName" name="lastName" class="form-control" formControlName="last_name">
+                        <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
+                            <div *ngIf="formdata.controls['last_name'].errors.required">
+                                <i class="fa fa-exclamation-circle"></i>
+                                This field is required
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -45,16 +49,13 @@
                 <div class="col-md-4">
                     <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.userName.$invalid)?'invalid':''">
                         <label class="control-label" for="userName">User Name: </label>
-                        <input type="text" id="userName" name="userName" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required" ng-model="account.userName">
-                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.userName.$invalid">
-                            <i class="fa fa-exclamation-circle"></i>
-                            This field is required
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="alert alert-success ng-hide" ng-show="checkAvailabilityResponse.valid">
-                        This user name is available.
+                        <input type="text" id="userName" name="userName" class="form-control" formControlName="user_name">
+                        <div *ngIf="formdata.controls['user_name'].invalid && formdata.controls['user_name'].touched" class="alert alert-danger">
+                            <div *ngIf="formdata.controls['user_name'].errors.required">
+                                <i class="fa fa-exclamation-circle"></i>
+                                This field is required
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -80,15 +81,13 @@
                 <div class="col-md-4" ng-class="(submitted &amp;&amp; accountCreation.password.$invalid)?'invalid':''">
                 <div class="form-group">
                     <label class="control-label" for="password">Password: </label>
-                    <input type="text" id="password" name="password" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required" ng-model="account.password">
-                    <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.password.$error.required">
-                        <i class="fa fa-exclamation-circle"></i>
-                        This field is required
-                    </div>
-                    <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.password.$error.invalidFormat">
-                        <i class="fa fa-exclamation-circle"></i>
-                        Invalid field format
-                    </div>
+                    <input type="text" id="password" name="password" class="form-control" formControlName="password">
+                    <div *ngIf="formdata.controls['password'].invalid && formdata.controls['password'].touched" class="alert alert-danger">
+                        <div *ngIf="formdata.controls['password'].errors.required">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div> 
                 </div>
             </div>
             </div>
@@ -100,22 +99,14 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="dayPhone" class="control-label">Day Phone Number:</label>
-                        <input type="text" id="dayPhone" name="dayPhone" required="required" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required ng-valid-maxlength" ng-disabled="freezePhones" ng-model="account.dayPhone" maxlength="14" placeholder="(___)-___-____" autocomplete="off" disabled="disabled">
-                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.dayPhone.$invalid">
-                            <i class="fa fa-exclamation-circle"></i>
-                            This field is required
-                        </div>
+                        <label for="day_phone" class="control-label">Day Phone Number:</label>
+                        <input type="text" id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="homePhone" class="control-label">Home Phone Number:</label>
-                        <input type="text" id="homePhone" name="homePhone" required="required" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required ng-valid-maxlength" ng-disabled="freezePhones" ng-model="account.homePhone" maxlength="14" placeholder="(___)-___-____" autocomplete="off" disabled="disabled">
-                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.homePhone.$invalid">
-                            <i class="fa fa-exclamation-circle"></i>
-                            This field is required
-                        </div>
+                        <label for="home_phone" class="control-label">Home Phone Number:</label>
+                        <input type="text" id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -132,7 +123,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-primary pull-right" ng-disabled="checkingAccount" ng-click="checkAccount()">
+                    <button type="submit" class="btn btn-primary pull-right" [disabled]="formdata.invalid">
                         Submit
                         <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
                         <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>

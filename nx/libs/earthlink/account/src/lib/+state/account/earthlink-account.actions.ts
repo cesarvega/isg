@@ -12,3 +12,13 @@ export const loadEarthlinkAccountFailure = createAction(
   '[EarthlinkAccount/API] Load EarthlinkAccount Failure',
   props<{ error: any }>()
 );
+
+export const createAccount = createAction(
+  'createAccount',
+  props<{ account: any }>()
+);
+
+export const createAccountFailure = createAction(
+  'createAccountFailure',
+  props<{ error: any }>()
+) 

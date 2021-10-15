@@ -44,6 +44,18 @@ const earthlinkAccountReducer = createReducer(
   on(
     EarthlinkAccountActions.loadEarthlinkAccountFailure,
     (state, { error }) => ({ ...state, error })
+  ),
+  on(
+    EarthlinkAccountActions.createAccount, (state, { account }) => ({
+     ...state,
+     response: account,
+    })
+  ),
+  on(
+    EarthlinkAccountActions.createAccountFailure, (state, { error }) => ({
+      ...state,
+      error: error
+    })
   )
 );
 

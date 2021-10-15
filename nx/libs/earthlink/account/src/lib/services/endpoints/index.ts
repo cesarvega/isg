@@ -1,0 +1,1 @@
+export const addAccount = "http://localhost:8000/api/account";

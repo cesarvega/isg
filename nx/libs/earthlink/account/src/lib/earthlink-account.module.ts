@@ -2,25 +2,26 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ComponentsComponent } from './components/components.component';
-import { ContainersComponent } from './containers/account/account.component';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import * as fromEarthlinkAccount from './+state/account/earthlink-account.reducer';
-import { EarthlinkAccountEffects } from './+state/account/earthlink-account.effects';
+import { AccountComponent } from './containers/account/account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EarthlinkSharedModule } from '@nx/earthlink/shared';
+
 @NgModule({
   imports: [
+    EarthlinkSharedModule,
+    ReactiveFormsModule,
     FontAwesomeModule,
     CommonModule,
     RouterModule.forChild([
-      {path: '', pathMatch: 'full', component: ContainersComponent}
+      {path: '', pathMatch: 'full', component: AccountComponent}
     ]),
-    StoreModule.forFeature(
-      fromEarthlinkAccount.EARTHLINK_ACCOUNT_FEATURE_KEY,
-      fromEarthlinkAccount.reducer
-    ),
-    EffectsModule.forFeature([EarthlinkAccountEffects]),
+    // StoreModule.forFeature(
+    //   fromEarthlinkAccount.EARTHLINK_ACCOUNT_FEATURE_KEY,
+    //   fromEarthlinkAccount.reducer
+    // ),
+    // EffectsModule.forFeature([EarthlinkAccountEffects]),
   ],
-  declarations: [ComponentsComponent, ContainersComponent],
+  declarations: [ComponentsComponent, AccountComponent],
 })
 export class EarthlinkAccountModule {}
