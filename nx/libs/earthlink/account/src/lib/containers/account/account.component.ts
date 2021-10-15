@@ -9,7 +9,8 @@ import { getCurrentProduct } from '@nx/earthlink/offers';
 import { getAddressState } from '@nx/earthlink/state';
 import { validatePhoneNumber } from '@nx/earthlink/shared';
 import { AccountService } from '../../services/account.services';
-
+import { getCurrentAccount } from '../../+state/account/earthlink-account.selectors';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'nx-account',
@@ -25,7 +26,7 @@ export class AccountComponent implements OnInit {
   stateSubscription: Subscription | undefined;
   product$: any = null;
   address$: any = null;
-
+  account$: any = null;
 
 /***** Form elements ********/
 formdata!: any;
@@ -99,20 +100,49 @@ headers = new HttpHeaders;
       this.router.navigate(['/offers']);
     }else{
       /********** Pulling the addres from the store ********************/
+      /*
+        To populate phone's and Email inputs boxes
+      */
       this.stateSubscription = this.store.select(getAddressState).subscribe((state) => {
         if( state && state.response )
           this.address$ = state.response;
       })
       this.stateSubscription.unsubscribe();
+
+      /*********** Pulling the current Account (if any)****************/
+      /*
+        To populate the Account form
+      */
+      this.stateSubscription = this.store.select(getCurrentAccount).subscribe((state) => {
+        debugger;
+        if( state && state.id )
+          this.account$ = state;
+      })
+      this.stateSubscription.unsubscribe();
+
+      if( this.account$ ){
+        this.formdata.setValue(
+          {
+            first_name: this.account$.first_name,
+            last_name: this.account$.last_name,
+            user_name: this.account$.user_name,
+            password: '****************',
+            day_phone: this.address$.phone,
+            home_phone: this.address$.alt_phone,
+          }
+        )
+      }
     }
   }
 
   async onSubmit(){
+    if( this.account$ ) return;
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.token,
       'Accept': 'application/json'
     });
+
     const account = this.formdata.value;
     await this.accountService.createAccount(account, this.headers );
   }

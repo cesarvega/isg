@@ -36,8 +36,8 @@ describe('EarthlinkAccount Selectors', () => {
   });
 
   describe('EarthlinkAccount Selectors', () => {
-    it('getAllEarthlinkAccount() should return the list of EarthlinkAccount', () => {
-      const results = EarthlinkAccountSelectors.getAllEarthlinkAccount(state);
+    it('getCurrentAccount() should return the list of EarthlinkAccount', () => {
+      const results = EarthlinkAccountSelectors.getCurrentAccount(state);
       const selId = getEarthlinkAccountId(results[1]);
 
       expect(results.length).toBe(3);

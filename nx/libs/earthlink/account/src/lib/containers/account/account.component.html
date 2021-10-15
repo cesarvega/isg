@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="!account$">
                 <div class="col-md-9">
                     <div class="alert alert-info">
                         <i class="fa fa-exclamation-triangle"></i>
@@ -100,30 +100,26 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="day_phone" class="control-label">Day Phone Number:</label>
-                        <input type="text" id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
+                        <input type="text" [disabled]=true id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="home_phone" class="control-label">Home Phone Number:</label>
-                        <input type="text" id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
+                        <input type="text" [disabled]=true id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="alternativeEmail" class="control-label">Alternative Email:</label>
-                        <input type="text" id="alternativeEmail" name="alternativeEmail" required="required" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" ng-model="account.alternativeEmail">
-                        <div class="help-block ng-hide" ng-show="submitted &amp;&amp; accountCreation.alternativeEmail.$invalid">
-                            <i class="fa fa-exclamation-circle"></i>
-                            This field is required
-                        </div>
+                        <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" ng-model="account.alternativeEmail">
                     </div>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary pull-right" [disabled]="formdata.invalid">
+                    <button type="submit" class="btn btn-primary pull-right" [disabled]="formdata.invalid || account$">
                         Submit
                         <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
                         <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>

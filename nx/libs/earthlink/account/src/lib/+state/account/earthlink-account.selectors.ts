@@ -22,7 +22,7 @@ export const getEarthlinkAccountError = createSelector(
   (state: State) => state.error
 );
 
-export const getAllEarthlinkAccount = createSelector(
+export const getCurrentAccount = createSelector(
   getEarthlinkAccountState,
   (state: State) => state.response
 );

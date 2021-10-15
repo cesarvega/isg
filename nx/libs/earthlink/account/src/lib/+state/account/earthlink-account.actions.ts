@@ -21,4 +21,4 @@ export const createAccount = createAction(
 export const createAccountFailure = createAction(
   'createAccountFailure',
   props<{ error: any }>()
-) 
+);
