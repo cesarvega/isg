@@ -48,13 +48,14 @@ const earthlinkAccountReducer = createReducer(
   on(
     EarthlinkAccountActions.createAccount, (state, { account }) => ({
      ...state,
+     error: null,
      response: account,
     })
   ),
   on(
     EarthlinkAccountActions.createAccountFailure, (state, { error }) => ({
       ...state,
-      error: error
+      error
     })
   )
 );

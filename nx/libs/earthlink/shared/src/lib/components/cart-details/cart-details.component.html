@@ -149,19 +149,19 @@
                   <li class="list-group-item list-group-item-warning ng-hide" *ngIf="account$">
                       <strong>Account Name:</strong>
                       <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
-                            
+                        {{ account$.first_name }}  {{ account$.last_name }}
                       </span>
                   </li>
                   <li class="list-group-item list-group-item-warning ng-hide" *ngIf="account$">
                       <strong>Account User Name:</strong>
                       <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
-                          
+                          {{ account$.user_name }}
                       </span>
                   </li>
                   <li class="list-group-item list-group-item-warning ng-hide" *ngIf="account$">
                       <strong>Alt Email Address:</strong>
                       <span style="font-weight: bold; font-size: 1.1em; color: orangered;" class="ng-binding">
-                          
+                        
                       </span>
                   </li>
               </ul>

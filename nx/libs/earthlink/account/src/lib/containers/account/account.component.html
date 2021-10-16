@@ -7,16 +7,17 @@
                 Account Info
             </h3>
             <hr>
-            <div class="alert alert-danger ng-binding ng-hide" *ngIf="errors">
+            <div class="alert alert-danger ng-binding ng-hide" *ngIf="error$">
                 <strong>
                     <i class="fa fa-exclamation-circle"></i>
-                    An error occurred:
+                    An error occurred: {{ error$.error }}
                 </strong>
                 <hr>
-                
-                <hr ng-show="checkAvailabilityResponse.suggestedIds.length > 0" class="ng-hide">
+                <h5>Suggested user's name:</h5>
                 <ul>
-                    <!-- ngRepeat: suggestedId in checkAvailabilityResponse.suggestedIds -->
+                    <li *ngFor="let suggested of error$.suggested">
+                        {{ suggested }}
+                    </li>
                 </ul>
             </div>
             <div class="row">
@@ -119,11 +120,20 @@
             <hr>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary pull-right" [disabled]="formdata.invalid || account$">
-                        Submit
-                        <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
-                        <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>
-                    </button>
+                    <ng-template [ngIf]="!account$" [ngIfElse]="accountElseBlock">
+                        <button type="submit" class="btn btn-primary pull-right" [disabled]="formdata.invalid || account$">
+                            Submit
+                            <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
+                            <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>
+                        </button>
+                    </ng-template>
+                    <ng-template #accountElseBlock>
+                        <button type="button" class="btn btn-primary pull-right" routerLink="/billing">
+                            Continue to Billing
+                            <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
+                            <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>
+                        </button>
+                    </ng-template>
                 </div>
             </div>
         </form>

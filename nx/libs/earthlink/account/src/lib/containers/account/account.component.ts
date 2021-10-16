@@ -4,16 +4,18 @@ import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { getCurrentProduct } from '@nx/earthlink/offers';
-import { getAddressState } from '@nx/earthlink/state';
+import { getAddressState, getAccountFailure } from '@nx/earthlink/state';
 import { validatePhoneNumber } from '@nx/earthlink/shared';
 import { AccountService } from '../../services/account.services';
 import { getCurrentAccount } from '../../+state/account/earthlink-account.selectors';
-import { state } from '@angular/animations';
+import { createAccountFailure } from '../../+state/account/earthlink-account.actions';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'nx-account',
+  selector: 'nx-account', 
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
@@ -27,6 +29,8 @@ export class AccountComponent implements OnInit {
   product$: any = null;
   address$: any = null;
   account$: any = null;
+  error$: any = null;
+  isError$ = new Subject<boolean>();
 
 /***** Form elements ********/
 formdata!: any;
@@ -44,6 +48,7 @@ headers = new HttpHeaders;
     private store: Store<any>,
     private router: Router,
     private accountService: AccountService,
+    private update$: Actions,
   ) { 
     this.token = localStorage.getItem('token');
     this.stateSubscription = this.store.select(getCurrentProduct).subscribe((product) => {
@@ -52,9 +57,21 @@ headers = new HttpHeaders;
       }
     })
     this.stateSubscription.unsubscribe;
+
+    this.stateSubscription = update$.pipe(
+      ofType(createAccountFailure))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.isError$.next(true);
+        this.error$ = data;
+      })
+    this.stateSubscription.unsubscribe;
   }
 
+  destroy$ = new Subject<boolean>();
+  ngOnDestroy(){
 
+  }
 
   createFormControls(){
     this.first_name = new FormControl ('', Validators.required);
@@ -99,9 +116,9 @@ headers = new HttpHeaders;
     if( !this.product$ ){
       this.router.navigate(['/offers']);
     }else{
-      /********** Pulling the addres from the store ********************/
+      /********** Pulling the address from the store ********************/
       /*
-        To populate phone's and Email inputs boxes
+        To populate phone and Email input boxes
       */
       this.stateSubscription = this.store.select(getAddressState).subscribe((state) => {
         if( state && state.response )
@@ -114,7 +131,6 @@ headers = new HttpHeaders;
         To populate the Account form
       */
       this.stateSubscription = this.store.select(getCurrentAccount).subscribe((state) => {
-        debugger;
         if( state && state.id )
           this.account$ = state;
       })
@@ -131,7 +147,22 @@ headers = new HttpHeaders;
             home_phone: this.address$.alt_phone,
           }
         )
+        
+        /** Disabling input boxes **/
+        this.first_name.disable();
+        this.last_name.disable();
+        this.user_name.disable();
+        this.day_phone.disable();
+        this.home_phone.disable();  
+      }else if( this.address$ ){
+        // this.formdata.setValue(
+        //   {
+        //     day_phone: this.address$.phone,
+        //     home_phone: this.address$.alt_phone
+        //   }
+        // )
       }
+    
     }
   }
 

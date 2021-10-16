@@ -12,7 +12,7 @@ import { AddressService } from '../../services/address.service';
 import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
 import { addressRequest, errorAction } from '../../+state/address/earthlink-address.actions';
-import { takeUntil, timestamp } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { validatePhoneNumber } from '@nx/earthlink/shared';
 import { faBars, faComment, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 

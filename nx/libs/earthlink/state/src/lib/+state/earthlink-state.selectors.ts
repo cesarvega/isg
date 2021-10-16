@@ -52,3 +52,21 @@ export const getMessage: any = createSelector(
         }
     }
 );
+
+export const getAccount: any = createSelector(
+    getAccountState,
+    (state: any) => {
+        if (state) {
+            return state.response;
+        }
+    }
+)
+
+export const getAccountFailure: any = createSelector(
+    getAccount,
+    (state: any) => {
+        if( state && state.error ){
+            return state;
+        } 
+    }
+)

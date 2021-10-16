@@ -27,11 +27,12 @@ export class AccountService {
                     this.router.navigate(['/billing']);
                     //return response;
                 }else{
-                    this.store.dispatch( createAccountFailure( { error: 'Cannot create the account' } ))
+                    if( response.error )
+                    this.store.dispatch( createAccountFailure( response.error ))
                 }
             }
-            ,(error) => {
-                this.store.dispatch( createAccountFailure(error))
+            ,(response) => {
+                this.store.dispatch( createAccountFailure(response.error) )
             })
         ).toPromise();
     }
