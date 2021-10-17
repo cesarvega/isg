@@ -1,85 +1,84 @@
-<div ng-view="" class="ng-scope">
-  <div class="row ng-scope">
-    <div class="col-md-12">
-        <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
-            <h3>
-                <fa-icon [icon]="faBars"></fa-icon>
-                Account Info
-            </h3>
+<section id="account">
+  <div class="row">
+    <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
+        <h3>
+            <fa-icon [icon]="faBars"></fa-icon>
+            Account Info
+        </h3>
+        <hr>
+        <div class="alert alert-danger ng-binding ng-hide" *ngIf="error$">
+            <strong>
+                <i class="fa fa-exclamation-circle"></i>
+                An error occurred: {{ error$.message }}
+            </strong>
             <hr>
-            <div class="alert alert-danger ng-binding ng-hide" *ngIf="error$">
-                <strong>
-                    <i class="fa fa-exclamation-circle"></i>
-                    An error occurred: {{ error$.error }}
-                </strong>
-                <hr>
-                <h5>Suggested user's name:</h5>
-                <ul>
-                    <li *ngFor="let suggested of error$.suggested">
-                        {{ suggested }}
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label" for="first_name">First Name: </label>
-                        <input type="text" id="first_name" name="first_name" class="form-control" formControlName="first_name">
-                        <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
-                            <div *ngIf="formdata.controls['first_name'].errors.required">
-                                <i class="fa fa-exclamation-circle"></i>
-                                This field is required
-                            </div>
-                        </div>             
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.lastName.$invalid)?'invalid':''">
-                        <label class="control-label" for="lastName">Last Name: </label>
-                        <input type="text" id="lastName" name="lastName" class="form-control" formControlName="last_name">
-                        <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
-                            <div *ngIf="formdata.controls['last_name'].errors.required">
-                                <i class="fa fa-exclamation-circle"></i>
-                                This field is required
-                            </div>
-                        </div> 
-                    </div>
+            <h5>Suggested user's name:</h5>
+            <ul>
+                <li *ngFor="let suggested of error$.suggested">
+                    {{ suggested }}
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="first_name">First Name: </label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" formControlName="first_name">
+                    <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
+                        <div *ngIf="formdata.controls['first_name'].errors.required">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div>             
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.userName.$invalid)?'invalid':''">
-                        <label class="control-label" for="userName">User Name: </label>
-                        <input type="text" id="userName" name="userName" class="form-control" formControlName="user_name">
-                        <div *ngIf="formdata.controls['user_name'].invalid && formdata.controls['user_name'].touched" class="alert alert-danger">
-                            <div *ngIf="formdata.controls['user_name'].errors.required">
-                                <i class="fa fa-exclamation-circle"></i>
-                                This field is required
-                            </div>
-                        </div> 
-                    </div>
+            <div class="col-md-4">
+                <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.lastName.$invalid)?'invalid':''">
+                    <label class="control-label" for="lastName">Last Name: </label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" formControlName="last_name">
+                    <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
+                        <div *ngIf="formdata.controls['last_name'].errors.required">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div> 
                 </div>
             </div>
-            <div class="row" *ngIf="!account$">
-                <div class="col-md-9">
-                    <div class="alert alert-info">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        <strong>Password valid format</strong>
-                        <hr>
-                        <ul>
-                            <li>
-                                Password is required and a valid length from 8 to 12 characters.
-                            </li>
-                            <li>
-                                Password must contains at least one uppercase letter, one lowercase letter, a number and an special character of @ # $ %
-                            </li>
-                            <li>
-                                So, allowed characters are: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%
-                            </li>
-                        </ul>
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.userName.$invalid)?'invalid':''">
+                    <label class="control-label" for="userName">User Name: </label>
+                    <input type="text" id="userName" name="userName" class="form-control" formControlName="user_name">
+                    <div *ngIf="formdata.controls['user_name'].invalid && formdata.controls['user_name'].touched" class="alert alert-danger">
+                        <div *ngIf="formdata.controls['user_name'].errors.required">
+                            <i class="fa fa-exclamation-circle"></i>
+                            This field is required
+                        </div>
+                    </div> 
                 </div>
-                <div class="col-md-4" ng-class="(submitted &amp;&amp; accountCreation.password.$invalid)?'invalid':''">
+            </div>
+        </div>
+        <div class="row" *ngIf="!account$">
+            <div class="col-md-9">
+                <div class="alert alert-info">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <strong>Password valid format</strong>
+                    <hr>
+                    <ul>
+                        <li>
+                            Password is required and a valid length from 8 to 12 characters.
+                        </li>
+                        <li>
+                            Password must contains at least one uppercase letter, one lowercase letter, a number and an special character of @ # $ %
+                        </li>
+                        <li>
+                            So, allowed characters are: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label" for="password">Password: </label>
                     <input type="text" id="password" name="password" class="form-control" formControlName="password">
@@ -91,51 +90,53 @@
                     </div> 
                 </div>
             </div>
-            </div>
-            <h3>
-                <i class="fa fa-bars"></i>
-                Contact Info
-            </h3>
-            <hr>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="day_phone" class="control-label">Day Phone Number:</label>
-                        <input type="text" [disabled]=true id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="home_phone" class="control-label">Home Phone Number:</label>
-                        <input type="text" [disabled]=true id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="alternativeEmail" class="control-label">Alternative Email:</label>
-                        <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" ng-model="account.alternativeEmail">
-                    </div>
+        </div>
+        <h3>
+            <i class="fa fa-bars"></i>
+            Contact Info
+        </h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group" *ngIf="address$">
+                    <label for="day_phone" class="control-label">Day Phone Number:</label>
+                    <span class="form-control fake-input-box">{{ address$.phone }}</span>
+                    <input type="hidden" id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
                 </div>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12">
-                    <ng-template [ngIf]="!account$" [ngIfElse]="accountElseBlock">
-                        <button type="submit" class="btn btn-primary pull-right" [disabled]="formdata.invalid || account$">
-                            Submit
-                            <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
-                            <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>
-                        </button>
-                    </ng-template>
-                    <ng-template #accountElseBlock>
-                        <button type="button" class="btn btn-primary pull-right" routerLink="/billing">
-                            Continue to Billing
-                            <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
-                            <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>
-                        </button>
-                    </ng-template>
+            <div class="col-md-3">
+                <div class="form-group" *ngIf="address$">
+                    <label for="home_phone" class="control-label">Home Phone Number:</label>
+                    <span class="form-control fake-input-box">{{ address$.alt_phone }}</span>
+                    <input type="hidden" [disabled]=true id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
                 </div>
             </div>
-        </form>
-    </div>
-</div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="alternativeEmail" class="control-label">Alternative Email:</label>
+                    <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" ng-model="account.alternativeEmail">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <ng-template [ngIf]="!account$" [ngIfElse]="accountElseBlock">
+                    <button type="submit" class="btn btn-primary pull-right" [disabled]="formdata.invalid || account$">
+                        Submit
+                        <i class="fa fa-arrow-right" ng-hide="checkingAccount"></i>
+                        <i class="fa fa-spin fa-spinner ng-hide" ng-show="checkingAccount"></i>
+                    </button>
+                </ng-template>
+                <ng-template #accountElseBlock>
+                    <button type="button" class="btn btn-primary pull-right" routerLink="/billing">
+                        Continue to Billing
+                        <i class="fa fa-arrow-right"></i>
+                        <i class="fa fa-spin fa-spinner"></i>
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+    </form>
+  </div>
+</section>

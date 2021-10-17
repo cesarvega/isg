@@ -155,12 +155,18 @@ headers = new HttpHeaders;
         this.day_phone.disable();
         this.home_phone.disable();  
       }else if( this.address$ ){
-        // this.formdata.setValue(
-        //   {
-        //     day_phone: this.address$.phone,
-        //     home_phone: this.address$.alt_phone
-        //   }
-        // )
+        this.formdata.setValue(
+          {
+            first_name: '',
+            last_name: '',
+            user_name: '',
+            password: '',
+            day_phone: this.address$.phone,
+            home_phone: this.address$.alt_phone
+          }
+        )
+        //this.day_phone.disable();
+        //this.home_phone.disable();
       }
     
     }
