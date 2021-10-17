@@ -48,15 +48,16 @@ export class HeaderComponent implements OnInit {
       }
     })
 
-    this.billingCheckStateSubscription = this.store.select(getBillingState).subscribe((billingState) =>{
-      if( billingState.request ){
-        this.billingCheckState.osnResponse = billingState.request;
+    /** Checking if the Store has value at earthlinkAccount.response  node **/
+    this.billingCheckStateSubscription = this.store.select(getAccountState).subscribe((accountState) =>{
+      if( accountState && accountState.response ){
+        this.billingCheckState.osnResponse = accountState.response;
       }
     })
 
     this.confirmationCheckStateSubscription = this.store.select(getConfirmationState).subscribe((confirmationState) => {
       if( confirmationState.request ){
-        this.confirmationCheckState.osnResponse = confirmationState.request;
+        this.confirmationCheckState.osnResponse = confirmationState.response;
       }
     })
   }

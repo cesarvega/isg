@@ -1,1 +1,256 @@
-<p>containers works!</p>
+<div>
+    <div ng-view="" class="ng-scope">    <script src="https://safetechpageencryptionvar.chasepaymentech.com/pie/v1/64100000000198/getkey.js?t=1634333672" type="text/javascript" class="ng-scope"></script>
+    <script src="https://safetechpageencryptionvar.chasepaymentech.com/pie/v1/encryption.js?t=1634333672" type="text/javascript" class="ng-scope"></script>
+    <div class="row ng-scope" ng-init="init()">
+    <div>
+    <form name="billingForm" class="ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength">
+    <h3>
+        <i class="fa fa-bars"></i>
+        Billing Info
+    </h3>
+    <hr>
+    <div class="alert alert-danger ng-binding ng-hide" *ngIf="error$">
+        <strong>
+            <i class="fa fa-exclamation-circle"></i>
+            An error occurred:
+        </strong>
+        <hr>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" ng-class="autoPayDisclaimer?'alert-success':'alert-danger'">
+                <strong style="font-size: 1.2em;">
+                    Mandatory Disclaimer
+                </strong>
+                <hr>
+                <i class="fa fa-commenting"></i>
+                You are providing your credit card information in order to process payment on your EarthLink account and understand that your information will be
+                saved by EarthLink for future transactions on your account. For further information on auto payments, please see earthlink.net. By saying "yes" or "no"
+                please state that you understand and consent to EarthLink processing your payment.
+                <hr>
+                <label for="autoPayDisclaimer" class="control-label" style="cursor: pointer;">
+                    <input type="checkbox" ng-model="autoPayDisclaimer" name="autoPayDisclaimer" id="autoPayDisclaimer" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+                    I have read the disclaimer to the customer and customer agreed to the Automatic Payment terms.
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="!billingData.cardSavedInSession">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.creditCardNumber.$invalid)?'invalid':''">
+                <label class="control-label" for="creditCardNumber">Credit Card Number: </label>
+                <input type="password" id="creditCardNumber" name="creditCardNumber" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" ng-required="!billingData.cardSavedInSession" ng-disabled="sendingOrder" ng-model="billingData.creditCardNumber" maxlength="16" placeholder="________________" autocomplete="off" required="required">
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.creditCardNumber.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="!billingData.cardSavedInSession">
+        <div class="col-md-2">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.expDateMonth.$invalid)?'invalid':''">
+                <label class="control-label" for="expDateMonth">Exp Date Month: </label>
+                <select id="expDateMonth" name="expDateMonth" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required" ng-disabled="sendingOrder" ng-model="billingData.expDateMonth">
+                    <option value="" selected="selected">::: EXP MONTH :::</option>
+                    <option value="01">01 - Jan</option>
+                    <option value="02">02 - Feb</option>
+                    <option value="03">03 - Mar</option>
+                    <option value="04">04 - Apr</option>
+                    <option value="05">05 - May</option>
+                    <option value="06">06 - Jun</option>
+                    <option value="07">07 - Jul</option>
+                    <option value="08">08 - Aug</option>
+                    <option value="09">09 - Sep</option>
+                    <option value="10">10 - Oct</option>
+                    <option value="11">11 - Nov</option>
+                    <option value="12">12 - Dec</option>
+                </select>
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.expDateMonth.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.expDateYear.$invalid)?'invalid':''">
+                <label class="control-label" for="expDateYear">Exp Date Year: </label>
+                <select id="expDateYear" name="expDateYear" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-required="!billingData.cardSavedInSession" ng-disabled="sendingOrder" ng-options="year as year for year in years" ng-model="billingData.expDateYear" required="required"><option value="" class="" selected="selected">::: EXP YEAR :::</option><option label="2021" value="number:2021">2021</option><option label="2022" value="number:2022">2022</option><option label="2023" value="number:2023">2023</option><option label="2024" value="number:2024">2024</option><option label="2025" value="number:2025">2025</option><option label="2026" value="number:2026">2026</option><option label="2027" value="number:2027">2027</option><option label="2028" value="number:2028">2028</option><option label="2029" value="number:2029">2029</option><option label="2030" value="number:2030">2030</option><option label="2031" value="number:2031">2031</option></select>
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.expDateYear.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.cvv.$invalid)?'invalid':''">
+                <label class="control-label" for="cvv">Credit Card CVV: </label>
+                <input type="password" id="cvv" name="cvv" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" ng-required="!billingData.cardSavedInSession" ng-disabled="sendingOrder" ng-model="billingData.cvv" maxlength="4" placeholder="____" autocomplete="off" required="required">
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.cvv.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ng-hide" *ngIf="billingData && billingData.cardSavedInSession">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        <i class="fa fa-check"></i>
+                        <strong>Credit Card Saved!</strong>
+                        <hr>
+                        A credit card have been saved successfully into the session, if you want change the credit card info, please click in the button "New Credit Card" below
+                    </div>
+                    <div class="form-group">
+                        <label>Credit Card Number: </label>
+                        <strong style="color: blue;" class="ng-binding">XXXXXXXXXXXX - </strong>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV: </label>
+                        <strong style="color: blue;">XXX</strong>
+                    </div>
+                    <div class="form-group">
+                        <label>Expiration Date: </label>
+                        <strong style="color: blue;" class="ng-binding">
+                            /
+                        </strong>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-warning" ng-click="newCard()">New Credit Card</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-warning" ng-click="useCaseCC()">Test Credit Card</button>
+            </div>
+        </div>
+        <br>
+                <h3>
+        <i class="fa fa-bars"></i>
+        Billing Address
+    </h3>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.sameAddress.$invalid)?'invalid':''">
+                <label class="control-label" for="sameAddress" style="cursor: pointer;">
+                    <input type="checkbox" id="sameAddress" name="sameAddress" ng-model="billingData.sameAddress" ng-change="checkSameAddress()" ng-disabled="sendingOrder" class="ng-pristine ng-untouched ng-valid ng-empty">
+                    Check here is the billing address is same that service address.
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingAddressLine1.$invalid)?'invalid':''">
+                <label class="control-label" for="billingAddressLine1">Street Address: </label>
+                <input type="text" id="billingAddressLine1" name="billingAddressLine1" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingAddressLine1" required="required">
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingAddressLine1.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingAddressLine2.$invalid)?'invalid':''">
+                <label class="control-label" for="billingAddressLine2">Unit: </label>
+                <input type="text" id="billingAddressLine2" name="billingAddressLine2" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingAddressLine2">
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingAddressLine2.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingCity.$invalid)?'invalid':''">
+                <label class="control-label" for="billingCity">City: </label>
+                <input type="text" id="billingCity" name="billingCity" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingCity" required="required">
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingCity.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingState.$invalid)?'invalid':''">
+                <label class="control-label" for="billingState">State: </label>
+                <select id="billingState" name="billingState" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-options="item.value as item.label for item in Resources.stateTypes" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingState" required="required"><option value="" class="" selected="selected">::: SELECT STATE :::</option><option label="Alabama" value="string:AL">Alabama</option><option label="Alaska" value="string:AK">Alaska</option><option label="Arizona" value="string:AZ">Arizona</option><option label="Arkansas" value="string:AR">Arkansas</option><option label="California" value="string:CA">California</option><option label="Colorado" value="string:CO">Colorado</option><option label="Connecticut" value="string:CT">Connecticut</option><option label="Delaware" value="string:DE">Delaware</option><option label="District of Columbia" value="string:DC">District of Columbia</option><option label="Florida" value="string:FL">Florida</option><option label="Georgia" value="string:GA">Georgia</option><option label="Hawaii" value="string:HI">Hawaii</option><option label="Idaho" value="string:ID">Idaho</option><option label="Illinois" value="string:IL">Illinois</option><option label="Indiana" value="string:IN">Indiana</option><option label="Iowa" value="string:IA">Iowa</option><option label="Kansas" value="string:KS">Kansas</option><option label="Kentucky" value="string:KY">Kentucky</option><option label="Louisiana" value="string:LA">Louisiana</option><option label="Maine" value="string:ME">Maine</option><option label="Maryland" value="string:MD">Maryland</option><option label="Massachusetts" value="string:MA">Massachusetts</option><option label="Michigan" value="string:MI">Michigan</option><option label="Minnesota" value="string:MN">Minnesota</option><option label="Mississippi" value="string:MS">Mississippi</option><option label="Missouri" value="string:MO">Missouri</option><option label="Montana" value="string:MT">Montana</option><option label="Nebraska" value="string:NE">Nebraska</option><option label="Nevada" value="string:NV">Nevada</option><option label="New Hampshire" value="string:NH">New Hampshire</option><option label="New Jersey" value="string:NJ">New Jersey</option><option label="New Mexico" value="string:NM">New Mexico</option><option label="New York" value="string:NY">New York</option><option label="North Carolina" value="string:NC">North Carolina</option><option label="North Dakota" value="string:ND">North Dakota</option><option label="Ohio" value="string:OH">Ohio</option><option label="Oklahoma" value="string:OK">Oklahoma</option><option label="Oregon" value="string:OR">Oregon</option><option label="Pennsylvania" value="string:PA">Pennsylvania</option><option label="Rhode Island" value="string:RI">Rhode Island</option><option label="South Carolina" value="string:SC">South Carolina</option><option label="South Dakota" value="string:SD">South Dakota</option><option label="Tennessee" value="string:TN">Tennessee</option><option label="Texas" value="string:TX">Texas</option><option label="Utah" value="string:UT">Utah</option><option label="Vermont" value="string:VT">Vermont</option><option label="Virginia" value="string:VA">Virginia</option><option label="Washington" value="string:WA">Washington</option><option label="West Virginia" value="string:WV">West Virginia</option><option label="Wisconsin" value="string:WI">Wisconsin</option><option label="Wyoming" value="string:WY">Wyoming</option></select>
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingState.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingZipCode.$invalid)?'invalid':''">
+                <label class="control-label" for="billingZipCode">Zip Code: </label>
+                <input type="text" id="billingZipCode" name="billingZipCode" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingZipCode" maxlength="5" placeholder="_____" autocomplete="off" required="required">
+                <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingZipCode.$invalid">
+                    <i class="fa fa-exclamation-circle"></i>
+                    This field is required
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>
+        <i class="fa fa-bars"></i>
+        Disclosures
+    </h3>
+    <hr>
+    <h3>
+    <i class="fa fa-commenting"></i>
+    Product Description
+    </h3>
+    <p class="well ng-binding" ng-bind-html="CartService.Cart.selectedProduct.description">8 email addresses. Automatic virus and spam protection. Live online chat.</p>
+    <h3>
+    <i class="fa fa-commenting"></i>
+    EarthLink Terms and conditions
+    </h3>
+    <p class="well ng-binding" ng-bind-html="CartService.Cart.selectedProduct.terms">Taxes, other fees and restrictions may apply. Actual speeds may vary based on network activity, configuration, and other factors. Professional Installation charge of $79.95 is required. We will partner with your local telephone company to conduct your professional installation. Once the service is installed, EarthLink will be the owner of all your Customer Support needs.  If you have any other questions or concerns, contact EarthLink technical support (800.327.8454) or visit the EarthLink Support Center. Offer requires a 12-month subscription with an early-termination fee of up to $200.00. HyperLink equipment charged at $6.95 per month. Monthly fees are automatically billed in advance for service with the card provided at the time of sale. This starts the day after installation and continues monthly. Cancellation required by phone before the next billing period begins to prevent further charges. Service Agreements located at earthlink.net/tcs contains additional important information about the Service.</p>
+    <h3>
+    <i class="fa fa-commenting"></i>
+    Equipment Terms and conditions
+    </h3>
+    <p class="well ng-binding" ng-bind-html="CartService.Cart.selectedProduct.equipmentDescription">HyperLink requires a professional installation.  The technician will bring and install a wireless gateway with an equipment charge of $6.95/month.</p>
+    <div class="row">
+    <div class="col-md-12">
+    <div class="form-group">
+    <label class="control-label" for="agreeTerms" style="cursor: pointer; color: red;">
+        <input type="checkbox" id="agreeTerms" ng-disabled="sendingOrder" ng-model="agreeTerms" class="ng-pristine ng-untouched ng-valid ng-empty">
+        Do you agree with EarthLink Terms and Conditions?
+    </label>
+    </div>
+    </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary pull-right" ng-click="submitOrder()" ng-disabled="sendingOrder || !agreeTerms || !autoPayDisclaimer" disabled="disabled">
+                Submit Order
+                <i class="fa fa-arrow-right" ng-hide="sendingOrder"></i>
+                <i class="fa fa-spin fa-spinner ng-hide" ng-show="sendingOrder"></i>
+            </button>
+        </div>
+    </div>
+
+    </form>
+    </div>
+    </div>
+    <script class="ng-scope">
+    $('#creditCardNumber').mask('0000000000000000', { placeholder: '________________'});
+    $('#cvv').mask('0000', { placeholder: '____'});
+    $('#billingZipCode').mask('00000', { placeholder: '_____'});
+    </script>
+    </div>
+</div>
