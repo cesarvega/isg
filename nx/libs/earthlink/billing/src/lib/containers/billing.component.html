@@ -16,8 +16,8 @@
                                 </h5>
                             </div>
                             <label class="form-control" for="chkClearAddress">Clear the Billing Address?</label>
-                            <label  for="rdyes">Yes</label>
-                            <input id="rdYes" type="radio" name="chkclear" checked value="1" class="form-control" (click)="clearAddressSwitch($event)">
+                            <label  for="rdYes">Yes</label>
+                            <input id="rdYes" type="radio" name="chkclear" value="1" class="form-control" (click)="clearAddressSwitch($event)">
                             
                             <label for="rdNo">No</label>
                             <input id="rdNo" type="radio" name="chkclear" value="0" class="form-control" (click)="clearAddressSwitch($event)">
@@ -268,7 +268,7 @@
                 <div class="col-md-12">
                 <div class="form-group">
                 <label class="control-label" for="agreeTerms" style="cursor: pointer; color: red;">
-                    <input type="checkbox" id="agreeTerms" [disabled]="sendingOrder">
+                    <input type="checkbox" (change)="f_agreeTerms($event)" id="agreeTerms" [disabled]="sendingOrder">
                     Do you agree with EarthLink Terms and Conditions?
                 </label>
                 </div>

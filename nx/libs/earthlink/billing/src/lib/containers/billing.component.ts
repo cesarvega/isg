@@ -34,7 +34,7 @@ export class BillingComponent implements OnInit {
   /** Modal **/
   @ViewChild('clearAddressModal') clearAddressModal : TemplateRef<any> | undefined;
   modalReference: any = null;
-  chkClearAddress: any = true;
+  chkClearAddress: any;
 
   constructor(
     private store: Store,
@@ -83,6 +83,8 @@ export class BillingComponent implements OnInit {
     if( !this.account$ ){
       this.router.navigate(['/account']);
     }
+
+    this.chkClearAddress = 1;
   }
 
   f_autoPayDisclaimer( e:any ){
@@ -91,6 +93,15 @@ export class BillingComponent implements OnInit {
     }else{
       this.autoPayDisclaimer = false;
     };
+  }
+
+  f_agreeTerms( e: any ){
+    if(e.target.checked ){
+      this.agreeTerms = true;
+    }else{
+      this.agreeTerms = false;
+    };
+    
   }
 
   useCaseCc(){
