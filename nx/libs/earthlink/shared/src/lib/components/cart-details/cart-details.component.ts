@@ -29,7 +29,7 @@ export class CartDetailsComponent {
     ){
         /** Address/Phone Number **/
         this.addressCheckStateSubscription = this.store.select(getAddressState).subscribe((addressCheckState) =>{
-            if( addressCheckState.response ){
+            if( addressCheckState && addressCheckState.response ){
                 this.address$ = addressCheckState.response;
             }
         });

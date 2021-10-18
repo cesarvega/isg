@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ComponentsComponent } from './components/components.component';
 import { BillingComponent } from './containers/billing.component';
 import { StoreModule } from '@ngrx/store';
@@ -10,6 +11,7 @@ import { EarthlinkBillingEffects } from './+state/billing/earthlink-billing.effe
 
 @NgModule({
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild([
       {path: '', pathMatch: 'full', component: BillingComponent}

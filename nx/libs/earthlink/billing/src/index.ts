@@ -3,3 +3,4 @@ export * from './lib/+state/billing/earthlink-billing.selectors';
 export * from './lib/+state/billing/earthlink-billing.reducer';
 export * from './lib/+state/billing/earthlink-billing.actions';
 export * from './lib/earthlink-billing.module';
+export * from './lib/services/test-creditcard';
