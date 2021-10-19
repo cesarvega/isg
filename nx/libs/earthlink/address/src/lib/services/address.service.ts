@@ -16,6 +16,7 @@ import { orderDetailsActionRequest } from '@nx/earthlink/offers';
 import { Offers } from '@nx/earthlink/offers';
 import { OffersService } from '@nx/earthlink/offers';
 import { Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -27,21 +28,29 @@ export class AddressService {
     loading: false,
     customerType: "NEW"
   };
+  token: any;
+  headers: any = null;
 
   stateSubscription: Subscription = new Subscription;
+
   constructor(
     private apiService: ApiService,
     private store: Store<any>,
     private router: Router,
     private offersService: OffersService,
+    
+
   ) {
+    this.token = localStorage.getItem('token'),
     this.stateSubscription = this.store.select(getEarthlinkAddressState).subscribe((addresState) => {
       this.addressState = this.addressState
     })
    }
 
-  serviceQualification(address: Address, headers: any) {
-    return this.apiService.post( qualify, address, headers).pipe(
+  
+  serviceQualification(address: Address) {
+    this.customHeaders();
+    return this.apiService.post( qualify, address, this.headers).pipe(
       map((response: any) => {
         let uuid = response.uuid;
         if( uuid ){
@@ -82,9 +91,10 @@ export class AddressService {
     ).toPromise();
   }
 
-  generateTransaction(headers:any) {
+  generateTransaction() {
+    this.customHeaders();
     this.store.dispatch(loading())
-    return this.apiService.post(transaction, { "provider": "earthlink" }, headers).pipe(
+    return this.apiService.post(transaction, { "provider": "earthlink" }, this.headers).pipe(
       tap((response: any) => {
         const orderNumber = response.OrderNumber;
         this.store.dispatch(setTransaction({ transaction: orderNumber }))
@@ -95,4 +105,11 @@ export class AddressService {
     ).toPromise();
   }
 
+  customHeaders(){
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token,
+      'Accept': 'application/json'
+    });
+  }
 }

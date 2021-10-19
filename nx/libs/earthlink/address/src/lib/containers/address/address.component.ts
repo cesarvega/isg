@@ -44,18 +44,6 @@ stateSubscription: Subscription | undefined;
 initialData: Address = {};
 submittedAddress: Address = {}
 
-addressLine1: any;
-addressLine2: any;
-city: any;
-state: any;
-zipCode: any;
-isBusiness: any;
-inputFirstName: any;
-inputLastName: any;
-inputEmail: any;
-inputPhone: any;
-inputAltPhone: any;
-uuid: any;
 uuidStr: any = '';
 isError$ = new Subject<boolean>();
 objErrors:any = [];
@@ -95,64 +83,32 @@ objErrors:any = [];
     this.destroy$.complete();
   }
 
-  createFormControls(){
-    this.addressLine1 = new FormControl ('', Validators.required);
-    this.addressLine2 = new FormControl('');
-    this.city = new FormControl('', Validators.required);
-
-    this.state = new FormControl ('',
-      [
-        Validators.required,
-        //Validators.pattern("[a-z]{2}")
-      ]
-    );
-
-    this.zipCode = new FormControl ('',
-      [
-        Validators.required,
-        Validators.pattern("[0-9]{5}")
-      ]
-    );
-
-    this.isBusiness = new FormControl ('') ,
-    this.inputFirstName = new FormControl ('', Validators.required );
-    this.inputLastName  = new FormControl ('', Validators.required);
-    
-    this.inputEmail = new FormControl ('',
-      [
-        Validators.required,
-        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
-      ]
-    );
-
-    this.inputPhone = new FormControl ('',
-      [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(10),
-        validatePhoneNumber
-      ],
-    );
-    this.inputAltPhone = new FormControl('', validatePhoneNumber );
-
-    this.uuid = new FormControl( this.uuidStr );
-  }
 
   createForm(){
     this.formdata = new FormGroup({
-      address_line1: this.addressLine1,
-      address_line2: this.addressLine2,
-      city: this.city,
-      state: this.state,
-      zip_code: this.zipCode,
-      is_business: this.isBusiness,
-      first_name: this.inputFirstName,
-      last_name: this.inputLastName,
-      email: this.inputEmail,
-      phone: this.inputPhone,
-      alt_phone: this.inputAltPhone,
-      uuid: this.uuid,
-      submitted: this.submitted,
+      address_line1: new FormControl ('', Validators.required),
+      address_line2: new FormControl(''),
+      city: new FormControl(''),
+      state: new FormControl ('',
+        [
+          Validators.required,
+          //Validators.pattern("[a-z]{2}")
+        ]
+      ),
+      zip_code: new FormControl ('',
+        [
+          Validators.required,
+          Validators.pattern("[0-9]{5}")
+        ]
+      ),
+      is_business: new FormControl (''),
+      first_name: new FormControl ('', Validators.required ),
+      last_name: new FormControl ('', Validators.required ),
+      email: new FormControl ('', Validators.required ),
+      phone: new FormControl ('', Validators.required ),
+      alt_phone: new FormControl (''),
+      uuid: new FormControl (''),
+      submitted: new FormControl ('true'),
     })
   }
 
@@ -163,12 +119,11 @@ objErrors:any = [];
     })
     this.stateSubscription.unsubscribe();
 
-    this.createFormControls();
     this.createForm();
 
     /****if the store has an address, populate the form*****/
     if( this.address$){
-      this.formdata.setValue(
+      this.formdata.patchValue(
         {
           address_line1 : this.address$.address_line1,
           address_line2 : this.address$.address_line2,
@@ -181,16 +136,18 @@ objErrors:any = [];
           email : this.address$.email,
           phone : this.address$.phone,
           alt_phone: this.address$.alt_phone,
-          uuid: 'uuid'
+          uuid: 'uuid',
         }
       )      
-      this.addressLine1.disable();
-      this.addressLine2.disable();
-      this.city.disable();
-      this.state.disable();
-      this.zipCode.disable();
-      this.isBusiness.disable();
-      this.submitted = this.address$.submitted;
+      this.formdata.get('address_line1').disable();
+      this.formdata.get('address_line2').disable();
+      this.formdata.get('city').disable();
+      this.formdata.get('state').disable();
+      this.formdata.get('zip_code').disable();
+      this.formdata.get('is_business').disable();
+      
+      /** Flag used to toggle Submit and Continue buttons */
+      this.submitted = true;
     }
   }
 
@@ -201,16 +158,11 @@ objErrors:any = [];
   }
 
   async onSubmit(){
-    this.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token,
-      'Accept': 'application/json'
-    });
     this.formdata.addControl( 'submitted', new FormControl( true ) );
     const address = this.formdata.value;
     this.submittedAddress = address;
-    await this.addressService.generateTransaction(this.headers);
-    await this.addressService.serviceQualification(address, this.headers);
+    await this.addressService.generateTransaction();
+    await this.addressService.serviceQualification(address);
 
     if (!this.isError$.hasError) {
       this.submitted = true;
@@ -218,22 +170,18 @@ objErrors:any = [];
     }
   }
 
-  ngOnChanges(){
-    if( !!this.formdata && this.formdata.dirty ){
-    alert('changes');}
-  }
 
   continueToOffers(){
     /****
      * If the contact information was modified, update the Address Store data
      */
     if( this.formdata.dirty ){
-      this.addressLine1.enable();
-      this.addressLine2.enable();
-      this.city.enable();
-      this.state.enable();
-      this.zipCode.enable();
-      this.isBusiness.enable();
+      this.formdata.get('address_line1').enable();
+      this.formdata.get('address_line2').enable();
+      this.formdata.get('city').enable();
+      this.formdata.get('state').enable();
+      this.formdata.get('zip_code').enable();
+      this.formdata.get('is_business').enable();
       this.formdata.addControl( 'submitted', new FormControl( true ) );
       let data = this.formdata.value;
       this.store.dispatch(addressRequest({ address: data }));
