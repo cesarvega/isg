@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { HttpHeaders } from "@angular/common/http";
 import { payUrl } from "./endpoints";
-import { paymentSuccess } from '../+state/billing/earthlink-billing.actions';
+import { paymentSuccess, errorPayment } from '../+state/billing/earthlink-billing.actions';
+import { confirmationSuccess } from '@nx/earthlink/confirmation';
 import { iPayment } from '../interfaces/payment';
 import { isParameter } from "typescript";
 
@@ -33,19 +34,20 @@ export class BillingService{
     }
 
     makeApayment( payment: iPayment){
-        debugger;
         return this.apiService.post( payUrl, payment, this.headers).pipe(
             map( (response: any ) => {
-                //if( response ){
-                    debugger;
+                if( response && response.result && response.result == 'success' ){
                     this.store.dispatch(paymentSuccess( { payment } ));
+                    this.store.dispatch(confirmationSuccess());
                     this.router.navigate(['/confirmation']);
-                //}
+                }
             }),
             tap( (response ) => {
-                //clear the store and navigate to index
                 console.log('TODO  clear the store');
-            })
+            },( error ) => {
+                this.store.dispatch(errorPayment({ error }))
+            }
+            )
         ).toPromise();
 
     }

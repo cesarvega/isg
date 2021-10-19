@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ContainersComponent } from './containers/containers.component';
+import { ConfirmationComponent } from './containers/confirmation.component';
 import { ComponentsComponent } from './components/components.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -12,7 +12,7 @@ import { EarthlinkConfirmationEffects } from './+state/confirmation/earthlink-co
   imports: [
     CommonModule,
     RouterModule.forChild([
-      /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
+      {path: '', pathMatch: 'full', component: ConfirmationComponent}
     ]),
     StoreModule.forFeature(
       fromEarthlinkConfirmation.EARTHLINK_CONFIRMATION_FEATURE_KEY,
@@ -20,6 +20,6 @@ import { EarthlinkConfirmationEffects } from './+state/confirmation/earthlink-co
     ),
     EffectsModule.forFeature([EarthlinkConfirmationEffects]),
   ],
-  declarations: [ContainersComponent, ComponentsComponent],
+  declarations: [ConfirmationComponent, ComponentsComponent],
 })
 export class EarthlinkConfirmationModule {}

@@ -9,7 +9,8 @@ export const EARTHLINK_CONFIRMATION_FEATURE_KEY = 'earthlinkConfirmation';
 export interface State extends EntityState<EarthlinkConfirmationEntity> {
   selectedId?: string | number; // which EarthlinkConfirmation record has been selected
   loaded: boolean; // has the EarthlinkConfirmation list been loaded
-  error?: string | null; // last known error (if any)
+  error?: string | null; // last known error (if any);
+  response: string | null;
 }
 
 export interface EarthlinkConfirmationPartialState {
@@ -23,6 +24,7 @@ export const initialState: State = earthlinkConfirmationAdapter.getInitialState(
   {
     // set initial required properties
     loaded: false,
+    response: null,
   }
 );
 
@@ -44,6 +46,12 @@ const earthlinkConfirmationReducer = createReducer(
   on(
     EarthlinkConfirmationActions.loadEarthlinkConfirmationFailure,
     (state, { error }) => ({ ...state, error })
+  ),
+  on(
+    EarthlinkConfirmationActions.confirmationSuccess, (state) => ({
+    ...state,
+    response: 'success'
+  })
   )
 );
 

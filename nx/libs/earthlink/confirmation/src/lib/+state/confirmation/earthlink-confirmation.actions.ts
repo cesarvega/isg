@@ -12,3 +12,7 @@ export const loadEarthlinkConfirmationFailure = createAction(
   '[EarthlinkConfirmation/API] Load EarthlinkConfirmation Failure',
   props<{ error: any }>()
 );
+
+export const confirmationSuccess = createAction(
+  'confirmationSuccess',
+)

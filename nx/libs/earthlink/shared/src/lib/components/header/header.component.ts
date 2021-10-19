@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
     })
 
     this.confirmationCheckStateSubscription = this.store.select(getConfirmationState).subscribe((confirmationState) => {
-      if( confirmationState.request ){
+      if( confirmationState && confirmationState.response ){
         this.confirmationCheckState.osnResponse = confirmationState.response;
       }
     })

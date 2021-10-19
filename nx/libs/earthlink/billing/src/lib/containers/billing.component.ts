@@ -6,7 +6,7 @@ import { Subject, Subscription } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { makeApayment, errorPayment } from '../+state/billing/earthlink-billing.actions';
+import { errorPayment } from '../+state/billing/earthlink-billing.actions';
 import { getCurrentAccount } from '@nx/earthlink/account';
 import { CcTest } from '../services/test-creditcard';
 import { states } from '@nx/earthlink/utilities';

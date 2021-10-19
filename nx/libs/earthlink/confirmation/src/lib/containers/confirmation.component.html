@@ -1,0 +1,116 @@
+<div ng-view="" class="ng-scope"><div class="row ng-scope" ng-init="$parent.initStep('confirmation'); window.scroll(0, 0);">
+    <div class="col-md-12" style="font-size: 1.3em;">
+        <h3>
+            <i class="fa fa-bars"></i>
+            Confirmation
+        </h3>
+        <hr>
+        <div class="alert alert-danger ng-binding ng-hide" ng-show="error.show">
+            <strong>
+                <i class="fa fa-exclamation-circle"></i>
+                An error occurred:
+            </strong>
+            <hr>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- ngIf: CartService.getDotColor() === 'DISH' -->
+                <!-- ngIf: CartService.getDotColor() === 'ATT' -->
+
+                <!-- ngIf: CartService.getDotColor() === 'DTV-BUSINESS' -->
+
+                <!-- ngIf: CartService.getDotColor() === false || CartService.getDotColor() === -1 --><div ng-if="CartService.getDotColor() === false || CartService.getDotColor() === -1" class="ng-scope">
+                    <div style="padding:10px; border: 1px solid #909090; border-radius: 4px;">
+    <div style="text-align:center;margin-bottom:30px;">
+        <h1 style="border-bottom:1px solid #000">*** Home Security Opportunity ***</h1>
+        <h3 style="color:red">Over $100 Commission Potential!</h3>
+    </div>
+    <p>
+        While I complete your order, I want to see if I can help you take advantage of an one-time offer
+        through one of our valued partners. Let me ask you a few questions to see if you are eligible:
+    </p>
+    <br>
+    <ul>
+        <li>Are you interested in protecting your home from security and fire emergencies?</li>
+        <li>Are you interested in a doorbell, indoor, or outdoor camera for your home?</li>
+        <li>Are you interested in money-saving smart home technology like a smart thermostat?</li>
+        <li>Are you interested in saving money on your homeowner’s insurance?</li>
+    </ul>
+    <p>
+        As a special thank you for signing up for new home services today, I am able to give you special bundle
+        pricing, a free activation, and free equipment installation on a smart home and security system!
+        Let’s see what a customized system for your home would include…
+    </p>
+    <div style="font-weight: bold;">
+        <p>If interested:</p>
+        <ul>
+            <li>Sell ADT (free upgraded system and equipment voucher) or Vivint (free doorbell camera)...</li>
+            <li>Warm transfer to Vivint Team via 855-664-6412 (homeowners) or 855-668-2613 (renters).</li>
+            <ul style="list-style: circle;">
+                <li>
+                    "Now that your home-services order is complete, I will transfer you to a security advisor who
+                    will discuss making your home safer and smarter!"
+                </li>
+            </ul>
+        </ul>
+        <p>
+            If not interested, complete the caller's internet order.
+        </p>
+    </div>
+</div>
+                </div><!-- end ngIf: CartService.getDotColor() === false || CartService.getDotColor() === -1 -->
+
+                <div class="alert alert-success">
+                    <i class="fa fa-check"></i>
+                    Congratulations
+                    <hr>
+                    Your account have been created successfully.
+                    <hr>
+
+                    <div class="form-group">
+                        <label class="control-label">
+                            Account Number:
+                        </label>
+                        <span style="color: orangered;">
+                            29599264                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">
+                            Confirmation Number:
+                        </label>
+                        <span style="color: orangered;">
+                        1510598489                    </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">
+                            Provider Confirm User:
+                        </label>
+                        <span style="color: orangered;">
+                        ms25803301                    </span>
+                    </div>
+                    <hr>
+                        <i class="fa fa-commenting"></i>
+
+                        EarthLink will send you emails and texts about your HyperLink order and installation. 
+                        The installation process will take about one week. If you have any questions, call us at 888-EARTHLINK (888-327-8454).
+
+                        <!-- In the event that you have questions or would like to follow up regarding your order, save the following phone number
+                        for Earthlink Support - 833-578-4667. Please allow 48 hours prior to contacting while your information is processed. -->
+                    <hr>
+                </div>
+            </div>
+        </div>
+                <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-danger pull-right" ng-click="restartOrder()">
+                    Restart Order
+                    <i class="fa fa-repeat"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
