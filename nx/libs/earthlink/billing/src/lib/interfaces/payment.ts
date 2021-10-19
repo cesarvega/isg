@@ -1,0 +1,20 @@
+export interface iPayment{
+    address_line1: string,
+    address_line2?: string,
+    city: string,
+    zip_code: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone: string,
+    alt_phone?: string,
+    billing_address1: string,
+    billing_address2?: string, 
+    billing_city: string,
+    billing_zip_code: string,
+    creditCardNumber: string,
+    expDateMonth: string,
+    expDateYear: string,
+    cvv: string,
+    
+}

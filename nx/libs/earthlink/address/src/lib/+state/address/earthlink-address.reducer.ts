@@ -2,7 +2,7 @@
 import { state } from '@angular/animations';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
-import { addressRequest } from '@nx/earthlink/address';
+//import { addressRequest } from '@nx/earthlink/address';
 
 import * as AddressActions from './earthlink-address.actions';
 import { EarthlinkAddressEntity } from './earthlink-address.models';

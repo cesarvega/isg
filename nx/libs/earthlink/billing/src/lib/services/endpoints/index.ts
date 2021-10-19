@@ -1,0 +1,1 @@
+export const payUrl = 'http://localhost:8000/api/payment';

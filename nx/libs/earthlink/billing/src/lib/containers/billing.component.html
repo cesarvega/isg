@@ -187,10 +187,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingAddressLine1.$invalid)?'invalid':''">
-                            <label class="control-label" for="billingAddressLine1">Street Address: </label>
-                            <input formControlName="billingAddressLine1" type="text" id="billingAddressLine1" name="billingAddressLine1" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingAddressLine1" required="required">
-                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingAddressLine1.$invalid">
+                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billing_address_line1.$invalid)?'invalid':''">
+                            <label class="control-label" for="billing_address_line1">Street Address: </label>
+                            <input formControlName="billing_address_line1" type="text" id="billing_address_line1" name="billing_address_line1" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billing_address_line1" required="required">
+                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billing_address_line1.$invalid">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>
@@ -199,10 +199,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingAddressLine2.$invalid)?'invalid':''">
-                            <label class="control-label" for="billingAddressLine2">Unit: </label>
-                            <input formControlName="billingAddressLine2" type="text" id="billingAddressLine2" name="billingAddressLine2" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingAddressLine2">
-                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingAddressLine2.$invalid">
+                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billing_address_line2.$invalid)?'invalid':''">
+                            <label class="control-label" for="billing_address_line2">Unit: </label>
+                            <input formControlName="billing_address_line2" type="text" id="billing_address_line2" name="billing_address_line2" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billing_address_line2">
+                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billing_address_line2.$invalid">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>
@@ -211,32 +211,32 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingCity.$invalid)?'invalid':''">
-                            <label class="control-label" for="billingCity">City: </label>
-                            <input formControlName="billingCity" type="text" id="billingCity" name="billingCity" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingCity" required="required">
-                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingCity.$invalid">
+                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billing_city.$invalid)?'invalid':''">
+                            <label class="control-label" for="billing_city">City: </label>
+                            <input formControlName="billing_city" type="text" id="billing_city" name="billing_city" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billing_city" required="required">
+                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billing_city.$invalid">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingState.$invalid)?'invalid':''">
-                            <label class="control-label" for="billingState">State: </label>
-                            <select formControlName="billingState" id="billingState" name="billingState" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-options="item.value as item.label for item in Resources.stateTypes" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingState" required="required"><option value="" class="" selected="selected">::: SELECT STATE :::</option>
+                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billing_state.$invalid)?'invalid':''">
+                            <label class="control-label" for="billing_state">State: </label>
+                            <select formControlName="billing_state" id="billing_state" name="billing_state" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-options="item.value as item.label for item in Resources.stateTypes" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billing_state" required="required"><option value="" class="" selected="selected">::: SELECT STATE :::</option>
                                 <option [value]="state.value" *ngFor="let state of states">{{ state.name }}</option>
                             </select>
-                            <div *ngIf="formData.controls['billingState'].invalid && formData.controls['billingState'].touched" class="alert alert-danger">
+                            <div *ngIf="formData.controls['billing_state'].invalid && formData.controls['billing_state'].touched" class="alert alert-danger">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billingZipCode.$invalid)?'invalid':''">
-                            <label class="control-label" for="billingZipCode">Zip Code: </label>
-                            <input formControlName="billingZipCode" type="text" id="billingZipCode" name="billingZipCode" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billingZipCode" maxlength="5" placeholder="_____" autocomplete="off" required="required">
-                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billingZipCode.$invalid">
+                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billing_zip_code.$invalid)?'invalid':''">
+                            <label class="control-label" for="billing_zip_code">Zip Code: </label>
+                            <input formControlName="billing_zip_code" type="text" id="billing_zip_code" name="billing_zip_code" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" ng-required="!billingData.sameAddress" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billing_zip_code" maxlength="5" placeholder="_____" autocomplete="off" required="required">
+                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billing_zip_code.$invalid">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>
@@ -290,7 +290,7 @@
     <script class="ng-scope">
     $('#creditCardNumber').mask('0000000000000000', { placeholder: '________________'});
     $('#cvv').mask('0000', { placeholder: '____'});
-    $('#billingZipCode').mask('00000', { placeholder: '_____'});
+    $('#billing_zip_code').mask('00000', { placeholder: '_____'});
     </script>
     </div>
 </div>

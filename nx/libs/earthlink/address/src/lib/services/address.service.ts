@@ -44,12 +44,12 @@ export class AddressService {
     this.token = localStorage.getItem('token'),
     this.stateSubscription = this.store.select(getEarthlinkAddressState).subscribe((addresState) => {
       this.addressState = this.addressState
-    })
+    });
+    this.customHeaders();
    }
 
   
   serviceQualification(address: Address) {
-    this.customHeaders();
     return this.apiService.post( qualify, address, this.headers).pipe(
       map((response: any) => {
         let uuid = response.uuid;
@@ -92,7 +92,6 @@ export class AddressService {
   }
 
   generateTransaction() {
-    this.customHeaders();
     this.store.dispatch(loading())
     return this.apiService.post(transaction, { "provider": "earthlink" }, this.headers).pipe(
       tap((response: any) => {
