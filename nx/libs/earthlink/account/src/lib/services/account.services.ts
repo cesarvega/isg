@@ -23,9 +23,12 @@ export class AccountService {
         return this.apiService.post( addAccount, account, headers).pipe(
             tap((response: any) => {
                 if( response && response.id ){
+
+                    //Append the password to store, because the server response wont include it (protected)
+                    Object.assign( response, { "password": account.password })
+
                     this.store.dispatch( createAccount( { account: response } ))
                     this.router.navigate(['/billing']);
-                    //return response;
                 }else{
                     if( response.error )
                     this.store.dispatch( createAccountFailure( response.error ))

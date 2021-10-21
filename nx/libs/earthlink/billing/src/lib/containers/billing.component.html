@@ -33,14 +33,6 @@
                     Billing Info
                 </h3>
                 <hr>
-                <div class="alert alert-danger ng-binding ng-hide" *ngIf="error$">
-                    <strong>
-                        <i class="fa fa-exclamation-circle"></i>
-                        An error occurred:
-                    </strong>
-                    <hr>
-                    
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="alert" [class]="(autoPayDisclaimer && disclaimer)?'alert-success':'alert-danger'">
@@ -65,6 +57,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="alert alert-danger ng-binding ng-hide" *ngIf="objErrors">
+                    <strong >
+                        <i class="fa fa-exclamation-circle"></i>
+                        An error occurred: 
+                    </strong>
+                    <ul>
+                        <li *ngFor="let err of objErrors">{{ err }}</li>
+                    </ul>
+                </div>                
                 <div class="row" ng-show="!billingData.cardSavedInSession">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -96,6 +97,7 @@
                                 <option value="11">11 - Nov</option>
                                 <option value="12">12 - Dec</option>
                             </select>
+                            <!-- TODO -->
                             <div *ngIf="formData.controls['expDateMonth'].invalid && formData.controls['expDateMonth'].touched" class="alert alert-danger">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
@@ -119,6 +121,7 @@
                                 <option label="2030" value="2030">2030</option>
                                 <option label="2031" value="2031">2031</option>
                             </select>
+                            <!-- TODO -->
                             <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.expDateYear.$invalid">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required

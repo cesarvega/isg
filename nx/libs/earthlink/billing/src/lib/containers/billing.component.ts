@@ -10,7 +10,7 @@ import { errorPayment } from '../+state/billing/earthlink-billing.actions';
 import { getCurrentAccount } from '@nx/earthlink/account';
 import { CcTest } from '../services/test-creditcard';
 import { states } from '@nx/earthlink/utilities';
-import { getAddressState } from '@nx/earthlink/state';
+import { getAddressState, getOffersState } from '@nx/earthlink/state';
 import { takeUntil } from 'rxjs/operators';
 import { BillingService } from '../services/billing.services';
 declare var paymentTechEncrypt: any;
@@ -24,11 +24,14 @@ export class BillingComponent implements OnInit {
 
   stateSubscription: Subscription | undefined;
   account$: any = null;
-  error$: any = null;
+  
   billingData: any = null;
   autoPayDisclaimer: boolean = false;
   disclaimer: boolean = false;
   address$: any = null;
+
+  productId$: any = null;
+
 
   /** Form and controls **/
   formData!: any;
@@ -37,7 +40,7 @@ export class BillingComponent implements OnInit {
   states: any = states;
 
   isError$ = new Subject<boolean>();
-  objErrors:any = [];
+  objErrors:any = null;
 
   ccIsEncrypted: any = null;
 
@@ -86,6 +89,16 @@ export class BillingComponent implements OnInit {
         this.router.navigate(['/address']);
       }
     })
+    this.stateSubscription.unsubscribe;
+
+    this.stateSubscription = this.store.select(getOffersState).subscribe((response) => {
+      if( response && response.product && response.product.id ){
+        this.productId$ = response.product.id ;
+      }else{
+        this.router.navigate(['/offers']);
+      }
+    })
+    this.stateSubscription.unsubscribe;    
   }
 
   destroy$ = new Subject<boolean>();
@@ -158,6 +171,7 @@ export class BillingComponent implements OnInit {
 
 
   encryptCC(cc: any,vv: any){
+    this.objErrors = null;
     if (!cc){
       cc = this.formData.get('creditCardNumberInput').value;
     }
@@ -172,15 +186,19 @@ export class BillingComponent implements OnInit {
      ******************************************************/
     this.ccIsEncrypted = paymentTechEncrypt.card(cc, vv);
     if (this.ccIsEncrypted ){
+
       /** the field already exists at the form? **/
       if( this.formData.get('creditcardnumber')){
         /** update its value **/
         this.formData.get('creditcardnumber').value = this.ccIsEncrypted;
       }else{
+
         /** creating and appening the field to the form **/
         this.formData.addControl( 'creditcardnumber', new FormControl(this.ccIsEncrypted, Validators.required));
       }
     }else{
+      /****** CC invalid  ******/
+      this.objErrors = ['Invalid Credit Card Number and/or CVV'];
       /** if the field already exists, update its value **/
       if(this.formData.get('creditcardnumber')){
         this.formData.get('creditcardnumber').value = null;
@@ -249,19 +267,40 @@ export class BillingComponent implements OnInit {
   async submitOrder(){
     /*** Disabling input boxes wont be send ***/
     this.formData.get('creditCardNumberInput').disable();
-    this.formData.get('cvv').disable();
-    this.formData.get('expDateYear').disable();
-    this.formData.get('expDateMonth').disable();
 
-
-    this.formData.addControl( 'address_line1', new FormControl(this.address$.address_line1));
-    this.formData.addControl( 'address_line2', new FormControl(this.address$.address_line2));
+    /** Adding disclaimer fields **/
+    this.formData.addControl( 'AgentReadTC', new FormControl('Yes'));
+    this.formData.addControl( 'CustomerAcceptedTC', new FormControl('Yes'));
+    this.formData.addControl( 'TC_source', new FormControl('Infinity-CallCenter'));
+    
+    /** Service Address **/
+    this.formData.addControl( 'address1', new FormControl(this.address$.address_line1));
+    // TODO ???'address_line2', new FormControl(this.address$.address_line2));
     this.formData.addControl( 'city', new FormControl(this.address$.city));
-    this.formData.addControl( 'first_name', new FormControl(this.address$.first_name));
-    this.formData.addControl( 'last_name', new FormControl(this.address$.last_name));
+    this.formData.addControl( 'state', new FormControl(this.address$.state));
+    this.formData.addControl( 'zip_code', new FormControl(this.address$.zip_code));    
+
+    /** Billing Address **/
+    /************************
+     *  fields sent 
+     * *********************/
+    //billing_address_line1
+    //billing_address_line2 like unit
+    //billing_city
+    //billing_state
+    //billing_zip_code
+
+
+    /** Registration Info **/
+    this.formData.addControl( 'firstname', new FormControl(this.address$.first_name));
+    this.formData.addControl( 'lastname', new FormControl(this.address$.last_name));
     this.formData.addControl( 'email', new FormControl(this.address$.email));
     this.formData.addControl( 'phone', new FormControl(this.address$.first_name));
-    this.formData.addControl( 'alt_phone', new FormControl(this.address$.alt_phone));
+    this.formData.addControl( 'alt_phone', new FormControl(this.address$.day_phone));
+    this.formData.addControl( 'password', new FormControl(this.account$.password));
+
+    /** SERVICE REFERENCE **/
+    this.formData.addControl( 'service_reference', new FormControl(this.productId$));
 
     await this.billingService.makeApayment(this.formData.value);
   }
