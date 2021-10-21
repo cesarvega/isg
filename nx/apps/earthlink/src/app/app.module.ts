@@ -113,7 +113,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ]),
     NgbModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: Window,
+      useValue: window
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

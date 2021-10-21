@@ -2,7 +2,7 @@
 /*
     switch API route based on environment: prod/dev
 */
-var api_url='http://localhost:8000/';
+var api_url='http://localhost:8000/';//https://isg-br-webdev/wc/carlos/earthlink-api
 // switch( env.NODE_ENV){
 //     case 'development':
 //         api_url = 'http://localhost:8000';

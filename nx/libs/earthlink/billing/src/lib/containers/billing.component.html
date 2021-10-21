@@ -1,7 +1,5 @@
 <div>
     <div ng-view="" class="ng-scope">    
-        <script src="https://safetechpageencryptionvar.chasepaymentech.com/pie/v1/64100000000198/getkey.js?t=1634333672" type="text/javascript" class="ng-scope"></script>
-        <script src="https://safetechpageencryptionvar.chasepaymentech.com/pie/v1/encryption.js?t=1634333672" type="text/javascript" class="ng-scope"></script>
         <div class="row ng-scope">
         <div>
             <div class="row">
@@ -64,10 +62,10 @@
                 </div>
                 <div class="row" ng-show="!billingData.cardSavedInSession">
                     <div class="col-md-4">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.creditCardNumber.$invalid)?'invalid':''">
-                            <label class="control-label" for="creditCardNumber">Credit Card Number: </label>
-                            <input formControlName="creditCardNumber" type="password" id="creditCardNumber" name="creditCardNumber" class="form-control" maxlength="16" placeholder="________________" autocomplete="off">
-                            <div *ngIf="formData.controls['creditCardNumber'].invalid && formData.controls['creditCardNumber'].touched" class="alert alert-danger">
+                        <div class="form-group">
+                            <label class="control-label" for="creditCardNumberInput">Credit Card Number: </label>
+                            <input (change)="encryptCC(null, null)" formControlName="creditCardNumberInput" type="text" id="creditCardNumberInput" name="creditCardNumberInput" class="form-control" maxlength="16" placeholder="________________" autocomplete="off">
+                            <div *ngIf="formData.controls['creditCardNumberInput'].invalid && formData.controls['creditCardNumberInput'].touched" class="alert alert-danger">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>
@@ -76,7 +74,7 @@
                 </div>
                 <div class="row" ng-show="!billingData.cardSavedInSession">
                     <div class="col-md-2">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.expDateMonth.$invalid)?'invalid':''">
+                        <div class="form-group">
                             <label class="control-label" for="expDateMonth">Exp Date Month: </label>
                             <select formControlName="expDateMonth" id="expDateMonth" name="expDateMonth" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required">
                                 <option value="" selected="selected">::: EXP MONTH :::</option>
@@ -100,7 +98,7 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.expDateYear.$invalid)?'invalid':''">
+                        <div class="form-group">
                             <label class="control-label" for="expDateYear">Exp Date Year: </label>
                             <select formControlName="expDateYear" id="expDateYear" name="expDateYear" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" [disabled]="sendingOrder" ng-options="year as year for year in years">
                                 <option value="" class="" selected="selected">::: EXP YEAR :::</option>
@@ -123,9 +121,9 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.cvv.$invalid)?'invalid':''">
+                        <div class="form-group">
                             <label class="control-label" for="cvv">Credit Card CVV: </label>
-                            <input formControlName="cvv" type="password" id="cvv" name="cvv" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" [disabled]="sendingOrder" maxlength="4" placeholder="____" autocomplete="off">
+                            <input (change)="encryptCC(null, null)" formControlName="cvv" type="password" id="cvv" name="cvv" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength" [disabled]="sendingOrder" maxlength="4" placeholder="____" autocomplete="off">
                             <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.cvv.$invalid">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
@@ -277,7 +275,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-primary pull-right" (click)="submitOrder()" [disabled]="formData.invalid || sendingOrder || !agreeTerms || !autoPayDisclaimer">
+                        <button class="btn btn-primary pull-right" (click)="submitOrder()" [disabled]="formData.invalid || sendingOrder || !agreeTerms || !autoPayDisclaimer || !ccIsEncrypted">
                             Submit Order
                             <i class="fa fa-arrow-right" ng-hide="sendingOrder"></i>
                             <i class="fa fa-spin fa-spinner ng-hide" ng-show="sendingOrder"></i>
@@ -288,7 +286,7 @@
         </div>
     </div>
     <script class="ng-scope">
-    $('#creditCardNumber').mask('0000000000000000', { placeholder: '________________'});
+    $('#creditCardNumberInput').mask('0000000000000000', { placeholder: '________________'});
     $('#cvv').mask('0000', { placeholder: '____'});
     $('#billing_zip_code').mask('00000', { placeholder: '_____'});
     </script>

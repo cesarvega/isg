@@ -13,9 +13,10 @@ import { states } from '@nx/earthlink/utilities';
 import { getAddressState } from '@nx/earthlink/state';
 import { takeUntil } from 'rxjs/operators';
 import { BillingService } from '../services/billing.services';
+declare var myExtObject: any;
 
 @Component({
-  selector: 'nx-containers',
+  selector: 'nx-billing',
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss']
 })
@@ -37,6 +38,7 @@ export class BillingComponent implements OnInit {
   isError$ = new Subject<boolean>();
   objErrors:any = [];
 
+  ccIsEncrypted: any = null;
 
 
   /** Modal **/
@@ -45,6 +47,7 @@ export class BillingComponent implements OnInit {
   chkClearAddress: any;
 
   constructor(
+    private window: Window,
     private billingService: BillingService,
     private store: Store,
     private router: Router,
@@ -53,7 +56,7 @@ export class BillingComponent implements OnInit {
     //private billingService: BillingService,
     //private update$: Actions,
   ) { 
-
+    
     this.stateSubscription = update$.pipe(
       ofType(errorPayment))
       .pipe(takeUntil(this.destroy$))
@@ -84,7 +87,6 @@ export class BillingComponent implements OnInit {
     })
   }
 
-
   destroy$ = new Subject<boolean>();
   ngOnDestroy(){
     this.destroy$.next();
@@ -94,7 +96,7 @@ export class BillingComponent implements OnInit {
 
   createForm(){
     this.formData = new FormGroup({
-      creditCardNumber: new FormControl('', Validators.required),
+      creditCardNumberInput: new FormControl('', Validators.required),
       expDateMonth: new FormControl('', Validators.required),
       expDateYear: new FormControl('', Validators.required),
       cvv: new FormControl('', Validators.required),
@@ -137,7 +139,7 @@ export class BillingComponent implements OnInit {
   useCaseCc(){
     this.formData.patchValue(
       {
-        creditCardNumber: CcTest.number,
+        creditCardNumberInput: CcTest.number,
         expDateMonth: CcTest.expMonth,
         expDateYear: CcTest.expYear,
         cvv: CcTest.cvv
@@ -146,7 +148,26 @@ export class BillingComponent implements OnInit {
   }
 
 
+  encryptCC(cc: any,vv: any){
+    if (!cc){
+      cc = this.formData.get('creditCardNumberInput').value;
+    }
+
+    if( !vv ){
+      vv = this.formData.get('cvv').value;
+    }
+
+    this.ccIsEncrypted = myExtObject.func1(cc, vv);
+    if (this.ccIsEncrypted ){
+      this.formData.addControl( 'creditcardnumber', new FormControl(this.ccIsEncrypted));
+    }else{
+      if(this.formData.get('creditcardnumber')){
+        this.formData.get('creditcardnumber').value = null;}
+    }
+  }
+
   checkSameAddress(e: any){
+    this.encryptCC( this.formData.get('creditCardNumberInput').value, this.formData.get('cvv').value );
     if( e.target.checked ){
       this.formData.patchValue(
         { 
@@ -204,6 +225,13 @@ export class BillingComponent implements OnInit {
   }
 
   async submitOrder(){
+    /*** Disabling input boxes wont be send ***/
+    this.formData.get('creditCardNumberInput').disable();
+    this.formData.get('cvv').disable();
+    this.formData.get('expDateYear').disable();
+    this.formData.get('expDateMonth').disable();
+
+
     this.formData.addControl( 'address_line1', new FormControl(this.address$.address_line1));
     this.formData.addControl( 'address_line2', new FormControl(this.address$.address_line2));
     this.formData.addControl( 'city', new FormControl(this.address$.city));
