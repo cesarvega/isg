@@ -43,7 +43,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="alert" [class]="autoPayDisclaimer?'alert-success':'alert-danger'">
+                        <div class="alert" [class]="(autoPayDisclaimer && disclaimer)?'alert-success':'alert-danger'">
                             <strong style="font-size: 1.2em;">
                                 Mandatory Disclaimer
                             </strong>
@@ -53,8 +53,13 @@
                             saved by EarthLink for future transactions on your account. For further information on auto payments, please see earthlink.net. By saying "yes" or "no"
                             please state that you understand and consent to EarthLink processing your payment.
                             <hr>
+                            <label for="agentReadDisclaimer" class="control-label" style="cursor: pointer;">
+                                <input type="checkbox" (change)="f_agentReadDisclaimer($event)" name="AgentReadTC" id="agentReadDisclaimer" required="required" />
+                                I have read the disclaimer to the customer.
+                            </label> 
+                            <br />                          
                             <label for="autoPayDisclaimer" class="control-label" style="cursor: pointer;">
-                                <input type="checkbox" (change)="f_autoPayDisclaimer($event)" name="autoPayDisclaimer" id="autoPayDisclaimer" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+                                <input type="checkbox" (change)="f_autoPayDisclaimer($event)" name="autoPayDisclaimer" id="autoPayDisclaimer" required="required">
                                 I have read the disclaimer to the customer and customer agreed to the Automatic Payment terms.
                             </label>
                         </div>
@@ -275,7 +280,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-primary pull-right" (click)="submitOrder()" [disabled]="formData.invalid || sendingOrder || !agreeTerms || !autoPayDisclaimer || !ccIsEncrypted">
+                        <button class="btn btn-primary pull-right" (click)="submitOrder()" [disabled]="formData.invalid || sendingOrder || !agreeTerms || !autoPayDisclaimer || !disclaimer || !ccIsEncrypted">
                             Submit Order
                             <i class="fa fa-arrow-right" ng-hide="sendingOrder"></i>
                             <i class="fa fa-spin fa-spinner ng-hide" ng-show="sendingOrder"></i>

@@ -13,7 +13,7 @@ import { states } from '@nx/earthlink/utilities';
 import { getAddressState } from '@nx/earthlink/state';
 import { takeUntil } from 'rxjs/operators';
 import { BillingService } from '../services/billing.services';
-declare var myExtObject: any;
+declare var paymentTechEncrypt: any;
 
 @Component({
   selector: 'nx-billing',
@@ -27,6 +27,7 @@ export class BillingComponent implements OnInit {
   error$: any = null;
   billingData: any = null;
   autoPayDisclaimer: boolean = false;
+  disclaimer: boolean = false;
   address$: any = null;
 
   /** Form and controls **/
@@ -119,6 +120,14 @@ export class BillingComponent implements OnInit {
     this.chkClearAddress = 1;
   }
 
+  f_agentReadDisclaimer( e: any ){
+    if(e.target.checked ){
+      this.disclaimer = true;
+    }else{
+      this.disclaimer = false;
+    }
+  }
+
   f_autoPayDisclaimer( e:any ){
     if(e.target.checked ){
       this.autoPayDisclaimer = true;
@@ -157,12 +166,25 @@ export class BillingComponent implements OnInit {
       vv = this.formData.get('cvv').value;
     }
 
-    this.ccIsEncrypted = myExtObject.func1(cc, vv);
+    /******************************************************
+     *  paymentTechEncrypt is a function at chase.js file
+     * chase.js file was added in app/index.html file
+     ******************************************************/
+    this.ccIsEncrypted = paymentTechEncrypt.card(cc, vv);
     if (this.ccIsEncrypted ){
-      this.formData.addControl( 'creditcardnumber', new FormControl(this.ccIsEncrypted));
+      /** the field already exists at the form? **/
+      if( this.formData.get('creditcardnumber')){
+        /** update its value **/
+        this.formData.get('creditcardnumber').value = this.ccIsEncrypted;
+      }else{
+        /** creating and appening the field to the form **/
+        this.formData.addControl( 'creditcardnumber', new FormControl(this.ccIsEncrypted, Validators.required));
+      }
     }else{
+      /** if the field already exists, update its value **/
       if(this.formData.get('creditcardnumber')){
-        this.formData.get('creditcardnumber').value = null;}
+        this.formData.get('creditcardnumber').value = null;
+      }
     }
   }
 

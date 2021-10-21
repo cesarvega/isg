@@ -1,8 +1,8 @@
 //This function encrypts
 //returns encrypted card number (if successful) and code
-var myExtObject = (function(ccNumber, cvv) {
+var paymentTechEncrypt = (function(ccNumber, cvv) {
   return {
-    func1: function(ccNumber, cvv){
+    card: function(ccNumber, cvv){
       var validated = globalThis.ValidatePANChecksum('"' + ccNumber + '"');
 
       var response = null;
@@ -16,12 +16,4 @@ var myExtObject = (function(ccNumber, cvv) {
       return response;
     }
   }
-})(myExtObject||{})
-
-var webGlObject = (function(){
-  return {
-    init: function(){
-      alert('initialized');
-    }
-  }
-})(webGlObject||{})
+})(paymentTechEncrypt||{})
