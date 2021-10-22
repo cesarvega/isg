@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpHeaders } from '@angular/common/http';
+
 import { Store } from '@ngrx/store';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Subject, Subscription } from 'rxjs';
@@ -41,7 +41,7 @@ password: any = null;
 day_phone: any = null;
 home_phone: any = null;
 token: any = null;
-headers = new HttpHeaders;
+
 
 
   constructor(
@@ -173,14 +173,14 @@ headers = new HttpHeaders;
   }
 
   async onSubmit(){
-    if( this.account$ ) return;
-    this.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token,
-      'Accept': 'application/json'
-    });
-
     const account = this.formdata.value;
-    await this.accountService.createAccount(account, this.headers );
+    await this.accountService.createAccount(account );
+  }
+
+  chooseSuggestion(e: string){
+    this.formdata.patchValue(
+      { 
+        user_name: e
+      })
   }
 }

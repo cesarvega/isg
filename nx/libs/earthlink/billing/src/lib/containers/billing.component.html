@@ -70,7 +70,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label" for="creditCardNumberInput">Credit Card Number: </label>
-                            <input (change)="encryptCC(null, null)" formControlName="creditCardNumberInput" type="text" id="creditCardNumberInput" name="creditCardNumberInput" class="form-control" maxlength="16" placeholder="________________" autocomplete="off">
+                            <input (change)="encryptCC(null, null)" formControlName="creditCardNumberInput" type="password" id="creditCardNumberInput" name="creditCardNumberInput" class="form-control" maxlength="16" placeholder="________________" autocomplete="off">
                             <div *ngIf="formData.controls['creditCardNumberInput'].invalid && formData.controls['creditCardNumberInput'].touched" class="alert alert-danger">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required

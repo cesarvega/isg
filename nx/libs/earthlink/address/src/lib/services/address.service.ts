@@ -16,7 +16,7 @@ import { orderDetailsActionRequest } from '@nx/earthlink/offers';
 import { Offers } from '@nx/earthlink/offers';
 import { OffersService } from '@nx/earthlink/offers';
 import { Router } from '@angular/router';
-import { HttpHeaders } from '@angular/common/http';
+import { CustomHeaders } from '@nx/earthlink/shared';
 
 @Injectable({
   providedIn: 'root'
@@ -38,14 +38,14 @@ export class AddressService {
     private store: Store<any>,
     private router: Router,
     private offersService: OffersService,
-    
+    private customHeaders: CustomHeaders,
 
   ) {
     this.token = localStorage.getItem('token'),
     this.stateSubscription = this.store.select(getEarthlinkAddressState).subscribe((addresState) => {
       this.addressState = this.addressState
     });
-    this.customHeaders();
+    this.headers = this.customHeaders.bearer( this.token );
    }
 
   
@@ -54,7 +54,7 @@ export class AddressService {
       map((response: any) => {
         let uuid = response.uuid;
         if( uuid ){
-            localStorage.setItem('uuidStr', uuid);
+            localStorage.setItem('uuidStr', uuid);// TODO ???
             //update address store
             this.store.dispatch(addressRequest( { address: address } ))
         }else{
@@ -85,7 +85,7 @@ export class AddressService {
         this.offersService.productIdsActionRequestService({ availableProductsIds })
         this.store.dispatch(setEarthLinkTransactionId({ earthLinkTransactionId }))
       }, (error) => {
-        this.store.dispatch(errorAction({ error }))
+        this.store.dispatch(errorAction({ error: error.response }))
       }
       )
     ).toPromise();
@@ -98,17 +98,10 @@ export class AddressService {
         const orderNumber = response.OrderNumber;
         this.store.dispatch(setTransaction({ transaction: orderNumber }))
       }, (error) => {
-        this.store.dispatch(errorAction({ error }))
+        this.store.dispatch(errorAction({ error: error.error }))
       }
       ),
     ).toPromise();
   }
 
-  customHeaders(){
-    this.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token,
-      'Accept': 'application/json'
-    });
-  }
 }

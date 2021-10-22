@@ -68,7 +68,7 @@ objErrors:any = [];
           if(
               data.hasOwnProperty('error')
           ){
-            this.objErrors.push( data.error.error.message )
+            this.objErrors.push( data.error )
           }else{
             this.objErrors.push( 'The form was not sent. An error has ocurred.');
           }

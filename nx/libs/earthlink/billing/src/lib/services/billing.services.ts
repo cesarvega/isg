@@ -8,7 +8,7 @@ import { payUrl } from "./endpoints";
 import { paymentSuccess, errorPayment } from '../+state/billing/earthlink-billing.actions';
 import { confirmationSuccess } from '@nx/earthlink/confirmation';
 import { iPayment } from '../interfaces/payment';
-import { isParameter } from "typescript";
+import { CustomHeaders } from "@nx/earthlink/shared";
 
 
 @Injectable({
@@ -23,9 +23,10 @@ export class BillingService{
         private apiService: ApiService,
         private store: Store,
         private router: Router,
+        private customHeaders: CustomHeaders,
     ){
         this.token = localStorage.getItem('token');
-        this.customHeaders();
+        this.headers = this.customHeaders.bearer( this.token );
     }
 
     
@@ -50,14 +51,5 @@ export class BillingService{
             )
         ).toPromise();
 
-    }
-
-
-    customHeaders(){
-        this.headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.token,
-            'Accept': 'application/json'
-        });
     }
 }

@@ -56,7 +56,7 @@ export class BillingComponent implements OnInit {
     private store: Store,
     private router: Router,
     private modalService: NgbModal,
-    update$: Actions,
+    private update$: Actions,
     //private billingService: BillingService,
     //private update$: Actions,
   ) { 

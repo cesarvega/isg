@@ -49,7 +49,7 @@
               </div>
               <div *ngIf="isError$ | async" class="alert alert-danger">
                 <ul>
-                  <li *ngFor = "let err of objErrors">{{ err }}</li>
+                  <li *ngFor = "let err of objErrors">{{ err.message }}</li>
                 </ul>
               </div>
             <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
