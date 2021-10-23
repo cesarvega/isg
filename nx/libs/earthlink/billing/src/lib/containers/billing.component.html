@@ -81,8 +81,8 @@
                 <div class="row" ng-show="!billingData.cardSavedInSession">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label class="control-label" for="expDateMonth">Exp Date Month: </label>
-                            <select formControlName="expDateMonth" id="expDateMonth" name="expDateMonth" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required">
+                            <label class="control-label" for="exp_date_month">Exp Date Month: </label>
+                            <select formControlName="exp_date_month" id="exp_date_month" name="exp_date_month" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required="required">
                                 <option value="" selected="selected">::: EXP MONTH :::</option>
                                 <option value="01">01 - Jan</option>
                                 <option value="02">02 - Feb</option>
@@ -98,7 +98,7 @@
                                 <option value="12">12 - Dec</option>
                             </select>
                             <!-- TODO -->
-                            <div *ngIf="formData.controls['expDateMonth'].invalid && formData.controls['expDateMonth'].touched" class="alert alert-danger">
+                            <div *ngIf="formData.controls['exp_date_month'].invalid && formData.controls['exp_date_month'].touched" class="alert alert-danger">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>
@@ -106,8 +106,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label class="control-label" for="expDateYear">Exp Date Year: </label>
-                            <select formControlName="expDateYear" id="expDateYear" name="expDateYear" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" [disabled]="sendingOrder" ng-options="year as year for year in years">
+                            <label class="control-label" for="exp_date_year">Exp Date Year: </label>
+                            <select formControlName="exp_date_year" id="exp_date_year" name="exp_date_year" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" [disabled]="sendingOrder" ng-options="year as year for year in years">
                                 <option value="" class="" selected="selected">::: EXP YEAR :::</option>
                                 <option label="2021" value="2021">2021</option>
                                 <option label="2022" value="2022">2022</option>
@@ -122,7 +122,7 @@
                                 <option label="2031" value="2031">2031</option>
                             </select>
                             <!-- TODO -->
-                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.expDateYear.$invalid">
+                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.exp_date_year.$invalid">
                                 <i class="fa fa-exclamation-circle"></i>
                                 This field is required
                             </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faBars, faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCoffee, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'nx-root',
   templateUrl: './app.component.html',
@@ -9,4 +9,5 @@ export class AppComponent {
   title = 'earthlink';
   faBars = faBars;
   faCoffee = faCoffee;
+  faExclamationCircle = faExclamationCircle
 }

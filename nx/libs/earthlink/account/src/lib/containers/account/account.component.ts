@@ -3,7 +3,7 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subject, Subscription } from 'rxjs';
 import { getCurrentProduct } from '@nx/earthlink/offers';
 import { getAddressState, getAccountFailure } from '@nx/earthlink/state';
@@ -23,6 +23,7 @@ export class AccountComponent implements OnInit {
 
   /*** ICONS ****/
   faBars = faBars;
+  faExclamationCircle = faExclamationCircle;
 
   errors: any = null;
   stateSubscription: Subscription | undefined;

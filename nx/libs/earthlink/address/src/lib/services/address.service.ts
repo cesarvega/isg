@@ -13,7 +13,7 @@ import { getTransactionId } from './helpers/getTransactionId';
 import { Subscription } from 'rxjs';
 import { getEarthlinkAddressState } from '../+state/address/earthlink-address.selectors';
 import { orderDetailsActionRequest } from '@nx/earthlink/offers';
-import { Offers } from '@nx/earthlink/offers';
+//import { Offers } from '@nx/earthlink/offers';
 import { OffersService } from '@nx/earthlink/offers';
 import { Router } from '@angular/router';
 import { CustomHeaders } from '@nx/earthlink/shared';
@@ -52,9 +52,7 @@ export class AddressService {
   serviceQualification(address: Address) {
     return this.apiService.post( qualify, address, this.headers).pipe(
       map((response: any) => {
-        let uuid = response.uuid;
-        if( uuid ){
-            localStorage.setItem('uuidStr', uuid);// TODO ???
+        if( response && response.result && response.result.availableProductCount ){
             //update address store
             this.store.dispatch(addressRequest( { address: address } ))
         }else{
@@ -62,12 +60,10 @@ export class AddressService {
         }
         //if (isServiceFound(response)) {
           this.store.dispatch(setCustomerType({ customerType: "SLI" }));
-          return Offers;
+
+          /*** Returning OFFERS ***/
+          return response.result;
         // }
-        // else if (noOffersFound(response)) {
-        //   throw new Error("We could not find Offers");
-        // }
-        // return response;
       }),
       tap((request) => {
         const order = request.orderNumber;

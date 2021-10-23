@@ -111,8 +111,8 @@ export class BillingComponent implements OnInit {
   createForm(){
     this.formData = new FormGroup({
       creditCardNumberInput: new FormControl('', Validators.required),
-      expDateMonth: new FormControl('', Validators.required),
-      expDateYear: new FormControl('', Validators.required),
+      exp_date_month: new FormControl('', Validators.required),
+      exp_date_year: new FormControl('', Validators.required),
       cvv: new FormControl('', Validators.required),
       billing_address_line1: new FormControl('', Validators.required),
       billing_address_line2: new FormControl('', Validators.required),
@@ -162,8 +162,8 @@ export class BillingComponent implements OnInit {
     this.formData.patchValue(
       {
         creditCardNumberInput: CcTest.number,
-        expDateMonth: CcTest.expMonth,
-        expDateYear: CcTest.expYear,
+        exp_date_month: CcTest.expMonth,
+        exp_date_year: CcTest.expYear,
         cvv: CcTest.cvv
       }
     )
@@ -190,7 +190,11 @@ export class BillingComponent implements OnInit {
       /** the field already exists at the form? **/
       if( this.formData.get('creditcardnumber')){
         /** update its value **/
-        this.formData.get('creditcardnumber').value = this.ccIsEncrypted;
+        this.formData.patchValue(
+          {
+            'creditcardnumber': this.ccIsEncrypted
+          }
+        )
       }else{
 
         /** creating and appening the field to the form **/
@@ -201,7 +205,11 @@ export class BillingComponent implements OnInit {
       this.objErrors = ['Invalid Credit Card Number and/or CVV'];
       /** if the field already exists, update its value **/
       if(this.formData.get('creditcardnumber')){
-        this.formData.get('creditcardnumber').value = null;
+        this.formData.patchValue(
+          {
+            'creditcardnumber': null
+          }
+        )
       }
     }
   }
@@ -220,11 +228,11 @@ export class BillingComponent implements OnInit {
         }
       );
       
-      this.formData.get('billing_address_line1').disable();
-      this.formData.get('billing_address_line2').disable();
-      this.formData.get('billing_city').disable();
-      this.formData.get('billing_state').disable();
-      this.formData.get('billing_zip_code').disable();
+      // this.formData.get('billing_address_line1').disable();
+      // this.formData.get('billing_address_line2').disable();
+      // this.formData.get('billing_city').disable();
+      // this.formData.get('billing_state').disable();
+      // this.formData.get('billing_zip_code').disable();
 
     }else{
       this.showModal();
