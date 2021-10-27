@@ -104,20 +104,20 @@
                 <div class="form-group" *ngIf="address$">
                     <label for="day_phone" class="control-label">Day Phone Number:</label>
                     <span class="form-control fake-input-box">{{ address$.phone }}</span>
-                    <input type="hidden" id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
+                    <!-- <input type="hidden" id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off"> -->
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group" *ngIf="address$">
                     <label for="home_phone" class="control-label">Home Phone Number:</label>
                     <span class="form-control fake-input-box">{{ address$.alt_phone }}</span>
-                    <input type="hidden" [disabled]=true id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off">
+                    <!-- <input type="hidden" [disabled]=true id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off"> -->
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="alternativeEmail" class="control-label">Alternative Email:</label>
-                    <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" ng-model="account.alternativeEmail">
+                    <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control">
                 </div>
             </div>
         </div>

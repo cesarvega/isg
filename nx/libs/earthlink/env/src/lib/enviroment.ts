@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiBaseUrl: "http://127.0.0.1:8000/api/",//"https://isg-br-webdev/wc/carlos/earthlink-api/api/"
+    apiBaseUrl: "http://127.0.0.1:8000/api/",//"https://isg-br-webdev/wc/carlos/earthlink-api/public/api/"
     VendorId: "00000",
   };
   

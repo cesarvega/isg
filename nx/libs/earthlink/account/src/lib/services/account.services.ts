@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "@nx/earthlink/shared";
-import { addAccount } from './endpoints';
+import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { tap, map } from 'rxjs/operators';
 import { createAccount, createAccountFailure } from "../../lib/+state/account/earthlink-account.actions";
 import { Store } from "@ngrx/store";
@@ -28,7 +28,7 @@ export class AccountService {
 
 
     createAccount( account: any ){
-        return this.apiService.post( addAccount, account, this.headers).pipe(
+        return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.account, account, this.headers).pipe(
             tap((response: any) => {
                 if( response && response.id ){
 

@@ -3,7 +3,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 //import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 /************************************************ */
-import { loginUrl } from './endpoints';
+import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { ApiService } from '@nx/earthlink/shared';
 import { ENDPOINT } from '@nx/earthlink/api';
 @Injectable({
@@ -17,7 +17,7 @@ export class LoginService {
     ){ }
 
     doLogin( data: any, headers: any){
-      return this.apiService.post( loginUrl, data, headers).pipe(
+      return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.login, data, headers).pipe(
         map((response: any) => {
           //check if is valid login ( TODO ) and navigate
           this.router.navigate([ENDPOINT.address.navigate]);

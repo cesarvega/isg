@@ -8,8 +8,8 @@ export const environment = {
   qualify: '/address',
   transaction: '/transaction/generate',
   login: '/login',
-  payment: '/payment',
-  account: '/account'
+  account: '/account',
+  payment: '/payment'
 };
 
 /*

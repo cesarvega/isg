@@ -4,7 +4,7 @@ import { map, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { HttpHeaders } from "@angular/common/http";
-import { payUrl } from "./endpoints";
+import { SYSTEM_CONFIG } from "@nx/earthlink/config";
 import { paymentSuccess, errorPayment } from '../+state/billing/earthlink-billing.actions';
 import { confirmationSuccess } from '@nx/earthlink/confirmation';
 import { iPayment } from '../interfaces/payment';
@@ -35,7 +35,7 @@ export class BillingService{
     }
 
     makeApayment( payment: iPayment){
-        return this.apiService.post( payUrl, payment, this.headers).pipe(
+        return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.payment, payment, this.headers).pipe(
             map( (response: any ) => {
                 if( response && response.result && response.result == 'success' ){
                     this.store.dispatch(paymentSuccess( { payment } ));

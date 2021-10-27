@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
     const request = this.formdata.value;
  
-    this.http.post( SYSTEM_CONFIG.API_URL + ENDPOINT.login.path, request, options).subscribe(
+    this.http.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.login, request, options).subscribe(
       (response) => this.setData(response),
       (error) => console.log( error)
     )

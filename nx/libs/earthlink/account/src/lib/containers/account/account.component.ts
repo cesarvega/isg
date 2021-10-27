@@ -39,8 +39,8 @@ first_name: any = null;
 last_name: any = null;
 user_name: any = null;
 password: any = null;
-day_phone: any = null;
-home_phone: any = null;
+//day_phone: any = null;
+//home_phone: any = null;
 token: any = null;
 
 
@@ -86,15 +86,15 @@ token: any = null;
       ]
     );
 
-    this.day_phone = new FormControl ('',
-      [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(10),
-        validatePhoneNumber
-      ],
-    );
-    this.home_phone = new FormControl('', validatePhoneNumber );
+    // this.day_phone = new FormControl ('',
+    //   [
+    //     Validators.required,
+    //     Validators.minLength(10),
+    //     Validators.maxLength(10),
+    //     validatePhoneNumber
+    //   ],
+    // );
+    // this.home_phone = new FormControl('', validatePhoneNumber );
 
   }
 
@@ -104,8 +104,8 @@ token: any = null;
       last_name: this.last_name,
       user_name: this.user_name,
       password: this.password,
-      day_phone: this.day_phone,
-      home_phone: this.home_phone,
+      //day_phone: this.day_phone,
+      //home_phone: this.home_phone,
     })
   }
 
@@ -144,8 +144,8 @@ token: any = null;
             last_name: this.account$.last_name,
             user_name: this.account$.user_name,
             password: '****************',
-            day_phone: this.address$.phone,
-            home_phone: this.address$.alt_phone,
+            //day_phone: this.address$.phone,
+            //home_phone: this.address$.alt_phone,
           }
         )
         
@@ -153,8 +153,8 @@ token: any = null;
         this.first_name.disable();
         this.last_name.disable();
         this.user_name.disable();
-        this.day_phone.disable();
-        this.home_phone.disable();  
+        //this.day_phone.disable();
+        //this.home_phone.disable();  
       }else if( this.address$ ){
         this.formdata.setValue(
           {
@@ -162,8 +162,8 @@ token: any = null;
             last_name: '',
             user_name: '',
             password: '',
-            day_phone: this.address$.phone,
-            home_phone: this.address$.alt_phone
+            //day_phone: this.address$.phone,
+            //home_phone: this.address$.alt_phone
           }
         )
         //this.day_phone.disable();
@@ -174,6 +174,10 @@ token: any = null;
   }
 
   async onSubmit(){
+    this.formdata.addControl( 'day_phone', new FormControl( this.address$.phone ));
+    this.formdata.addControl( 'home_phone', new FormControl( this.address$.alt_phone ));
+    this.formdata.addControl( 'email', new FormControl( this.address$.email ));
+    
     const account = this.formdata.value;
     await this.accountService.createAccount(account );
   }

@@ -1,1 +1,1 @@
-export const addAccount = "http://localhost:8000/api/account";
+export const addAccount = "http://localhost:8000/api/account";//"https://isg-br-webdev/wc/carlos/earthlink-api/public/api/account";//

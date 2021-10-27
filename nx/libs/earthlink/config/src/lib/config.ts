@@ -1,16 +1,20 @@
-//to do
 /*
-    switch API route based on environment: prod/dev
+    switch API route based on environment: production /development
 */
-var api_url='http://localhost:8000/';//https://isg-br-webdev/wc/carlos/earthlink-api
-// switch( env.NODE_ENV){
-//     case 'development':
-//         api_url = 'http://localhost:8000';
-//         break;
-//     case 'production':
-//         api_url = '';
-//         break;
-// }
+import { environment } from 'apps/earthlink/src/environments/environment';
+
+var api_url = environment.apiURL;
+var qualify = environment.qualify;
+var transaction = environment.transaction;
+var login = environment.login;
+var payment = environment.payment;
+var account = environment.account;
+
 export const SYSTEM_CONFIG = {
     API_URL: api_url,
+    qualify: qualify,
+    transaction: transaction,
+    login: login,
+    payment: payment,
+    account: account
 }

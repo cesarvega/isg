@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@nx/earthlink/shared';
 import { Address } from '../containers/address/interfaces/address';
-import { qualify, transaction } from './endpoints';
+import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import {  addressRequest, addressResponse, errorAction, loading, setCustomerType, setEarthLinkTransactionId, setTransaction } from '../+state/address/earthlink-address.actions';
@@ -50,7 +50,7 @@ export class AddressService {
 
   
   serviceQualification(address: Address) {
-    return this.apiService.post( qualify, address, this.headers).pipe(
+    return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.qualify, address, this.headers).pipe(
       map((response: any) => {
         if( response && response.result && response.result.availableProductCount ){
             //update address store
@@ -89,7 +89,7 @@ export class AddressService {
 
   generateTransaction() {
     this.store.dispatch(loading())
-    return this.apiService.post(transaction, { "provider": "earthlink" }, this.headers).pipe(
+    return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.transaction, { "provider": "earthlink" }, this.headers).pipe(
       tap((response: any) => {
         const orderNumber = response.OrderNumber;
         this.store.dispatch(setTransaction({ transaction: orderNumber }))
