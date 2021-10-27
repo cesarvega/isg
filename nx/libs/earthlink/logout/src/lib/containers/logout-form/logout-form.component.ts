@@ -34,7 +34,7 @@ export class LogoutFormComponent implements OnInit {
 
     let options = { headers: headers };
     const request = this.formdata.value;
-    this.http.post( SYSTEM_CONFIG.API_URL + ENDPOINT.logout.path, request, options).subscribe(
+    this.http.post( SYSTEM_CONFIG.API_URL + '/logout', request, options).subscribe(
       (response) => this.router.navigate([ENDPOINT.login.navigate]),
       (error) => console.log(error)
     )

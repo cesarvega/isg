@@ -51,7 +51,7 @@ export class BillingComponent implements OnInit {
   chkClearAddress: any;
 
   constructor(
-    private window: Window,
+    //private window: Window,
     private billingService: BillingService,
     private store: Store,
     private router: Router,
@@ -115,7 +115,7 @@ export class BillingComponent implements OnInit {
       exp_date_year: new FormControl('', Validators.required),
       cvv: new FormControl('', Validators.required),
       billing_address_line1: new FormControl('', Validators.required),
-      billing_address_line2: new FormControl('', Validators.required),
+      billing_address_line2: new FormControl(''),
       billing_city: new FormControl('', Validators.required),
       billing_state: new FormControl('', Validators.required),
       billing_zip_code: new FormControl('', Validators.required),
@@ -303,7 +303,7 @@ export class BillingComponent implements OnInit {
     this.formData.addControl( 'firstname', new FormControl(this.address$.first_name));
     this.formData.addControl( 'lastname', new FormControl(this.address$.last_name));
     this.formData.addControl( 'email', new FormControl(this.address$.email));
-    this.formData.addControl( 'phone', new FormControl(this.address$.first_name));
+    this.formData.addControl( 'phone', new FormControl(this.address$.phone));
     this.formData.addControl( 'alt_phone', new FormControl(this.address$.day_phone));
     this.formData.addControl( 'password', new FormControl(this.account$.password));
 

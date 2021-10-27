@@ -207,11 +207,7 @@
                     <div class="col-md-4">
                         <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.billing_address_line2.$invalid)?'invalid':''">
                             <label class="control-label" for="billing_address_line2">Unit: </label>
-                            <input formControlName="billing_address_line2" type="text" id="billing_address_line2" name="billing_address_line2" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-disabled="billingData.sameAddress || sendingOrder" ng-model="billingData.billing_address_line2">
-                            <div class="help-block ng-hide" ng-show="submitted &amp;&amp; billingForm.billing_address_line2.$invalid">
-                                <i class="fa fa-exclamation-circle"></i>
-                                This field is required
-                            </div>
+                            <input formControlName="billing_address_line2" type="text" id="billing_address_line2" name="billing_address_line2" class="form-control">
                         </div>
                     </div>
                 </div>

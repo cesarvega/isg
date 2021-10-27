@@ -19,10 +19,10 @@ export class AccountService {
         private apiService: ApiService,
         private store: Store,
         private router: Router,
-        private customheaders: CustomHeaders,
+        private customHeaders: CustomHeaders,
     ){
         this.token = localStorage.getItem('token'),
-        this.headers = this.customheaders.bearer( this.token );
+        this.headers = this.customHeaders.bearer( this.token );
      }
 
 
@@ -30,13 +30,12 @@ export class AccountService {
     createAccount( account: any ){
         return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.account, account, this.headers).pipe(
             tap((response: any) => {
-                if( response && response.id ){
-
+                if( response && response.result ){
                     //Append the password and user_name to store, because the server response wont include it (are protected)
-                    Object.assign( response, { "password": account.password })
-                Object.assign( response, { "user_name" : account.user_name })
+                    Object.assign( response.result, { "password": account.password })
+                    Object.assign( response.result, { "user_name" : account.user_name })
 
-                    this.store.dispatch( createAccount( { account: response } ))
+                    this.store.dispatch( createAccount( { account: response.result } ))
                     this.router.navigate(['/billing']);
                 }else{
                     if( response.error )

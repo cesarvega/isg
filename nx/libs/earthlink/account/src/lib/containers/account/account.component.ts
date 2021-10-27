@@ -85,17 +85,6 @@ token: any = null;
         //Validators.pattern("[a-z]{2}")
       ]
     );
-
-    // this.day_phone = new FormControl ('',
-    //   [
-    //     Validators.required,
-    //     Validators.minLength(10),
-    //     Validators.maxLength(10),
-    //     validatePhoneNumber
-    //   ],
-    // );
-    // this.home_phone = new FormControl('', validatePhoneNumber );
-
   }
 
   createForm(){
@@ -104,8 +93,6 @@ token: any = null;
       last_name: this.last_name,
       user_name: this.user_name,
       password: this.password,
-      //day_phone: this.day_phone,
-      //home_phone: this.home_phone,
     })
   }
 
@@ -144,8 +131,6 @@ token: any = null;
             last_name: this.account$.last_name,
             user_name: this.account$.user_name,
             password: '****************',
-            //day_phone: this.address$.phone,
-            //home_phone: this.address$.alt_phone,
           }
         )
         
@@ -153,8 +138,6 @@ token: any = null;
         this.first_name.disable();
         this.last_name.disable();
         this.user_name.disable();
-        //this.day_phone.disable();
-        //this.home_phone.disable();  
       }else if( this.address$ ){
         this.formdata.setValue(
           {
@@ -162,12 +145,8 @@ token: any = null;
             last_name: '',
             user_name: '',
             password: '',
-            //day_phone: this.address$.phone,
-            //home_phone: this.address$.alt_phone
           }
         )
-        //this.day_phone.disable();
-        //this.home_phone.disable();
       }
     
     }
