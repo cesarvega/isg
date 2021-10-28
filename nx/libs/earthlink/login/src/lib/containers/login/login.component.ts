@@ -14,8 +14,8 @@ import { ENDPOINT } from '@nx/earthlink/api';
 })
 export class LoginComponent implements OnInit {
 
-  email: any;
-  password: any;
+  email: any = 'cgonzalez@isg.us';
+  password: any = '12345678';
   formdata: any;
 
   constructor(
@@ -24,15 +24,11 @@ export class LoginComponent implements OnInit {
   ) { }
 
 
-  createFormControls(){
-    this.email = new FormControl('', Validators.required);
-    this.password = new FormControl('', Validators.required);
-  }
 
   createForm(){
     this.formdata = new FormGroup({
-      email: this.email,
-      password: this.password
+      email: new FormControl(this.email),
+      password: new FormControl(this.password)
     })
   }
 
@@ -56,8 +52,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createFormControls();
-    this.createForm()
+    this.createForm();
+    this.onSubmit();
   }
 
 }
