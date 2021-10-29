@@ -32,3 +32,7 @@ export const sendProductActionRequest = createAction(
   'sendProductActionRequest',
   props<{ product: any }>()
 ) 
+
+export const LOGOUT = createAction(
+  'Logout'
+)

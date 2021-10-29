@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, ActionReducer, MetaReducer, ActionReducerMap } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,9 +18,18 @@ import * as fromOffers from '@nx/earthlink/offers';
 import * as fromAccount from '@nx/earthlink/account';
 import * as fromBilling from '@nx/earthlink/billing';
 import * as fromConfirmation from '@nx/earthlink/confirmation';
-
-//import { from } from 'rxjs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
+  return function (state, action) {
+      if (action.type === 'Logout') {
+        state = undefined;
+      }
+      return reducer(state, action);
+    };
+  }
+  export const metaReducers: MetaReducer<any>[] = [clearState];
+  const reducers:ActionReducerMap<unknown> = {};
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +42,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EarthlinkSharedModule,
     ReactiveFormsModule,
     EarthlinkLoginModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot([]),
     StoreModule.forFeature(
       fromAddress.EARTHLINK_ADDRESS_FEATURE_KEY,
