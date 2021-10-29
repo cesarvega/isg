@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LOGOUT } from '@nx/earthlink/offers'
+import { LOGOUT } from '@nx/earthlink/shared'
 @Component({
   selector: 'nx-containers',
   templateUrl: './confirmation.component.html',

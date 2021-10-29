@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { Subscription } from "rxjs";
 import { getAddressState, getOffersState, getAccount } from '@nx/earthlink/state'
-import { LOGOUT } from "@nx/earthlink/offers";
+import { LOGOUT } from "@nx/earthlink/shared";
 
 
 @Component({
@@ -71,7 +71,7 @@ export class CartDetailsComponent {
 
     restartOrder(){
         if( confirm('Are you sure?') ){
-             this.store.dispatch(LOGOUT());
+            this.store.dispatch(LOGOUT());
         }
     }
 

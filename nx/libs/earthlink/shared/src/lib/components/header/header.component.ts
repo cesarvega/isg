@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { getAddressState, getBillingState, getAccountState, getProductState, getConfirmationState } from '@nx/earthlink/state';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
-import { LOGOUT } from '@nx/earthlink/offers';
+import { LOGOUT } from '@nx/earthlink/shared';
 @Component({
   selector: 'nx-header',
   templateUrl: './header.component.html',
