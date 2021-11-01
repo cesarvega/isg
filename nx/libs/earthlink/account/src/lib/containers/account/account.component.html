@@ -1,6 +1,6 @@
 <section id="account">
   <div class="row">
-    <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()">
+    <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">
         <h3>
             <fa-icon [icon]="faBars"></fa-icon>
             Account Info
@@ -26,7 +26,15 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="control-label" for="first_name">First Name * </label>
-                    <input type="text" id="first_name" name="first_name" class="form-control" formControlName="first_name">
+                    <input 
+                        role="presentation" 
+                        autocomplete="nope"
+                        type="text" 
+                        id="first_name" 
+                        name="first_name" 
+                        class="form-control" 
+                        formControlName="first_name"
+                    >
                     <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
                         <div *ngIf="formdata.controls['first_name'].errors.required">
                             <i class="fa fa-exclamation-circle"></i>
@@ -38,7 +46,15 @@
             <div class="col-md-4">
                 <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.lastName.$invalid)?'invalid':''">
                     <label class="control-label" for="lastName">Last Name * </label>
-                    <input type="text" id="lastName" name="lastName" class="form-control" formControlName="last_name">
+                    <input 
+                        role="presentation" 
+                        autocomplete="off"
+                        type="text" 
+                        id="lastName" 
+                        name="lastName" 
+                        class="form-control" 
+                        formControlName="last_name"
+                    >
                     <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
                         <div *ngIf="formdata.controls['last_name'].errors.required">
                             <i class="fa fa-exclamation-circle"></i>
@@ -52,7 +68,15 @@
             <div class="col-md-4">
                 <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.userName.$invalid)?'invalid':''">
                     <label class="control-label" for="userName">User Name * </label>
-                    <input type="text" id="userName" name="userName" class="form-control" formControlName="user_name">
+                    <input 
+                        role="presentation" 
+                        autocomplete="off"
+                        type="text" 
+                        id="userName" 
+                        name="userName" 
+                        class="form-control" 
+                        formControlName="user_name" 
+                    >
                     <div *ngIf="formdata.controls['user_name'].invalid && formdata.controls['user_name'].touched" class="alert alert-danger">
                         <div *ngIf="formdata.controls['user_name'].errors.required">
                             <i class="fa fa-exclamation-circle"></i>
@@ -84,7 +108,15 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label" for="password">Password * </label>
-                    <input type="text" id="password" name="password" class="form-control" formControlName="password">
+                    <input 
+                        type="text" 
+                        id="password" 
+                        name="password" 
+                        class="form-control" 
+                        formControlName="password" 
+                        role="presentation" 
+                        autocomplete="off"
+                    >
                     <div *ngIf="formdata.controls['password'].invalid && formdata.controls['password'].touched" class="alert alert-danger">
                         <div *ngIf="formdata.controls['password'].invalid">
                             <i class="fa fa-exclamation-circle"></i>
@@ -119,7 +151,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="alternativeEmail" class="control-label">Alternative Email</label>
-                    <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control">
+                    <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control" role="presentation" autocomplete="nope">
                 </div>
             </div>
         </div>

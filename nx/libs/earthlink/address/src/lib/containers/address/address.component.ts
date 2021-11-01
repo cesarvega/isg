@@ -198,12 +198,17 @@ objErrors:any = null;
 
   handleAddressChange( address: any ){
     var address = address.address_components;
-    this.formdata.patchValue(
-      {
-        city: address[2]['long_name'],
-        state: address[4]['short_name'],
-        zip_code: address[6]['short_name']
-      }
-    )
+    if( address &&
+        address[2] &&
+        address[4] &&
+        address[6]){
+      this.formdata.patchValue(
+        {
+          city: address[2]['long_name'],
+          state: address[4]['short_name'],
+          zip_code: address[6]['short_name']
+        }
+      )
+    }
   }
 }

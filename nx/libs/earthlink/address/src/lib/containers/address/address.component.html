@@ -52,12 +52,13 @@
                   <li *ngFor = "let err of objErrors">{{ err }}</li>
                 </ul>
               </div>
-            <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()" autocomplete="off">
+            <form [formGroup]="formdata" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="addressLine1">Address Line</label>
                     <input 
+                      role="presentation" 
                       autocomplete="off"
                       class="form-control"
                       formControlName="address_line1"
@@ -77,7 +78,8 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="address_line2">Unit Type & Unit Number:</label>
-                    <input type="text" formControlName="address_line2" class="form-control" name="address_line2" id="address_line2">
+                    <input                      role="presentation" 
+                    autocomplete="off" type="text" formControlName="address_line2" class="form-control" name="address_line2" id="address_line2">
                   </div>
                 </div>
               </div>
@@ -86,7 +88,8 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="city">City:</label>
-                    <input type="text" formControlName="city" class="form-control" name="city" id="city" required>
+                    <input role="presentation" 
+                    autocomplete="off" type="text" formControlName="city" class="form-control" name="city" id="city" required>
                     <div *ngIf="formdata.controls['city'].invalid && formdata.controls['city'].touched" class="alert alert-danger">
                       <div *ngIf="formdata.controls['city'].errors.required">
                         City is required.
@@ -114,7 +117,8 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="zip_code">Zip Code:</label>
-                    <input formControlName="zip_code" type="text" class="form-control" name="zip_code" id="zip_code">
+                    <input role="presentation" 
+                    autocomplete="off" formControlName="zip_code" type="text" class="form-control" name="zip_code" id="zip_code">
                     <div *ngIf="formdata.controls['zip_code'].invalid && formdata.controls['zip_code'].touched" class="alert alert-danger">
                       <div *ngIf="formdata.controls['zip_code'].invalid">
                         Invalid Zip code format.
@@ -129,9 +133,8 @@
       
               <div class="row">
                 <div class="col-md-2">
-                  <div class="form-group">
-                    <label for="is_business">Is Business</label>
-                    <input formControlName="is_business" type="checkbox" class="form-control chkBox" name="is_business" id="is_business">
+                  <div class="form-inline">
+                    <label for="is_business"><input formControlName="is_business" type="checkbox" class="form-control chkBox" name="is_business" id="is_business">Is Business</label>
                   </div>
                 </div>
               </div>
@@ -142,7 +145,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="first_name">First Name *</label>
-                    <input formControlName="first_name" type="text" class="form-control" name="first_name" id="first_name" >
+                    <input role="presentation" autocomplete="off"formControlName="first_name" type="text" class="form-control" name="first_name" id="first_name" >
                     <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
                       <div *ngIf="formdata.controls['first_name'].errors.required">
                         First Name is required.
@@ -154,7 +157,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="last_name">Last Name *</label>
-                    <input formControlName="last_name" type="text" class="form-control" name="last_name" id="last_name">
+                    <input role="presentation" autocomplete="off" formControlName="last_name" type="text" class="form-control" name="last_name" id="last_name">
                     <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
                       <div *ngIf="formdata.controls['last_name'].errors.required">
                         Last Name is required.
@@ -166,7 +169,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="email">Email *</label>
-                    <input type="text" formControlName="email" class="form-control" id="email">
+                    <input role="presentation" autocomplete="off" type="text" formControlName="email" class="form-control" id="email">
                     <div *ngIf="formdata.controls['email'].invalid && formdata.controls['email'].touched" class="alert alert-danger">
                       <div *ngIf="formdata.controls['email'].invalid">
                         Invalid Email format.
@@ -193,6 +196,8 @@
                       formControlName="phone"
                       minlength="10"
                       maxlength="10"
+                      role="presentation" 
+                      autocomplete="off"                      
                     >
                     <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched" class="alert alert-danger">
                       <div *ngIf="formdata.controls['phone'].invalid && formdata.controls['phone'].touched">
@@ -216,6 +221,8 @@
                       formControlName="alt_phone"
                       minlength="10"
                       maxlength="10"
+                      role="presentation" 
+                      autocomplete="off"                      
                     >
                     <div *ngIf="formdata.controls['alt_phone'].invalid && formdata.controls['alt_phone'].touched" class="alert alert-danger">
                       <div *ngIf="formdata.controls['alt_phone'].invalid && formdata.controls['alt_phone'].touched">
