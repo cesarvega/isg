@@ -148,5 +148,6 @@ faArrowRight = faArrowRight;
       { 
         user_name: e
       })
+    this.onSubmit();
   }
 }

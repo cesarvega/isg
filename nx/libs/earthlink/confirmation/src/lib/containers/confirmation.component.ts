@@ -14,6 +14,7 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  error: boolean = false;
 
   restartOrder(){
     if( confirm('Are you sure?') ){

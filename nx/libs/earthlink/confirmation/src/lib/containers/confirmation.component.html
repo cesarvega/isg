@@ -5,7 +5,7 @@
             Confirmation
         </h3>
         <hr>
-        <div class="alert alert-danger ng-binding ng-hide" ng-show="error.show">
+        <div class="alert alert-danger" *ngIf="error">
             <strong>
                 <i class="fa fa-exclamation-circle"></i>
                 An error occurred:
