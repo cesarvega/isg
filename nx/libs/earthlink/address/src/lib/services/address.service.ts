@@ -4,16 +4,15 @@ import { Address } from '../containers/address/interfaces/address';
 import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import {  addressRequest, addressResponse, errorAction, loading, setCustomerType, setEarthLinkTransactionId, setTransaction } from '../+state/address/earthlink-address.actions';
-import { productsActionRequest, productIdsActionRequest } from '@nx/earthlink/offers';
-//import { mapResponse } from './helpers/mapResponse';
+import {  addressRequest, errorAction, loading, setCustomerType, setEarthLinkTransactionId, setTransaction } from '../+state/address/earthlink-address.actions';
+import { productsActionRequest } from '@nx/earthlink/offers';
+
 import { getTransactionId } from './helpers/getTransactionId';
-//import { isServiceFound } from './helpers/serviceFound';
-//import { noOffersFound } from './helpers/hasOffers';
+
 import { Subscription } from 'rxjs';
 import { getEarthlinkAddressState } from '../+state/address/earthlink-address.selectors';
 import { orderDetailsActionRequest } from '@nx/earthlink/offers';
-//import { Offers } from '@nx/earthlink/offers';
+
 import { OffersService } from '@nx/earthlink/offers';
 import { Router } from '@angular/router';
 import { CustomHeaders } from '@nx/earthlink/shared';
@@ -41,12 +40,12 @@ export class AddressService {
     private customHeaders: CustomHeaders,
 
   ) {
-    this.token = localStorage.getItem('token'),
-    this.stateSubscription = this.store.select(getEarthlinkAddressState).subscribe((addresState) => {
-      this.addressState = this.addressState
-    });
-    this.headers = this.customHeaders.bearer( this.token );
-   }
+      this.token = localStorage.getItem('token'),
+      this.stateSubscription = this.store.select(getEarthlinkAddressState).subscribe((addresState) => {
+        this.addressState = this.addressState
+      });
+      this.headers = this.customHeaders.bearer( this.token );
+    }
 
   
   serviceQualification(address: Address) {

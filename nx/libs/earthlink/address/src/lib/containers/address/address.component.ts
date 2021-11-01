@@ -13,7 +13,7 @@ import { testCases } from './test-cases';
 import { Address } from './interfaces/address';
 import { addressRequest, errorAction } from '../../+state/address/earthlink-address.actions';
 import { takeUntil } from 'rxjs/operators';
-import { validatePhoneNumber } from '@nx/earthlink/shared';
+//import { validatePhoneNumber } from '@nx/earthlink/shared';
 import { faBars, faComment, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -196,4 +196,14 @@ objErrors:any = null;
     this.router.navigate(['/offers']);
   }
 
+  handleAddressChange( address: any ){
+    var address = address.address_components;
+    this.formdata.patchValue(
+      {
+        city: address[2]['long_name'],
+        state: address[4]['short_name'],
+        zip_code: address[6]['short_name']
+      }
+    )
+  }
 }

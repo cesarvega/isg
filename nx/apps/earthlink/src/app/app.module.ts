@@ -22,7 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
   return function (state, action) {
-      if (action.type === 'Logout') {
+      if (action.type === 'Logout' || action.type === 'Confirmation') {
         state = undefined;
       }
       return reducer(state, action);

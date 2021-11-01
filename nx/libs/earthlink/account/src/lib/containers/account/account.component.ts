@@ -75,7 +75,7 @@ faArrowRight = faArrowRight;
       user_name: new FormControl('', Validators.required),
       password: new FormControl('', [
           Validators.required,
-          Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=.*[$@$!%*?&])(?=[^A-Z]*[A-Z]).{8,30}$/)
+          Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=.*[$@#%\$$!%*?&])(?=[^A-Z]*[A-Z]).{8,30}$/)
         ]
       )
     })

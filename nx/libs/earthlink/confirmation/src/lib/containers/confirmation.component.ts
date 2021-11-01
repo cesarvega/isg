@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LOGOUT } from '@nx/earthlink/shared'
+import { LOGOUT, CONFIRMATION } from '@nx/earthlink/shared'
 @Component({
   selector: 'nx-containers',
   templateUrl: './confirmation.component.html',
@@ -13,12 +13,13 @@ export class ConfirmationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(CONFIRMATION());
   }
   error: boolean = false;
 
   restartOrder(){
     if( confirm('Are you sure?') ){
-         this.store.dispatch(LOGOUT());
+        this.store.dispatch(LOGOUT());
     }
 }
 

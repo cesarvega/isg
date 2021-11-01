@@ -45,15 +45,19 @@
                             saved by EarthLink for future transactions on your account. For further information on auto payments, please see earthlink.net. By saying "yes" or "no"
                             please state that you understand and consent to EarthLink processing your payment.
                             <hr>
-                            <label for="agentReadDisclaimer" class="control-label" style="cursor: pointer;">
-                                <input type="checkbox" (change)="f_agentReadDisclaimer($event)" name="AgentReadTC" id="agentReadDisclaimer" required="required" />
-                                I have read the disclaimer to the customer.
-                            </label> 
-                            <br />                          
-                            <label for="autoPayDisclaimer" class="control-label" style="cursor: pointer;">
-                                <input type="checkbox" (change)="f_autoPayDisclaimer($event)" name="autoPayDisclaimer" id="autoPayDisclaimer" required="required">
-                                I have read the disclaimer to the customer and customer agreed to the Automatic Payment terms.
-                            </label>
+                            <div class="form-inline">
+                                <input class="form-control" type="checkbox" (change)="f_agentReadDisclaimer($event)" name="AgentReadTC" id="agentReadDisclaimer" required="required" />
+                                &nbsp;<label for="agentReadDisclaimer" class="control-label" style="cursor: pointer;">
+                                    I have read the disclaimer to the customer.
+                                </label>
+                            </div>
+                            <br />
+                            <div class="form-inline">    
+                                <input class="form-control" type="checkbox" (change)="f_autoPayDisclaimer($event)" name="autoPayDisclaimer" id="autoPayDisclaimer" required="required">
+                                &nbsp;<label for="autoPayDisclaimer" class="control-label" style="cursor: pointer;">
+                                    I have read the disclaimer to the customer and customer agreed to the Automatic Payment terms.
+                                </label>                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,9 +187,9 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group" ng-class="(submitted &amp;&amp; billingForm.sameAddress.$invalid)?'invalid':''">
-                            <label class="control-label" for="sameAddress" style="cursor: pointer;">
-                                <input type="checkbox" id="sameAddress" name="sameAddress" (change)="checkSameAddress($event)" [disabled]="sendingOrder">
+                        <div class="form-inline" ng-class="(submitted &amp;&amp; billingForm.sameAddress.$invalid)?'invalid':''">
+                            <input class="form-control" type="checkbox" id="sameAddress" name="sameAddress" (change)="checkSameAddress($event)" [disabled]="sendingOrder">
+                            &nbsp;<label class="control-label" for="sameAddress" style="cursor: pointer;">
                                 Check here is the billing address is same that service address.
                             </label>
                         </div>
@@ -268,11 +272,11 @@
                 <p class="well ng-binding" ng-bind-html="CartService.Cart.selectedProduct.equipmentDescription">HyperLink requires a professional installation.  The technician will bring and install a wireless gateway with an equipment charge of $6.95/month.</p>
                 <div class="row">
                 <div class="col-md-12">
-                <div class="form-group">
-                <label class="control-label" for="agreeTerms" style="cursor: pointer; color: red;">
+                <div class="form-inline">
                     <input type="checkbox" (change)="f_agreeTerms($event)" id="agreeTerms" [disabled]="sendingOrder">
-                    Do you agree with EarthLink Terms and Conditions?
-                </label>
+                    &nbsp;<label class="control-label" for="agreeTerms" style="cursor: pointer; color: red;">
+                        Do you agree with EarthLink Terms and Conditions?
+                    </label>
                 </div>
                 </div>
                 </div>

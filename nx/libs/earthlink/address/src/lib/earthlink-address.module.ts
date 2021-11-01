@@ -6,8 +6,11 @@ import { AddressFormComponent } from './components/address-form/address-form.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EarthlinkSharedModule } from '@nx/earthlink/shared';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+
 @NgModule({
   imports: [
+    GooglePlaceModule,
     EarthlinkSharedModule,
     FontAwesomeModule,
     CommonModule,
