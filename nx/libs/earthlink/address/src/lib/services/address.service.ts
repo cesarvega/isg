@@ -56,6 +56,7 @@ export class AddressService {
             //update address store
             this.store.dispatch(addressRequest( { address: address } ))
         }else{
+          return response.error;
             throw new Error("We could not find Offers");
         }
         //if (isServiceFound(response)) {
@@ -81,7 +82,7 @@ export class AddressService {
         this.offersService.productIdsActionRequestService({ availableProductsIds })
         this.store.dispatch(setEarthLinkTransactionId({ earthLinkTransactionId }))
       }, (error) => {
-        this.store.dispatch(errorAction({ error: error.response }))
+        this.store.dispatch(errorAction({ error: error }))
       }
       )
     ).toPromise();

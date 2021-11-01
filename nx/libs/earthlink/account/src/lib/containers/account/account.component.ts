@@ -3,7 +3,7 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { faBars, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faExclamationCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Subject, Subscription } from 'rxjs';
 import { getCurrentProduct } from '@nx/earthlink/offers';
 import { getAddressState, getAccountFailure } from '@nx/earthlink/state';
@@ -35,14 +35,8 @@ export class AccountComponent implements OnInit {
 
 /***** Form elements ********/
 formdata!: any;
-first_name: any = null;
-last_name: any = null;
-user_name: any = null;
-password: any = null;
-//day_phone: any = null;
-//home_phone: any = null;
 token: any = null;
-
+faArrowRight = faArrowRight;
 
 
   constructor(
@@ -74,32 +68,22 @@ token: any = null;
 
   }
 
-  createFormControls(){
-    this.first_name = new FormControl ('', Validators.required);
-    this.last_name = new FormControl('', Validators.required);
-    this.user_name = new FormControl('', Validators.required);
-
-    this.password = new FormControl ('',
-      [
-        Validators.required,
-        //Validators.pattern("[a-z]{2}")
-      ]
-    );
-  }
-
   createForm(){
     this.formdata = new FormGroup({
-      first_name: this.first_name,
-      last_name: this.last_name,
-      user_name: this.user_name,
-      password: this.password,
+      first_name: new FormControl ('', Validators.required),
+      last_name: new FormControl('', Validators.required),
+      user_name: new FormControl('', Validators.required),
+      password: new FormControl('', [
+          Validators.required,
+          Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=.*[$@$!%*?&])(?=[^A-Z]*[A-Z]).{8,30}$/)
+        ]
+      )
     })
   }
 
 
 
   ngOnInit(): void {
-    this.createFormControls();
     this.createForm();
     if( !this.product$ ){
       this.router.navigate(['/offers']);
@@ -134,10 +118,6 @@ token: any = null;
           }
         )
         
-        /** Disabling input boxes **/
-        this.first_name.disable();
-        this.last_name.disable();
-        this.user_name.disable();
       }else if( this.address$ ){
         this.formdata.setValue(
           {
@@ -153,6 +133,8 @@ token: any = null;
   }
 
   async onSubmit(){
+    if( this.formdata.invalid )return;
+
     this.formdata.addControl( 'day_phone', new FormControl( this.address$.phone ));
     this.formdata.addControl( 'home_phone', new FormControl( this.address$.alt_phone ));
     this.formdata.addControl( 'email', new FormControl( this.address$.email ));

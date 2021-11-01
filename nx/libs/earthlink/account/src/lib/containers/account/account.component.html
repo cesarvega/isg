@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="control-label" for="first_name">First Name: </label>
+                    <label class="control-label" for="first_name">First Name * </label>
                     <input type="text" id="first_name" name="first_name" class="form-control" formControlName="first_name">
                     <div *ngIf="formdata.controls['first_name'].invalid && formdata.controls['first_name'].touched" class="alert alert-danger">
                         <div *ngIf="formdata.controls['first_name'].errors.required">
@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.lastName.$invalid)?'invalid':''">
-                    <label class="control-label" for="lastName">Last Name: </label>
+                    <label class="control-label" for="lastName">Last Name * </label>
                     <input type="text" id="lastName" name="lastName" class="form-control" formControlName="last_name">
                     <div *ngIf="formdata.controls['last_name'].invalid && formdata.controls['last_name'].touched" class="alert alert-danger">
                         <div *ngIf="formdata.controls['last_name'].errors.required">
@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group" ng-class="(submitted &amp;&amp; accountCreation.userName.$invalid)?'invalid':''">
-                    <label class="control-label" for="userName">User Name: </label>
+                    <label class="control-label" for="userName">User Name * </label>
                     <input type="text" id="userName" name="userName" class="form-control" formControlName="user_name">
                     <div *ngIf="formdata.controls['user_name'].invalid && formdata.controls['user_name'].touched" class="alert alert-danger">
                         <div *ngIf="formdata.controls['user_name'].errors.required">
@@ -83,9 +83,13 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label class="control-label" for="password">Password: </label>
+                    <label class="control-label" for="password">Password * </label>
                     <input type="text" id="password" name="password" class="form-control" formControlName="password">
                     <div *ngIf="formdata.controls['password'].invalid && formdata.controls['password'].touched" class="alert alert-danger">
+                        <div *ngIf="formdata.controls['password'].invalid">
+                            <i class="fa fa-exclamation-circle"></i>
+                            Invalid password
+                        </div>
                         <div *ngIf="formdata.controls['password'].errors.required">
                             <i class="fa fa-exclamation-circle"></i>
                             This field is required
@@ -102,21 +106,19 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group" *ngIf="address$">
-                    <label for="day_phone" class="control-label">Day Phone Number:</label>
+                    <label for="day_phone" class="control-label">Day Phone Number *</label>
                     <span class="form-control fake-input-box">{{ address$.phone }}</span>
-                    <!-- <input type="hidden" id="day_phone" formControlName="day_phone" required="required" class="form-control" [disabled]="true" maxlength="14" placeholder="(___)-___-____" autocomplete="off"> -->
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group" *ngIf="address$">
-                    <label for="home_phone" class="control-label">Home Phone Number:</label>
+                    <label for="home_phone" class="control-label">Home Phone Number</label>
                     <span class="form-control fake-input-box">{{ address$.alt_phone }}</span>
-                    <!-- <input type="hidden" [disabled]=true id="home_phone" formControlName="home_phone" class="form-control" maxlength="14" placeholder="(___)-___-____" autocomplete="off"> -->
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="alternativeEmail" class="control-label">Alternative Email:</label>
+                    <label for="alternativeEmail" class="control-label">Alternative Email</label>
                     <input type="text" id="alternativeEmail" name="alternativeEmail" class="form-control">
                 </div>
             </div>
@@ -134,8 +136,8 @@
                 <ng-template #accountElseBlock>
                     <button type="button" class="btn btn-primary pull-right" routerLink="/billing">
                         Go Billing
-                        <i class="fa fa-arrow-right"></i>
-                        <i class="fa fa-spin fa-spinner"></i>
+                        <fa-icon [icon]="faArrowRight"></fa-icon>
+                        <!-- <fa-icon [icon]="faSpinner"></fa-icon> -->
                     </button>
                 </ng-template>
             </div>

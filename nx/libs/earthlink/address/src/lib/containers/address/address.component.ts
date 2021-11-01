@@ -46,7 +46,7 @@ submittedAddress: Address = {}
 
 uuidStr: any = '';
 isError$ = new Subject<boolean>();
-objErrors:any = [];
+objErrors:any = null;
 
   constructor(
     private addressService: AddressService,
@@ -68,9 +68,9 @@ objErrors:any = [];
           if(
               data.hasOwnProperty('error')
           ){
-            this.objErrors.push( data.error )
+            this.objErrors = [data.error.error];
           }else{
-            this.objErrors.push( 'The form was not sent. An error has ocurred.');
+            this.objErrors = 'An error has ocurred.';
           }
         })
       
@@ -104,11 +104,16 @@ objErrors:any = [];
       is_business: new FormControl (''),
       first_name: new FormControl ('', Validators.required ),
       last_name: new FormControl ('', Validators.required ),
-      email: new FormControl ('', Validators.required ),
-      phone: new FormControl ('', Validators.required ),
-      alt_phone: new FormControl (''),
+      email: new FormControl ('', [Validators.required, Validators.email] ),
+      phone: new FormControl ('', [
+        Validators.required, 
+        Validators.pattern("^[0-9]*$")
+      ] ),
+      alt_phone: new FormControl ('', [
+        Validators.pattern("^[0-9]*$")
+      ]),
       uuid: new FormControl (''),
-      submitted: new FormControl ('true'),
+      submitted: new FormControl (false),
     })
   }
 
@@ -158,6 +163,8 @@ objErrors:any = [];
   }
 
   async onSubmit(){
+    if( this.formdata.invalid )return;
+    this.formdata.submitted = true;
     this.formdata.addControl( 'submitted', new FormControl( true ) );
     const address = this.formdata.value;
     this.submittedAddress = address;
