@@ -48,9 +48,9 @@ const earthlinkConfirmationReducer = createReducer(
     (state, { error }) => ({ ...state, error })
   ),
   on(
-    EarthlinkConfirmationActions.confirmationSuccess, (state) => ({
+    EarthlinkConfirmationActions.confirmationSuccess, (state, { payment }) => ({
     ...state,
-    response: 'success'
+    response: payment
   })
   )
 );

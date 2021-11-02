@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LOGOUT, CONFIRMATION } from '@nx/earthlink/shared'
+import { LOGOUT, CONFIRMATION } from '@nx/earthlink/shared';
+import { getConfirmationState } from '@nx/earthlink/state';
+import { Route, Router } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { confirmationSuccess } from '../..';
+
 @Component({
   selector: 'nx-containers',
   templateUrl: './confirmation.component.html',
@@ -8,9 +13,23 @@ import { LOGOUT, CONFIRMATION } from '@nx/earthlink/shared'
 })
 export class ConfirmationComponent implements OnInit {
 
+  stateSubscription: Subscription | undefined;
+
   constructor(
-    private store: Store
-  ) { }
+    private store: Store,
+    private router: Router,
+  ) { 
+
+    this.stateSubscription = this.store.select(getConfirmationState).subscribe( (confirmation) =>{
+      if( !confirmation ){
+        this.router.navigate( ['/address']);
+      }
+    })
+
+
+  }
+
+
 
   ngOnInit(): void {
     this.store.dispatch(CONFIRMATION());
@@ -18,7 +37,7 @@ export class ConfirmationComponent implements OnInit {
   error: boolean = false;
 
   restartOrder(){
-    if( confirm('Are you sure?') ){
+    if( confirm('Are you sure to start/reset the application?') ){
         this.store.dispatch(LOGOUT());
     }
 }

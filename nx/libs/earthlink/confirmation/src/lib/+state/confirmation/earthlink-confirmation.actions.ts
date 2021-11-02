@@ -15,4 +15,5 @@ export const loadEarthlinkConfirmationFailure = createAction(
 
 export const confirmationSuccess = createAction(
   'confirmationSuccess',
+  props<{ payment: any }>()
 )

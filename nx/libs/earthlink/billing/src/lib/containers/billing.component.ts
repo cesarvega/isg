@@ -10,7 +10,7 @@ import { errorPayment } from '../+state/billing/earthlink-billing.actions';
 import { getCurrentAccount } from '@nx/earthlink/account';
 import { CcTest } from '../services/test-creditcard';
 import { states } from '@nx/earthlink/utilities';
-import { getAddressState, getOffersState } from '@nx/earthlink/state';
+import { getAddressState, getOffersState, getConfirmationState } from '@nx/earthlink/state';
 import { takeUntil } from 'rxjs/operators';
 import { BillingService } from '../services/billing.services';
 declare var paymentTechEncrypt: any;
@@ -77,7 +77,7 @@ export class BillingComponent implements OnInit {
       if( account ){
         this.account$ = account;
       }else{
-        this.router.navigate(['/address']);
+        this.router.navigate(['/confirmation']);
       }
     })
     this.stateSubscription.unsubscribe;
@@ -86,7 +86,7 @@ export class BillingComponent implements OnInit {
       if( address && address.response ){
         this.address$ = address.response ;
       }else{
-        this.router.navigate(['/address']);
+        this.router.navigate(['/confirmation']);
       }
     })
     this.stateSubscription.unsubscribe;
@@ -95,7 +95,7 @@ export class BillingComponent implements OnInit {
       if( response && response.product && response.product.id ){
         this.productId$ = response.product.id ;
       }else{
-        this.router.navigate(['/offers']);
+        this.router.navigate(['/confirmation']);
       }
     })
     this.stateSubscription.unsubscribe;    

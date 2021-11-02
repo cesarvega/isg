@@ -39,12 +39,12 @@ export class BillingService{
             map( (response: any ) => {
                 if( response && response.result && response.result == 'success' ){
                     this.store.dispatch(paymentSuccess( { payment } ));
-                    this.store.dispatch(confirmationSuccess());
+                    this.store.dispatch(confirmationSuccess( { payment }));
                     this.router.navigate(['/confirmation']);
                 }
             }),
             tap( (response ) => {
-                console.log('TODO  clear the store');
+                //console.log('TODO  clear the store');
             },( error ) => {
                 this.store.dispatch(errorPayment({ error }))
             }

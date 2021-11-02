@@ -51,11 +51,12 @@ export class CartDetailsComponent {
         this.stateProductSubscription = this.store.select(getOffersState).subscribe((offer) => {
             this.product$ = null;
             this.monthly$ = null;
-            this.monthly$ = null;
             if( offer && offer.product ){
                 this.product$ = offer.product;
-                this.monthly$ = offer.product.priceMonthly + offer.product.equipmentPrice;
-                this.monthly$ = this.monthly$.toFixed(2);
+                if( offer.priceMonthly && offer.equipmentPrice ){
+                    this.monthly$ = offer.product.priceMonthly + offer.product.equipmentPrice;
+                        this.monthly$ = this.monthly$.toFixed(2);
+                }
             }
         });
         this.stateProductSubscription.unsubscribe;
@@ -70,7 +71,7 @@ export class CartDetailsComponent {
     }
 
     restartOrder(){
-        if( confirm('Are you sure?') ){
+        if( confirm('Are you sure to start/reset the application??') ){
             this.store.dispatch(LOGOUT());
         }
     }

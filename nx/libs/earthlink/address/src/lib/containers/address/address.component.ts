@@ -198,17 +198,49 @@ objErrors:any = null;
 
   handleAddressChange( address: any ){
     var address = address.address_components;
-    if( address &&
-        address[2] &&
-        address[4] &&
-        address[6]){
-      this.formdata.patchValue(
+    var addressCols = 
+    [
+      ['locality', 'long_name', 'city'],
+      ['administrative_area_level_1', 'short_name', 'state'],
+      ['postal_code', 'short_name', 'zip_code']
+    ];
+
+    if( address ){
+      for( var j=0;j < address.length; j++ )
+      {
+        for( var k = 0; k < addressCols.length; k++ )
         {
-          city: address[2]['long_name'],
-          state: address[4]['short_name'],
-          zip_code: address[6]['short_name']
+          if( addressCols[k][0] == address[j]['types'][0] )
+          {
+            /***  CITY  ***/
+            if( addressCols[k][0] === 'locality' ){
+              this.formdata.patchValue(
+                {
+                  city: address[j][addressCols[k][1]]
+                }
+              )
+              break;
+            }else if( addressCols[k][0] == 'administrative_area_level_1' )
+            {
+              /*** STATE ***/
+              this.formdata.patchValue(
+                {
+                  state: address[j][addressCols[k][1]]
+                }
+              )
+              break;
+            }else if( addressCols[k][0] == 'postal_code' )
+            {
+              this.formdata.patchValue(
+                {
+                  zip_code: address[j][addressCols[k][1]]
+                }
+              )
+              break;
+            }
+          }
         }
-      )
+      }
     }
   }
 }
