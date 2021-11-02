@@ -23,10 +23,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
   return function (state, action) {
       if (action.type === 'Logout') {
-        //console.log('Logout event triggered');
         state = undefined;
       }else if( action.type === 'Confirmation' ){
-        //console.log('confirmation event triggered');
         const { earthlinkConfirmation } = state;
         state = { earthlinkConfirmation };
       }

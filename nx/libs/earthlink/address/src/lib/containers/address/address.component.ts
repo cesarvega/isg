@@ -15,7 +15,6 @@ import { addressRequest, errorAction } from '../../+state/address/earthlink-addr
 import { takeUntil } from 'rxjs/operators';
 //import { validatePhoneNumber } from '@nx/earthlink/shared';
 import { faBars, faComment, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { LOGOUT } from '@nx/earthlink/shared';
 
 
 @Component({
@@ -119,7 +118,6 @@ objErrors:any = null;
   }
 
   ngOnInit(): void {
-    this.store.dispatch(LOGOUT());
     /********** Pulling the addres from the store ********************/
     this.stateSubscription = this.store.select(getCurrentAddress).subscribe((address) => {
       this.address$ = address;
@@ -199,50 +197,49 @@ objErrors:any = null;
   }
 
   handleAddressChange( address: any ){
-    var address = address.address_components;
-    var addressCols = 
-    [
-      ['locality', 'long_name', 'city'],
-      ['administrative_area_level_1', 'short_name', 'state'],
-      ['postal_code', 'short_name', 'zip_code']
-    ];
+    if( !address || !address.address_components )return;
 
+    var address = address.address_components;
     if( address ){
-      for( var j=0;j < address.length; j++ )
-      {
-        for( var k = 0; k < addressCols.length; k++ )
-        {
-          if( addressCols[k][0] == address[j]['types'][0] )
-          {
-            /***  CITY  ***/
-            if( addressCols[k][0] === 'locality' ){
-              this.formdata.patchValue(
-                {
-                  city: address[j][addressCols[k][1]]
-                }
-              )
-              break;
-            }else if( addressCols[k][0] == 'administrative_area_level_1' )
-            {
-              /*** STATE ***/
-              this.formdata.patchValue(
-                {
-                  state: address[j][addressCols[k][1]]
-                }
-              )
-              break;
-            }else if( addressCols[k][0] == 'postal_code' )
-            {
-              this.formdata.patchValue(
-                {
-                  zip_code: address[j][addressCols[k][1]]
-                }
-              )
-              break;
-            }
-          }
+      for (let component of address) {
+        const type = component.types[0];
+        switch (type) {
+          case 'route':
+            var streetName= component.short_name;
+            break;
+
+          case 'street_number':
+            var streetNumber = component.long_name;
+            break;
+
+          case 'postal_code':
+            this.formdata.patchValue({
+                zip_code: component.long_name
+            })
+            break;
+
+          case 'locality':
+            this.formdata.patchValue({
+                city: component.long_name
+            });
+            break;
+
+          case 'administrative_area_level_1':
+            this.formdata.patchValue(
+              {
+                state: component.short_name
+              }
+            );
+            break;
         }
       }
+
+      const addressLine1 = `${streetNumber} ${streetName}`;
+      this.formdata.patchValue(
+        {
+          address_line1: addressLine1
+        }
+      )
     }
   }
 }

@@ -1,38 +1,4 @@
 <section id="checkAvailability">
-  <div class="modal fade" id="suggested_address" tabindex="-1" role="dialog" aria-labelledby="multiAddressModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title alert alert-warning" id="multi_addressesModalLabel">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        EarthLink returned suggested addresses. Please choose one from below:
-                    </h4>
-                </div>
-                <form name="multiAddressForm" novalidate="" ng-submit="submitMultiAddress()" class="ng-pristine ng-valid">
-                    <div class="modal-body" style="max-height: 600px; overflow-y: scroll;">
-
-                        <ul class="list-group">
-                            <!-- ngRepeat: item in suggested_addresses -->
-                        </ul>
-
-                        <!--<div style="color:red" ng-show="inputError.show">
-                            {{inputError.msg}}
-                        </div>-->
-                    </div>
-                    <div class="modal-footer">
-                        <div class="row">
-                            <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                Close
-                            </button>-->
-                            <!--<button type="submit" class="btn btn-ctl-dark" ng-disabled="!multiAddressFormData.AddressStruct">
-                                Requalify address
-                            </button>-->
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
   <div class="row">
     <div class="col-md-12">
       <div class="row">

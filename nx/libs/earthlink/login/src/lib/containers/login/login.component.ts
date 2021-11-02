@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { Store } from '@ngrx/store';
 import { SYSTEM_CONFIG } from '@nx/earthlink/config';
 import { ENDPOINT } from '@nx/earthlink/api';
-
+import { LOGOUT } from '@nx/earthlink/shared';
 
 @Component({
   selector: 'nx-login',
@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private store: Store,
   ) { }
 
 
@@ -52,6 +53,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(LOGOUT());
     this.createForm();
     this.onSubmit();
   }
