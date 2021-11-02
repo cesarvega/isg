@@ -15,6 +15,7 @@ import { addressRequest, errorAction } from '../../+state/address/earthlink-addr
 import { takeUntil } from 'rxjs/operators';
 //import { validatePhoneNumber } from '@nx/earthlink/shared';
 import { faBars, faComment, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { LOGOUT } from '@nx/earthlink/shared';
 
 
 @Component({
@@ -118,6 +119,7 @@ objErrors:any = null;
   }
 
   ngOnInit(): void {
+    this.store.dispatch(LOGOUT());
     /********** Pulling the addres from the store ********************/
     this.stateSubscription = this.store.select(getCurrentAddress).subscribe((address) => {
       this.address$ = address;

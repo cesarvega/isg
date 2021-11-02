@@ -21,7 +21,7 @@ export class ConfirmationComponent implements OnInit {
   ) { 
 
     this.stateSubscription = this.store.select(getConfirmationState).subscribe( (confirmation) =>{
-      if( !confirmation ){
+      if( !confirmation.response ){
         this.router.navigate( ['/address']);
       }
     })
