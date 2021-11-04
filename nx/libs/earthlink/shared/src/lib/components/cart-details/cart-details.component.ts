@@ -53,9 +53,14 @@ export class CartDetailsComponent {
             this.monthly$ = null;
             if( offer && offer.product ){
                 this.product$ = offer.product;
-                if( offer.priceMonthly && offer.equipmentPrice ){
-                    this.monthly$ = offer.product.priceMonthly + offer.product.equipmentPrice;
-                        this.monthly$ = this.monthly$.toFixed(2);
+                if( offer.product.priceMonthly ){
+                    this.monthly$ = offer.product.priceMonthly;
+
+                    if( offer.product.equipmentPrice ){
+                        this.monthly$ = offer.product.priceMonthly + offer.product.equipmentPrice;
+                    }
+                    
+                    this.monthly$ = this.monthly$.toFixed(2);
                 }
             }
         });

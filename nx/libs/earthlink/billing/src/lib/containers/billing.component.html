@@ -189,7 +189,7 @@
                     <div class="col-md-12">
                         <div class="form-inline" ng-class="(submitted &amp;&amp; billingForm.sameAddress.$invalid)?'invalid':''">
                             <input class="form-control" type="checkbox" id="sameAddress" name="sameAddress" (change)="checkSameAddress($event)" [disabled]="sendingOrder">
-                            &nbsp;<label class="control-label" for="sameAddress" style="cursor: pointer;">
+                            &nbsp;<label class="control-label" for="sameAddress" style="cursor: pointer; color: red;">
                                 Check here is the billing address is same that service address.
                             </label>
                         </div>

@@ -166,3 +166,14 @@ body {
 .pointer{
     cursor: pointer;
 }
+
+
+body::-webkit-scrollbar {
+    width: 0.7em;
+    background: #fff;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #ffa500;
+    height: 30px;
+}
