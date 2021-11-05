@@ -96,7 +96,12 @@ const earthlinkAddressReducer = createReducer(
         ...state,
         request: data.first_name,
       })
-    )
+    ),
+    on(AddressActions.removeInitial, (state) => ({
+        ...state,
+        response: null
+      })
+    ),
 
 
   )

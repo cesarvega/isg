@@ -3,13 +3,12 @@ import { ApiService } from '@nx/earthlink/shared';
 import { map, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { HttpHeaders } from "@angular/common/http";
+//import { HttpHeaders } from "@angular/common/http";
 import { SYSTEM_CONFIG } from "@nx/earthlink/config";
 import { paymentSuccess, errorPayment } from '../+state/billing/earthlink-billing.actions';
 import { confirmationSuccess } from '@nx/earthlink/confirmation';
 import { iPayment } from '../interfaces/payment';
 import { CustomHeaders } from "@nx/earthlink/shared";
-
 
 @Injectable({
     providedIn: 'root'

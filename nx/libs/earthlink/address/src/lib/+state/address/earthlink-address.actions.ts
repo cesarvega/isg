@@ -64,3 +64,7 @@ export const infoUpdate = createAction(
   'infoUpdate',
   props<{ data: any }>()
 )
+
+export const removeInitial = createAction(
+  'removeInitial',
+)

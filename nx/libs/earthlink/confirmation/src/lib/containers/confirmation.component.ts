@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LOGOUT, CONFIRMATION } from '@nx/earthlink/shared';
 import { getConfirmationState } from '@nx/earthlink/state';
-import { Route, Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { confirmationSuccess } from '../..';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { removeInitial } from '@nx/earthlink/address';
 
 @Component({
   selector: 'nx-containers',
@@ -33,6 +33,7 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(CONFIRMATION());
+    this.store.dispatch(removeInitial());
   }
   error: boolean = false;
 
