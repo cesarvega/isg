@@ -31,7 +31,7 @@ export class CartDetailsComponent {
         /** Address/Phone Number **/
         this.addressCheckStateSubscription = this.store.select(getAddressState).subscribe((addressCheckState) =>{
             this.address$ = null;
-            if( addressCheckState && addressCheckState.response ){
+            if( addressCheckState && addressCheckState.response && addressCheckState.response != 'initial' ){
                 this.address$ = addressCheckState.response;
             }
         });
@@ -76,7 +76,7 @@ export class CartDetailsComponent {
     }
 
     restartOrder(){
-        if( confirm('Are you sure to start/reset the application??') ){
+        if( confirm('Start/reset the application?') ){
             this.store.dispatch(LOGOUT());
         }
     }

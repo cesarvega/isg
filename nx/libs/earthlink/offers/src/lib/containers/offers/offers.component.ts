@@ -73,7 +73,7 @@ export class OffersComponent implements OnInit {
 
   ngOnInit(): void {
     if( !this.offers$ ){
-      this.router.navigate(['/address']);
+      this.router.navigate(['./']);
     }else{
       /**** Retrieve (if any) selected product****/
       this.getProduct();

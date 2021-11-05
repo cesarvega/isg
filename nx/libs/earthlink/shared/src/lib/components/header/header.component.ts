@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) =>{
         if( data && data.type && data.type == 'Logout' ){
-          this.router.navigate(['/address']);
+          this.router.navigate(['./']);
         }
       })
     this.stateSubscription.unsubscribe;

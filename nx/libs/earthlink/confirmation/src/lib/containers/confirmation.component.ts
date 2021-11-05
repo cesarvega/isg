@@ -22,7 +22,7 @@ export class ConfirmationComponent implements OnInit {
 
     this.stateSubscription = this.store.select(getConfirmationState).subscribe( (confirmation) =>{
       if( !confirmation.response ){
-        this.router.navigate( ['/address']);
+        this.router.navigate( ['./']);
       }
     })
 
@@ -37,7 +37,7 @@ export class ConfirmationComponent implements OnInit {
   error: boolean = false;
 
   restartOrder(){
-    if( confirm('Are you sure to start/reset the application?') ){
+    if( confirm('Start/reset the application?') ){
         this.store.dispatch(LOGOUT());
     }
 }

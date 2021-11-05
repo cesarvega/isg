@@ -26,7 +26,7 @@ export const initialState: State = earthlinkAddressAdapter.getInitialState({
   // set initial required properties
   error: null,
   request: null,
-  response: null,
+  response: 'initial',
   transaction: "",
   earthLinkTransactionId: "",
   customerType: "NEW",
