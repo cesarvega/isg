@@ -59,6 +59,20 @@
                   "with": "apps/earthlink/src/environments/environment.dev.ts"
                 }
               ]
+            },
+            "uat": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/earthlink/src/environments/environment.ts",
+                  "with": "apps/earthlink/src/environments/environment.uat.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
