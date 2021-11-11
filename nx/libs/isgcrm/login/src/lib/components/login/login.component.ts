@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from '../../login.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +34,8 @@ export class LoginComponent implements OnInit {
     const user = this.formData.value;
     
     //dispath event login
-    await this.loginService.doLogin(user);
+    //await this.loginService.doLogin(user);
+    this.router.navigate(['./products']);
     console.log('form submitted ');
   }
 }

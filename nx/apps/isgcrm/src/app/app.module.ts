@@ -6,25 +6,18 @@ import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IsgcrmCommonModule } from '@nx/isgcrm/common';
 import { IsgcrmLoginModule } from '@nx/isgcrm/login';
-import { IsgcrmProductsModule } from '@nx/isgcrm/products';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   imports: [
-    BrowserAnimationsModule,
-    IsgcrmLoginModule,
-    IsgcrmCommonModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    HttpClientModule,
-    NgbModule,
-    BrowserModule,
     RouterModule.forRoot([
-      { path: '', pathMatch: 'full', redirectTo: 'login' },
       {
         path: 'login',
         loadChildren: () => 
@@ -33,14 +26,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
           ),
       },
       {
-        path: 'products',
-        loadChildren: () => 
-          import ('@nx/isgcrm/products').then(
-            (module) => module.IsgcrmProductsModule
-          ),
-      }      
-    ])
-    //RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
+        path: '',
+        loadChildren: () => import('./main/main.module')
+          .then(m => m.MainModule),
+      },
+    ]),
+    BrowserAnimationsModule,
+    IsgcrmLoginModule,
+    IsgcrmCommonModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    HttpClientModule,
+    NgbModule,
+    BrowserModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
