@@ -1,13 +1,14 @@
 <div class="container-fluid">
     <div class="row">
-        <label for="partner">Choose a Partner</label>
-        <select 
-            id="partner" 
-            formControlName="partners" 
-            class="form-control"
-        >
-            <option [value]="partners.value" *ngFor="let partner of partners">{{ partner.name }}</option>
-        </select>
+        <label for="partner">Choose a Partner</label>&nbsp;
+        <p-dropdown 
+            [options]="partners" 
+            optionLabel="name" 
+            formControlName="partners"
+            optionValue="id"
+            (onChange)="selectedPartner($event)"
+            >
+        </p-dropdown>
     </div>
 
     <div class="row">
@@ -15,7 +16,13 @@
     </div>
 
     <div class="row">
-        <p-table [value]="products">
+        <p-table [value]="products"
+            [rowHover]="true"
+            [rows]="10"
+            [rowsPerPageOptions]="[5,10,30]"
+            [paginator]="true"
+            [loading]="loading"
+        >
             <ng-template pTemplate="header">
                 <tr>
                     <th>Type</th>
@@ -24,6 +31,7 @@
                     <th>Revenue</th>
                     <th>Start</th>
                     <th>End</th>
+                    <th>Actions</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
@@ -34,6 +42,14 @@
                     <td>{{ product.revenue }}</td>
                     <td>{{ product.start }}</td>
                     <td>{{ product.end }}</td>
+                    <td>
+                        <ng-template pTemplate="header">
+                            <div class="grid">
+                                <div class="col-6">E</div>
+                                <div class="col-6">V</div>
+                            </div>
+                        </ng-template>
+                    </td>
                 </tr>
             </ng-template>
 

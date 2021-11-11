@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'nx-products',
@@ -7,10 +9,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
   partners: any = [
-    {value: 1, name: 'Att'},
-    {value: 2, name: 'Dish'},
-    {value: 3, name: 'Earthlink'},
-    {value: 4, name: 'Frontier'},
+    {id: 0, name:'---'},
+    {id: 1, name: 'Att'},
+    {id: 2, name: 'Dish'},
+    {id: 3, name: 'Earthlink'},
+    {id: 4, name: 'Frontier'},
   ];
 
   products=[
@@ -20,9 +23,18 @@ export class ProductsComponent implements OnInit {
     {id: 4, type: 'Video', description: 'Product video 4 description', features: '[40,41]', revenue: '126', start:'01/30/2020', end:'01/11/2021'},
   ];
 
+  loading: boolean = true;
+  
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(()=>{
+      this.loading = false;
+    }, 1500);
   }
 
+  //selectedPartner!: any;
+  selectedPartner(event: any){
+    console.log(event.value);
+  }
 }

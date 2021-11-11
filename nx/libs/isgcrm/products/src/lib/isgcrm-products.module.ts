@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './components/products/products.component';
 import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 
 export interface Product {
   type: any;
@@ -15,6 +16,7 @@ export interface Product {
 
 @NgModule({
   imports: [
+    DropdownModule,
     TableModule,
     CommonModule,
     RouterModule.forChild([

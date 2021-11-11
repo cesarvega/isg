@@ -10,13 +10,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IsgcrmCommonModule } from '@nx/isgcrm/common';
 import { IsgcrmLoginModule } from '@nx/isgcrm/login';
 import { IsgcrmProductsModule } from '@nx/isgcrm/products';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    InputTextModule,
+    BrowserAnimationsModule,
     IsgcrmLoginModule,
     IsgcrmCommonModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
