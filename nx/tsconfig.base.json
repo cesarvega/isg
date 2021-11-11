@@ -32,6 +32,7 @@
       "@nx/earthlink/utilities": ["libs/earthlink/utilities/src/index.ts"],
       "@nx/isgcrm/common": ["libs/isgcrm/common/src/index.ts"],
       "@nx/isgcrm/config": ["libs/isgcrm/config/src/index.ts"],
+      "@nx/isgcrm/edit": ["libs/isgcrm/edit/src/index.ts"],
       "@nx/isgcrm/login": ["libs/isgcrm/login/src/index.ts"],
       "@nx/isgcrm/products": ["libs/isgcrm/products/src/index.ts"],
       "@nx/isgcrm/shared": ["libs/isgcrm/shared/src/index.ts"]

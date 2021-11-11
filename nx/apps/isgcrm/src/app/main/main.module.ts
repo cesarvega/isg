@@ -1,9 +1,11 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from '../app.component';
+//import { AppComponent } from '../app.component';
 import { MainComponent } from './main.component';
 import { IsgcrmCommonModule } from '@nx/isgcrm/common';
+
+
 const routes: Routes = [
     {
         path: '',
@@ -15,7 +17,12 @@ const routes: Routes = [
               import ('@nx/isgcrm/products').then(
                 (module) => module.IsgcrmProductsModule
               ),
-          }  
+          },
+          {
+            path: 'product/edit/:partnerId/:productId',
+            loadChildren: () =>
+              import('@nx/isgcrm/edit').then((module) => module.IsgcrmEditModule),
+          },
         ]
     }
 ];

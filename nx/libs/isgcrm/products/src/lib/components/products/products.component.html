@@ -4,9 +4,8 @@
         <p-dropdown 
             [options]="partners" 
             optionLabel="name" 
-            formControlName="partners"
             optionValue="id"
-            (onChange)="selectedPartner($event)"
+            (onChange)="selectedPartner($event.value)"
             >
         </p-dropdown>
     </div>
@@ -46,7 +45,7 @@
                         <!-- <ng-template pTemplate="header"> -->
                             <div class="grid">
                                 <div class="col-6">
-                                    <i class="pi pi-eye pointer"></i>
+                                    <a (click)="selectedProduct(product.id)"><i class="pi pi-eye pointer"></i></a>
                                 </div>
                                 <div class="col-6">
                                     <i class="pi pi-user-edit pointer"></i>

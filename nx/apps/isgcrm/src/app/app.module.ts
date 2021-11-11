@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -11,26 +12,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IsgcrmCommonModule } from '@nx/isgcrm/common';
 import { IsgcrmLoginModule } from '@nx/isgcrm/login';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     RouterModule.forRoot([
       {
         path: 'login',
-        loadChildren: () => 
-          import ('@nx/isgcrm/login').then(
-            (module) => module.IsgcrmLoginModule
-          ),
+        loadChildren: () =>
+          import('@nx/isgcrm/login').then((module) => module.IsgcrmLoginModule),
       },
       {
         path: '',
-        loadChildren: () => import('./main/main.module')
-          .then(m => m.MainModule),
-      },
+        loadChildren: () =>
+          import('./main/main.module').then((m) => m.MainModule),
+      }
     ]),
+    FormsModule,
     BrowserAnimationsModule,
     IsgcrmLoginModule,
     IsgcrmCommonModule,

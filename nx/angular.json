@@ -638,6 +638,31 @@
         }
       }
     },
+    "isgcrm-edit": {
+      "projectType": "library",
+      "root": "libs/isgcrm/edit",
+      "sourceRoot": "libs/isgcrm/edit/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/isgcrm/edit"],
+          "options": {
+            "jestConfig": "libs/isgcrm/edit/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/isgcrm/edit/src/**/*.ts",
+              "libs/isgcrm/edit/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "isgcrm-login": {
       "projectType": "library",
       "root": "libs/isgcrm/login",

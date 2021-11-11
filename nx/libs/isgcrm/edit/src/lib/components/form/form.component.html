@@ -1,0 +1,67 @@
+<div class="p-grid p-fluid">
+    <div class="row">Partner Choosed: {{ partnerId }}</div>
+    <div class="col-sm-12 col-8"><hr></div>
+    <div>
+        <div class="col-sm-12 col-4">
+            <label for="pType">Product Type</label>&nbsp;
+            <p-dropdown 
+                [options]="productType" 
+                optionLabel="name" 
+                formControlName="type"
+                optionValue="id"
+                (onChange)="selectedType($event)"
+                id="pType"
+                >
+            </p-dropdown>
+        </div>
+        <div class="col-sm-12 col-4">
+            <label for="pType">Features</label>&nbsp;
+            <p-dropdown 
+                [options]="featureType" 
+                optionLabel="name" 
+                formControlName="type"
+                optionValue="id"
+                (onChange)="selectedFeature($event)"
+                id="pType"
+                >
+            </p-dropdown>
+        </div>            
+        
+        <div class="col-8"><hr></div>
+        <h4>Composition</h4>
+
+        <div class="col-sm-12 col-8">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user-edit"></i></span>
+                <input type="text" pInputText class="p-inputtext-lg" placeholder="Product Name">         
+            </div>
+        </div>
+        <div class="col-sm-12 col-8">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">$</span>
+                <input type="text" pInputText placeholder="Price">   
+                <span class="p-inputgroup-addon">.00</span>      
+            </div>
+        </div>
+        <div class="col-sm-12 col-8">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                <p-calendar formControlName="start" placeholder="Start Date"></p-calendar>         
+            </div>
+        </div>
+        <div class="col-sm-12 col-8">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                <p-calendar formControlName="end" placeholder="End Date"></p-calendar>         
+            </div>
+        </div>
+        <div class="p-formgroup-inline">
+            <div class="p-field">
+                <button class="p-button-info" pButton type="button" label="Cancel" (click)="goPartners()"></button>
+            </div>
+            <div class="p-field">
+                <button class="p-button-info" pButton type="button" label="Submit"></button>
+            </div>
+        </div>
+    </div>
+</div>

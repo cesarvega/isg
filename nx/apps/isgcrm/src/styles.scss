@@ -7,3 +7,23 @@
 .pointer{
     cursor: pointer;
 }
+.p-inputtext-lg{
+    width: 100%;
+}
+
+.p-inputtext-md{
+    width: 75%;
+}
+
+.p-formgroup-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.p-formgroup-inline .p-field, .p-formgroup-inline .p-field-checkbox, .p-formgroup-inline .p-field-radiobutton {
+    margin-right: 1rem;
+}
+.p-field {
+    margin-bottom: 1rem;
+}

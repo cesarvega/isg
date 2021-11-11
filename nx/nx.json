@@ -86,6 +86,9 @@
       "tags": [],
       "implicitDependencies": ["isgcrm"]
     },
+    "isgcrm-edit": {
+      "tags": []
+    },
     "isgcrm-login": {
       "tags": []
     },

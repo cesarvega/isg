@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -18,6 +19,7 @@ export interface Product {
 
 @NgModule({
   imports: [
+    FormsModule,
     DropdownModule,
     TableModule,
     CommonModule,
