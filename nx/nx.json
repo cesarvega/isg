@@ -72,6 +72,28 @@
     },
     "earthlink-utilities": {
       "tags": []
+    },
+    "isgcrm": {
+      "tags": []
+    },
+    "isgcrm-common": {
+      "tags": []
+    },
+    "isgcrm-config": {
+      "tags": []
+    },
+    "isgcrm-e2e": {
+      "tags": [],
+      "implicitDependencies": ["isgcrm"]
+    },
+    "isgcrm-login": {
+      "tags": []
+    },
+    "isgcrm-products": {
+      "tags": []
+    },
+    "isgcrm-shared": {
+      "tags": []
     }
   }
 }

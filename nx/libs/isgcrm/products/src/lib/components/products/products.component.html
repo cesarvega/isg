@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="row">
+        <label for="partner">Choose a Partner</label>
+        <select 
+            id="partner" 
+            formControlName="partners" 
+            class="form-control"
+        >
+            <option [value]="partners.value" *ngFor="let partner of partners">{{ partner.name }}</option>
+        </select>
+    </div>
+
+    <div class="row">
+        <hr>
+    </div>
+
+    <div class="row">
+        <p-table [value]="products">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Features</th>
+                    <th>Revenue</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.type }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.features }}</td>
+                    <td>{{ product.revenue }}</td>
+                    <td>{{ product.start }}</td>
+                    <td>{{ product.end }}</td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+    </div>
+</div>

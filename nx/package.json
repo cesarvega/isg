@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^12.2.0",
+    "@angular/cdk": "^13.0.0",
     "@angular/common": "^12.2.0",
     "@angular/compiler": "^12.2.0",
     "@angular/core": "^12.2.0",
@@ -35,6 +36,9 @@
     "angular-reactive-form": "^1.0.0",
     "bootstrap": "^4.5.0",
     "ngx-google-places-autocomplete": "^2.0.5",
+    "primeflex": "^3.1.0",
+    "primeicons": "^5.0.0",
+    "primeng": "^13.0.0-rc.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
