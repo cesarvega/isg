@@ -5,9 +5,11 @@ import { FormComponent } from './components/form/form.component';
 import { DropdownModule } from 'primeng/dropdown';
 import {ButtonModule} from 'primeng/button';
 import {Calendar, CalendarModule} from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   imports: [
+    InputNumberModule,
     CalendarModule,
     ButtonModule,
     DropdownModule,

@@ -1,5 +1,9 @@
 <div class="p-grid p-fluid">
-    <div class="row">Partner Choosed: {{ partnerId }}</div>
+    <div class="row">
+        <h2>
+            {{ partnerName }}
+        </h2>
+    </div>
     <div class="col-sm-12 col-8"><hr></div>
     <div>
         <div class="col-sm-12 col-4">
@@ -31,28 +35,40 @@
         <h4>Composition</h4>
 
         <div class="col-sm-12 col-8">
+            <label for="pName">Product name</label>
             <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user-edit"></i></span>
-                <input type="text" pInputText class="p-inputtext-lg" placeholder="Product Name">         
+                
+                <span class="p-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+                <input id="pName" type="text" pInputText class="p-inputtext-lg" placeholder="Required">         
             </div>
         </div>
-        <div class="col-sm-12 col-8">
+        <div class="col-sm-12 col-3">
+            <label for="pName">Price</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">$</span>
-                <input type="text" pInputText placeholder="Price">   
+                <p-inputNumber 
+                    type="text" 
+                    formControlName="price" 
+                    placeholder="Required" 
+                    mode="currency" 
+                    currency="USD"
+                    locale="en-US"
+                ></p-inputNumber>
                 <span class="p-inputgroup-addon">.00</span>      
             </div>
         </div>
-        <div class="col-sm-12 col-8">
+        <div class="col-sm-12 col-3">
+            <label for="pName">Start Date</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                <p-calendar formControlName="start" placeholder="Start Date"></p-calendar>         
+                <p-calendar formControlName="start" placeholder="required"></p-calendar>         
             </div>
         </div>
-        <div class="col-sm-12 col-8">
+        <div class="col-sm-12 col-3">
+            <label for="pName">Date End</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                <p-calendar formControlName="end" placeholder="End Date"></p-calendar>         
+                <p-calendar formControlName="end" placeholder="Required"></p-calendar>         
             </div>
         </div>
         <div class="p-formgroup-inline">

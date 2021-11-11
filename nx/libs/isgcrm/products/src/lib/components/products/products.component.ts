@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit {
 
   products: any = [];
   partnerId: any = null;
+  partnerName: any = null;
 
   ngOnInit(): void {
     if( localStorage.getItem('partnerId') ){
@@ -47,13 +48,22 @@ export class ProductsComponent implements OnInit {
       ];
     }, 1000);
     localStorage.setItem('partnerId', id);
-    console.log(id);
     this.partnerId = id;
+
+    this.partnerName = this.partners.find( (x:any) => x.id === this.partnerId );
+    localStorage.setItem('partnerName', '');
+   
+    if(this.partnerName && this.partnerName.name){
+      localStorage.setItem('partnerName', this.partnerName.name);
+    }
   }
 
   selectedProduct(id: any){
-    debugger;
     if( !this.partnerId ){alert('Choose Partner'); return;}
     this.router.navigate(['product/edit/' + this.partnerId + '/' + id]);
+  }
+
+  getPartnerName(partners: any){
+    return partners.id === this.partnerId;
   }
 }

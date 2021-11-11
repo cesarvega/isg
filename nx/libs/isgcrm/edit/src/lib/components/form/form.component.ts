@@ -14,6 +14,7 @@ export class FormComponent implements OnInit {
   ) { }
 
   partnerId: any = null;
+  partnerName: any = null;
 
     productType: any =[
       {id: null, name:'---'},
@@ -25,6 +26,9 @@ export class FormComponent implements OnInit {
     featureType: any =[];
 
   ngOnInit(): void {
+    if( localStorage.getItem('partnerName') ){
+      this.partnerName = localStorage.getItem('partnerName');
+    }
     this.partnerId = this.actRoute.snapshot.paramMap.get('partnerId');
   }
 
