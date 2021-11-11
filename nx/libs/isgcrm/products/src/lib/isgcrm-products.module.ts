@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './components/products/products.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
+import {MenuItem, PrimeIcons} from 'primeng/api';
+
 
 export interface Product {
   type: any;

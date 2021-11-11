@@ -31,7 +31,7 @@
                     <th>Revenue</th>
                     <th>Start</th>
                     <th>End</th>
-                    <th>Actions</th>
+                    <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
@@ -43,12 +43,16 @@
                     <td>{{ product.start }}</td>
                     <td>{{ product.end }}</td>
                     <td>
-                        <ng-template pTemplate="header">
+                        <!-- <ng-template pTemplate="header"> -->
                             <div class="grid">
-                                <div class="col-6">E</div>
-                                <div class="col-6">V</div>
+                                <div class="col-6">
+                                    <i class="pi pi-eye pointer"></i>
+                                </div>
+                                <div class="col-6">
+                                    <i class="pi pi-user-edit pointer"></i>
+                                </div>
                             </div>
-                        </ng-template>
+                        <!-- </ng-template> -->
                     </td>
                 </tr>
             </ng-template>
