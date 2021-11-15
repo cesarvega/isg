@@ -4,6 +4,10 @@
 @import url("~primeng/resources/primeng.min.css");
 @import url("~primeflex/primeflex.css");
 
+* {
+    -webkit-box-sizing: border-box;
+  }
+  
 .pointer{
     cursor: pointer;
 }

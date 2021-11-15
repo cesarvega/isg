@@ -1,39 +1,53 @@
 <div class="p-grid p-fluid">
-    <div class="row">
-        <h2>
-            {{ partnerName }}
-        </h2>
+    <div class="grid">
+        <div class="col-12">
+            <h2>
+                {{ partnerName }}
+            </h2>
+        </div>
     </div>
-    <div class="col-sm-12 col-8"><hr></div>
-    <form [formGroup]="formData" novalidate>
-        <div class="col-sm-12 col-4">
+    <div>
+        <hr>
+    </div>
+    <div class="grid">
+        <div class="col-4">
             <label for="pType">Product Type</label>&nbsp;
             <p-dropdown 
-                [options]="productType" 
-                optionLabel="name" 
-                formControlName="type"
+                [options]="productType"
+                optionLabel="name"
                 optionValue="id"
-                (onChange)="selectedType($event)"
-                id="pType"
+                [(ngModel)]="selectedProductTypeId"
+                (onChange)="getFeatures($event)"
                 >
             </p-dropdown>
         </div>
-        <div class="col-sm-12 col-4">
+    </div>
+    <div class="grid">
+        <div class="col-4">
             <label for="pType">Features</label>&nbsp;
             <p-dropdown 
                 [options]="featureType" 
                 optionLabel="name" 
-                formControlName="features"
                 optionValue="id"
                 (onChange)="selectedFeature($event)"
                 id="pType"
                 >
             </p-dropdown>
-        </div>            
-        
-        <div class="col-8"><hr></div>
-        <h4>Composition</h4>
-
+        </div>
+        <div class="col-4">
+            <label>Ids</label>
+            <div>
+                {{ selectedProduct.features }}
+            </div>
+            
+        </div>
+    </div>
+    <div>
+        <hr>
+    </div>
+    <h4>Composition</h4>
+    <form [formGroup]="formData" novalidate>
+    <div class="grid">
         <div class="col-sm-12 col-8">
             <label for="pName">Product name</label>
             <div class="p-inputgroup">
@@ -41,6 +55,8 @@
                 <input id="pName" formControlName="name" type="text" class="p-inputtext-lg" placeholder="Required">         
             </div>
         </div>
+    </div>
+    <div class="grid">
         <div class="col-sm-12 col-3">
             <label for="pName">Price</label>
             <div class="p-inputgroup">
@@ -55,20 +71,24 @@
                 ></p-inputNumber>     
             </div>
         </div>
-        <div class="col-sm-12 col-3">
+    </div>
+    <div class="grid">
+        <div class="col-3">
             <label for="pName">Start Date</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
                 <p-calendar formControlName="start" placeholder="required"></p-calendar>         
             </div>
         </div>
-        <div class="col-sm-12 col-3">
+    
+        <div class="col-3">
             <label for="pName">Date End</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
                 <p-calendar formControlName="end" placeholder="Required"></p-calendar>         
             </div>
         </div>
+    </div>
         <div class="p-formgroup-inline">
             <div class="p-field">
                 <button class="p-button-info" pButton type="button" label="Cancel" (click)="goPartners()"></button>
@@ -77,5 +97,6 @@
                 <button class="p-button-info" pButton type="button" label="Submit"></button>
             </div>
         </div>
+    
     </form>
 </div>

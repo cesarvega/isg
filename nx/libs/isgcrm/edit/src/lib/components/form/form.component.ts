@@ -19,6 +19,10 @@ export class FormComponent implements OnInit {
   productId: any = null;
   selectedProduct: any = null;
   formData!: any;
+  selectedProductType: any = null;
+  selectedProductTypeId: any = null;
+  productFeatures: any = [];//[{id:1},{id:2},{id:3},{id:4}];
+
 
     productType: any =[
       {id: null, name:'---'},
@@ -27,12 +31,7 @@ export class FormComponent implements OnInit {
       {id: 3, name: 'Internet'},
     ]
 
-    products: any = [
-      {id: 1, type: 'Video', description: 'Product video 1 description', features: '[34,35]', revenue: '123', start:'01/30/2020', end:'01/11/2021'},
-      {id: 2, type: 'Video', description: 'Product video 2 description', features: '[36,37]', revenue: '124', start:'01/30/2020', end:'01/11/2021'},
-      {id: 3, type: 'Video', description: 'Product video 3 description', features: '[38,39]', revenue: '125', start:'01/30/2020', end:'01/11/2021'},
-      {id: 4, type: 'Video', description: 'Product video 4 description', features: '[40,41]', revenue: '126', start:'01/30/2020', end:'01/11/2021'},
-    ];
+    products: any = [];
 
     featureType: any =[];
 
@@ -44,27 +43,46 @@ export class FormComponent implements OnInit {
     this.partnerId = this.actRoute.snapshot.paramMap.get('partnerId');
     this.productId = this.actRoute.snapshot.paramMap.get('productId');
 
+    let productsV:any =  localStorage.getItem('products');
+    this.products = JSON.parse( productsV );
+
     if( this.productId ){
       this.selectedProduct = this.products.find( (x:any) => x.id == this.productId );
       if( this.selectedProduct ){
+        this.selectedProductType = this.selectedProduct.type;
+        let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
+        this.selectedProductTypeId = productTypeId.id;
+
+        // const arr  = JSON.parse(this.selectedProduct.features);
+        // for( let a of arr ){
+        //   this.productFeatures.push({id: a});
+        // }
+
+
         this.populateForm();
-        console.log(this.selectedProduct);
+        this.getFeatures(this.selectedProductTypeId);
       }
     }
   }
 
-  selectedType(pType: any){
-    console.log( pType.value );
+  getFeatures(id: any){
+ //debugger;
+    //console.log( 'getFeatures:' + id );
     this.featureType =[
       {id: null, name:'---'},
-      {id: 1, name: '23'},
-      {id: 2, name: '45,56'},
-      {id: 3, name: '99'},
+      {id: 34, name: 'Feature id 34'},
+      {id: 35, name: 'Feature id 35'},
+      {id: 36, name: 'Feature id 36'},
+      {id: 37, name: 'Feature id 37'},
+      {id: 38, name: 'Feature id 38'},
+      {id: 39, name: 'Feature id 39'},
+      {id: 40, name: 'feature id 40'},
+      {id: 41, name: 'feature id 41'},
     ];
   }
 
   selectedFeature( fType: any ){
-    console.log( fType.value );
+    //console.log( 'selected feature:' + fType.value );
   }
 
   goPartners(){
@@ -75,8 +93,6 @@ export class FormComponent implements OnInit {
 
   createForm(){
     this.formData = new FormGroup({
-      type: new FormControl(''),
-      features: new FormControl(''),
       name: new FormControl(''),
       price: new FormControl(''),
       start: new FormControl(''),
@@ -86,8 +102,6 @@ export class FormComponent implements OnInit {
 
   populateForm(){
     this.formData.patchValue({
-      type: this.selectedProduct.type,
-      features: this.selectedProduct.features,
       name: this.selectedProduct.description,
       price: this.selectedProduct.revenue
     })

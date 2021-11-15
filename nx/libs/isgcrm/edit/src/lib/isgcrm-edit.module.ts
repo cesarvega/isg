@@ -1,18 +1,23 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormComponent } from './components/form/form.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
-import {Calendar, CalendarModule} from 'primeng/calendar';
+import { CalendarModule} from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
+    TableModule,
     ReactiveFormsModule,
     InputNumberModule,
     CalendarModule,
     ButtonModule,
+    FormsModule,
     DropdownModule,
     CommonModule,
     RouterModule.forChild([

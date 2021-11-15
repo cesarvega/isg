@@ -61,6 +61,20 @@ export class ProductsComponent implements OnInit {
       * Storing Partners object
       */
       localStorage.setItem('partners', JSON.stringify(myArr));
+
+      //TODO pull it from backend
+      let products=[
+        {id: 1, type: 'Video', description: 'Product video 1 description', features: '[34,35]', revenue: '123', start:'01/30/2020', end:'01/11/2021'},
+        {id: 2, type: 'Audio', description: 'Product Audio 2 description', features: '[36,37]', revenue: '124', start:'01/30/2020', end:'01/11/2021'},
+        {id: 3, type: 'Internet', description: 'Product Internet 3 description', features: '[38,39]', revenue: '125', start:'01/30/2020', end:'01/11/2021'},
+        {id: 4, type: 'Video', description: 'Product video 4 description', features: '[40,41]', revenue: '126', start:'01/30/2020', end:'01/11/2021'},
+      ];
+      /******************************************
+       * Storing products
+       */
+      localStorage.setItem('products', JSON.stringify(
+        products
+      ))
     }
     
     /********************************************
@@ -117,12 +131,14 @@ export class ProductsComponent implements OnInit {
 
     setTimeout(()=>{
       this.loading = false;
-      this.products=[
-        {id: 1, type: 'Video', description: 'Product video 1 description', features: '[34,35]', revenue: '123', start:'01/30/2020', end:'01/11/2021'},
-        {id: 2, type: 'Video', description: 'Product video 2 description', features: '[36,37]', revenue: '124', start:'01/30/2020', end:'01/11/2021'},
-        {id: 3, type: 'Video', description: 'Product video 3 description', features: '[38,39]', revenue: '125', start:'01/30/2020', end:'01/11/2021'},
-        {id: 4, type: 'Video', description: 'Product video 4 description', features: '[40,41]', revenue: '126', start:'01/30/2020', end:'01/11/2021'},
-      ];
+      let products: any = localStorage.getItem( 'products' );
+      this.products = JSON.parse( products );
+      // this.products=[
+      //   {id: 1, type: 'Video', description: 'Product video 1 description', features: '[34,35]', revenue: '123', start:'01/30/2020', end:'01/11/2021'},
+      //   {id: 2, type: 'Audio', description: 'Product Audio 2 description', features: '[36,37]', revenue: '124', start:'01/30/2020', end:'01/11/2021'},
+      //   {id: 3, type: 'Internet', description: 'Product Internet 3 description', features: '[38,39]', revenue: '125', start:'01/30/2020', end:'01/11/2021'},
+      //   {id: 4, type: 'Video', description: 'Product video 4 description', features: '[40,41]', revenue: '126', start:'01/30/2020', end:'01/11/2021'},
+      // ];
     }, 1000);
     
     this.partnerId = event.value.id;
