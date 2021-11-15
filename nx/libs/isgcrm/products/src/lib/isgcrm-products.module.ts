@@ -6,7 +6,9 @@ import { ProductsComponent } from './components/products/products.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import {MenuItem, PrimeIcons} from 'primeng/api';
-
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export interface Product {
   type: any;
@@ -19,6 +21,9 @@ export interface Product {
 
 @NgModule({
   imports: [
+    ReactiveFormsModule,
+    MessagesModule,
+    MessageModule,
     FormsModule,
     DropdownModule,
     TableModule,

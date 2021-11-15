@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LoginService } from '../../login.service';
+
 
 @Component({
   selector: 'nx-login',
@@ -14,16 +14,16 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private router: Router,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
+    localStorage.clear();
   }
 
   createForm(){
     this.formData = new FormGroup({
-      user_name: new FormControl( '', [Validators.required]),
+      email: new FormControl( '', [Validators.required]),
       password: new FormControl('', [Validators.required])
     })
   }
@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit {
     const user = this.formData.value;
     
     //dispath event login
-    //await this.loginService.doLogin(user);
-    this.router.navigate(['./products']);
-    console.log('form submitted ');
+    await this.loginService.doLogin(user);
   }
 }

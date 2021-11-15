@@ -5,7 +5,7 @@
         </h2>
     </div>
     <div class="col-sm-12 col-8"><hr></div>
-    <div>
+    <form [formGroup]="formData" novalidate>
         <div class="col-sm-12 col-4">
             <label for="pType">Product Type</label>&nbsp;
             <p-dropdown 
@@ -23,7 +23,7 @@
             <p-dropdown 
                 [options]="featureType" 
                 optionLabel="name" 
-                formControlName="type"
+                formControlName="features"
                 optionValue="id"
                 (onChange)="selectedFeature($event)"
                 id="pType"
@@ -37,9 +37,8 @@
         <div class="col-sm-12 col-8">
             <label for="pName">Product name</label>
             <div class="p-inputgroup">
-                
                 <span class="p-inputgroup-addon"><i class="pi pi-pencil"></i></span>
-                <input id="pName" type="text" pInputText class="p-inputtext-lg" placeholder="Required">         
+                <input id="pName" formControlName="name" type="text" class="p-inputtext-lg" placeholder="Required">         
             </div>
         </div>
         <div class="col-sm-12 col-3">
@@ -53,8 +52,7 @@
                     mode="currency" 
                     currency="USD"
                     locale="en-US"
-                ></p-inputNumber>
-                <span class="p-inputgroup-addon">.00</span>      
+                ></p-inputNumber>     
             </div>
         </div>
         <div class="col-sm-12 col-3">
@@ -79,5 +77,5 @@
                 <button class="p-button-info" pButton type="button" label="Submit"></button>
             </div>
         </div>
-    </div>
+    </form>
 </div>

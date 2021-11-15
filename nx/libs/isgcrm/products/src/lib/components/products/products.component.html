@@ -1,11 +1,14 @@
 <div class="container-fluid">
+    <div class="container" *ngIf="objErrors">
+        <p-message severity="error" text="Unauthorized. A login is required" styleClass="p-mr-2"></p-message>
+    </div>
     <div class="row">
         <label for="partner">Choose a Partner</label>&nbsp;
         <p-dropdown 
             [options]="partners" 
-            optionLabel="name" 
-            optionValue="id"
-            (onChange)="selectedPartner($event.value)"
+            optionLabel="name"
+            (onChange)="getPartnerProducts($event)"
+            [(ngModel)]="selectedPartner"
             >
         </p-dropdown>
     </div>

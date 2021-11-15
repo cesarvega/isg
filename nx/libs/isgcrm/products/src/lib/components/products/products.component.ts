@@ -1,42 +1,119 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {Message,MessageService} from 'primeng/api';
+import { map, tap } from 'rxjs/operators';
+import { FormGroup, FormControl } from '@angular/forms';
 
+import { SYSTEM_CONFIG } from '@nx/isgcrm/config';
+import { ApiService } from '@nx/isgcrm/common';
+import { CustomHeaders } from '@nx/earthlink/shared';
 
 @Component({
   selector: 'nx-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
+  providers: [MessageService]
 })
 export class ProductsComponent implements OnInit {
 
-  partners: any = [
-    {id: 0, name:'---'},
-    {id: 1, name: 'Att'},
-    {id: 2, name: 'Dish'},
-    {id: 3, name: 'Earthlink'},
-    {id: 4, name: 'Frontier'},
-  ];
+  partners: any = {};
+  formData!: any;
+  selectedPartner: any | undefined;
 
+  token: any;
+  headers: any = null;
   loading: boolean = false;
-  
+  objErrors: any = null;
+
   constructor(
     private router: Router,
-  ) { }
+    private apiService: ApiService,
+    private customHeaders: CustomHeaders,
+  ) {
+    this.token = localStorage.getItem('token'),
+    this.headers = this.customHeaders.bearer( this.token );
+  }
 
   products: any = [];
   partnerId: any = null;
   partnerName: any = null;
 
-  ngOnInit(): void {
-    if( localStorage.getItem('partnerId') ){
-      this.partnerId = localStorage.getItem('partnerId');
-      this.selectedPartner(this.partnerId)
+  async ngOnInit(){
+
+    /***********************************************
+     * If the item [partners] isn't exists at localStorage,
+     * pull it to the backend to create it
+     */
+    if( !localStorage.getItem( 'partners' )){
+
+      var response = await this.getPartners();
+
+      /******************************************
+       * Adding 'Select' option to the dropdown
+       */
+      let myArr = [{id:0, name: 'Select'}];
+      for(let option in response ){
+        myArr.push(response[option]);
+      }     
+      this.partners = myArr;
+      
+      /******************************************
+      * Storing Partners object
+      */
+      localStorage.setItem('partners', JSON.stringify(myArr));
     }
+    
+    /********************************************
+     * Populating the dropdown
+     */
+    let p:any = localStorage.getItem('partners');
+    var response = JSON.parse(p);
+    this.partners = response;
+    
+    /********************************************
+     * Load the products for the selected Partner
+     */
+    if( localStorage.getItem('partnerId') ){
+      this.partnerId = localStorage.getItem( 'partnerId' );
+      this.partnerName = localStorage.getItem( 'partnerName' );
+      this.getPartnerProducts( 
+        {
+          value:
+          {
+            id: this.partnerId,
+            name: this.partnerName
+          }
+        }
+      );
+
+      this.selectedPartner = this.partners.find( (x:any) => parseInt(x.id) === parseInt(this.partnerId) );
+    }
+
   }
 
-  selectedPartner(id: any){
+  getPartners(){
+    return this.partners = this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PARTNERS_PATH, undefined, this.headers).pipe(
+      map( (response: any) => {
+          return response.data;
+        }
+      ),
+      tap((request) =>{
+          
+        },(error) => {
+          this.objErrors = error.error.message;
+        }
+      )
+    ).toPromise()
+  }
+
+
+
+
+  getPartnerProducts(event: any){
     this.products = [];
+    if( event.value.id == 0 ) return
     this.loading = true;
+
 
     setTimeout(()=>{
       this.loading = false;
@@ -47,23 +124,28 @@ export class ProductsComponent implements OnInit {
         {id: 4, type: 'Video', description: 'Product video 4 description', features: '[40,41]', revenue: '126', start:'01/30/2020', end:'01/11/2021'},
       ];
     }, 1000);
-    localStorage.setItem('partnerId', id);
-    this.partnerId = id;
+    
+    this.partnerId = event.value.id;
+    localStorage.setItem( 'partnerId', this.partnerId );
 
-    this.partnerName = this.partners.find( (x:any) => x.id === this.partnerId );
-    localStorage.setItem('partnerName', '');
-   
-    if(this.partnerName && this.partnerName.name){
-      localStorage.setItem('partnerName', this.partnerName.name);
+    this.partnerName = event.value.name;
+    if( this.partnerName ){
+      localStorage.setItem( 'partnerName', this.partnerName );
     }
+    
   }
+
+  // getProducts( partnerId: any ){
+
+  //   return this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PRODUCTS_PATH, {partnerId: partnerId} , this.headers)
+  // }
 
   selectedProduct(id: any){
     if( !this.partnerId ){alert('Choose Partner'); return;}
     this.router.navigate(['product/edit/' + this.partnerId + '/' + id]);
   }
 
-  getPartnerName(partners: any){
-    return partners.id === this.partnerId;
-  }
+  // getPartnerName(partners: any){
+  //   return partners.id === this.partnerId;
+  // }
 }
