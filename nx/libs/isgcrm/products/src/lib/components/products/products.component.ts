@@ -158,7 +158,11 @@ export class ProductsComponent implements OnInit {
 
   editProduct(id: number){
     if( !this.partnerId ){alert('Choose Partner'); return;}
-    this.router.navigate(['product/edit/' + this.partnerId + '/' + id]);
+    if( id ){
+      this.router.navigate(['product/edit/' + this.partnerId + '/' + id]);
+    }else{
+      this.router.navigate(['product/new/' + this.partnerId]);
+    }
   }
 
   viewProduct(id: number){

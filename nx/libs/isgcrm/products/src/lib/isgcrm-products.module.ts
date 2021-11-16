@@ -9,6 +9,7 @@ import {MenuItem, PrimeIcons} from 'primeng/api';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 
 export interface Product {
   type: any;
@@ -21,6 +22,7 @@ export interface Product {
 
 @NgModule({
   imports: [
+    ButtonModule,
     ReactiveFormsModule,
     MessagesModule,
     MessageModule,

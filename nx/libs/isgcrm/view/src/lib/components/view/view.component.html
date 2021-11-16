@@ -1,1 +1,89 @@
-<p>view works!</p>
+<div class="p-grid p-fluid">
+    <div class="grid">
+        <div class="col-12">
+            <h2>
+                {{ partnerName }}
+            </h2>
+        </div>
+    </div>
+    <div>
+        <hr>
+    </div>
+    <div class="grid">
+        <div class="col-4">
+            <label for="pType">Product Type</label>&nbsp;
+            <p-dropdown 
+                [options]="productType"
+                optionLabel="name"
+                optionValue="id"
+                [(ngModel)]="selectedProductTypeId"
+                (onChange)="getFeatures($event)"
+                >
+            </p-dropdown>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-4">
+            <label for="pType">Features</label>&nbsp;
+            <p-dropdown 
+                [options]="featureType" 
+                optionLabel="name" 
+                optionValue="id"
+                (onChange)="selectedFeature($event)"
+                id="pType"
+                >
+            </p-dropdown>
+        </div>
+        <div class="col-4">
+            <label>Ids</label>
+            <div>
+                {{ selectedProduct.features }}
+            </div>
+            
+        </div>
+    </div>
+    <div>
+        <hr>
+    </div>
+    <div class="grid">
+        <div class="col-sm-12 col-8">
+            <label for="pName">Product name</label>
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-eye"></i></span>
+                <input disabled id="pName" type="text" class="p-inputtext-lg" placeholder="Required">         
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-sm-12 col-3">
+            <label for="pName">Price</label>
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">$</span>
+                    <input disabled value="678.90">
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-3">
+            <label for="pName">Start Date</label>
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                <input disabled value="11/15/20201">        
+            </div>
+        </div>
+    
+        <div class="col-3">
+            <label for="pName">Date End</label>
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                <input disabled value="11/15/20201">  
+            </div>
+        </div>
+    </div>
+        <div class="p-formgroup-inline">
+            <div class="p-field">
+                <button class="p-button-info" pButton type="button" label="Back" (click)="goPartners()"></button>
+            </div>
+        </div>
+
+</div>

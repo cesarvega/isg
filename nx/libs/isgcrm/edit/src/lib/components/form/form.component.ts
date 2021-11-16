@@ -21,8 +21,8 @@ export class FormComponent implements OnInit {
   formData!: any;
   selectedProductType: any = null;
   selectedProductTypeId: any = null;
-  productFeatures: any = [];//[{id:1},{id:2},{id:3},{id:4}];
-
+  productFeatures: any = [];
+  disabled: boolean = true;
 
     productType: any =[
       {id: null, name:'---'},
@@ -58,10 +58,20 @@ export class FormComponent implements OnInit {
         //   this.productFeatures.push({id: a});
         // }
 
-
         this.populateForm();
         this.getFeatures(this.selectedProductTypeId);
       }
+    }else{
+      this.selectedProduct ={
+        description: "",
+        end: "",
+        features: "",
+        id: 0,
+        revenue: "",
+        start: "",
+        type: ""
+      }
+      this.disabled = false;
     }
   }
 
@@ -103,7 +113,7 @@ export class FormComponent implements OnInit {
   populateForm(){
     this.formData.patchValue({
       name: this.selectedProduct.description,
-      price: this.selectedProduct.revenue
+      start: this.selectedProduct.start,
     })
   }
 }

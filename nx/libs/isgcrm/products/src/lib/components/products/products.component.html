@@ -2,15 +2,20 @@
     <div class="container" *ngIf="objErrors">
         <p-message severity="error" text="Unauthorized. A login is required" styleClass="p-mr-2"></p-message>
     </div>
-    <div class="row">
-        <label for="partner">Choose a Partner</label>&nbsp;
-        <p-dropdown 
-            [options]="partners" 
-            optionLabel="name"
-            (onChange)="getPartnerProducts($event)"
-            [(ngModel)]="selectedPartner"
-            >
-        </p-dropdown>
+    <div class="flex justify-content-between flex-wrap card-container purple-container">
+        <div class="flex align-items-center justify-content-center h-4rem m-2">
+            <label for="partner">Choose a Partner</label>&nbsp;
+            <p-dropdown 
+                [options]="partners" 
+                optionLabel="name"
+                (onChange)="getPartnerProducts($event)"
+                [(ngModel)]="selectedPartner"
+                >
+            </p-dropdown>
+        </div>
+        <div class="flex align-items-center justify-content-center m-2">
+            <button pButton type="button" label="New Product" class="p-button p-button-info" (click)="editProduct(0)"></button>
+        </div>
     </div>
 
     <div class="row">
