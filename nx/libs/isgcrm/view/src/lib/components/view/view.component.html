@@ -1,10 +1,16 @@
 <div class="p-grid p-fluid">
-    <div class="grid">
-        <div class="col-12">
+    <div class="flex justify-content-between flex-wrap card-container purple-container">
+        <div class="flex align-items-center justify-content-center h-4rem m-2">
             <h2>
                 {{ partnerName }}
             </h2>
         </div>
+        <div class="flex align-items-center justify-content-center m-2">
+            <button pButton type="button" label="View" class="p-button p-button-warning w-9rem"></button>
+            <!-- <div *ngIf="productId" class="p-2 m-2 border-round w-6rem h-2rem text-center" [ngStyle]="{backgroundColor:'var(--orange-500)', color:'#fff'}">
+                Viewing
+            </div> -->
+        </div>        
     </div>
     <div>
         <hr>
