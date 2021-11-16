@@ -35,7 +35,8 @@
       "@nx/isgcrm/edit": ["libs/isgcrm/edit/src/index.ts"],
       "@nx/isgcrm/login": ["libs/isgcrm/login/src/index.ts"],
       "@nx/isgcrm/products": ["libs/isgcrm/products/src/index.ts"],
-      "@nx/isgcrm/shared": ["libs/isgcrm/shared/src/index.ts"]
+      "@nx/isgcrm/shared": ["libs/isgcrm/shared/src/index.ts"],
+      "@nx/isgcrm/view": ["libs/isgcrm/view/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

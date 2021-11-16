@@ -23,6 +23,11 @@ const routes: Routes = [
             loadChildren: () =>
               import('@nx/isgcrm/edit').then((module) => module.IsgcrmEditModule),
           },
+          {
+            path: 'product/view/:productId',
+            loadChildren: () =>
+              import('@nx/isgcrm/view').then((module) => module.IsgcrmViewModule),
+          },          
         ]
     }
 ];

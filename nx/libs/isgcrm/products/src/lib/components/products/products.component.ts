@@ -156,11 +156,14 @@ export class ProductsComponent implements OnInit {
   //   return this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PRODUCTS_PATH, {partnerId: partnerId} , this.headers)
   // }
 
-  selectedProduct(id: any){
+  editProduct(id: number){
     if( !this.partnerId ){alert('Choose Partner'); return;}
     this.router.navigate(['product/edit/' + this.partnerId + '/' + id]);
   }
 
+  viewProduct(id: number){
+    this.router.navigate(['product/view/' + id]);
+  }
   // getPartnerName(partners: any){
   //   return partners.id === this.partnerId;
   // }

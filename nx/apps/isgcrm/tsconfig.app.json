@@ -5,5 +5,9 @@
     "types": []
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["src/**/*.d.ts", "../../libs/isgcrm/edit/src/index.ts"]
+  "include": [
+    "src/**/*.d.ts",
+    "../../libs/isgcrm/edit/src/index.ts",
+    "../../libs/isgcrm/view/src/index.ts"
+  ]
 }

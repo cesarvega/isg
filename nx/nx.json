@@ -97,6 +97,9 @@
     },
     "isgcrm-shared": {
       "tags": []
+    },
+    "isgcrm-view": {
+      "tags": []
     }
   }
 }
