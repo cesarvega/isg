@@ -10,9 +10,13 @@ import { CalendarModule} from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { PickListModule } from 'primeng/picklist';
+import { ListboxModule } from 'primeng/listbox';
 
 @NgModule({
   imports: [
+    ListboxModule,
+    PickListModule,
     InputTextModule,
     TableModule,
     ReactiveFormsModule,
