@@ -6,22 +6,15 @@
             </h2>
         </div>
         <div class="flex align-items-center justify-content-center m-2">
-            <!-- <div *ngIf="productId" class="p-2 m-2 border-round w-6rem h-2rem text-center" [ngStyle]="{backgroundColor:'#ff0000', color:'#fff'}">
-                Editing
-            </div> -->
             <button *ngIf="productId" pButton type="button" label="Edit" class="p-button p-button-danger w-9rem"></button>
-
             <button *ngIf="!productId" pButton type="button" label="New" class="p-button p-button-success w-9rem"></button>
-            <!-- <div *ngIf="!productId" class="p-2 m-2 border-round w-6rem h-2rem text-center" [ngStyle]="{backgroundColor:'var(--green-500)', color:'#fff'}">
-                New
-            </div>             -->
         </div>
     </div>
     <div>
         <hr>
     </div>
     <div class="grid">
-        <div class="col-4">
+        <div class="col-12 md:col-6 lg:col-4">
             <label for="pType">Product Type</label>&nbsp;
             <p-dropdown 
                 [options]="productType"
@@ -35,7 +28,7 @@
         </div>
     </div>
     <div class="grid">
-        <div class="col-4">
+        <div class="col-12 md:col-4 lg:col-4">
             <label for="pType">Features</label>&nbsp;
             <p-dropdown 
                 [options]="featureType" 
@@ -60,21 +53,28 @@
     <h4>Composition</h4>
     <form [formGroup]="formData" novalidate>
     <div class="grid">
-        <div class="col-sm-12 col-8">
+        <div class="col-12 md:col-10 lg:col-8">
             <label for="pName">Product name</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-pencil"></i></span>
-                <input pInputText id="pName" [readonly]="disabled" formControlName="name" class="p-inputtext-lg" placeholder="Required">         
+                <input 
+                    pInputText 
+                    id="pName" 
+                    [disabled]="disabled" 
+                    formControlName="name" 
+                    class="p-inputtext-lg" 
+                    placeholder="Required"
+                >         
             </div>
         </div>
     </div>
     <div class="grid">
-        <div class="col-sm-12 col-3">
+        <div class="col-12 md:col-6 lg:col-3">
             <label for="pName">Price</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">$</span>
                 <p-inputNumber 
-                    [readonly]="disabled" 
+                    [disabled]="disabled" 
                     [(ngModel)]="selectedProduct.revenue" 
                     mode="currency" 
                     currency="USD" 
@@ -85,7 +85,7 @@
         </div>
     </div>
     <div class="grid">
-        <div class="col-3">
+        <div class="col-12 md:col-6 lg:col-3">
             <label for="pName">Start Date</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
@@ -93,7 +93,7 @@
             </div>
         </div>
     
-        <div class="col-3">
+        <div class="col-12 md:col-6 lg:col-3">
             <label for="pName">Date End</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>

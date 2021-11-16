@@ -53,11 +53,6 @@ export class FormComponent implements OnInit {
         let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
         this.selectedProductTypeId = productTypeId.id;
 
-        // const arr  = JSON.parse(this.selectedProduct.features);
-        // for( let a of arr ){
-        //   this.productFeatures.push({id: a});
-        // }
-
         this.populateForm();
         this.getFeatures(this.selectedProductTypeId);
       }

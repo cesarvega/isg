@@ -21,8 +21,8 @@ export class ViewComponent implements OnInit {
   formData!: any;
   selectedProductType: any = null;
   selectedProductTypeId: any = null;
-  productFeatures: any = [];//[{id:1},{id:2},{id:3},{id:4}];
-
+  productFeatures: any = [];
+  disabled: boolean = true;
 
     productType: any =[
       {id: null, name:'---'},
@@ -36,7 +36,7 @@ export class ViewComponent implements OnInit {
     featureType: any =[];
 
   ngOnInit(): void {
- 
+    this.createForm();
     if( localStorage.getItem('partnerName') ){
       this.partnerName = localStorage.getItem('partnerName');
     }
@@ -53,10 +53,7 @@ export class ViewComponent implements OnInit {
         let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
         this.selectedProductTypeId = productTypeId.id;
 
-        // const arr  = JSON.parse(this.selectedProduct.features);
-        // for( let a of arr ){
-        //   this.productFeatures.push({id: a});
-        // }
+        this.populateForm();
 
         this.getFeatures(this.selectedProductTypeId);
       }
@@ -89,5 +86,19 @@ export class ViewComponent implements OnInit {
     //}
   }
 
+  createForm(){
+    this.formData = new FormGroup({
+      name: new FormControl(''),
+      price: new FormControl(''),
+      start: new FormControl(''),
+      end: new FormControl('')
+    })
+  }
 
+  populateForm(){
+    this.formData.patchValue({
+
+      start: this.selectedProduct.start,
+    })
+  }
 }

@@ -7,29 +7,27 @@
         </div>
         <div class="flex align-items-center justify-content-center m-2">
             <button pButton type="button" label="View" class="p-button p-button-warning w-9rem"></button>
-            <!-- <div *ngIf="productId" class="p-2 m-2 border-round w-6rem h-2rem text-center" [ngStyle]="{backgroundColor:'var(--orange-500)', color:'#fff'}">
-                Viewing
-            </div> -->
         </div>        
     </div>
     <div>
         <hr>
     </div>
     <div class="grid">
-        <div class="col-4">
-            <label for="pType">Product Type</label>&nbsp;
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="pType">Product TypeV</label>&nbsp;
             <p-dropdown 
                 [options]="productType"
                 optionLabel="name"
                 optionValue="id"
                 [(ngModel)]="selectedProductTypeId"
                 (onChange)="getFeatures($event)"
-                >
+                [disabled]="disabled"
+            >
             </p-dropdown>
         </div>
     </div>
     <div class="grid">
-        <div class="col-4">
+        <div class="col-12 md:col-6 lg:col-4">
             <label for="pType">Features</label>&nbsp;
             <p-dropdown 
                 [options]="featureType" 
@@ -37,10 +35,11 @@
                 optionValue="id"
                 (onChange)="selectedFeature($event)"
                 id="pType"
-                >
+                [disabled]="disabled"
+            >
             </p-dropdown>
         </div>
-        <div class="col-4">
+        <div class="col-12 md:col-10 lg:col-6">
             <label>Ids</label>
             <div>
                 {{ selectedProduct.features }}
@@ -51,41 +50,51 @@
     <div>
         <hr>
     </div>
-    <div class="grid">
-        <div class="col-sm-12 col-8">
-            <label for="pName">Product name</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-eye"></i></span>
-                <input disabled id="pName" type="text" class="p-inputtext-lg" placeholder="Required">         
+    <!-- <form [formGroup]="formData" novalidate> -->
+        <div class="grid">
+            <div class="col-12 md:col-10 lg:col-6">
+                <label for="pName">Product name</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-eye"></i></span>
+                    <input 
+                        pInputText 
+                        disabled
+                        id="pName" 
+                        type="text" 
+                        class="p-inputtext-lg" 
+                        placeholder="Required" 
+                        [(ngModel)]="selectedProduct.description"
+                    >         
+                </div>
             </div>
         </div>
-    </div>
-    <div class="grid">
-        <div class="col-sm-12 col-3">
-            <label for="pName">Price</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon">$</span>
-                    <input disabled value="678.90">
+        <div class="grid">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="pName">Price</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">$</span>
+                        <input pInputText disabled [(ngModel)]="selectedProduct.revenue">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="grid">
-        <div class="col-3">
-            <label for="pName">Start Date</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                <input disabled value="11/15/20201">        
+        <div class="grid">
+            <div class="col-12 md:col-6 lg:col-2">
+                <label for="pName">Start Date</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                    <input pInputText disabled [(ngModel)]="selectedProduct.start">        
+                </div>
+            </div>
+        
+            <div class="col-12 md:col-6 lg:col-2">
+                <label for="pName">Date End</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                    <input pInputText disabled [(ngModel)]="selectedProduct.end">  
+                </div>
             </div>
         </div>
-    
-        <div class="col-3">
-            <label for="pName">Date End</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                <input disabled value="11/15/20201">  
-            </div>
-        </div>
-    </div>
+    <!-- </form> -->
         <div class="p-formgroup-inline">
             <div class="p-field">
                 <button class="p-button-info" pButton type="button" label="Back" (click)="goPartners()"></button>
