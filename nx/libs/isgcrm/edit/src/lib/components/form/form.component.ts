@@ -61,7 +61,8 @@ export class FormComponent implements OnInit {
         this.selectedProductTypeId = productTypeId.id;
 
         this.populateForm();
-        this.getFeatures(this.selectedProductTypeId);
+        this.list2 = this.productType.filter( (x:any) => x.name == this.selectedProductType );;
+        this.list4 = this.getFeatures(this.selectedProductTypeId);
       }
     }else{
       this.selectedProduct ={
@@ -130,7 +131,7 @@ export class FormComponent implements OnInit {
       //this.list2 = arrTemp;
     }
     setTimeout(() => {
-       this.visible = true;
+        this.visible = true;
       },10
     )
   }
@@ -166,8 +167,8 @@ export class FormComponent implements OnInit {
   }
 
   onMoveAllToTarget( event: any ){
-    this.list3 = [];
     alert('Please, select one Class Type');
-
+    this.onMoveAllToSource();
+    this.productType = event.items;
   }
 }

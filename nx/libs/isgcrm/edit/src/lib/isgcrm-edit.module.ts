@@ -4,21 +4,23 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormComponent } from './components/form/form.component';
 import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
-import {ButtonModule} from 'primeng/button';
-import { CalendarModule} from 'primeng/calendar';
+// import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PickListModule } from 'primeng/picklist';
-import { ListboxModule } from 'primeng/listbox';
+import { CardModule } from 'primeng/card';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   imports: [
-    ListboxModule,
+    AccordionModule,
+    CardModule,
     PickListModule,
     InputTextModule,
-    TableModule,
+    // TableModule,
     ReactiveFormsModule,
     InputNumberModule,
     CalendarModule,
