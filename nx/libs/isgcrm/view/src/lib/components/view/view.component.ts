@@ -24,6 +24,9 @@ export class ViewComponent implements OnInit {
   productFeatures: any = [];
   disabled: boolean = true;
 
+  list2: any = [];
+  list4: any = [];
+
     productType: any =[
       {id: null, name:'---'},
       {id: 1, name: 'Video'},
@@ -36,7 +39,6 @@ export class ViewComponent implements OnInit {
     featureType: any =[];
 
   ngOnInit(): void {
-    this.createForm();
     if( localStorage.getItem('partnerName') ){
       this.partnerName = localStorage.getItem('partnerName');
     }
@@ -53,27 +55,24 @@ export class ViewComponent implements OnInit {
         let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
         this.selectedProductTypeId = productTypeId.id;
 
-        this.populateForm();
-
-        this.getFeatures(this.selectedProductTypeId);
+        this.list2 = [{id:1, name: this.selectedProduct.type}];
+        this.list4 = this.getFeatures(this.selectedProductTypeId);
       }
     }
   }
 
   getFeatures(id: any){
- //debugger;
-    //console.log( 'getFeatures:' + id );
     this.featureType =[
-      {id: null, name:'---'},
-      {id: 34, name: 'Feature id 34'},
-      {id: 35, name: 'Feature id 35'},
-      {id: 36, name: 'Feature id 36'},
-      {id: 37, name: 'Feature id 37'},
-      {id: 38, name: 'Feature id 38'},
-      {id: 39, name: 'Feature id 39'},
-      {id: 40, name: 'feature id 40'},
-      {id: 41, name: 'feature id 41'},
+      {id: 34, name: 'Feature id 34', key: 1},
+      {id: 35, name: 'Feature id 35', key: 1},
+      {id: 36, name: 'Feature id 36', key: 2},
+      {id: 37, name: 'Feature id 37', key: 2},
+      {id: 38, name: 'Feature id 38', key: 2},
+      {id: 39, name: 'Feature id 39', key: 3},
+      {id: 40, name: 'feature id 40', key: 3},
+      {id: 41, name: 'feature id 41', key: 1},
     ];
+    return this.featureType.filter( (x:any) => x.key === id );
   }
 
   selectedFeature( fType: any ){
@@ -86,19 +85,5 @@ export class ViewComponent implements OnInit {
     //}
   }
 
-  createForm(){
-    this.formData = new FormGroup({
-      name: new FormControl(''),
-      price: new FormControl(''),
-      start: new FormControl(''),
-      end: new FormControl('')
-    })
-  }
 
-  populateForm(){
-    this.formData.patchValue({
-
-      start: this.selectedProduct.start,
-    })
-  }
 }

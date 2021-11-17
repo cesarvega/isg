@@ -56,3 +56,11 @@ body{
 .logoContainer{
     padding-bottom: 10px;
 }
+
+.p-menu{
+    width: 100%!important;
+}
+
+.p-menu > div > ul > li.active > a > span {
+    color: blue !important;
+  }

@@ -125,6 +125,9 @@ export class ProductsComponent implements OnInit {
 
   getPartnerProducts(event: any){
     this.products = [];
+    localStorage.removeItem( 'partnerId' );
+    this.partnerId = null;
+    
     if( event.value.id == 0 ) return
     this.loading = true;
 
@@ -133,13 +136,7 @@ export class ProductsComponent implements OnInit {
       this.loading = false;
       let products: any = localStorage.getItem( 'products' );
       this.products = JSON.parse( products );
-      // this.products=[
-      //   {id: 1, type: 'Video', description: 'Product video 1 description', features: '[34,35]', revenue: '123', start:'01/30/2020', end:'01/11/2021'},
-      //   {id: 2, type: 'Audio', description: 'Product Audio 2 description', features: '[36,37]', revenue: '124', start:'01/30/2020', end:'01/11/2021'},
-      //   {id: 3, type: 'Internet', description: 'Product Internet 3 description', features: '[38,39]', revenue: '125', start:'01/30/2020', end:'01/11/2021'},
-      //   {id: 4, type: 'Video', description: 'Product video 4 description', features: '[40,41]', revenue: '126', start:'01/30/2020', end:'01/11/2021'},
-      // ];
-    }, 1000);
+    }, 500);
     
     this.partnerId = event.value.id;
     localStorage.setItem( 'partnerId', this.partnerId );

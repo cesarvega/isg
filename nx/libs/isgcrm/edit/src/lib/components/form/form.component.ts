@@ -31,6 +31,7 @@ export class FormComponent implements OnInit {
   featureList: any = [];
   temp:any = [];
   visible: boolean = true;
+  bkColor: any = '#689f38';
 
   productType: any =[
       {id: 1, name: 'Video'},
@@ -61,10 +62,13 @@ export class FormComponent implements OnInit {
         this.selectedProductTypeId = productTypeId.id;
 
         this.populateForm();
-        this.list2 = this.productType.filter( (x:any) => x.name == this.selectedProductType );;
+        const ids = JSON.parse( this.selectedProduct.features );
+
+        this.list2 = this.productType.filter( (x:any) => x.name == this.selectedProductType );
         this.list4 = this.getFeatures(this.selectedProductTypeId);
       }
     }else{
+      this.bkColor = '#ff0000';
       this.selectedProduct ={
         description: "",
         end: "",

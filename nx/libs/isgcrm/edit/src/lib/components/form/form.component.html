@@ -55,7 +55,7 @@
 
         <div class="grid">
             <div class="col-12 md:col-6 lg:col-4">
-                <p-card header="Class Type" [style]="{'background':'#777', 'color': '#fff'}">
+                <p-card header="Class Type" [style]="{'background':'#f8f9fa', 'color': '#495164'}">
                     <hr>
                     <div *ngFor="let class of list2">
                         {{ class.name }}
@@ -63,7 +63,7 @@
                 </p-card>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
-                <p-card header="Features" [style]="{'background':'#777', 'color': '#fff'}">
+                <p-card header="Features" [style]="{'background':'#f8f9fa', 'color': '#495164'}">
                     <hr>
                     <div *ngFor="let feature of list4">
                         {{ feature.name }}
@@ -77,63 +77,64 @@
     </div>
 
     <form [formGroup]="formData" novalidate>
-    <div class="grid">
-        <div class="col-12 md:col-10 lg:col-8">
-            <label for="pName">Product name</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-pencil"></i></span>
-                <input 
-                    pInputText 
-                    id="pName" 
-                    [readonly]="disabled" 
-                    formControlName="name" 
-                    class="p-inputtext-lg" 
-                    placeholder="Required"
-                >         
+        <div class="grid">
+            <div class="col-12 md:col-10 lg:col-8">
+                <label for="pName">Product name</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+                    <input 
+                        pInputText 
+                        id="pName" 
+                        [readonly]="disabled" 
+                        formControlName="name" 
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
             </div>
         </div>
-    </div>
-    <div class="grid">
-        <div class="col-12 md:col-6 lg:col-3">
-            <label for="pName">Price</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon">$</span>
-                <p-inputNumber 
-                    [disabled]="disabled" 
-                    [(ngModel)]="selectedProduct.revenue" 
-                    mode="currency" 
-                    currency="USD" 
-                    locale="en-US"
-                    formControlName="price">
-                </p-inputNumber>
+        <div class="grid">
+            <div class="col-12 md:col-6 lg:col-3">
+                <label for="pName">Price</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">$</span>
+                    <p-inputNumber 
+                        [disabled]="disabled" 
+                        [(ngModel)]="selectedProduct.revenue" 
+                        mode="currency" 
+                        currency="USD" 
+                        locale="en-US"
+                        formControlName="price">
+                    </p-inputNumber>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="grid">
-        <div class="col-12 md:col-6 lg:col-3">
-            <label for="pName">Start Date</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                <p-calendar [disabled]="disabled" formControlName="start" placeholder="required"></p-calendar>
+        <div class="grid">
+            <div class="col-12 md:col-6 lg:col-3">
+                <label for="pName">Start Date</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                    <p-calendar [disabled]="disabled" formControlName="start" placeholder="required"></p-calendar>
+                </div>
+            </div>
+        
+            <div class="col-12 md:col-6 lg:col-3">
+                <label for="pName">Date End</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                    <p-calendar formControlName="end" placeholder="required"></p-calendar>     
+                </div>
             </div>
         </div>
-    
-        <div class="col-12 md:col-6 lg:col-3">
-            <label for="pName">Date End</label>
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                <p-calendar formControlName="end" placeholder="required"></p-calendar>     
+        <div class="flex justify-content-end flex-wrap">
+            <div class="flex">
+                <div class="p-field m-2">
+                    <button class="p-button-info" pButton type="button" label="Cancel" (click)="goPartners()"></button>
+                </div>
+                <div class="p-field m-2">
+                    <button class="p-button-info" pButton type="button" label="Submit"></button>
+                </div>
             </div>
         </div>
-    </div>
-        <div class="p-formgroup-inline">
-            <div class="p-field">
-                <button class="p-button-info" pButton type="button" label="Cancel" (click)="goPartners()"></button>
-            </div>
-            <div class="p-field">
-                <button class="p-button-info" pButton type="button" label="Submit"></button>
-            </div>
-        </div>
-    
     </form>
 </div>

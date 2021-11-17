@@ -9,9 +9,11 @@ import { RouterModule } from '@angular/router';
 import { ViewComponent } from './components/view/view.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   imports: [
+    CardModule,
     InputTextModule,
     ReactiveFormsModule,
     TableModule,

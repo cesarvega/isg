@@ -12,45 +12,30 @@
     <div>
         <hr>
     </div>
-    <div class="grid">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="pType">Product TypeV</label>&nbsp;
-            <p-dropdown 
-                [options]="productType"
-                optionLabel="name"
-                optionValue="id"
-                [(ngModel)]="selectedProductTypeId"
-                (onChange)="getFeatures($event)"
-                [disabled]="disabled"
-            >
-            </p-dropdown>
-        </div>
-    </div>
-    <div class="grid">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="pType">Features</label>&nbsp;
-            <p-dropdown 
-                [options]="featureType" 
-                optionLabel="name" 
-                optionValue="id"
-                (onChange)="selectedFeature($event)"
-                id="pType"
-                [disabled]="disabled"
-            >
-            </p-dropdown>
-        </div>
-        <div class="col-12 md:col-10 lg:col-6">
-            <label>Ids</label>
-            <div>
-                {{ selectedProduct.features }}
+    <div>
+        <div class="grid">
+            <div class="col-12 md:col-6 lg:col-4">
+                <p-card header="Class Type" [style]="{'background':'#f8f9fa', 'color': '#495164'}">
+                    <hr>
+                    <div *ngFor="let class of list2">
+                        {{ class.name }}
+                    </div>
+                </p-card>
             </div>
-            
+            <div class="col-12 md:col-6 lg:col-4">
+                <p-card header="Features" [style]="{'background':'#f8f9fa', 'color': '#495164'}">
+                    <hr>
+                    <div *ngFor="let feature of list4">
+                        {{ feature.name }}
+                    </div>
+                </p-card>
+            </div>
         </div>
+
     </div>
     <div>
         <hr>
     </div>
-    <!-- <form [formGroup]="formData" novalidate> -->
         <div class="grid">
             <div class="col-12 md:col-10 lg:col-6">
                 <label for="pName">Product name</label>
@@ -94,10 +79,11 @@
                 </div>
             </div>
         </div>
-    <!-- </form> -->
-        <div class="p-formgroup-inline">
-            <div class="p-field">
-                <button class="p-button-info" pButton type="button" label="Back" (click)="goPartners()"></button>
+        <div class="flex justify-content-end flex-wrap">
+            <div class="flex">
+                <div class="p-field m-2">
+                    <button class="p-button-info" pButton type="button" label="Close" (click)="goPartners()"></button>
+                </div>
             </div>
         </div>
 
