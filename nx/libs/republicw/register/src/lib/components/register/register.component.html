@@ -2,14 +2,6 @@
     <div class="grid flex align-content-end" id="LR1">
         <div class="col-12 md:col-6 lg:col-4">
             <label for="search">Search by customer phone number</label>
-            <!-- <p-inputNumber  
-                id="search"
-                class="p-inputtext-lg" 
-                placeholder="Required"
-                [useGrouping]="false"
-                [maxlength]="10"
-                ariaLabel="Search by customer phone number"
-            ></p-inputNumber> -->
             <input
                 pInputText
                 id="search"
@@ -17,6 +9,8 @@
                 placeholder="##########"
                 (keypress)="onlyNumbers($event)"
                 maxlength="10"
+                role="presentation"
+                autocomplete="off"
             >
         </div>
         <div class="col-12 md:col-6 lg:col-4 flex">
@@ -37,6 +31,8 @@
                         formControlName="first_name"
                         class="p-inputtext-lg" 
                         placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
                     >         
                 </div>
             </div>
@@ -49,6 +45,8 @@
                         formControlName="last_name"
                         class="p-inputtext-lg" 
                         placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
                     >         
                 </div>
             </div>
@@ -71,6 +69,8 @@
                     (keypress)="onlyNumbers($event)"
                     [maxlength]="10"
                     formControlName="phone_number"
+                    role="presentation"
+                    autocomplete="off"
                 >
             </div>
             <div class="col-12 md:col-6 lg:col-4">
@@ -82,6 +82,8 @@
                         formControlName="email"
                         class="p-inputtext-lg" 
                         placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
                     >         
                 </div>
             </div>
@@ -94,6 +96,8 @@
                         formControlName="account_number"
                         class="p-inputtext-lg" 
                         placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
                     >         
                 </div>
             </div>        
@@ -126,7 +130,8 @@
                         id="address_line2" 
                         formControlName="address_line2"
                         class="p-inputtext-lg" 
-                        placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
                     >         
                 </div>
             </div>     
@@ -141,6 +146,8 @@
                         formControlName="city"
                         class="p-inputtext-lg" 
                         placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
                     >         
                 </div>
             </div>
@@ -153,6 +160,8 @@
                         optionLabel="name"
                         formControlName="state"
                         optionValue="value"
+                        role="presentation"
+                        autocomplete="off"
                     >
                     </p-dropdown>
                 </div>
@@ -168,6 +177,8 @@
                         (keypress)="onlyNumbers($event)"
                         formControlName="zip_code"
                         [maxLength]="5"
+                        role="presentation"
+                        autocomplete="off"
                     >      
                 </div>
             </div>             
