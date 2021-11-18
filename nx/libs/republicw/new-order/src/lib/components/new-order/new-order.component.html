@@ -344,18 +344,16 @@
         <div class="col-12 md:col-6 lg:col-4">
             <label for="devprice">Price</label>
             <div>
-                <div>
-                    <p-inputNumber
-                        id="devprice"
-                        formControlName="devprice"
-                        class="p-inputtext-lg"
-                        placeholder="required"
-                        role="presentation"
-                        autocomplete="off"
-                        mode="currency"
-                        currency="USD"
-                    ></p-inputNumber>
-                </div>
+                <p-inputNumber
+                    id="devprice"
+                    formControlName="devprice"
+                    class="p-inputtext-lg"
+                    placeholder="required"
+                    role="presentation"
+                    autocomplete="off"
+                    mode="currency"
+                    currency="USD"
+                ></p-inputNumber>
             </div>            
         </div>
         <div class="col-12 md:col-6 lg:col-4">
@@ -399,20 +397,77 @@
         <div class="col-12 md:col-6 lg:col-4">
             <label for="accesories-price">Price</label>
             <div>
-                <div>
-                    <p-inputNumber
-                        id="accesories-price"
-                        formControlName="accesories-price"
-                        class="p-inputtext-lg"
-                        placeholder="required"
-                        role="presentation"
-                        autocomplete="off"
-                        mode="currency"
-                        currency="USD"
-                    ></p-inputNumber>
-                </div>
+                <p-inputNumber
+                    id="accesories-price"
+                    formControlName="accesories-price"
+                    class="p-inputtext-lg"
+                    placeholder="required"
+                    role="presentation"
+                    autocomplete="off"
+                    mode="currency"
+                    currency="USD"
+                ></p-inputNumber>
             </div>            
         </div>         
     </div>
-  
+    <div class="flex justify-content-end" id="LR12">
+        <div class="flex">
+            <label for="subtotal">Sub Total </label>&nbsp;
+            <div>
+                <p-inputNumber
+                    id="subtotal"
+                    mode="currency"
+                    currency="USD"
+                ></p-inputNumber>
+            </div>
+
+        </div>
+    </div>
+    <div class="flex justify-content-end" id="LR13">
+        <div class="flex">
+            <label for="shipping">Shipping </label>&nbsp;
+            <div>
+                <p-inputNumber
+                    id="shipping"
+                    mode="currency"
+                    currency="USD"
+                ></p-inputNumber>
+            </div>
+
+        </div>
+    </div>
+    <div class="flex justify-content-end" id="LR14">
+        <div class="flex">
+            <label for="tax">Tax </label>&nbsp;
+            <div>
+                <p-inputNumber
+                    id="tax"
+                    mode="currency"
+                    currency="USD"
+                ></p-inputNumber>
+            </div>
+
+        </div>
+    </div>      
+    <div class="flex justify-content-end" id="LR15">
+        <div class="flex">
+            <label for="total">Total </label>&nbsp;
+            <div>
+                <p-inputNumber
+                    [disabled]="true"
+                    id="total"
+                    mode="currency"
+                    currency="USD"
+                ></p-inputNumber>
+            </div>
+        </div>
+    </div>  
+    <div>
+        <p-divider type="dashed"></p-divider>        
+    </div>     
+    <div class="flex justify-content-end" id="LR13">
+        <div class="flex">
+            <button class="p-button-info" pButton type="button" label="Save Order"></button>    
+        </div>
+    </div>     
 </section>
