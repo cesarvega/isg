@@ -1,1 +1,418 @@
-<p>new-order works!</p>
+<section id="newOrder">
+    <div class="grid flex align-content-end" id="LR1">
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="search">Search by customer phone number</label>
+            <input
+                pInputText
+                id="search"
+                class="p-inputtext-lg"
+                placeholder="Enter the phone number"
+                (keypress)="onlyNumbers($event)"
+                maxlength="10"
+                role="presentation"
+                autocomplete="off"
+            >
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 flex">
+            <button class="p-button-info" pButton type="button" label="Search"></button>
+        </div>        
+    </div>
+    <div class="grid" id="LR2">
+        <div class="col-12 md:col-6 lg:col-3">
+            <label for="address_line1">Order Number</label>
+            <div class="p-inputgroup">
+                <input 
+                    pInputText 
+                    id="order_number" 
+                    formControlName="order_number"
+                    class="p-inputtext-lg" 
+                    placeholder="Required"
+                    role="presentation"
+                    autocomplete="off"
+                >         
+            </div>
+        </div>
+        <div class="col-12 md:col-6 lg:col-3">
+            <label for="pName">Date</label>
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                <p-calendar formControlName="date" placeholder="required"></p-calendar>
+            </div>
+        </div>     
+    </div>
+    <div id="LR3">
+        <p-tabView>
+            <p-tabPanel header="Shipping">
+                <div class="grid">
+                    <div class="col-12 md:col-6 lg:col-4">
+                        <label for="address_line1">Address 1</label>
+                        <div class="p-inputgroup">
+                            <input 
+                                pInputText 
+                                id="address_line1" 
+                                formControlName="address_line1"
+                                class="p-inputtext-lg" 
+                                placeholder="Required"
+                                role="presentation"
+                                autocomplete="off"
+                                ngx-google-places-autocomplete
+                            >         
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-4">
+                        <label for="address_line2">Address 2</label>
+                        <div class="p-inputgroup">
+                            <input 
+                                pInputText 
+                                id="address_line2" 
+                                formControlName="address_line2"
+                                class="p-inputtext-lg" 
+                                role="presentation"
+                                autocomplete="off"
+                            >         
+                        </div>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 md:col-6 lg:col-4">
+                        <label for="city">City</label>
+                        <div class="p-inputgroup">
+                            <input 
+                                pInputText 
+                                id="city" 
+                                formControlName="city"
+                                class="p-inputtext-lg" 
+                                placeholder="Required"
+                                role="presentation"
+                                autocomplete="off"
+                            >         
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-3 lg:col-2">
+                        <label for="state">State</label>
+                        <div>
+                            <p-dropdown 
+                                id="state"
+                                [options]="states" 
+                                optionLabel="name"
+                                formControlName="state"
+                                optionValue="value"
+                                role="presentation"
+                                autocomplete="off"
+                            >
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-6 md:col-3 lg:col-2">
+                        <label for="zip_code">Zip Code</label>
+                        <div>
+                            <input 
+                                pInputText
+                                id="zip_code"
+                                class="p-inputtext-lg" 
+                                placeholder="Required"
+                                (keypress)="onlyNumbers($event)"
+                                formControlName="zip_code"
+                                [maxLength]="5"
+                                role="presentation"
+                                autocomplete="off"
+                            >      
+                        </div>
+                    </div>                    
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Billing">
+                <div class="grid">
+                    <div class="col-12 md:col-6 lg:col-4">
+                        <label for="address_line1">Address 1</label>
+                        <div class="p-inputgroup">
+                            <input 
+                                pInputText 
+                                id="address_line1" 
+                                formControlName="address_line1"
+                                class="p-inputtext-lg" 
+                                placeholder="Required"
+                                role="presentation"
+                                autocomplete="off"
+                                ngx-google-places-autocomplete
+                            >         
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-4">
+                        <label for="address_line2">Address 2</label>
+                        <div class="p-inputgroup">
+                            <input 
+                                pInputText 
+                                id="address_line2" 
+                                formControlName="address_line2"
+                                class="p-inputtext-lg" 
+                                role="presentation"
+                                autocomplete="off"
+                            >         
+                        </div>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col-12 md:col-6 lg:col-4">
+                        <label for="city">City</label>
+                        <div class="p-inputgroup">
+                            <input 
+                                pInputText 
+                                id="city" 
+                                formControlName="city"
+                                class="p-inputtext-lg" 
+                                placeholder="Required"
+                                role="presentation"
+                                autocomplete="off"
+                            >         
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-3 lg:col-2">
+                        <label for="state">State</label>
+                        <div>
+                            <p-dropdown 
+                                id="state"
+                                [options]="states" 
+                                optionLabel="name"
+                                formControlName="state"
+                                optionValue="value"
+                                role="presentation"
+                                autocomplete="off"
+                            >
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-6 md:col-3 lg:col-2">
+                        <label for="zip_code">Zip Code</label>
+                        <div>
+                            <input 
+                                pInputText
+                                id="zip_code"
+                                class="p-inputtext-lg" 
+                                placeholder="Required"
+                                (keypress)="onlyNumbers($event)"
+                                formControlName="zip_code"
+                                [maxLength]="5"
+                                role="presentation"
+                                autocomplete="off"
+                            >      
+                        </div>
+                    </div>                    
+                </div>
+            </p-tabPanel>
+        </p-tabView>        
+    </div>
+    <div id="LR4">
+        <div>
+            <h3>Wireless</h3>
+        </div>
+        <p-divider type="dashed"></p-divider>        
+    </div>    
+    <div class="grid" id="LR5">
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="state">Plan</label>
+            <div>
+                <p-dropdown 
+                    id="state"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="state"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="state">Package</label>
+            <div>
+                <p-dropdown 
+                    id="state"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="state"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>        
+    </div>
+    <div class="grid" id="LR6">
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="state">Lines</label>
+            <div>
+                <p-dropdown 
+                    id="state"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="state"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="price">Price</label>
+            <div>
+                <p-inputNumber
+                    id="price"
+                    formControlName="price"
+                    class="p-inputtext-lg"
+                    placeholder="required"
+                    role="presentation"
+                    autocomplete="off"
+                    mode="currency"
+                    currency="USD"
+                ></p-inputNumber>
+            </div>            
+        </div>        
+    </div>
+    <div id="LR7">
+        <div>
+            <h3>Devices</h3>
+        </div>
+        <p-divider type="dashed"></p-divider>        
+    </div>
+    <div class="grid" id="LR8">
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="state">Manufacturer</label>
+            <div>
+                <p-dropdown 
+                    id="state"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="state"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="device">Device</label>
+            <div>
+                <p-dropdown 
+                    id="device"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="device"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="phoneos">Phone OS</label>
+            <div>
+                <p-dropdown 
+                    id="phoneos"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="phoneos"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>                  
+    </div>
+    <div class="grid" id="LR9">
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="state">Storage</label>
+            <div>
+                <p-dropdown 
+                    id="state"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="state"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="devprice">Price</label>
+            <div>
+                <div>
+                    <p-inputNumber
+                        id="devprice"
+                        formControlName="devprice"
+                        class="p-inputtext-lg"
+                        placeholder="required"
+                        role="presentation"
+                        autocomplete="off"
+                        mode="currency"
+                        currency="USD"
+                    ></p-inputNumber>
+                </div>
+            </div>            
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="quantity">Quantity</label>
+            <div>
+                <p-dropdown 
+                    id="quantity"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="quantity"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>                  
+    </div>
+    <div id="LR10">
+        <div>
+            <h3>Accesories</h3>
+        </div>
+        <p-divider type="dashed"></p-divider>        
+    </div>
+    <div class="grid" id="LR11">
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="type">Type</label>
+            <div>
+                <p-dropdown 
+                    id="type"
+                    [options]="states" 
+                    optionLabel="name"
+                    formControlName="type"
+                    optionValue="value"
+                    role="presentation"
+                    autocomplete="off"
+                >
+                </p-dropdown>
+            </div>            
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="accesories-price">Price</label>
+            <div>
+                <div>
+                    <p-inputNumber
+                        id="accesories-price"
+                        formControlName="accesories-price"
+                        class="p-inputtext-lg"
+                        placeholder="required"
+                        role="presentation"
+                        autocomplete="off"
+                        mode="currency"
+                        currency="USD"
+                    ></p-inputNumber>
+                </div>
+            </div>            
+        </div>         
+    </div>
+  
+</section>

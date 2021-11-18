@@ -25,7 +25,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
           import('@nx/republicw/register').then(
             (module) => module.RepublicwRegisterModule
           )
-      }
+      },
+      {
+        path: 'new-order',
+        pathMatch: 'full',
+        loadChildren: () =>
+        import('@nx/republicw/new-order').then(
+          (module) => module.RepublicwNewOrderModule
+        )
+      },
     ]),
   ],
   providers: [],
