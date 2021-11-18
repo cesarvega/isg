@@ -2,30 +2,33 @@
     <div class="grid flex align-content-end" id="LR1">
         <div class="col-12 md:col-6 lg:col-4">
             <label for="search">Search by customer phone number</label>
-            <p-inputNumber  
+            <!-- <p-inputNumber  
                 id="search"
                 class="p-inputtext-lg" 
                 placeholder="Required"
                 [useGrouping]="false"
                 [maxlength]="10"
                 ariaLabel="Search by customer phone number"
-            ></p-inputNumber>
-            <!-- <input
+            ></p-inputNumber> -->
+            <input
                 pInputText
                 id="search"
                 class="p-inputtext-lg"
-                placeholder=""
-                type="number"
+                placeholder="##########"
+                (keypress)="onlyNumbers($event)"
                 maxlength="10"
-            > -->
+            >
         </div>
         <div class="col-12 md:col-6 lg:col-4 flex">
             <button class="p-button-info" pButton type="button" label="Search"></button>
         </div>
     </div>
+    <div>
+        <p-divider type="dashed"></p-divider>
+    </div>
     <form [formGroup]="registerForm" novalidate>
         <div class="grid" id="LR2">
-            <div class="col-12 md:col-4 lg:col-3">
+            <div class="col-12 md:col-6 lg:col-4">
                 <label for="first_name">First Name</label>
                 <div class="p-inputgroup">
                     <input 
@@ -37,7 +40,7 @@
                     >         
                 </div>
             </div>
-            <div class="col-12 md:col-4 lg:col-3">
+            <div class="col-12 md:col-6 lg:col-4">
                 <label for="pName">Last Name</label>
                 <div class="p-inputgroup">
                     <input 
@@ -49,7 +52,7 @@
                     >         
                 </div>
             </div>
-            <div class="col-12 md:col-4 lg:col-3">
+            <div class="col-12 md:col-6 lg:col-4">
                 <label for="pName">Date</label>
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
@@ -58,36 +61,109 @@
             </div>        
         </div>
         <div class="grid" id="LR3">
-            <div class="col-12 md:col-4 lg:col-3">
-                phone_number
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="phone_number">Phone Number</label>
+                <input  
+                    pInputText
+                    id="phone_number"
+                    class="p-inputtext-lg" 
+                    placeholder="Required"
+                    (keypress)="onlyNumbers($event)"
+                    [maxlength]="10"
+                    formControlName="phone_number"
+                >
             </div>
-            <div class="col-12 md:col-4 lg:col-3">
-                email
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="first_name">email</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="email" 
+                        formControlName="email"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
             </div>
-            <div class="col-12 md:col-4 lg:col-3">
-                account_number
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="first_name">Account Number</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="account_number" 
+                        formControlName="account_number"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
             </div>        
         </div>
-        <div class="grid" id="LR4">
-            Separator
+        <div id="LR4">
+            <p-divider type="dashed"></p-divider>
         </div>
         <div class="grid" id="LR5">
-            <div class="col-12 md:col-4 lg:col-3">
-                address_line1
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="address_line1">Address 1</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="address_line1" 
+                        formControlName="address_line1"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
             </div>
-            <div class="col-12 md:col-4 lg:col-3">
-                address_line2
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="address_line2">Address 2</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="address_line2" 
+                        formControlName="address_line2"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
             </div>     
         </div>
         <div class="grid" id="LR6">
-            <div class="col-12 md:col-3 lg:col-3">
-                city
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="city">City</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="city" 
+                        formControlName="city"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
             </div>
-            <div class="col-12 md:col-3 lg:col-3">
-                state
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="state">State</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="state" 
+                        formControlName="state"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
             </div> 
-            <div class="col-12 md:col-3 lg:col-3">
-                zip-code
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="zip_code">Zip Code</label>
+                <div>
+                    <input 
+                        pInputText
+                        id="zip_code"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                        (keypress)="onlyNumbers($event)"
+                        [maxLength]="5"
+                    >      
+                </div>
             </div>             
         </div>
     </form> 
