@@ -100,6 +100,19 @@
     },
     "isgcrm-view": {
       "tags": []
+    },
+    "republicw": {
+      "tags": []
+    },
+    "republicw-e2e": {
+      "tags": [],
+      "implicitDependencies": ["republicw"]
+    },
+    "republicw-new-order": {
+      "tags": []
+    },
+    "republicw-register": {
+      "tags": []
     }
   }
 }

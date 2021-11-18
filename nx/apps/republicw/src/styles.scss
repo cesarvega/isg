@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("~primeicons/primeicons.css");
+@import url("~primeng/resources/themes/saga-orange/theme.css");
+@import url("~primeng/resources/primeng.min.css");
+@import url("~primeflex/primeflex.css");
+
+p-inputnumber, .p-inputnumber, .p-inputtext{
+    display: block!important;
+    width: 100%;
+}
+
+label{
+    display: block;
+    padding-bottom: 5px;
+    padding-top: 15px;
+    color: #777;
+}

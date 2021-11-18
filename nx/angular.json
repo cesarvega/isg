@@ -762,6 +762,175 @@
           }
         }
       }
+    },
+    "republicw": {
+      "projectType": "application",
+      "root": "apps/republicw",
+      "sourceRoot": "apps/republicw/src",
+      "prefix": "nx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/republicw",
+            "index": "apps/republicw/src/index.html",
+            "main": "apps/republicw/src/main.ts",
+            "polyfills": "apps/republicw/src/polyfills.ts",
+            "tsConfig": "apps/republicw/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/republicw/src/favicon.ico",
+              "apps/republicw/src/assets"
+            ],
+            "styles": ["apps/republicw/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/republicw/src/environments/environment.ts",
+                  "with": "apps/republicw/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "republicw:build:production"
+            },
+            "development": {
+              "browserTarget": "republicw:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "republicw:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/republicw/src/**/*.ts",
+              "apps/republicw/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/republicw"],
+          "options": {
+            "jestConfig": "apps/republicw/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "republicw-e2e": {
+      "root": "apps/republicw-e2e",
+      "sourceRoot": "apps/republicw-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/republicw-e2e/cypress.json",
+            "devServerTarget": "republicw:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "republicw:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/republicw-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "republicw-new-order": {
+      "projectType": "library",
+      "root": "libs/republicw/new-order",
+      "sourceRoot": "libs/republicw/new-order/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/republicw/new-order"],
+          "options": {
+            "jestConfig": "libs/republicw/new-order/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/republicw/new-order/src/**/*.ts",
+              "libs/republicw/new-order/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "republicw-register": {
+      "projectType": "library",
+      "root": "libs/republicw/register",
+      "sourceRoot": "libs/republicw/register/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/republicw/register"],
+          "options": {
+            "jestConfig": "libs/republicw/register/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/republicw/register/src/**/*.ts",
+              "libs/republicw/register/src/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

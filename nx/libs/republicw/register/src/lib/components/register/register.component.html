@@ -1,0 +1,104 @@
+<div>
+    <div class="grid flex align-content-end" id="LR1">
+        <div class="col-12 md:col-6 lg:col-4">
+            <label for="search">Search by customer phone number</label>
+            <p-inputNumber  
+                id="search"
+                class="p-inputtext-lg" 
+                placeholder="Required"
+                [useGrouping]="false"
+                [maxlength]="10"
+                ariaLabel="Search by customer phone number"
+            ></p-inputNumber>
+            <!-- <input
+                pInputText
+                id="search"
+                class="p-inputtext-lg"
+                placeholder=""
+                type="number"
+                maxlength="10"
+            > -->
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 flex">
+            <button class="p-button-info" pButton type="button" label="Search"></button>
+        </div>
+    </div>
+    <form [formGroup]="registerForm" novalidate>
+        <div class="grid" id="LR2">
+            <div class="col-12 md:col-4 lg:col-3">
+                <label for="first_name">First Name</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="first_name" 
+                        formControlName="first_name"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
+            </div>
+            <div class="col-12 md:col-4 lg:col-3">
+                <label for="pName">Last Name</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="last_name" 
+                        formControlName="last_name"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                    >         
+                </div>
+            </div>
+            <div class="col-12 md:col-4 lg:col-3">
+                <label for="pName">Date</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
+                    <p-calendar formControlName="date" placeholder="required"></p-calendar>
+                </div>
+            </div>        
+        </div>
+        <div class="grid" id="LR3">
+            <div class="col-12 md:col-4 lg:col-3">
+                phone_number
+            </div>
+            <div class="col-12 md:col-4 lg:col-3">
+                email
+            </div>
+            <div class="col-12 md:col-4 lg:col-3">
+                account_number
+            </div>        
+        </div>
+        <div class="grid" id="LR4">
+            Separator
+        </div>
+        <div class="grid" id="LR5">
+            <div class="col-12 md:col-4 lg:col-3">
+                address_line1
+            </div>
+            <div class="col-12 md:col-4 lg:col-3">
+                address_line2
+            </div>     
+        </div>
+        <div class="grid" id="LR6">
+            <div class="col-12 md:col-3 lg:col-3">
+                city
+            </div>
+            <div class="col-12 md:col-3 lg:col-3">
+                state
+            </div> 
+            <div class="col-12 md:col-3 lg:col-3">
+                zip-code
+            </div>             
+        </div>
+    </form> 
+    <div class="flex justify-content-end flex-wrap" id="LR7">
+        <div class="flex">
+            <div class="p-field m-2">
+                <button class="p-button-info" pButton type="button" label="Cancel"></button>
+            </div>
+            <div class="p-field m-2">
+                <button class="p-button-info" pButton type="button" label="Save Order"></button>
+            </div>
+        </div>
+    </div>         
+</div>
