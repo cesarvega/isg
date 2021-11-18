@@ -14,7 +14,7 @@
             </p-dropdown>
         </div>
         <div class="flex align-items-center justify-content-center m-2">
-            <button pButton type="button" label="Create Product" class="p-button p-button-info" (click)="editProduct(0)"></button>
+            <button [disabled]="!partnerId" pButton type="button" label="Create Product" class="p-button p-button-info" (click)="editProduct(0)"></button>
         </div>
     </div>
 
