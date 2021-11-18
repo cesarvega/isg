@@ -10,9 +10,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 @NgModule({
   imports: [
+    GooglePlaceModule,
     DividerModule,
     FormsModule,
     DropdownModule,
