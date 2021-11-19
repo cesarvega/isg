@@ -92,6 +92,7 @@ export class NewOrderComponent implements OnInit {
         "updated_at": "2021-11-19T17:19:29.000000Z"
     }
   ];
+  selectedPlan: any = null;
   selectedLines: any = null;
   selectedLineId: any = 0;
   newOrderForm!: any;
@@ -188,6 +189,9 @@ export class NewOrderComponent implements OnInit {
 
   linesChangeHandler( event: any ){
     this.selectedLines = null;
+    if( event.value === 999 ){
+      return;
+    }
     this.selectedLineId = event.value;
     const arr = this.lines.filter( (x:any) => x.quantity <= event.value );
     this.selectedLines = arr;
@@ -195,10 +199,13 @@ export class NewOrderComponent implements OnInit {
   }
 
   planChangeHandler( event: any ){
+    this.selectedPlan = null;
     if( event.value == null ){
       this.selectedLineId = 0;
       this.selectedLines = null;
+      return;
     }
+    this.selectedPlan = event.value;
   }
 
 }

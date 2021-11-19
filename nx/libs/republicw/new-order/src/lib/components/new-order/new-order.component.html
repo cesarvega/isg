@@ -125,6 +125,7 @@
                         autocomplete="off"
                         (onChange)="linesChangeHandler($event)"
                         [(ngModel)]="selectedLineId"
+                        [disabled]="!selectedPlan"
                     >
                     </p-dropdown>
                 </div>
