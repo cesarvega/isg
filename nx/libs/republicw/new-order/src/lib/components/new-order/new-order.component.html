@@ -1,164 +1,168 @@
 <section id="newOrder">
-    <div class="grid flex align-content-end" id="LR1">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="search">Search by customer phone number</label>
-            <input
-                pInputText
-                id="search"
-                class="p-inputtext-lg"
-                placeholder="Enter the phone number"
-                (keypress)="onlyNumbers($event)"
-                maxlength="10"
-                role="presentation"
-                autocomplete="off"
-            >
-        </div>
-        <div class="col-12 md:col-1 lg:col-1 flex">
-            <button class="p-button-info" pButton type="button" label="Search"></button>
-        </div>
-        <div class="col-12 md:col-7 lg:col-7 flex justify-content-end">
-            <label for="plan">Callkey( Select call ) </label>
-            <div>
-                <p-dropdown 
-                    id="plan"
-                    [options]="plans" 
-                    optionLabel="description"
-                    formControlName="plan"
-                    optionValue="id"
+    <form [formGroup]="formData">
+        <div class="grid flex align-content-end" id="LR1">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="search">Search by customer phone number</label>
+                <input
+                    pInputText
+                    id="search"
+                    class="p-inputtext-lg"
+                    placeholder="Enter the phone number"
+                    (keypress)="onlyNumbers($event)"
+                    maxlength="10"
                     role="presentation"
                     autocomplete="off"
                 >
-                </p-dropdown>
             </div>
-        </div>     
-    </div>
-    <div class="grid" id="LR2">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="first_name">First Name</label>
-            <div class="p-inputgroup">
-                <input 
-                    pInputText 
-                    id="first_name" 
-                    formControlName="first_name"
-                    class="p-inputtext-lg" 
-                    placeholder="Required"
-                    role="presentation"
-                    autocomplete="off"
-                >         
+            <div class="col-12 md:col-1 lg:col-1 flex">
+                <button class="p-button-info" pButton type="button" label="Search"></button>
             </div>
+            <div class="col-12 md:col-7 lg:col-7 flex justify-content-end">
+                <label for="plan">Callkey( Select call ) </label>
+                <div>
+                    <p-dropdown 
+                        id="plan"
+                        [options]="plans" 
+                        optionLabel="description"
+                        formControlName="plan"
+                        optionValue="id"
+                        role="presentation"
+                        autocomplete="off"
+                    >
+                    </p-dropdown>
+                </div>
+            </div>     
         </div>
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="pName">Last Name</label>
-            <div class="p-inputgroup">
-                <input 
-                    pInputText 
-                    id="last_name" 
-                    formControlName="last_name"
-                    class="p-inputtext-lg" 
-                    placeholder="Required"
-                    role="presentation"
-                    autocomplete="off"
-                >         
+        <div class="grid" id="LR2">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="first_name">First Name</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="first_name" 
+                        formControlName="first_name"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
+                    >         
+                </div>
             </div>
-        </div>  
-    </div>
-    <div class="grid"  id="LR3">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="phone_number">Phone Number</label>
-            <input  
-                pInputText
-                id="phone_number"
-                class="p-inputtext-lg" 
-                placeholder="Required"
-                (keypress)="onlyNumbers($event)"
-                formControlName="phone_number"
-                role="presentation"
-                autocomplete="off"
-                [maxLength]="10"
-            >
-        </div>    
-    </div>
-    <div class="grid"  id="LR4">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="order_number">Order Number</label>
-            <div class="p-inputgroup">
-                <input 
-                    pInputText 
-                    id="order_number" 
-                    formControlName="order_number"
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="pName">Last Name</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="last_name" 
+                        formControlName="last_name"
+                        class="p-inputtext-lg" 
+                        placeholder="Required"
+                        role="presentation"
+                        autocomplete="off"
+                    >         
+                </div>
+            </div>  
+        </div>
+        <div class="grid"  id="LR3">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="phone_number">Phone Number</label>
+                <input  
+                    pInputText
+                    id="phone_number"
                     class="p-inputtext-lg" 
+                    placeholder="Required"
+                    (keypress)="onlyNumbers($event)"
+                    formControlName="phone_number"
                     role="presentation"
                     autocomplete="off"
-                    placeholder="Required"
-                >         
+                    [maxLength]="10"
+                >
+            </div>    
+        </div>
+        <div class="grid"  id="LR4">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="order_number">Order Number</label>
+                <div class="p-inputgroup">
+                    <input 
+                        pInputText 
+                        id="order_number" 
+                        formControlName="order_number"
+                        class="p-inputtext-lg" 
+                        role="presentation"
+                        autocomplete="off"
+                        placeholder="Required"
+                    >         
+                </div>
+            </div> 
+        </div>    
+        <div class="grid"  id="LR5">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="plan">Plan</label>
+                <div>
+                    <p-dropdown 
+                        id="plan"
+                        [options]="plans" 
+                        optionLabel="description"
+                        formControlName="plan"
+                        optionValue="id"
+                        role="presentation"
+                        autocomplete="off"
+                        (onChange)="planChangeHandler($event)"
+                    >
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-2">
+                <label for="lines">Number of Lines</label>
+                <div>
+                    <p-dropdown 
+                        id="lines"
+                        [options]="lines" 
+                        optionLabel="description"
+                        formControlName="lines"
+                        optionValue="quantity"
+                        role="presentation"
+                        autocomplete="off"
+                        (onChange)="linesChangeHandler($event)"
+                        [(ngModel)]="selectedLineId"
+                    >
+                    </p-dropdown>
+                </div>
+            </div>           
+        </div>
+        <div class="grid" id="LR6" *ngIf="selectedLines">
+            <div class="col-12 md:col-6 lg:2">
+                <p-table [value]="selectedLines"
+                    [rowHover]="true"
+                    [rows]="5"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Description</th>
+                            <th>Type</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-line>
+                        <tr>
+                            <td>{{ line.description }}</td>
+                            <td>
+                                <p-dropdown
+                                    name="byod"
+                                    [options]="byod"
+                                    optionValue="id"
+                                    optionLabel="id"
+                                >
+                                </p-dropdown>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
         </div> 
-    </div>    
-    <div class="grid"  id="LR5">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="plan">Plan</label>
-            <div>
-                <p-dropdown 
-                    id="plan"
-                    [options]="plans" 
-                    optionLabel="description"
-                    formControlName="plan"
-                    optionValue="id"
-                    role="presentation"
-                    autocomplete="off"
-                >
-                </p-dropdown>
+        <div class="flex justify-content-end" id="LR7">
+            <div class="flex">
+                <button [disabled]="!selectedLines" class="p-button-info" pButton type="button" label="Save Order"></button>    
             </div>
         </div>
-        <div class="col-12 md:col-6 lg:col-2">
-            <label for="lines">Number of Lines</label>
-            <div>
-                <p-dropdown 
-                    id="lines"
-                    [options]="lines" 
-                    optionLabel="description"
-                    formControlName="lines"
-                    optionValue="quantity"
-                    role="presentation"
-                    autocomplete="off"
-                    (onChange)="selectedLinesHandler($event)"
-                >
-                </p-dropdown>
-            </div>
-        </div>           
-    </div>
-    <div class="grid" id="LR6" *ngIf="selectedLines">
-        <div class="col-12 md:col-6 lg:2">
-            <p-table [value]="selectedLines"
-                [rowHover]="true"
-                [rows]="5"
-            >
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Description</th>
-                        <th>Type</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-line>
-                    <tr>
-                        <td>{{ line.description }}</td>
-                        <td>
-                            <p-dropdown
-                                name="byod"
-                                [options]="byod"
-                                optionValue="id"
-                                optionLabel="id"
-                            >
-                            </p-dropdown>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </div> 
-    <div class="flex justify-content-end" id="LR7">
-        <div class="flex">
-            <button [disabled]="!selectedLines" class="p-button-info" pButton type="button" label="Save Order"></button>    
-        </div>
-    </div>     
+    </form>    
 </section>

@@ -9,6 +9,7 @@ import { states } from '@nx/earthlink/utilities';
 })
 export class NewOrderComponent implements OnInit {
   
+  formData!: any;
   byod: any = [
     { id: 'Select', value: null },
     { id: 'BYOD', value: 'byod' },
@@ -92,18 +93,39 @@ export class NewOrderComponent implements OnInit {
     }
   ];
   selectedLines: any = null;
-
+  selectedLineId: any = 0;
   newOrderForm!: any;
 
   constructor() { }
 
   ngOnInit(): void {
-    const option0 = {
+    this.createForm();
+    const line0 = {
       id: 0,
       description: 'Select',
-      quantity: 9999
+      quantity: 999
     };
-    this.lines.unshift( option0 );
+    this.lines.unshift( line0 );
+
+    const plan0 = {
+      "id": null,
+      "description": "Select"
+    }
+    this.plans.unshift(plan0);
+
+  }
+
+  createForm(){
+    this.formData = new FormGroup({
+      first_name: new FormControl(''),
+      last_name: new FormControl(''),
+      phone_number: new FormControl(''),
+      email: new FormControl(''),
+      order_number: new FormControl(''),
+      plan: new FormControl(''),
+      lines: new FormControl(''),
+
+    })
   }
 
   onlyNumbers( input: any ){
@@ -164,14 +186,19 @@ export class NewOrderComponent implements OnInit {
     }
   }
 
-  selectedLinesHandler( event: any ){
+  linesChangeHandler( event: any ){
     this.selectedLines = null;
-    if( event.value == 9999 ){
-      return;
-    }
-
+    this.selectedLineId = event.value;
     const arr = this.lines.filter( (x:any) => x.quantity <= event.value );
     this.selectedLines = arr;
 
   }
+
+  planChangeHandler( event: any ){
+    if( event.value == null ){
+      this.selectedLineId = 0;
+      this.selectedLines = null;
+    }
+  }
+
 }

@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -11,6 +13,8 @@ import { Table, TableModule } from 'primeng/table';
 
 @NgModule({
   imports: [
+    ReactiveFormsModule,
+    FormsModule,
     TableModule,
     ButtonModule,
     InputNumberModule,
