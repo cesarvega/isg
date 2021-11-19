@@ -37,8 +37,10 @@
       "@nx/isgcrm/products": ["libs/isgcrm/products/src/index.ts"],
       "@nx/isgcrm/shared": ["libs/isgcrm/shared/src/index.ts"],
       "@nx/isgcrm/view": ["libs/isgcrm/view/src/index.ts"],
+      "@nx/republicw/config": ["libs/republicw/config/src/index.ts"],
       "@nx/republicw/new-order": ["libs/republicw/new-order/src/index.ts"],
-      "@nx/republicw/register": ["libs/republicw/register/src/index.ts"]
+      "@nx/republicw/register": ["libs/republicw/register/src/index.ts"],
+      "@nx/republicw/services": ["libs/republicw/services/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

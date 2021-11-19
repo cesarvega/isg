@@ -856,6 +856,31 @@
         }
       }
     },
+    "republicw-config": {
+      "projectType": "library",
+      "root": "libs/republicw/config",
+      "sourceRoot": "libs/republicw/config/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/republicw/config"],
+          "options": {
+            "jestConfig": "libs/republicw/config/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/republicw/config/src/**/*.ts",
+              "libs/republicw/config/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "republicw-e2e": {
       "root": "apps/republicw-e2e",
       "sourceRoot": "apps/republicw-e2e/src",
@@ -927,6 +952,31 @@
             "lintFilePatterns": [
               "libs/republicw/register/src/**/*.ts",
               "libs/republicw/register/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "republicw-services": {
+      "projectType": "library",
+      "root": "libs/republicw/services",
+      "sourceRoot": "libs/republicw/services/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/republicw/services"],
+          "options": {
+            "jestConfig": "libs/republicw/services/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/republicw/services/src/**/*.ts",
+              "libs/republicw/services/src/**/*.html"
             ]
           }
         }

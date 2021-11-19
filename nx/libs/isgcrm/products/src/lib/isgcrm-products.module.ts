@@ -5,9 +5,9 @@ import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './components/products/products.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
-import {MenuItem, PrimeIcons} from 'primeng/api';
-import {MessagesModule} from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
+import { MenuItem, PrimeIcons} from 'primeng/api';
+import { MessagesModule} from 'primeng/messages';
+import { MessageModule} from 'primeng/message';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 

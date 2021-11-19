@@ -104,6 +104,9 @@
     "republicw": {
       "tags": []
     },
+    "republicw-config": {
+      "tags": []
+    },
     "republicw-e2e": {
       "tags": [],
       "implicitDependencies": ["republicw"]
@@ -112,6 +115,9 @@
       "tags": []
     },
     "republicw-register": {
+      "tags": []
+    },
+    "republicw-services": {
       "tags": []
     }
   }
