@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { states } from '@nx/earthlink/utilities';
-
+import { NewOrderService } from '@nx/republicw/new-order';
+import { tap, map } from 'rxjs/operators';
 @Component({
   selector: 'nx-new-order',
   templateUrl: './new-order.component.html',
@@ -10,13 +10,8 @@ import { states } from '@nx/earthlink/utilities';
 export class NewOrderComponent implements OnInit {
   
   formData!: any;
-  byod: any = [
-    { id: 'Select', value: null },
-    { id: 'BYOD', value: 'byod' },
-    { id: 'New Device', value: 'new' }
-  ];
+  byod: any = null;
 
-  states: any = states;
   lines: any = [
     {
       id: 100,
@@ -30,74 +25,17 @@ export class NewOrderComponent implements OnInit {
     }    
   ];
 
-  plans: any = [
-    {
-        "id": 12,
-        "name": "20 for one line",
-        "description": "Only What You Need - $20 FOR ONE LINE",
-        "slug": "sp201l",
-        "price": 20,
-        "product_category_id": 1,
-        "created_at": "2021-11-19T17:19:28.000000Z",
-        "updated_at": "2021-11-19T17:19:28.000000Z"
-    },
-    {
-        "id": 13,
-        "name": "40 for one line",
-        "description": "Everything You Want - $40 FOR ONE LINE",
-        "slug": "sp401l",
-        "price": 40,
-        "product_category_id": 1,
-        "created_at": "2021-11-19T17:19:28.000000Z",
-        "updated_at": "2021-11-19T17:19:28.000000Z"
-    },
-    {
-        "id": 14,
-        "name": "60 for one line",
-        "description": "Everywhere You Go - $60 FOR ONE LINE",
-        "slug": "sp601l",
-        "price": 60,
-        "product_category_id": 1,
-        "created_at": "2021-11-19T17:19:28.000000Z",
-        "updated_at": "2021-11-19T17:19:28.000000Z"
-    },
-    {
-        "id": 15,
-        "name": "30 for two lines",
-        "description": "Only What You Need - $30 FOR TWO LINES",
-        "slug": "sp302l",
-        "price": 30,
-        "product_category_id": 1,
-        "created_at": "2021-11-19T17:19:29.000000Z",
-        "updated_at": "2021-11-19T17:19:29.000000Z"
-    },
-    {
-        "id": 16,
-        "name": "60 for two lines",
-        "description": "Everything You Want - $60 FOR TWO LINES",
-        "slug": "sp602l",
-        "price": 60,
-        "product_category_id": 1,
-        "created_at": "2021-11-19T17:19:29.000000Z",
-        "updated_at": "2021-11-19T17:19:29.000000Z"
-    },
-    {
-        "id": 17,
-        "name": "90 for two lines",
-        "description": "Everywhere You Go - $90 FOR TWO LINES",
-        "slug": "sp902l",
-        "price": 90,
-        "product_category_id": 1,
-        "created_at": "2021-11-19T17:19:29.000000Z",
-        "updated_at": "2021-11-19T17:19:29.000000Z"
-    }
-  ];
-  selectedPlan: any = null;
+  plans: any = null;
+
+  selectedPlanId: any = null;
   selectedLines: any = null;
   selectedLineId: any = 0;
   newOrderForm!: any;
-
-  constructor() { }
+  
+  constructor(
+    private newOrderService: NewOrderService,
+  ) { }
+    
 
   ngOnInit(): void {
     this.createForm();
@@ -106,15 +44,45 @@ export class NewOrderComponent implements OnInit {
       description: 'Select',
       quantity: 999
     };
+
+    //Adding to LINES dropdown element, the <SELECT> option
     this.lines.unshift( line0 );
-
-    const plan0 = {
-      "id": null,
-      "description": "Select"
-    }
-    this.plans.unshift(plan0);
-
+    this.getPlans();
+    this.getByod();
   }
+
+  async getPlans(){
+    /* Pulling plans from server.
+    *  new-order.services.ts send to api.service.ts a Bearer token, using  CustomHeaders from '@nx/earthlink/shared';
+    *  and the body, using body.request.ts
+    */
+    this.plans = await this.newOrderService.getPlans();
+    if( this.plans ){
+      /* Adding to PLANS dropdown element, the <SELECT> option*/
+      const plan0 = {
+        "id": 0,
+        "description": "Select"
+      }
+      this.plans.unshift(plan0);
+    }else{
+      if( this.plans.error ){
+        alert(this.plans.error.message);
+        return;
+      }
+    }
+  }
+
+  async getByod(){
+    this.byod = await this.newOrderService.getByod();
+    if( this.byod ){
+      const byod0 = {
+        "id": null,
+        "description": "Select"
+      }
+      this.byod.unshift(byod0);
+    }
+  }
+
 
   createForm(){
     this.formData = new FormGroup({
@@ -189,23 +157,29 @@ export class NewOrderComponent implements OnInit {
 
   linesChangeHandler( event: any ){
     this.selectedLines = null;
-    if( event.value === 999 ){
-      return;
-    }
+    this.selectedLineId=0;
+    //if( event.value === 999 ){
+      this.selectedPlanId = 0;
+    //  return;
+    //}
     this.selectedLineId = event.value;
-    const arr = this.lines.filter( (x:any) => x.quantity <= event.value );
-    this.selectedLines = arr;
-
   }
 
   planChangeHandler( event: any ){
-    this.selectedPlan = null;
-    if( event.value == null ){
+//    this.selectedPlanId = null;
+
+    if( event.value === 0 ){
       this.selectedLineId = 0;
       this.selectedLines = null;
       return;
     }
-    this.selectedPlan = event.value;
+    this.selectedPlanId = event.value;
+    const arr = this.lines.filter( (x:any) => x.quantity <= this.selectedLineId );
+    this.selectedLines = arr;
   }
 
+  async onSubmit(){
+    const data = this.formData.value;
+    /////await this.newOrderService.TODO( data );
+  }
 }

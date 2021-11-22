@@ -1,5 +1,5 @@
 <section id="newOrder">
-    <form [formGroup]="formData">
+    <form [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">
         <div class="grid flex align-content-end" id="LR1">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="search">Search by customer phone number</label>
@@ -96,22 +96,6 @@
             </div> 
         </div>    
         <div class="grid"  id="LR5">
-            <div class="col-12 md:col-6 lg:col-4">
-                <label for="plan">Plan</label>
-                <div>
-                    <p-dropdown 
-                        id="plan"
-                        [options]="plans" 
-                        optionLabel="description"
-                        formControlName="plan"
-                        optionValue="id"
-                        role="presentation"
-                        autocomplete="off"
-                        (onChange)="planChangeHandler($event)"
-                    >
-                    </p-dropdown>
-                </div>
-            </div>
             <div class="col-12 md:col-6 lg:col-2">
                 <label for="lines">Number of Lines</label>
                 <div>
@@ -125,11 +109,28 @@
                         autocomplete="off"
                         (onChange)="linesChangeHandler($event)"
                         [(ngModel)]="selectedLineId"
-                        [disabled]="!selectedPlan"
                     >
                     </p-dropdown>
                 </div>
-            </div>           
+            </div>              
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="plan">Plan</label>
+                <div>
+                    <p-dropdown 
+                        id="plan"
+                        [options]="plans" 
+                        optionLabel="description"
+                        formControlName="plan"
+                        optionValue="id"
+                        role="presentation"
+                        autocomplete="off"
+                        (onChange)="planChangeHandler($event)"
+                        [(ngModel)]="selectedPlanId"
+                        [disabled]="!selectedLineId"
+                    >
+                    </p-dropdown>
+                </div>
+            </div>         
         </div>
         <div class="grid" id="LR6" *ngIf="selectedLines">
             <div class="col-12 md:col-6 lg:2">
@@ -151,7 +152,7 @@
                                     name="byod"
                                     [options]="byod"
                                     optionValue="id"
-                                    optionLabel="id"
+                                    optionLabel="description"
                                 >
                                 </p-dropdown>
                             </td>
@@ -162,7 +163,7 @@
         </div> 
         <div class="flex justify-content-end" id="LR7">
             <div class="flex">
-                <button [disabled]="!selectedLines" class="p-button-info" pButton type="button" label="Save Order"></button>    
+                <button [disabled]="!selectedLines" class="p-button-info" pButton type="submit" label="Save Order"></button>    
             </div>
         </div>
     </form>    

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-//import { environment } from '@nx/isgcrm/env';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class ApiService {
     });
   }
 
-  post<T, D>(url: string, data: D, headers: any = null): Observable<T> {
+  post<T, D>(url: string, data: D, headers: any): Observable<T> {
     return this.http.post<T>(url, data, { headers: headers });
   }
 
