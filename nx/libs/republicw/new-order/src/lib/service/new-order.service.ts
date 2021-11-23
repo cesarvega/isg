@@ -69,10 +69,28 @@ export class NewOrderService {
         const header = this.customHeaders.bearer(localStorage.getItem('token'));
         
         return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.GET_CUSTOMER, body, header).pipe(
-            tap( (response: any) => {
-                return response.data;
+            map( (response: any) => {
+                return response.data[0];
+            }),
+            tap( (request: any) => {
+                return request.data;
             }, (error) => {
                 return error;
+            })
+        ).toPromise();
+    }
+
+    putNewOrder( body: any ){
+        const header = this.customHeaders.bearer(localStorage.getItem('token'));
+
+        return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PUT_ORDER, body, header ).pipe(
+            map((response: any) => {
+                return response.data;
+            }),
+            tap((request: any) => {
+                console.log('tap: ' + request );
+            }, (error) =>{
+               console.log( error ); 
             })
         ).toPromise();
     }

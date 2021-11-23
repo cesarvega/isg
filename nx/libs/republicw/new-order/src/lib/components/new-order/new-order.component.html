@@ -21,10 +21,10 @@
                 <label for="plan">Callkey( Select call ) </label>
                 <div>
                     <p-dropdown 
-                        id="plan"
+                        id="call_key"
                         [options]="plans" 
                         optionLabel="description"
-                        formControlName="plan"
+                        formControlName="call_key"
                         optionValue="id"
                         role="presentation"
                         autocomplete="off"
@@ -45,6 +45,7 @@
                         placeholder="Required"
                         role="presentation"
                         autocomplete="off"
+                        readonly
                     >         
                 </div>
             </div>
@@ -59,6 +60,7 @@
                         placeholder="Required"
                         role="presentation"
                         autocomplete="off"
+                        readonly
                     >         
                 </div>
             </div>  
@@ -76,6 +78,7 @@
                     role="presentation"
                     autocomplete="off"
                     [maxLength]="10"
+                    readonly
                 >
             </div>    
         </div>
@@ -153,6 +156,7 @@
                                     [options]="byod"
                                     optionValue="id"
                                     optionLabel="description"
+                                    (onChange)="deviceTypeSelected($event)"
                                 >
                                 </p-dropdown>
                             </td>

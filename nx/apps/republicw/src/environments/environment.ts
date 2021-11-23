@@ -10,7 +10,8 @@ export const environment = {
   classTypes: '/class_types/filter',
   products: '/products/filter',
   serviceLines: '/config/service_lines',
-  getCustomer: '/customers/filter'
+  getCustomer: '/customers/filter',
+  putOrder: '/orders',
 };
 
 /*

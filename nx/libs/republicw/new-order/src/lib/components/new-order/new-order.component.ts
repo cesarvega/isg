@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { NewOrderService } from '@nx/republicw/new-order';
 
 @Component({
@@ -10,6 +10,8 @@ import { NewOrderService } from '@nx/republicw/new-order';
 export class NewOrderComponent implements OnInit {
   
   formData!: any;
+  id: any = null;
+
   byod: any = null;
   lines: any = null;
   plans: any = null;
@@ -18,9 +20,13 @@ export class NewOrderComponent implements OnInit {
   selectedLines: any = null;
   selectedLineId: any = 0;
   newOrderForm!: any;
+
+  items: any = [];
   
   constructor(
     private newOrderService: NewOrderService,
+    private fb: FormBuilder,
+
   ) { }
     
 
@@ -79,7 +85,16 @@ export class NewOrderComponent implements OnInit {
 
   async customerRequest(){
     const customer = await this.newOrderService.getCustomer('99988877766');
-    console.log(customer);
+    if( customer ){
+      this.formData.patchValue({
+        first_name: customer.first_name ,
+        last_name: customer.last_name,
+        phone_number: customer.phone_number,
+        order_number: customer.order_number
+      })
+      this.id = customer.id;
+      //this.formData = null;
+    }
   }
 
   createForm(){
@@ -87,13 +102,14 @@ export class NewOrderComponent implements OnInit {
       first_name: new FormControl(''),
       last_name: new FormControl(''),
       phone_number: new FormControl(''),
-      email: new FormControl(''),
       order_number: new FormControl(''),
       plan: new FormControl(''),
       lines: new FormControl(''),
-
+      call_key: new FormControl(''),
+      items: new FormArray([])
     })
   }
+
 
   onlyNumbers( input: any ){
     if( input ){
@@ -106,57 +122,20 @@ export class NewOrderComponent implements OnInit {
     }
   }
 
-  handleAddressChange( address: any ){
-    if( !address || !address.address_components )return;
-
-    var address = address.address_components;
-    if( address ){
-      for (let component of address) {
-        const type = component.types[0];
-        switch (type) {
-          case 'route':
-            var streetName= component.short_name;
-            break;
-
-          case 'street_number':
-            var streetNumber = component.long_name;
-            break;
-
-          case 'postal_code':
-            this.newOrderForm.patchValue({
-                zip_code: component.long_name
-            })
-            break;
-
-          case 'locality':
-            this.newOrderForm.patchValue({
-                city: component.long_name
-            });
-            break;
-
-          case 'administrative_area_level_1':
-            this.newOrderForm.patchValue(
-              {
-                state: component.short_name
-              }
-            );
-            break;
-        }
-
-        const addressLine1 = `${streetNumber} ${streetName}`;
-        this.newOrderForm.patchValue(
-          {
-            address_line1: addressLine1
-          }
-        )        
-      }
-    }
-  }
 
   linesChangeHandler( event: any ){
     this.selectedLines = null;
     this.selectedPlanId = 0;
-    this.selectedLineId = event.value;
+    this.selectedLineId = parseInt( event.value );
+
+    const items = this.formData.get('items');
+    if( items ){
+      const q = items.length;
+      for(var k=0; k<q; k++){
+        this.quantities().removeAt(k);
+      }
+    }
+
     if( this.selectedLineId !== 0 ){
       this.getPlans( this.selectedLineId );
     }
@@ -173,8 +152,45 @@ export class NewOrderComponent implements OnInit {
     this.selectedLines = arr;
   }
 
+  deviceTypeSelected( event: any ){
+    this.quantities().push (this.newQuantity( event.value ) );
+  }
+
+  newQuantity( id: any ): FormGroup {
+    return this.fb.group({
+      id: id,
+      description: '',
+      name: '',
+      product_category_id: 2,
+    })
+  }
+
+  quantities(): FormArray {
+    return this.formData.get("items") as FormArray;
+  }
+
+
   async onSubmit(){
-    const data = this.formData.value;
-    /////await this.newOrderService.TODO( data );
+    const lines = this.formData.get('lines').value;
+    const plan = this.formData.get('plan').value;
+    const items = this.formData.get('items').value;
+    console.log( this.formData.value );
+    return;
+
+    this.formData.addControl('customer_id', new FormControl( this.id ) );
+    const call_key =  this.formData.get('call_key').value;
+    const order_number = this.formData.get('order_number').value;
+    const customer_id = this.formData.get('customer_id').value;
+    const data = [
+      { 
+        "call_key":call_key.toString(),
+        "order_number": order_number.toString(),
+        "customer_id": customer_id.toString(),
+        "items": items
+      }
+    ];
+
+    console.log( data );
+    //await this.newOrderService.putNewOrder( data );
   }
 }

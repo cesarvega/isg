@@ -7,6 +7,7 @@ var classTypes = environment.classTypes;
 var products = environment.products;
 var serviceLines = environment.serviceLines;
 var getCustomer = environment.getCustomer;
+var putOrder = environment.putOrder;
 
 export const SYSTEM_CONFIG = {
     API_URL: api_url,
@@ -16,4 +17,5 @@ export const SYSTEM_CONFIG = {
     PRODUCTS_PATH: products,
     SERVICE_LINES_PATH: serviceLines,
     GET_CUSTOMER: getCustomer,
+    PUT_ORDER: putOrder,
 }
