@@ -3,6 +3,11 @@ export const plans_body = {
         {
             "field":"product_category_id",
             "value":1
+        },"AND",
+        {
+            "field": "slug",
+            "value": "%@@l",
+            "operator": "LIKE"
         }
     ]
 }

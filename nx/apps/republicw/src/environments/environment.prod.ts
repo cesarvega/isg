@@ -1,8 +1,9 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://34.224.227.35/api',
+  apiUrl: 'http://34.224.227.35/api/republic',
   token: '/token',
   providers: '/providers/filter',
   classTypes: '/class_types/filter',
-  products: '/products/filter'
+  products: '/products/filter',
+  service_lines: 'config/service_lines',
 };

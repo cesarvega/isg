@@ -11,20 +11,7 @@ export class NewOrderComponent implements OnInit {
   
   formData!: any;
   byod: any = null;
-
-  lines: any = [
-    {
-      id: 100,
-      description: 'One Line',
-      quantity: 1
-    },
-    {
-      id: 200,
-      description: 'Two Lines',
-      quantity: 2
-    }    
-  ];
-
+  lines: any = null;
   plans: any = null;
 
   selectedPlanId: any = null;
@@ -39,24 +26,30 @@ export class NewOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    const line0 = {
-      id: 0,
-      description: 'Select',
-      quantity: 999
-    };
-
-    //Adding to LINES dropdown element, the <SELECT> option
-    this.lines.unshift( line0 );
-    this.getPlans();
+    this.getLinesQuantity();
     this.getByod();
   }
 
-  async getPlans(){
+  async getLinesQuantity(){
+    this.lines = await this.newOrderService.getLinesQuantity();
+    
+    if( this.lines ){
+      //Adding to LINES dropdown element, the <SELECT> option
+      const line0 = {
+        id: 0,
+        description: 'Select',
+        value: 999
+      };
+      this.lines.unshift( line0 );
+    }
+  }
+
+  async getPlans( q: string ){
     /* Pulling plans from server.
     *  new-order.services.ts send to api.service.ts a Bearer token, using  CustomHeaders from '@nx/earthlink/shared';
     *  and the body, using body.request.ts
     */
-    this.plans = await this.newOrderService.getPlans();
+    this.plans = await this.newOrderService.getPlans(q);
     if( this.plans ){
       /* Adding to PLANS dropdown element, the <SELECT> option*/
       const plan0 = {
@@ -157,24 +150,21 @@ export class NewOrderComponent implements OnInit {
 
   linesChangeHandler( event: any ){
     this.selectedLines = null;
-    this.selectedLineId=0;
-    //if( event.value === 999 ){
-      this.selectedPlanId = 0;
-    //  return;
-    //}
+    this.selectedPlanId = 0;
     this.selectedLineId = event.value;
+    if( this.selectedLineId !== 0 ){
+      this.getPlans( this.selectedLineId );
+    }
   }
 
   planChangeHandler( event: any ){
-//    this.selectedPlanId = null;
-
     if( event.value === 0 ){
       this.selectedLineId = 0;
       this.selectedLines = null;
       return;
     }
     this.selectedPlanId = event.value;
-    const arr = this.lines.filter( (x:any) => x.quantity <= this.selectedLineId );
+    const arr = this.lines.filter( (x:any) => x.value <= this.selectedLineId );
     this.selectedLines = arr;
   }
 

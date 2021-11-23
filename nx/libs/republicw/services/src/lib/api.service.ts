@@ -10,10 +10,10 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  get<T>(url: string, params: HttpParams = new HttpParams()): Observable<T> {
+  get<T>(url: string, params: any, headers: any): Observable<T> {
     return this.http.get<T>(url, {
-      headers: this.headers,
-      params,
+      headers: headers,
+      params: params,
     });
   }
 
