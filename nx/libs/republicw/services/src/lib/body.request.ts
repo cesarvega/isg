@@ -24,3 +24,12 @@ export const byod_body = {
         }
         ]
     }
+
+export const get_customer = {
+    "filter": [
+        {
+            "field": "phone_number",
+            "value": "@@"
+        }
+    ]
+}

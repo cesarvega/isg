@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NewOrderService } from '@nx/republicw/new-order';
-import { tap, map } from 'rxjs/operators';
+
 @Component({
   selector: 'nx-new-order',
   templateUrl: './new-order.component.html',
@@ -76,6 +76,11 @@ export class NewOrderComponent implements OnInit {
     }
   }
 
+
+  async customerRequest(){
+    const customer = await this.newOrderService.getCustomer('99988877766');
+    console.log(customer);
+  }
 
   createForm(){
     this.formData = new FormGroup({

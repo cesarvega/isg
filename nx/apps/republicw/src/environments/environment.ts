@@ -9,7 +9,8 @@ export const environment = {
   providers: '/providers/filter',
   classTypes: '/class_types/filter',
   products: '/products/filter',
-  service_lines: '/config/service_lines',
+  serviceLines: '/config/service_lines',
+  getCustomer: '/customers/filter'
 };
 
 /*
