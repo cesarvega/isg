@@ -20,7 +20,7 @@ export class NewOrderComponent implements OnInit {
   selectedLines: any = null;
   selectedLineId: any = 0;
   newOrderForm!: any;
-
+  selectedDeviceArray: any = [];
   items: any = [];
   
   constructor(
@@ -40,6 +40,14 @@ export class NewOrderComponent implements OnInit {
     this.lines = await this.newOrderService.getLinesQuantity();
     
     if( this.lines ){
+
+      //creating form fields for Line Types
+      //firstly, get the biggest value to know how many fields must be created
+      const q = this.lines.filter( (x: any) => x.value == Math.max( ...this.lines.map( ((x:any) => x.value))));
+      for( var k=0; k<q[0].value; k++){
+        this.formData.addControl(`byod${k}`, new FormControl(''));
+      }
+
       //Adding to LINES dropdown element, the <SELECT> option
       const line0 = {
         id: 0,
@@ -72,10 +80,12 @@ export class NewOrderComponent implements OnInit {
   }
 
   async getByod(){
+
     this.byod = await this.newOrderService.getByod();
     if( this.byod ){
       const byod0 = {
         "id": null,
+        "name": null,
         "description": "Select"
       }
       this.byod.unshift(byod0);
@@ -87,18 +97,19 @@ export class NewOrderComponent implements OnInit {
     const customer = await this.newOrderService.getCustomer('99988877766');
     if( customer ){
       this.formData.patchValue({
+        customer_id: customer.id,
         first_name: customer.first_name ,
         last_name: customer.last_name,
         phone_number: customer.phone_number,
         order_number: customer.order_number
-      })
-      this.id = customer.id;
-      //this.formData = null;
+      });
+
     }
   }
 
   createForm(){
     this.formData = new FormGroup({
+      customer_id: new FormControl(''),
       first_name: new FormControl(''),
       last_name: new FormControl(''),
       phone_number: new FormControl(''),
@@ -128,6 +139,9 @@ export class NewOrderComponent implements OnInit {
     this.selectedPlanId = 0;
     this.selectedLineId = parseInt( event.value );
 
+    const arr = <FormArray>this.formData.controls.items;
+    arr.controls = [];
+
     const items = this.formData.get('items');
     if( items ){
       const q = items.length;
@@ -153,31 +167,47 @@ export class NewOrderComponent implements OnInit {
   }
 
   deviceTypeSelected( event: any ){
-    this.quantities().push (this.newQuantity( event.value ) );
+    if (event.value && this.selectedDeviceArray.indexOf( event.value ) === -1 ){
+      console.log( event.value );
+    }
+    
+    //this.quantities().push (this.newQuantity( event ) );
   }
 
-  newQuantity( id: any ): FormGroup {
+  newQuantity( item: any ): FormGroup {
     return this.fb.group({
-      id: id,
-      description: '',
-      name: '',
-      product_category_id: 2,
+      id: item.id,
+      description: item.description,
+      value: item.value,
     })
   }
 
   quantities(): FormArray {
-    return this.formData.get("items") as FormArray;
+    return this.formData.get("items");
   }
 
 
   async onSubmit(){
+    debugger;
     const lines = this.formData.get('lines').value;
     const plan = this.formData.get('plan').value;
-    const items = this.formData.get('items').value;
-    console.log( this.formData.value );
-    return;
+    var itemsArr = [];//this.formData.get('items');
+    var byods = document.getElementsByName('byod');
+    if( byods ){
+      for( var b=0; b< byods.length; b++ ){
+        var e: any = byods[b];
+        if( e.options[e.selectedIndex].value ){
+          itemsArr.push ( parseInt( e.options[e.selectedIndex].value ) );
+        }else{
+          itemsArr = [];
+          alert("Please, select Type for each line.");
+          return;
+        }
+      }
+    }
+    itemsArr.push(plan);
 
-    this.formData.addControl('customer_id', new FormControl( this.id ) );
+//    this.formData.addControl('customer_id', new FormControl( this.id ) );
     const call_key =  this.formData.get('call_key').value;
     const order_number = this.formData.get('order_number').value;
     const customer_id = this.formData.get('customer_id').value;
@@ -186,11 +216,11 @@ export class NewOrderComponent implements OnInit {
         "call_key":call_key.toString(),
         "order_number": order_number.toString(),
         "customer_id": customer_id.toString(),
-        "items": items
+        "items": itemsArr
       }
     ];
 
-    console.log( data );
-    //await this.newOrderService.putNewOrder( data );
+    //console.log( data );
+    await this.newOrderService.putNewOrder( data );
   }
 }

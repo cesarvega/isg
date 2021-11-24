@@ -151,14 +151,13 @@
                         <tr>
                             <td>{{ line.description }}</td>
                             <td>
-                                <p-dropdown
-                                    name="byod"
-                                    [options]="byod"
-                                    optionValue="id"
-                                    optionLabel="description"
-                                    (onChange)="deviceTypeSelected($event)"
-                                >
-                                </p-dropdown>
+                                <select class="p-dropdown p-component" name="byod" id="byod{{ line.id }}">
+                                    <option 
+                                        *ngFor="let option of byod"
+                                        value="{{option.id}}"
+                                        >{{ option.description }}
+                                    </option>
+                                </select>
                             </td>
                         </tr>
                     </ng-template>
