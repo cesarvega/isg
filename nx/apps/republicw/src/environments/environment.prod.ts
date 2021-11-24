@@ -6,5 +6,7 @@ export const environment = {
   classTypes: '/class_types/filter',
   products: '/products/filter',
   service_lines: 'config/service_lines',
+  getCustomer: '/customers/filter',
   putOrder: '/orders',
+  register: '/customers',
 };

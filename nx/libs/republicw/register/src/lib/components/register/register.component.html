@@ -20,7 +20,7 @@
     <div>
         <p-divider type="dashed"></p-divider>
     </div>
-    <form [formGroup]="registerForm" novalidate autocomplete="off" autofill="off">
+    <form [formGroup]="registerForm" novalidate autocomplete="off" autofill="off" (ngSubmit)="onSubmit()">
         <div class="grid" id="LR2">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="first_name">First Name</label>
@@ -112,7 +112,7 @@
                     <input 
                         pInputText 
                         id="address_line1" 
-                        formControlName="address_line1"
+                        formControlName="address_one"
                         class="p-inputtext-lg" 
                         placeholder="Required"
                         role="presentation"
@@ -128,7 +128,7 @@
                     <input 
                         pInputText 
                         id="address_line2" 
-                        formControlName="address_line2"
+                        formControlName="address_two"
                         class="p-inputtext-lg" 
                         role="presentation"
                         autocomplete="off"
@@ -183,15 +183,15 @@
                 </div>
             </div>             
         </div>
-    </form> 
-    <div class="flex justify-content-end flex-wrap" id="LR7">
-        <div class="flex">
-            <div class="p-field m-2">
-                <button class="p-button-info" pButton type="button" label="Cancel"></button>
+        <div class="flex justify-content-end flex-wrap" id="LR7">
+            <div class="flex">
+                <div class="p-field m-2">
+                    <button class="p-button-info" pButton type="button" label="Cancel"></button>
+                </div>
+                <div class="p-field m-2">
+                    <button class="p-button-info" type="submit" pButton label="Save Order"></button>
+                </div>
             </div>
-            <div class="p-field m-2">
-                <button class="p-button-info" pButton type="button" label="Save Order"></button>
-            </div>
-        </div>
-    </div>         
+        </div>        
+    </form>        
 </section>

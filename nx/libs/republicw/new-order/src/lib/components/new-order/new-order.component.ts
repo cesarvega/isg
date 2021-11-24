@@ -188,10 +188,9 @@ export class NewOrderComponent implements OnInit {
 
 
   async onSubmit(){
-    debugger;
     const lines = this.formData.get('lines').value;
     const plan = this.formData.get('plan').value;
-    var itemsArr = [];//this.formData.get('items');
+    var itemsArr = [];
     var byods = document.getElementsByName('byod');
     if( byods ){
       for( var b=0; b< byods.length; b++ ){
@@ -204,10 +203,12 @@ export class NewOrderComponent implements OnInit {
           return;
         }
       }
+    }else{
+      alert("Please, select Lines and Plan.");
+      return;
     }
     itemsArr.push(plan);
 
-//    this.formData.addControl('customer_id', new FormControl( this.id ) );
     const call_key =  this.formData.get('call_key').value;
     const order_number = this.formData.get('order_number').value;
     const customer_id = this.formData.get('customer_id').value;
@@ -220,7 +221,6 @@ export class NewOrderComponent implements OnInit {
       }
     ];
 
-    //console.log( data );
-    await this.newOrderService.putNewOrder( data );
+    var response = await this.newOrderService.putNewOrder( data );
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { states } from '@nx/earthlink/utilities';
+import { NewRegister } from '../../service/register.service';
 
 @Component({
   selector: 'nx-register',
@@ -11,7 +12,10 @@ export class RegisterComponent implements OnInit {
 
   registerForm!: any;
   states: any = states;
-  constructor() { }
+  
+  constructor(
+    private newRegister: NewRegister,
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -24,8 +28,8 @@ export class RegisterComponent implements OnInit {
       date: new FormControl(''),
       phone_number: new FormControl(''),
       email: new FormControl(''),
-      address_line1: new FormControl(''),
-      address_line2: new FormControl(''),
+      address_one: new FormControl(''),
+      address_two: new FormControl(''),
       city: new FormControl(''),
       state: new FormControl(''),
       zip_code: new FormControl(''),
@@ -83,10 +87,15 @@ export class RegisterComponent implements OnInit {
         const addressLine1 = `${streetNumber} ${streetName}`;
         this.registerForm.patchValue(
           {
-            address_line1: addressLine1
+            address_one: addressLine1
           }
         )        
       }
     }
+  }
+
+  async onSubmit(){
+    const data:any = [this.registerForm.value];
+    await this.newRegister.register( data );
   }
 }

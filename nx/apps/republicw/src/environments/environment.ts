@@ -12,6 +12,7 @@ export const environment = {
   serviceLines: '/config/service_lines',
   getCustomer: '/customers/filter',
   putOrder: '/orders',
+  register: '/customers',
 };
 
 /*
