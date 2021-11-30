@@ -119,6 +119,9 @@
     },
     "republicw-services": {
       "tags": []
+    },
+    "republicw-token": {
+      "tags": []
     }
   }
 }

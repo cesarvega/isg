@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { states } from '@nx/earthlink/utilities';
 import { NewRegister } from '../../service/register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nx-register',
@@ -15,6 +16,7 @@ export class RegisterComponent implements OnInit {
   
   constructor(
     private newRegister: NewRegister,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +27,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = new FormGroup({
       first_name: new FormControl(''),
       last_name: new FormControl(''),
-      date: new FormControl(''),
+//      date: new FormControl(''),
       phone_number: new FormControl(''),
       email: new FormControl(''),
       address_one: new FormControl(''),
@@ -97,5 +99,8 @@ export class RegisterComponent implements OnInit {
   async onSubmit(){
     const data:any = [this.registerForm.value];
     await this.newRegister.register( data );
+  }
+  continueToDropOrder(){
+    this.router.navigate(['/new-order'])
   }
 }

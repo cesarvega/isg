@@ -164,9 +164,16 @@
                 </p-table>
             </div>
         </div> 
-        <div class="flex justify-content-end" id="LR7">
+        <div class="flex justify-content-end flex-wrap" id="LR7">
             <div class="flex">
-                <button [disabled]="!selectedLines" class="p-button-info" pButton type="submit" label="Save Order"></button>    
+                <div class="p-field m-2">
+                    <a routerLink="/register"><button class="p-button-success" pButton type="submit" label="Back to Register"></button></a>
+                </div>
+            </div>            
+            <div class="flex">
+                <div class="p-field m-2">
+                    <button [disabled]="!selectedLines" class="p-button-info" pButton type="submit" label="Save Order"></button> 
+                </div>
             </div>
         </div>
     </form>    

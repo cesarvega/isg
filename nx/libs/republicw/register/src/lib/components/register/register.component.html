@@ -50,13 +50,13 @@
                     >         
                 </div>
             </div>
-            <div class="col-12 md:col-6 lg:col-4">
+            <!-- <div class="col-12 md:col-6 lg:col-4">
                 <label for="pName">Date</label>
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
                     <p-calendar formControlName="date" placeholder="required"></p-calendar>
                 </div>
-            </div>        
+            </div>         -->
         </div>
         <div class="grid" id="LR3">
             <div class="col-12 md:col-6 lg:col-4">
@@ -186,11 +186,14 @@
         <div class="flex justify-content-end flex-wrap" id="LR7">
             <div class="flex">
                 <div class="p-field m-2">
+                    <button class="p-button-info" type="submit" pButton label="Submit"></button>
+                </div>
+                <div class="p-field m-2">
                     <button class="p-button-info" pButton type="button" label="Cancel"></button>
                 </div>
                 <div class="p-field m-2">
-                    <button class="p-button-info" type="submit" pButton label="Save Order"></button>
-                </div>
+                    <button class="p-button-success" pButton type="button" label="Drop Order" (click)="continueToDropOrder()"></button>
+                </div>                
             </div>
         </div>        
     </form>        

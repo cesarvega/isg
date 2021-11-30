@@ -981,6 +981,31 @@
           }
         }
       }
+    },
+    "republicw-token": {
+      "projectType": "library",
+      "root": "libs/republicw/token",
+      "sourceRoot": "libs/republicw/token/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/republicw/token"],
+          "options": {
+            "jestConfig": "libs/republicw/token/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/republicw/token/src/**/*.ts",
+              "libs/republicw/token/src/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

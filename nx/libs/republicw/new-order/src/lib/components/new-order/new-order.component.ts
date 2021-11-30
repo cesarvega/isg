@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { NewOrderService } from '@nx/republicw/new-order';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nx-new-order',
@@ -26,7 +27,7 @@ export class NewOrderComponent implements OnInit {
   constructor(
     private newOrderService: NewOrderService,
     private fb: FormBuilder,
-
+    private router: Router,
   ) { }
     
 
@@ -95,6 +96,7 @@ export class NewOrderComponent implements OnInit {
 
   async customerRequest(){
     const customer = await this.newOrderService.getCustomer('99988877766');
+
     if( customer ){
       this.formData.patchValue({
         customer_id: customer.id,
@@ -104,7 +106,10 @@ export class NewOrderComponent implements OnInit {
         order_number: customer.order_number
       });
 
-    }
+    }//else{
+    //   debugger;
+    //   console.log( customer );
+    // }
   }
 
   createForm(){
@@ -187,7 +192,7 @@ export class NewOrderComponent implements OnInit {
   }
 
 
-  async onSubmit(){
+  onSubmit(){
     const lines = this.formData.get('lines').value;
     const plan = this.formData.get('plan').value;
     var itemsArr = [];
@@ -221,6 +226,6 @@ export class NewOrderComponent implements OnInit {
       }
     ];
 
-    var response = await this.newOrderService.putNewOrder( data );
+    this.newOrderService.putNewOrder( data );
   }
 }

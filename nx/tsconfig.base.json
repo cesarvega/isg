@@ -40,7 +40,8 @@
       "@nx/republicw/config": ["libs/republicw/config/src/index.ts"],
       "@nx/republicw/new-order": ["libs/republicw/new-order/src/index.ts"],
       "@nx/republicw/register": ["libs/republicw/register/src/index.ts"],
-      "@nx/republicw/services": ["libs/republicw/services/src/index.ts"]
+      "@nx/republicw/services": ["libs/republicw/services/src/index.ts"],
+      "@nx/republicw/token": ["libs/republicw/token/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
