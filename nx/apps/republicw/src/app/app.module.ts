@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { RepublicInterceptor } from '@nx/republicw/services'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorDialogComponent } from '@nx/republicw/services';
+import { ErrorDialogService } from '@nx/republicw/services';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    ErrorDialogComponent,
+    AppComponent
+  ],
   imports: [
+    NgbModule,
     HttpClientModule,
     BrowserAnimationsModule,
     BrowserModule,
@@ -35,9 +42,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
           (module) => module.RepublicwNewOrderModule
         )
       },
+      {
+        path: 'token',
+        pathMatch: 'full',
+        loadChildren: () =>
+        import('@nx/republicw/token').then(
+          (module) => module.RepublicwTokenModule
+        )
+      }
     ]),
   ],
-  providers: [],
+  providers: [
+    ErrorDialogService,
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: RepublicInterceptor, 
+      multi: true },
+    { 
+      provide: Window,
+      useValue: window
+    },
+  ],
   bootstrap: [AppComponent],
+  entryComponents: [ErrorDialogComponent],
 })
 export class AppModule {}
