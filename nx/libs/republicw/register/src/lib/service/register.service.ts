@@ -5,6 +5,7 @@ import { SYSTEM_CONFIG } from '@nx/republicw/config';
 import { of } from "rxjs";
 import { rep_wireless } from "@nx/republicw/services";
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,7 @@ export class NewRegister {
     err: any = null;
     constructor(
         private apiService: ApiService,
+        private router: Router,
     ){ }
 
     register( body: any ){
@@ -38,10 +40,13 @@ export class NewRegister {
 
                 body = JSON.parse( body );
                 this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DISH_PATH, body, undefined ).pipe(
-                    catchError( err => this.err = of( 'Dis\' API error.' ))
+                    catchError( err => this.err = of( 'Dish\' API error.' ))
                 ).subscribe(
                     (data: any ) => {
-                        console.log( data );
+                        if( data.Url ){
+                            window.open( data.Url, "_blank" );
+                            this.router.navigate(['/new-order']);
+                        }
                     }
                 )
             }
