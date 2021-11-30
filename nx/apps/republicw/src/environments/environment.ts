@@ -4,15 +4,18 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://34.224.227.35/api/republic',
+  apiUrl: 'https://aws-dev-01.isg.us/api',
   token: '/token',
-  providers: '/providers/filter',
-  classTypes: '/class_types/filter',
-  products: '/products/filter',
-  serviceLines: '/config/service_lines',
-  getCustomer: '/customers/filter',
-  putOrder: '/orders',
-  register: '/customers',
+  providers: '/republic/providers/filter',
+  classTypes: '/republic/class_types/filter',
+  products: '/republic/products/filter',
+  service_lines: '/republic/config/service_lines',
+  getCustomer: '/republic/customers/filter',
+  putOrder: '/republic/orders',
+  register: '/republic/customers',
+  dish: '/republic/config/republic_wireless_url',
+  email: 'admin@isg.us',
+  password: 'admin@isg',
 };
 
 /*

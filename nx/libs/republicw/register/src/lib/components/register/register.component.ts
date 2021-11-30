@@ -13,11 +13,14 @@ export class RegisterComponent implements OnInit {
 
   registerForm!: any;
   states: any = states;
-  
+  body: any = undefined;
+
   constructor(
     private newRegister: NewRegister,
     private router: Router,
-  ) { }
+  ) { 
+      this.newRegister.requestToken();
+    }
 
   ngOnInit(): void {
     this.createForm();
@@ -96,10 +99,11 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  async onSubmit(){
+  onSubmit(){
     const data:any = [this.registerForm.value];
-    await this.newRegister.register( data );
+    this.newRegister.register( data );
   }
+  
   continueToDropOrder(){
     this.router.navigate(['/new-order'])
   }

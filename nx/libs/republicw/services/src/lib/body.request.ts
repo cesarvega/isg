@@ -33,3 +33,18 @@ export const get_customer = {
         }
     ]
 }
+
+export const rep_wireless = {
+        "firstName" : "@firstName",
+        "lastName" : "@lastName",
+        "address" : {
+            "lineOne": "@lineOne",
+            "lineTwo": "@lineTwo",
+            "city": "@city",
+            "state": "@state",
+            "zip": "@zip"
+        },
+        "emailAddress" : "@emailAddress",
+        "phone" : "@phone",
+        "accountId" : null
+}
