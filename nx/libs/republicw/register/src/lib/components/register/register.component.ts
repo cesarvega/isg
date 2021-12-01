@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { states } from '@nx/earthlink/utilities';
 import { NewRegister } from '../../service/register.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,8 @@ export class RegisterComponent implements OnInit {
   registerForm!: any;
   states: any = states;
   body: any = undefined;
+  result: any = null;
+  error$: any = null;
 
   constructor(
     private newRegister: NewRegister,
@@ -28,16 +30,19 @@ export class RegisterComponent implements OnInit {
 
   createForm(){
     this.registerForm = new FormGroup({
-      first_name: new FormControl(''),
-      last_name: new FormControl(''),
-//      date: new FormControl(''),
-      phone_number: new FormControl(''),
-      email: new FormControl(''),
-      address_one: new FormControl(''),
+      first_name: new FormControl('', Validators.required),
+      last_name: new FormControl('', Validators.required),
+      phone_number: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      address_one: new FormControl('', Validators.required),
       address_two: new FormControl(''),
-      city: new FormControl(''),
-      state: new FormControl(''),
-      zip_code: new FormControl(''),
+      city: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      zip_code: new FormControl('', [
+          Validators.required,
+          Validators.pattern("[0-9]{5}")
+        ]
+      ),
       account_number: new FormControl(''),
     })
   }
@@ -100,11 +105,26 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(){
+    if( this.registerForm.invalid ) return;
+    
     const data:any = [this.registerForm.value];
-    this.newRegister.register( data );
+    this.newRegister.register( data ).subscribe(
+      //(r:any) => this.result = r.error
+      (r: any) => {
+        if (r && r.error ){
+          if( r.error.match(/duplicate/g) ){
+            this.error$ = 'A duplicated data was found: Email or Phone number already exists at the database'
+          }else{
+              this.error$ = "An error as occured"
+          }
+        }
+      }
+    );
   }
-  
+
   continueToDropOrder(){
     this.router.navigate(['/new-order'])
   }
+
+
 }

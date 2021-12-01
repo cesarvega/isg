@@ -2,10 +2,11 @@ import { Injectable } from "@angular/core";
 import { catchError } from 'rxjs/operators';
 import { ApiService } from '@nx/republicw/services';
 import { SYSTEM_CONFIG } from '@nx/republicw/config';
-import { of } from "rxjs";
+import { of, throwError } from "rxjs";
 import { rep_wireless } from "@nx/republicw/services";
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -14,14 +15,20 @@ export class NewRegister {
     data: any = {};
     formData!: any;
     err: any = null;
+    result$ = new Subject;
+    error$ = new Subject;
     constructor(
         private apiService: ApiService,
         private router: Router,
     ){ }
 
     register( body: any ){
-        return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.REGISTER_PATH, body, undefined ).pipe(
-            catchError( err => this.err = of( 'There was an error'))
+        this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.REGISTER_PATH, body, undefined ).pipe(
+            catchError( err => {
+                //console.log( 'Handling error and rethrowing it...', err.error.message);
+                this.error$.next( {error: err.error.message });
+                return throwError(err);
+            })
         ).subscribe( 
             (data: any) => {
                 //console.log( data );
@@ -49,8 +56,11 @@ export class NewRegister {
                         }
                     }
                 )
-            }
+            },
+            //err => console.log( 'HTTP Error', err),
+            //() => console.log('HTTP request completed')
         );
+        return this.error$.asObservable();
     }
 
     requestToken(){

@@ -1,4 +1,7 @@
 <section id="register">
+    <div class="p-error" *ngIf="error$">
+        {{ error$ }}
+    </div>
     <div class="grid flex align-content-end" id="LR1">
         <div class="col-12 md:col-6 lg:col-4">
             <label for="search">Search by customer phone number</label>
@@ -24,7 +27,7 @@
         <div class="grid" id="LR2">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="first_name">First Name</label>
-                <div class="p-inputgroup">
+                <div class="p-field">
                     <input 
                         pInputText 
                         id="first_name" 
@@ -33,12 +36,17 @@
                         placeholder="Required"
                         role="presentation"
                         autocomplete="off"
-                    >         
+                    >
+                    <div *ngIf="registerForm.controls['first_name'].invalid && registerForm.controls['first_name'].touched" class="alert alert-danger">
+                        <div *ngIf="registerForm.controls['first_name'].errors.required">
+                            <small id="first-name-help" class="p-error">First Name is required.</small>
+                        </div>
+                    </div>                         
                 </div>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="pName">Last Name</label>
-                <div class="p-inputgroup">
+                <div class="p-field">
                     <input 
                         pInputText 
                         id="last_name" 
@@ -47,7 +55,12 @@
                         placeholder="Required"
                         role="presentation"
                         autocomplete="off"
-                    >         
+                    >
+                    <div *ngIf="registerForm.controls['last_name'].invalid && registerForm.controls['last_name'].touched" class="alert alert-danger">
+                        <div *ngIf="registerForm.controls['last_name'].errors.required">
+                            <small id="last-name2-help" class="p-error">Last Name is required.</small>
+                        </div>
+                    </div>                      
                 </div>
             </div>
             <!-- <div class="col-12 md:col-6 lg:col-4">
@@ -61,7 +74,8 @@
         <div class="grid" id="LR3">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="phone_number">Phone Number</label>
-                <input  
+                <div class="p-field">
+                    <input  
                     pInputText
                     id="phone_number"
                     class="p-inputtext-lg" 
@@ -70,12 +84,17 @@
                     [maxlength]="10"
                     formControlName="phone_number"
                     role="presentation"
-                    autocomplete="off"
-                >
+                    autocomplete="off">
+                    <div *ngIf="registerForm.controls['phone_number'].invalid && registerForm.controls['phone_number'].touched" class="alert alert-danger">
+                        <div *ngIf="registerForm.controls['phone_number'].errors.required">
+                            <small id="phone-number-help" class="p-error">Phone Number is required.</small>
+                        </div>
+                    </div>                    
+                </div>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="first_name">email</label>
-                <div class="p-inputgroup">
+                <div class="p-field">
                     <input 
                         pInputText 
                         id="email" 
@@ -83,8 +102,12 @@
                         class="p-inputtext-lg" 
                         placeholder="Required"
                         role="presentation"
-                        autocomplete="off"
-                    >         
+                        autocomplete="off">
+                        <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="alert alert-danger">
+                            <div *ngIf="registerForm.controls['email'].errors.required">
+                                <small id="email-help" class="p-error">Email is required.</small>
+                            </div>
+                        </div>  
                 </div>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
@@ -108,7 +131,7 @@
         <div class="grid" id="LR5">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="address_line1">Address 1</label>
-                <div class="p-inputgroup">
+                <div class="p-field">
                     <input 
                         pInputText 
                         id="address_line1" 
@@ -119,7 +142,12 @@
                         autocomplete="off"
                         ngx-google-places-autocomplete
                         (onAddressChange)="handleAddressChange($event)"
-                    >         
+                    >
+                    <div *ngIf="registerForm.controls['address_one'].invalid && registerForm.controls['address_one'].touched" class="alert alert-danger">
+                        <div *ngIf="registerForm.controls['address_one'].errors.required">
+                            <small id="address_one-help" class="p-error">Address is required.</small>
+                        </div>
+                    </div>                       
                 </div>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
@@ -139,7 +167,7 @@
         <div class="grid" id="LR6">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="city">City</label>
-                <div class="p-inputgroup">
+                <div class="p-field">
                     <input 
                         pInputText 
                         id="city" 
@@ -148,7 +176,12 @@
                         placeholder="Required"
                         role="presentation"
                         autocomplete="off"
-                    >         
+                    >
+                    <div *ngIf="registerForm.controls['city'].invalid && registerForm.controls['city'].touched" class="alert alert-danger">
+                        <div *ngIf="registerForm.controls['city'].errors.required">
+                            <small id="city-help" class="p-error">City is required.</small>
+                        </div>
+                    </div>                            
                 </div>
             </div>
             <div class="col-12 md:col-3 lg:col-2">
@@ -168,7 +201,7 @@
             </div> 
             <div class="col-12 md:col-3 lg:col-2">
                 <label for="zip_code">Zip Code</label>
-                <div>
+                <div class="p-field">
                     <input 
                         pInputText
                         id="zip_code"
@@ -179,14 +212,19 @@
                         [maxLength]="5"
                         role="presentation"
                         autocomplete="off"
-                    >      
+                    >
+                    <div *ngIf="registerForm.controls['zip_code'].invalid && registerForm.controls['zip_code'].touched" class="alert alert-danger">
+                        <div *ngIf="registerForm.controls['zip_code'].errors.required">
+                            <small id="zip_code-help" class="p-error">Zip Code is required.</small>
+                        </div>
+                    </div>                        
                 </div>
             </div>             
         </div>
         <div class="flex justify-content-end flex-wrap" id="LR7">
             <div class="flex">
                 <div class="p-field m-2">
-                    <button class="p-button-info" type="submit" pButton label="Submit"></button>
+                    <button [disabled]="registerForm.invalid" class="p-button-info" type="submit" pButton label="Submit"></button>
                 </div>
                 <div class="p-field m-2">
                     <button class="p-button-info" pButton type="button" label="Cancel"></button>
