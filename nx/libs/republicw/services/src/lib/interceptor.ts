@@ -1,51 +1,3 @@
-// import { Injectable } from '@angular/core';
-// import { HttpInterceptor, HttpEvent, HttpResponse, HttpRequest, HttpHandler,HttpErrorResponse } from '@angular/common/http';
-// import { Observable, throwError } from 'rxjs';
-// import { map, catchError } from 'rxjs/operators';
-// import { ErrorDialogService } from './error-dialog/errordialog.service';
-
-// @Injectable()
-// export class RepublicInterceptor implements HttpInterceptor {
-
-//     constructor(
-//         public errorDialogService: ErrorDialogService,
-//     ){}
-
-    // intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //     const token: any = localStorage.getItem('token');
-    //     if( token ){
-    //         httpRequest = httpRequest.clone( { headers: httpRequest.headers.set('Authorization', 'Bearer ' + token ) });
-    //     }
-
-        // return next.handle(httpRequest).pipe(
-        //     map((event: HttpEvent<any>) => {
-        //         if (event instanceof HttpResponse) {
-        //             console.log('event--->>>', event);
-        //         }
-        //         return event;
-        //     }),
-        //     catchError((error: HttpErrorResponse) => {
-        //         let data = {};
-        //         data = {
-        //             reason: error && error.error.message ? error.error.message : '',
-        //             status: error.status
-        //         };
-        //         this.errorDialogService.openDialog(data);
-        //         return throwError(error);
-        //     }));
-
-        // return next.handle(httpRequest).pipe(
-        //     map((event: HttpEvent<any>) => {
-        //         if( event instanceof HttpResponse ){
-        //             console.log('event--->>>' + event);
-        //         }
-        //         return event;
-        //     })
-        // );
-
-//     }
-// }
-
 import { Injectable } from "@angular/core";
 import { HttpEvent, HttpInterceptor, HttpHandler,HttpRequest, HttpErrorResponse } from "@angular/common/http";
 import { throwError, Observable, BehaviorSubject, of } from "rxjs";
@@ -54,14 +6,14 @@ import { catchError, filter, take, switchMap, finalize } from "rxjs/operators";
 @Injectable()
 export class RepublicInterceptor implements HttpInterceptor {
     private AUTH_HEADER = "Authorization";
-    private token = localStorage.getItem("token");
+    token = localStorage.getItem("token");
     private refreshTokenInProgress = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> { 
-        const token: any = localStorage.getItem('token');
-        if( token ){
-            req = req.clone( { headers: req.headers.set('Authorization', 'Bearer ' + token ) });
+        //const token: any = localStorage.getItem('token');
+        if( this.token ){
+            req = req.clone( { headers: req.headers.set('Authorization', 'Bearer ' + this.token ) });
         }
         if (!req.headers.has('Content-Type')) {
             req = req.clone({

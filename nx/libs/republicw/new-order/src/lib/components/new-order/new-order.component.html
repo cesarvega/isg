@@ -1,5 +1,5 @@
 <section id="newOrder">
-    <form [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">
+    <form [formGroup]="formSearch" novalidate (ngSubmit)="customerRequest()" autocomplete="off" autofill="off">
         <div class="grid flex align-content-end" id="LR1">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="search">Search by customer phone number</label>
@@ -12,10 +12,11 @@
                     maxlength="10"
                     role="presentation"
                     autocomplete="off"
+                    formControlName="search"
                 >
             </div>
             <div class="col-12 md:col-1 lg:col-1 flex">
-                <button (click)="customerRequest()" class="p-button-info" pButton type="button" label="Search"></button>
+                <button [disabled]="formSearch.invalid" class="p-button-info" pButton type="submit" label="Search"></button>
             </div>
             <div class="col-12 md:col-7 lg:col-7 flex justify-content-end">
                 <label for="plan">Callkey( Select call ) </label>
@@ -24,7 +25,6 @@
                         id="call_key"
                         [options]="plans" 
                         optionLabel="description"
-                        formControlName="call_key"
                         optionValue="id"
                         role="presentation"
                         autocomplete="off"
@@ -33,6 +33,8 @@
                 </div>
             </div>     
         </div>
+    </form>
+    <form [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">    
         <div class="grid" id="LR2">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="first_name">First Name</label>

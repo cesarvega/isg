@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { NewOrderService } from '@nx/republicw/new-order';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NewOrderComponent implements OnInit {
   
+  formSearch!: any;
   formData!: any;
   id: any = null;
 
@@ -35,6 +36,10 @@ export class NewOrderComponent implements OnInit {
     this.createForm();
     this.getLinesQuantity();
     this.getByod();
+
+    this.formSearch = new FormGroup({
+      search: new FormControl('', Validators.required)
+    })
   }
 
   async getLinesQuantity(){
@@ -95,7 +100,8 @@ export class NewOrderComponent implements OnInit {
 
 
   async customerRequest(){
-    const customer = await this.newOrderService.getCustomer('99988877766');
+    var pn = this.formSearch.get('search').value;
+    const customer = await this.newOrderService.getCustomer( pn );
 
     if( customer ){
       this.formData.patchValue({
@@ -115,14 +121,14 @@ export class NewOrderComponent implements OnInit {
   createForm(){
     this.formData = new FormGroup({
       customer_id: new FormControl(''),
-      first_name: new FormControl(''),
-      last_name: new FormControl(''),
-      phone_number: new FormControl(''),
-      order_number: new FormControl(''),
-      plan: new FormControl(''),
+      first_name: new FormControl('', Validators.required),
+      last_name: new FormControl('', Validators.required),
+      phone_number: new FormControl('', Validators.required),
+      order_number: new FormControl('', Validators.required),
+      plan: new FormControl('', Validators.required),
       lines: new FormControl(''),
       call_key: new FormControl(''),
-      items: new FormArray([])
+      items: new FormArray([], Validators.required)
     })
   }
 
@@ -191,6 +197,9 @@ export class NewOrderComponent implements OnInit {
     return this.formData.get("items");
   }
 
+  doSearch(){
+
+  }
 
   onSubmit(){
     const lines = this.formData.get('lines').value;
