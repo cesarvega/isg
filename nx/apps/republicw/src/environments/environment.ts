@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://aws-dev-01.isg.us/api',
+  apiUrl: 'https://isg-br-isgoe08/isg-backend/public/api',
   token: '/token',
   providers: '/republic/providers/filter',
   classTypes: '/republic/class_types/filter',

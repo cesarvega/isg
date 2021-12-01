@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { NewOrderService } from '@nx/republicw/new-order';
-import { ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nx-new-order',
   templateUrl: './new-order.component.html',
-  styleUrls: ['./new-order.component.scss']
+  styleUrls: ['./new-order.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NewOrderComponent implements OnInit {
   
+  result$: any = null;
+  message$: any = null;
   dniCallOptions: any = [];
   agentId!: any;
   notFound: boolean = false;
@@ -32,12 +34,13 @@ export class NewOrderComponent implements OnInit {
   constructor(
     private newOrderService: NewOrderService,
     private fb: FormBuilder,
-    private actRoute: ActivatedRoute,
+    private router: Router,
   ) { }
     
 
   ngOnInit(): void {
-    this.agentId = this.actRoute.snapshot.queryParams["agentId"];
+    //this.agentId = this.actRoute.snapshot.queryParams["agentId"];
+    this.agentId = localStorage.getItem("agentId");
     if(this.agentId ){
         this.getDniCall( this.agentId )
     }
@@ -148,10 +151,10 @@ export class NewOrderComponent implements OnInit {
       last_name: new FormControl('', Validators.required),
       phone_number: new FormControl('', Validators.required),
       order_number: new FormControl('', Validators.required),
-      plan: new FormControl('', Validators.required),
+      plan: new FormControl(''),
       lines: new FormControl(''),
-      call_key: new FormControl(''),
-      items: new FormArray([], Validators.required)
+      call_key: new FormControl('', Validators.required),
+      items: new FormArray([])
     })
   }
 
@@ -220,11 +223,16 @@ export class NewOrderComponent implements OnInit {
     return this.formData.get("items");
   }
 
-  doSearch(){
+  async onSubmit(){
 
-  }
+    this.formData.get('first_name').enable();
+    this.formData.get('last_name').enable();
+    this.formData.get('phone_number').enable();
 
-  onSubmit(){
+    if( this.formData.invalid )return;
+
+    this.message$ = '';
+    this.result$ = '';
     const lines = this.formData.get('lines').value;
     const plan = this.formData.get('plan').value;
     var itemsArr = [];
@@ -258,6 +266,20 @@ export class NewOrderComponent implements OnInit {
       }
     ];
 
-    this.newOrderService.putNewOrder( data );
+    var result = await this.newOrderService.putNewOrder( data );
+    if( result && result[0]['id'] ){
+      this.message$ = 'The order was posted successfully.';
+      this.result$ = {width:'100%', height: 'auto', 'padding': 0, 'margin-bottom': '1em', 'backgroundColor':'var(--green-100)'};
+    }else{
+      this.message$ = 'The order was not ';
+      this.result$ = {width:'100%', height: 'auto', 'padding': 0, 'margin-bottom': '1em', 'backgroundColor':'var(--pink-200)'};
+    }
+    this.formData.get('first_name').disable();
+    this.formData.get('last_name').disable();
+    this.formData.get('phone_number').disable();
+  }
+
+  toRegister(){
+    this.router.navigate(['/register'], { queryParams: {agentId: this.agentId }});
   }
 }

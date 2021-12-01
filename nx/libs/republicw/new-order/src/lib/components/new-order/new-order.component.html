@@ -9,6 +9,11 @@
             </div>
         </div>
     </p-card>
+    <p-card *ngIf="result$" [style]="result$">
+        <div>
+            {{ message$ }}
+        </div>
+    </p-card>
     <form [formGroup]="formSearch" novalidate (ngSubmit)="customerRequest()" autocomplete="off" autofill="off">
         <div class="row" *ngIf="notFound">
             <h3 class="p-error">
@@ -102,7 +107,7 @@
         <div class="grid"  id="LR4">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="order_number">Order Number</label>
-                <div class="p-inputgroup">
+                <div class="p-field">
                     <input 
                         pInputText 
                         id="order_number" 
@@ -111,7 +116,12 @@
                         role="presentation"
                         autocomplete="off"
                         placeholder="Required"
-                    >         
+                    > 
+                    <div *ngIf="formData.controls['order_number'].invalid && formData.controls['order_number'].touched" class="alert alert-danger">
+                        <div *ngIf="formData.controls['order_number'].errors.required">
+                            <small id="order_number-help" class="p-error">Order Number is required.</small>
+                        </div>
+                    </div>                           
                 </div>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
@@ -124,6 +134,7 @@
                         optionValue="id"
                         role="presentation"
                         autocomplete="off"
+                        formControlName="call_key"
                     >
                     </p-dropdown>
                 </div>
@@ -198,12 +209,12 @@
         <div class="flex justify-content-end flex-wrap" id="LR7">
             <div class="flex">
                 <div class="p-field m-2">
-                    <a routerLink="/register"><button class="p-button-success" pButton type="submit" label="Back to Register"></button></a>
+                    <button (click)="toRegister()" class="p-button-success" pButton type="submit" label="Back to Register"></button>
                 </div>
             </div>            
             <div class="flex">
                 <div class="p-field m-2">
-                    <button [disabled]="!selectedLines" class="p-button-info" pButton type="submit" label="Save Order"></button> 
+                    <button *ngIf="!result$" [disabled]="formData.invalid" class="p-button-info" pButton type="submit" label="Save Order"></button> 
                 </div>
             </div>
         </div>

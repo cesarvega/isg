@@ -102,6 +102,11 @@ export class NewOrderService {
     getDniCall(agentId: string){
         var body = JSON.stringify( dni_call );
         body = body.replace(/@value@/, agentId);
+        
+        var d = new Date();//2021-08-13 
+		var today = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); 
+        body = body.replace(/@date@/, today);
+
         body = JSON.parse(body);
         return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DNI_CALL, body, undefined ).pipe(
             map((response: any) => {

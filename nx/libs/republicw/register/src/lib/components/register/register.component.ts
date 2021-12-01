@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { states } from '@nx/earthlink/utilities';
 import { NewRegister } from '../../service/register.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'nx-register',
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
+  agentiId!: any;
   registerForm!: any;
   states: any = states;
   body: any = undefined;
@@ -20,12 +21,17 @@ export class RegisterComponent implements OnInit {
   constructor(
     private newRegister: NewRegister,
     private router: Router,
+    private actRoute: ActivatedRoute,
   ) { 
       this.newRegister.requestToken();
     }
 
   ngOnInit(): void {
     this.createForm();
+    this.agentiId = this.actRoute.snapshot.queryParams["agentId"];
+    if( this.agentiId ){
+      localStorage.setItem("agentId", this.agentiId);
+    }
   }
 
   createForm(){

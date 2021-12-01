@@ -57,7 +57,7 @@ export const dni_call = {
         }, "AND",
         {
             "field": "insertdate",
-            "value": "2021-08-13",
+            "value": "@date@",
             "operator": ">="
         }
     ]
