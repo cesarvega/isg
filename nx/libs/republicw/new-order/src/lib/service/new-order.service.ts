@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { throwError, AsyncSubject } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
-import { ApiService, plans_body, byod_body, get_customer } from '@nx/republicw/services';
+import { ApiService, plans_body, byod_body, get_customer, dni_call } from '@nx/republicw/services';
 import { SYSTEM_CONFIG } from '@nx/republicw/config';
 //import { CustomHeaders } from '@nx/earthlink/shared';
 
@@ -96,8 +96,6 @@ export class NewOrderService {
     }
 
     putNewOrder( body: any ){
-        //const header = this.customHeaders.bearer(localStorage.getItem('token'));
-
         return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PUT_ORDER, body, undefined ).pipe(
             map((response: any) => {
                 return response.data;
@@ -108,5 +106,22 @@ export class NewOrderService {
                 console.log('returned error:' + error ); 
             })
         ).toPromise();
+    }
+
+    getDniCall(agentId: string){
+        var body = JSON.stringify( dni_call );
+        body = body.replace(/@value@/, agentId);
+        body = JSON.parse(body);
+
+        return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DNI_CALL, body, undefined ).pipe(
+            map((response: any) => {
+                return response.data;
+            }),
+            tap( (request: any) => {
+                return request;
+            }, (error) => {
+
+            })
+        )
     }
 }

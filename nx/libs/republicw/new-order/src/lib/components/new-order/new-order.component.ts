@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { NewOrderService } from '@nx/republicw/new-order';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'nx-new-order',
@@ -10,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NewOrderComponent implements OnInit {
   
+  dniCallOptions: any = null;
+  agentId: any = null;
   notFound: boolean = false;
   formSearch!: any;
   formData!: any;
@@ -30,10 +33,15 @@ export class NewOrderComponent implements OnInit {
     private newOrderService: NewOrderService,
     private fb: FormBuilder,
     private router: Router,
+    private getParams: ActivatedRoute,
   ) { }
     
 
   ngOnInit(): void {
+    this.agentId = this.getParams.snapshot.paramMap.get('agentId');
+    if(this.agentId ){
+        this.getDniCall( this.agentId )
+    }
     this.createForm();
     this.getLinesQuantity();
     this.getByod();
@@ -44,6 +52,10 @@ export class NewOrderComponent implements OnInit {
         Validators.pattern("[0-9]{10}")
       ])
     })
+  }
+
+  async getDniCall( agentId: string ){
+    this.dniCallOptions = await this.newOrderService.getDniCall( this.agentId );
   }
 
   async getLinesQuantity(){
