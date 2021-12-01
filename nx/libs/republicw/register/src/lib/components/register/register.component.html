@@ -1,6 +1,6 @@
 <section id="register">
     <p-card [style]="{width:'100%', height: 'auto', 'padding': 0, 'margin-bottom': '1em'}">
-        <div class="flex justify-content-between">
+        <div class="flex justify-content-between align-items-center">
             <div class="p-field">
                 <img src="./assets/img/isg_logo.png" width="120px">
             </div>
@@ -237,7 +237,7 @@
                     <button [disabled]="registerForm.invalid" class="p-button-info" type="submit" pButton label="Submit"></button>
                 </div>
                 <div class="p-field m-2">
-                    <button class="p-button-info" pButton type="button" label="Cancel"></button>
+                    <button class="p-button-info" (click)="refreshToken()" pButton type="button" label="Refresh Token"></button>
                 </div>
                 <div class="p-field m-2">
                     <button class="p-button-success" pButton type="button" label="Drop Order" (click)="continueToDropOrder()"></button>

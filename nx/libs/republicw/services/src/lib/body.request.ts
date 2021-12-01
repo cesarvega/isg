@@ -48,3 +48,17 @@ export const rep_wireless = {
         "phone" : "@phone",
         "accountId" : null
 }
+
+export const dni_call = {
+    "filter": [
+        {
+            "field": "agent",
+            "value": "@value@"
+        }, "AND",
+        {
+            "field": "insertdate",
+            "value": "2021-08-13",
+            "operator": ">="
+        }
+    ]
+}

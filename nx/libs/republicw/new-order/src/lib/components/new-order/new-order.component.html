@@ -1,6 +1,6 @@
 <section id="newOrder">
     <p-card [style]="{width:'100%', height: 'auto', 'padding': 0, 'margin-bottom': '1em'}">
-        <div class="flex justify-content-between">
+        <div class="flex justify-content-between align-items-center">
             <div class="p-field">
                 <img src="./assets/img/isg_logo.png" width="120px">
             </div>
@@ -10,6 +10,11 @@
         </div>
     </p-card>
     <form [formGroup]="formSearch" novalidate (ngSubmit)="customerRequest()" autocomplete="off" autofill="off">
+        <div class="row" *ngIf="notFound">
+            <h3 class="p-error">
+                This phone number was Not Found
+            </h3>
+        </div>
         <div class="grid flex align-content-end" id="LR1">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="search">Search by customer phone number</label>
@@ -28,7 +33,7 @@
             <div class="col-12 md:col-1 lg:col-1 flex">
                 <button [disabled]="formSearch.invalid" class="p-button-info" pButton type="submit" label="Search"></button>
             </div>
-            <div class="col-12 md:col-7 lg:col-7 flex justify-content-end">
+            <!-- <div class="col-12 md:col-7 lg:col-7 flex justify-content-end">
                 <label for="plan">Callkey( Select call ) </label>
                 <div>
                     <p-dropdown 
@@ -41,7 +46,7 @@
                     >
                     </p-dropdown>
                 </div>
-            </div>     
+            </div>      -->
         </div>
     </form>
     <form [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">    
@@ -107,6 +112,20 @@
                         autocomplete="off"
                         placeholder="Required"
                     >         
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="call_key">Callkey( Select call ) </label>
+                <div>
+                    <p-dropdown 
+                        id="call_key"
+                        [options]="plans" 
+                        optionLabel="description"
+                        optionValue="id"
+                        role="presentation"
+                        autocomplete="off"
+                    >
+                    </p-dropdown>
                 </div>
             </div> 
         </div>    

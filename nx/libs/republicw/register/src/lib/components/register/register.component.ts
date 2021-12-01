@@ -126,5 +126,7 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/new-order'])
   }
 
-
+  refreshToken(){
+    this.newRegister.requestToken();
+  }
 }

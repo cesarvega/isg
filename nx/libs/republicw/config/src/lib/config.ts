@@ -12,6 +12,7 @@ var register = environment.register;
 var dish = environment.dish;
 var email = environment.email;
 var password = environment.password;
+var dni_call = environment.dni_call;
 
 export const SYSTEM_CONFIG = {
     API_URL: api_url,
@@ -26,4 +27,5 @@ export const SYSTEM_CONFIG = {
     DISH_PATH: dish,
     EMAIL: email,
     PASSWORD: password,
+    DNI_CALL: dni_call,
 }

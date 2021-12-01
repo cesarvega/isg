@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NewOrderComponent implements OnInit {
   
+  notFound: boolean = false;
   formSearch!: any;
   formData!: any;
   id: any = null;
@@ -107,6 +108,7 @@ export class NewOrderComponent implements OnInit {
     const customer = await this.newOrderService.getCustomer( pn );
 
     if( customer ){
+      this.notFound = false;
       this.formData.patchValue({
         customer_id: customer.id,
         first_name: customer.first_name ,
@@ -115,10 +117,14 @@ export class NewOrderComponent implements OnInit {
         order_number: customer.order_number
       });
 
-    }//else{
-    //   debugger;
-    //   console.log( customer );
-    // }
+    }else{
+      this.notFound = true;
+      this.formData.patchValue({
+        first_name: '',
+        last_name: '',
+        phone_number: ''
+      })
+    }
   }
 
   createForm(){

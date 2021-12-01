@@ -85,14 +85,11 @@ export class NewOrderService {
         // //const header = this.customHeaders.bearer(localStorage.getItem('token'));
         return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.GET_CUSTOMER, body, undefined).pipe(
             map( (response: any) => {
-                debugger;
                 return response.data[0];
             }),
             tap( (request: any) => {
-                debugger;
                 return request;
             }, (error) => {
-                debugger;
                 return error;
             })
         ).toPromise();

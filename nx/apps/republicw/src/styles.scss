@@ -34,3 +34,10 @@ label{
   a{
     text-decoration: none;
   }
+
+  .p-card .p-card-content {
+    padding: 0 !important;
+  }
+  .p-card .p-card-body {
+      padding: .5rem .5rem .5rem .5rem;
+  }
