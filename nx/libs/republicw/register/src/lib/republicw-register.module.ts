@@ -11,9 +11,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   imports: [
+    CardModule,
     GooglePlaceModule,
     DividerModule,
     FormsModule,

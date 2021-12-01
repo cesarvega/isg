@@ -1,4 +1,14 @@
 <section id="newOrder">
+    <p-card [style]="{width:'100%', height: 'auto', 'padding': 0, 'margin-bottom': '1em'}">
+        <div class="flex justify-content-between">
+            <div class="p-field">
+                <img src="./assets/img/isg_logo.png" width="120px">
+            </div>
+            <div class="p-field">
+                <img src="./assets/img/rw_logo.png" width="360px">
+            </div>
+        </div>
+    </p-card>
     <form [formGroup]="formSearch" novalidate (ngSubmit)="customerRequest()" autocomplete="off" autofill="off">
         <div class="grid flex align-content-end" id="LR1">
             <div class="col-12 md:col-6 lg:col-4">

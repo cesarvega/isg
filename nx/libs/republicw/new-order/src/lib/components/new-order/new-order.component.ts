@@ -38,7 +38,10 @@ export class NewOrderComponent implements OnInit {
     this.getByod();
 
     this.formSearch = new FormGroup({
-      search: new FormControl('', Validators.required)
+      search: new FormControl('', [
+        Validators.required,
+        Validators.pattern("[0-9]{10}")
+      ])
     })
   }
 

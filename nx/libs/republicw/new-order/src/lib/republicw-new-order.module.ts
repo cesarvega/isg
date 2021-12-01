@@ -10,9 +10,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { Table, TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   imports: [
+    CardModule,
     ReactiveFormsModule,
     FormsModule,
     TableModule,
