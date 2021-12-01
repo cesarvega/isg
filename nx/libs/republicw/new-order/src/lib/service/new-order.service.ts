@@ -74,15 +74,6 @@ export class NewOrderService {
         var body = JSON.stringify( get_customer );
         body = body.replace(/@@/, phone);
         body = JSON.parse(body);
-        // this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.GET_CUSTOMER, body, undefined )
-        //         .subscribe(
-        //             result => { 
-        //                 //this.response$.next( result );
-        //                 //this.response$.complete();
-        //             }
-        //         );
-        // //return this.response$;
-        // //const header = this.customHeaders.bearer(localStorage.getItem('token'));
         return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.GET_CUSTOMER, body, undefined).pipe(
             map( (response: any) => {
                 return response.data[0];
@@ -112,7 +103,6 @@ export class NewOrderService {
         var body = JSON.stringify( dni_call );
         body = body.replace(/@value@/, agentId);
         body = JSON.parse(body);
-
         return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DNI_CALL, body, undefined ).pipe(
             map((response: any) => {
                 return response.data;
@@ -120,8 +110,8 @@ export class NewOrderService {
             tap( (request: any) => {
                 return request;
             }, (error) => {
-
+                // todo
             })
-        )
+        ).toPromise();
     }
 }

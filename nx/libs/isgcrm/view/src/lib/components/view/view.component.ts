@@ -42,7 +42,7 @@ export class ViewComponent implements OnInit {
     if( localStorage.getItem('partnerName') ){
       this.partnerName = localStorage.getItem('partnerName');
     }
-    this.partnerId = this.actRoute.snapshot.paramMap.get('partnerId');
+    this.partnerId = this.actRoute.snapshot.queryParams.get('partnerId');
     this.productId = this.actRoute.snapshot.paramMap.get('productId');
 
     let productsV:any =  localStorage.getItem('products');
