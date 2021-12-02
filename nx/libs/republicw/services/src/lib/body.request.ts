@@ -62,3 +62,12 @@ export const dni_call = {
         }
     ]
 }
+
+export const get_sales_customer = {
+    "filter": [
+        {
+            "field": "phone",
+            "value": "@@"
+        }
+    ]
+}

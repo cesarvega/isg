@@ -12,7 +12,8 @@ export const environment = {
   dish: '/republic/config/republic_wireless_url',
   email: 'admin@isg.us',
   password: 'admin@isg',
-  dni_call: '/isg/dni_call_key_mapping/filter'
+  dni_call: '/isg/dni_call_key_mapping/filter',
+  sales_customer: '/sales/search/customers',
 };
 
 //apiUrl: 'https://aws-dev-01.isg.us/api'

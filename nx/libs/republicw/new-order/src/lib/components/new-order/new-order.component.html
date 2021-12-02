@@ -38,22 +38,11 @@
             <div class="col-12 md:col-1 lg:col-1 flex">
                 <button [disabled]="formSearch.invalid" class="p-button-info" pButton type="submit" label="Search"></button>
             </div>
-            <!-- <div class="col-12 md:col-7 lg:col-7 flex justify-content-end">
-                <label for="plan">Callkey( Select call ) </label>
-                <div>
-                    <p-dropdown 
-                        id="call_key"
-                        [options]="plans" 
-                        optionLabel="description"
-                        optionValue="id"
-                        role="presentation"
-                        autocomplete="off"
-                    >
-                    </p-dropdown>
-                </div>
-            </div>      -->
         </div>
     </form>
+    <div>
+        <p-divider type="dashed"></p-divider>
+    </div>
     <form [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">    
         <div class="grid" id="LR2">
             <div class="col-12 md:col-6 lg:col-4">

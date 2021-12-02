@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { catchError } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ApiService } from '@nx/republicw/services';
 import { SYSTEM_CONFIG } from '@nx/republicw/config';
 import { of, throwError } from "rxjs";
-import { rep_wireless } from "@nx/republicw/services";
+import { rep_wireless, get_sales_customer } from "@nx/republicw/services";
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -79,5 +79,26 @@ export class NewRegister {
             }
         )
 
+    }
+
+    getCustomer( phone_number: string){
+        var body = JSON.stringify( get_sales_customer);
+        body = body.replace(/@@/, phone_number);
+        body = JSON.parse( body );
+        return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.SALES_CUSTOMER, body, undefined).pipe(
+            catchError( err => {
+                this.error$.next( { error: err.error.message } );
+                return this.error$.asObservable();
+            }),
+            map( (response: any) => {
+                return response.data[0];
+            }),
+            tap( (request: any) => {
+                return request;
+            }, (error) => {
+                return error;
+            })
+        ).toPromise();
+   
     }
 }

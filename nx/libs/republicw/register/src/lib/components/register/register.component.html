@@ -9,27 +9,37 @@
             </div>
         </div>
     </p-card>
-    <div class="p-error" *ngIf="error$">
-        {{ error$ }}
-    </div>
-    <div class="grid flex align-content-end" id="LR1">
-        <div class="col-12 md:col-6 lg:col-4">
-            <label for="search">Search by customer phone number</label>
-            <input
-                pInputText
-                id="search"
-                class="p-inputtext-lg"
-                placeholder="Enter the phone number"
-                (keypress)="onlyNumbers($event)"
-                maxlength="10"
-                role="presentation"
-                autocomplete="off"
-            >
+    <p-card class="p-error" *ngIf="error$">
+        <div>
+            {{ error$ }}
         </div>
-        <div class="col-12 md:col-6 lg:col-4 flex">
-            <button class="p-button-info" pButton type="button" label="Search"></button>
+    </p-card>
+    <form [formGroup]="customerForm" novalidate autocomplete="off" autofill="off" (ngSubmit)="getCustomer()">
+        <div class="row" *ngIf="notFound">
+            <h3 class="p-error">
+                This phone number was Not Found
+            </h3>
         </div>
-    </div>
+        <div class="grid flex align-content-end">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label for="search">Search by customer phone number</label>
+                <input
+                    pInputText
+                    id="search"
+                    class="p-inputtext-lg"
+                    placeholder="Enter the phone number"
+                    (keypress)="onlyNumbers($event)"
+                    maxlength="10"
+                    role="presentation"
+                    autocomplete="off"
+                    formControlName="pn_search"
+                >
+            </div>
+            <div class="col-12 md:col-6 lg:col-4 flex">
+                <button [disabled]="customerForm.invalid" class="p-button-info" pButton type="submit" label="Search"></button>
+            </div>
+        </div>
+    </form>
     <div>
         <p-divider type="dashed"></p-divider>
     </div>

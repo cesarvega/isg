@@ -58,9 +58,6 @@ export class NewOrderComponent implements OnInit {
 
   async getDniCall( agentId: string ){
     this.dniCallOptions = await this.newOrderService.getDniCall( this.agentId );
-    if( this.dniCallOptions ){
-
-    }
   }
 
   async getLinesQuantity(){

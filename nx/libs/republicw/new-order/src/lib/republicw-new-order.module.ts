@@ -11,9 +11,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { Table, TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   imports: [
+    DividerModule,
     CardModule,
     ReactiveFormsModule,
     FormsModule,

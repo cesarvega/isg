@@ -11,11 +11,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
+  notFound: boolean = false;
   agentiId!: any;
+  customerForm!: any;
   registerForm!: any;
   states: any = states;
   body: any = undefined;
-  result: any = null;
+  result$: any = null;
   error$: any = null;
 
   constructor(
@@ -32,6 +34,9 @@ export class RegisterComponent implements OnInit {
     if( this.agentiId ){
       localStorage.setItem("agentId", this.agentiId);
     }
+    this.customerForm = new FormGroup({
+      pn_search: new FormControl('', Validators.required)
+    })
   }
 
   createForm(){
@@ -50,6 +55,7 @@ export class RegisterComponent implements OnInit {
         ]
       ),
       account_number: new FormControl(''),
+      record_id: new FormControl('')
     })
   }
 
@@ -115,7 +121,6 @@ export class RegisterComponent implements OnInit {
     
     const data:any = [this.registerForm.value];
     this.newRegister.register( data ).subscribe(
-      //(r:any) => this.result = r.error
       (r: any) => {
         if (r && r.error ){
           if( r.error.match(/duplicate/g) ){
@@ -134,5 +139,43 @@ export class RegisterComponent implements OnInit {
 
   refreshToken(){
     this.newRegister.requestToken();
+  }
+  
+  async getCustomer(){
+    if( this.customerForm.invalid ) return;
+
+    this.notFound = false;
+    this.registerForm.patchValue({
+      record_id:'',
+      first_name: '',
+      last_name: '',
+      phone_number: '',
+      email: '',
+      address_one: '',
+      address_two: '',
+      city: '',
+      state: '',
+      zip_code: ''
+    })
+
+    var pn = this.customerForm.get('pn_search').value;
+    const r = this.result$ = await this.newRegister.getCustomer( pn );
+
+    if( r && r.first_name && r.last_name && r.phone ){
+      this.registerForm.patchValue({
+        first_name: r.first_name,
+        last_name: r.last_name,
+        phone_number: r.phone,
+        email: r.email,
+        address_one: r.address1,
+        address_two: r.address2,
+        city: r.city,
+        state: r.state,
+        zip_code: r.zip,
+        record_id: r.record_id
+      })
+    }else{
+      this.notFound = true;
+    }
   }
 }
