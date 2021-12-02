@@ -23,6 +23,8 @@ export class NewRegister {
     ){ }
 
     register( body: any ){
+        localStorage.setItem('phone_number', '');
+        
         this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.REGISTER_PATH, body, undefined ).pipe(
             catchError( err => {
                 //console.log( 'Handling error and rethrowing it...', err.error.message);
@@ -44,7 +46,9 @@ export class NewRegister {
                 body = body.replace(/@lineOne/, this.data.address_one);
                 body = body.replace(/@emailAddress/, this.data.email);
                 body = body.replace(/@phone/, this.data.phone_number);
-
+                
+                localStorage.setItem('phone_number', this.data.phone_number);
+                
                 body = JSON.parse( body );
                 this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DISH_PATH, body, undefined ).pipe(
                     catchError( err => this.err = of( 'Dish\' API error.' ))

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class NewOrderComponent implements OnInit {
   
+  phone_number: any = null;
   result$: any = null;
   message$: any = null;
   dniCallOptions: any = [];
@@ -48,12 +49,14 @@ export class NewOrderComponent implements OnInit {
     this.getLinesQuantity();
     this.getByod();
 
+    this.phone_number = localStorage.getItem('phone_number');
     this.formSearch = new FormGroup({
-      search: new FormControl('', [
+      search: new FormControl(this.phone_number, [
         Validators.required,
         Validators.pattern("[0-9]{10}")
       ])
     })
+    this.customerRequest();
   }
 
   async getDniCall( agentId: string ){
@@ -118,6 +121,7 @@ export class NewOrderComponent implements OnInit {
 
 
   async customerRequest(){
+
     var pn = this.formSearch.get('search').value;
     const customer = await this.newOrderService.getCustomer( pn );
 
@@ -139,6 +143,7 @@ export class NewOrderComponent implements OnInit {
         phone_number: ''
       })
     }
+    console.log( this.formData.value)
   }
 
   createForm(){
