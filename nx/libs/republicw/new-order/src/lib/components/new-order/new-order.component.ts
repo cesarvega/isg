@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { NewOrderService } from '@nx/republicw/new-order';
 import { Router } from '@angular/router';
+declare var thisWindow: any;
 
 @Component({
   selector: 'nx-new-order',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
 })
 export class NewOrderComponent implements OnInit {
   
+  posted$: boolean = false;
+  customLabel: any = [];
   phone_number: any = null;
   result$: any = null;
   message$: any = null;
@@ -60,7 +63,15 @@ export class NewOrderComponent implements OnInit {
   }
 
   async getDniCall( agentId: string ){
-    this.dniCallOptions = await this.newOrderService.getDniCall( this.agentId );
+    this.dniCallOptions = await this.newOrderService.getDniCall( agentId );
+    if( this.dniCallOptions ){
+      for( let callOpt of this.dniCallOptions ){
+
+        callOpt.customLabel = `${callOpt.callkey} - [${callOpt.phone}]`;
+        this.customLabel.push(callOpt);
+
+      }
+    }
   }
 
   async getLinesQuantity(){
@@ -156,7 +167,8 @@ export class NewOrderComponent implements OnInit {
       plan: new FormControl(''),
       lines: new FormControl(''),
       call_key: new FormControl('', Validators.required),
-      items: new FormArray([])
+      items: new FormArray([]),
+      byod: new FormControl('', Validators.required)
     })
   }
 
@@ -227,6 +239,7 @@ export class NewOrderComponent implements OnInit {
 
   async onSubmit(){
 
+    this.posted$ = false;
     this.formData.get('first_name').enable();
     this.formData.get('last_name').enable();
     this.formData.get('phone_number').enable();
@@ -272,6 +285,7 @@ export class NewOrderComponent implements OnInit {
     if( result && result[0]['id'] ){
       this.message$ = 'The order was posted successfully.';
       this.result$ = {width:'100%', height: 'auto', 'padding': 0, 'margin-bottom': '1em', 'backgroundColor':'var(--green-100)'};
+      this.posted$ = true;
     }else{
       this.message$ = 'The order was not ';
       this.result$ = {width:'100%', height: 'auto', 'padding': 0, 'margin-bottom': '1em', 'backgroundColor':'var(--pink-200)'};

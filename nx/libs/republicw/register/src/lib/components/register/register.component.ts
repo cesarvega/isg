@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { states } from '@nx/earthlink/utilities';
 import { NewRegister } from '../../service/register.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { rep_wireless } from "@nx/republicw/services";
 
 @Component({
   selector: 'nx-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit {
 
+  posted: boolean = false;
   notFound: boolean = false;
   agentiId!: any;
   customerForm!: any;
@@ -118,19 +121,46 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(){
     if( this.registerForm.invalid ) return;
-    
+    this.posted = false;
     const data:any = [this.registerForm.value];
     this.newRegister.register( data ).subscribe(
       (r: any) => {
         if (r && r.error ){
           if( r.error.match(/duplicate/g) ){
-            this.error$ = 'A duplicated data was found: Email or Phone number already exists at the database'
+            this.error$ = 'A duplicated data was found: Email or Phone number already exists at the database';
+            this.dishUrl();
           }else{
               this.error$ = "An error as occured"
           }
         }
       }
     );
+  }
+
+  async dishUrl(){
+    if( this.posted ) return;
+
+    var body = JSON.stringify(rep_wireless);
+    body = body.replace(/@firstName/, this.registerForm.get('first_name').value);
+    body = body.replace(/@lastName/, this.registerForm.get('last_name').value);
+    body = body.replace(/@lineOne/, this.registerForm.get('address_one').value);
+    body = body.replace(/@lineTwo/, this.registerForm.get('address_two').value);
+    body = body.replace(/@city/, this.registerForm.get('city').value);
+    body = body.replace(/@state/, this.registerForm.get('state').value);
+    body = body.replace(/@zip/, this.registerForm.get('zip_code').value);
+    body = body.replace(/@lineOne/, this.registerForm.get('address_one').value);
+    body = body.replace(/@emailAddress/, this.registerForm.get('email').value);
+    body = body.replace(/@phone/, this.registerForm.get('phone_number').value);
+    body = JSON.parse( body );
+
+    var response = await this.newRegister.getDishUrl( body );
+    if( response && response.Url ){                
+      localStorage.setItem('phone_number', this.registerForm.get('phone_number').value);
+
+      this.posted = true;
+      window.open( response.Url, "_blank" );
+      this.router.navigate(['/new-order']);
+    }
   }
 
   continueToDropOrder(){

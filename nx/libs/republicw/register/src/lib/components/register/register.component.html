@@ -9,12 +9,15 @@
             </div>
         </div>
     </p-card>
-    <p-card class="p-error" *ngIf="error$">
-        <div>
+    <p-card class="p-error" *ngIf="error$" [style]="{'background':'rgb(255, 0 , 0, .5)', 'color': '#ffffff'}">
+        <div >
             {{ error$ }}
         </div>
     </p-card>
     <form [formGroup]="customerForm" novalidate autocomplete="off" autofill="off" (ngSubmit)="getCustomer()">
+        <div>
+            <h2>Register</h2>
+        </div>        
         <div class="row" *ngIf="notFound">
             <h3 class="p-error">
                 This phone number was Not Found
@@ -35,7 +38,8 @@
                     formControlName="pn_search"
                 >
             </div>
-            <div class="col-12 md:col-6 lg:col-4 flex">
+            <div class="col-12 md:col-6 lg:col-4">
+                <label>&nbsp;</label>
                 <button [disabled]="customerForm.invalid" class="p-button-info" pButton type="submit" label="Search"></button>
             </div>
         </div>

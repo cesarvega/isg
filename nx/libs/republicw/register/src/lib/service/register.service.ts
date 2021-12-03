@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { catchError, map, tap } from 'rxjs/operators';
 import { ApiService } from '@nx/republicw/services';
 import { SYSTEM_CONFIG } from '@nx/republicw/config';
-import { of, throwError } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
 import { rep_wireless, get_sales_customer } from "@nx/republicw/services";
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,39 +22,52 @@ export class NewRegister {
         private router: Router,
     ){ }
 
+    getDishUrl( body: any ){
+        return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DISH_PATH, body, undefined ).pipe(
+            map((data: any) => { 
+                return data;
+            }),
+            tap( (request) => {
+                return request;
+            }, (error) => {
+                return error;
+            })
+        ).toPromise();
+    }
+
     register( body: any ){
         localStorage.setItem('phone_number', '');
-        
+
         this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.REGISTER_PATH, body, undefined ).pipe(
             catchError( err => {
-                //console.log( 'Handling error and rethrowing it...', err.error.message);
+                //if(err.error.message.match(/duplicate/g)) return of( undefined )
+                
                 this.error$.next( {error: err.error.message });
                 return throwError(err);
             })
         ).subscribe( 
             (data: any) => {
-                //console.log( data );
-                this.data = data[0];
-                var body = JSON.stringify(rep_wireless);
-                body = body.replace(/@firstName/, this.data.first_name);
-                body = body.replace(/@lastName/, this.data.last_name);
-                body = body.replace(/@lineOne/, this.data.address_one);
-                body = body.replace(/@lineTwo/, this.data.address_two);
-                body = body.replace(/@city/, this.data.city);
-                body = body.replace(/@state/, this.data.state);
-                body = body.replace(/@zip/, this.data.zip_code);
-                body = body.replace(/@lineOne/, this.data.address_one);
-                body = body.replace(/@emailAddress/, this.data.email);
-                body = body.replace(/@phone/, this.data.phone_number);
+                    body = JSON.stringify(rep_wireless);
+                    body = body.replace(/@firstName/, this.data.first_name);
+                    body = body.replace(/@lastName/, this.data.last_name);
+                    body = body.replace(/@lineOne/, this.data.address_one);
+                    body = body.replace(/@lineTwo/, this.data.address_two);
+                    body = body.replace(/@city/, this.data.city);
+                    body = body.replace(/@state/, this.data.state);
+                    body = body.replace(/@zip/, this.data.zip_code);
+                    body = body.replace(/@lineOne/, this.data.address_one);
+                    body = body.replace(/@emailAddress/, this.data.email);
+                    body = body.replace(/@phone/, this.data.phone_number);
+                    body = JSON.parse( body );
                 
                 localStorage.setItem('phone_number', this.data.phone_number);
                 
-                body = JSON.parse( body );
                 this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DISH_PATH, body, undefined ).pipe(
-                    catchError( err => this.err = of( 'Dish\' API error.' ))
+                    catchError( err => this.err = of( undefined))
                 ).subscribe(
                     (data: any ) => {
                         if( data.Url ){
+                            debugger;
                             window.open( data.Url, "_blank" );
                             this.router.navigate(['/new-order']);
                         }
@@ -67,7 +80,7 @@ export class NewRegister {
         return this.error$.asObservable();
     }
 
-    requestToken(){
+    requestToken(): any{
         this.formData = new FormData();
         this.formData = new FormGroup({
             email: new FormControl(SYSTEM_CONFIG.EMAIL),
