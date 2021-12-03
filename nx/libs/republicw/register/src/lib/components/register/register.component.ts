@@ -132,6 +132,12 @@ export class RegisterComponent implements OnInit {
           }else{
               this.error$ = "An error as occured"
           }
+        }else{
+          if( r && r.Status && r.Status.StatusMessage ){
+            this.error$ = r.Status.StatusMessage;
+          }else{
+            this.error$ = "A not handled error.";
+          }
         }
       }
     );

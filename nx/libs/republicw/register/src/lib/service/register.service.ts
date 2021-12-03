@@ -48,28 +48,31 @@ export class NewRegister {
         ).subscribe( 
             (data: any) => {
                     body = JSON.stringify(rep_wireless);
-                    body = body.replace(/@firstName/, this.data.first_name);
-                    body = body.replace(/@lastName/, this.data.last_name);
-                    body = body.replace(/@lineOne/, this.data.address_one);
-                    body = body.replace(/@lineTwo/, this.data.address_two);
-                    body = body.replace(/@city/, this.data.city);
-                    body = body.replace(/@state/, this.data.state);
-                    body = body.replace(/@zip/, this.data.zip_code);
-                    body = body.replace(/@lineOne/, this.data.address_one);
-                    body = body.replace(/@emailAddress/, this.data.email);
-                    body = body.replace(/@phone/, this.data.phone_number);
+                    body = body.replace(/@firstName/, data[0].first_name);
+                    body = body.replace(/@lastName/, data[0].last_name);
+                    body = body.replace(/@lineOne/, data[0].address_one);
+                    body = body.replace(/@lineTwo/, data[0].address_two);
+                    body = body.replace(/@city/, data[0].city);
+                    body = body.replace(/@state/, data[0].state);
+                    body = body.replace(/@zip/, data[0].zip_code);
+                    body = body.replace(/@lineOne/, data[0].address_one);
+                    body = body.replace(/@emailAddress/, data[0].email);
+                    body = body.replace(/@phone/, data[0].phone_number);
                     body = JSON.parse( body );
-                
-                localStorage.setItem('phone_number', this.data.phone_number);
+                    
+                localStorage.setItem('phone_number', data[0].phone_number);
                 
                 this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DISH_PATH, body, undefined ).pipe(
                     catchError( err => this.err = of( undefined))
                 ).subscribe(
                     (data: any ) => {
                         if( data.Url ){
-                            debugger;
                             window.open( data.Url, "_blank" );
                             this.router.navigate(['/new-order']);
+                        }else{
+
+                            this.error$.next( data );
+                            this.error$.asObservable();
                         }
                     }
                 )

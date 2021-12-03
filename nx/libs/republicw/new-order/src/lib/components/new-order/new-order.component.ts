@@ -134,6 +134,7 @@ export class NewOrderComponent implements OnInit {
   async customerRequest(){
 
     var pn = this.formSearch.get('search').value;
+    localStorage.setItem('phone_number', pn);
     const customer = await this.newOrderService.getCustomer( pn );
 
     if( customer ){
@@ -154,7 +155,7 @@ export class NewOrderComponent implements OnInit {
         phone_number: ''
       })
     }
-    console.log( this.formData.value)
+    //console.log( this.formData.value)
   }
 
   createForm(){

@@ -6,12 +6,12 @@ import { catchError, filter, take, switchMap, finalize } from "rxjs/operators";
 @Injectable()
 export class RepublicInterceptor implements HttpInterceptor {
     private AUTH_HEADER = "Authorization";
-    token = localStorage.getItem("token");
+    token: any = null;
     private refreshTokenInProgress = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> { 
-        //const token: any = localStorage.getItem('token');
+        this.token = localStorage.getItem('token');
         if( this.token ){
             req = req.clone( { headers: req.headers.set('Authorization', 'Bearer ' + this.token ) });
         }
