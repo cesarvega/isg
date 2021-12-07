@@ -7,8 +7,8 @@ import { AuthService } from './token-services/auth-service';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { environment } from 'apps/republicw/src/environments/environment';
 
-// const TOKEN_HEADER_KEY = 'Authorization';  // for Spring Boot back-end
 const TOKEN_HEADER_KEY = 'Authorization';    // for Node.js Express back-end
 
 @Injectable()
@@ -36,8 +36,8 @@ export class RepublicInterceptor implements HttpInterceptor {
 
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
         if (!this.isRefreshing) {
-        this.isRefreshing = true;
-        this.refreshTokenSubject.next(null);
+            this.isRefreshing = true;
+            this.refreshTokenSubject.next(null);
 
         //const token = this.tokenService.getRefreshToken();
 
@@ -68,11 +68,14 @@ export class RepublicInterceptor implements HttpInterceptor {
     }
 
     private addTokenHeader(request: HttpRequest<any>, token: string) {
-        /* for Spring Boot back-end */
+        /**********************************************************************
+         * If we are calling to an external domain, then do not add the header
+         */
+        const url = environment.url;
+        if( !request.url.match(url) ) return request;
+        /**********************************************************************/
+        
         return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
-
-        /* for Node.js Express back-end */
-        //return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, token) });
     }
 }
 

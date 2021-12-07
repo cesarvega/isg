@@ -47,6 +47,7 @@
     <div>
         <p-divider type="dashed"></p-divider>
     </div>
+    <h2 *ngIf="!agentId">Agent ID is missing</h2>
     <form *ngIf="agentId"  [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">    
         <div class="grid" id="LR2">
             <div class="col-12 md:col-6 lg:col-4">

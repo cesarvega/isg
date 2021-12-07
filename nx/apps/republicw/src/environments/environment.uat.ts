@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: 'uat',
   apiUrl: 'https://aws-dev-01.isg.us/api',
   token: '/token',
   providers: '/republic/providers/filter',
@@ -14,5 +14,5 @@ export const environment = {
   password: 'admin@isg',
   dni_call: '/isg/dni_call_key_mapping/filter',
   sales_customer: '/sales/search/customers',
-  url: 'https://aws-dev-01.isg.us',
+  url: 'https://aws-dev-01-isg.us',
 };

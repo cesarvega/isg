@@ -18,6 +18,7 @@ export const environment = {
   password: 'admin@isg',
   dni_call: '/isg/dni_call_key_mapping/filter',
   sales_customer: '/sales/search/customers',
+  url: 'https://isg-br-isgoe08',
 };
 
 /*
