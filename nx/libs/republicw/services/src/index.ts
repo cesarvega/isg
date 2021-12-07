@@ -4,3 +4,4 @@ export * from './lib/body.request';
 export * from './lib/interceptor';
 export * from './lib/error-dialog/errordialog.service';
 export * from './lib/error-dialog/errordialog.component';
+export * from './lib/token-services/auth-service';

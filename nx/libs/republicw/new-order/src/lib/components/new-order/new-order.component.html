@@ -9,12 +9,12 @@
             </div>
         </div>
     </p-card>
-    <p-card *ngIf="result$" [style]="result$">
+    <p-card *ngIf="result$ || message$" [style]="result$">
         <div>
             {{ message$ }}
         </div>
     </p-card>
-    <form [formGroup]="formSearch" novalidate (ngSubmit)="customerRequest()" autocomplete="off" autofill="off">
+    <form *ngIf="agentId" [formGroup]="formSearch" novalidate (ngSubmit)="customerRequest()" autocomplete="off" autofill="off">
         <div>
             <h2>Drop Order</h2>
         </div>
@@ -47,7 +47,7 @@
     <div>
         <p-divider type="dashed"></p-divider>
     </div>
-    <form [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">    
+    <form *ngIf="agentId"  [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">    
         <div class="grid" id="LR2">
             <div class="col-12 md:col-6 lg:col-4">
                 <label for="first_name">First Name</label>

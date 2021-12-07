@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { states } from '@nx/earthlink/utilities';
 import { NewRegister } from '../../service/register.service';
+import { AuthService } from '@nx/republicw/services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { rep_wireless } from "@nx/republicw/services";
 
@@ -25,10 +26,11 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private newRegister: NewRegister,
+    private authService: AuthService,
     private router: Router,
     private actRoute: ActivatedRoute,
   ) { 
-      this.newRegister.requestToken();
+      this.authService.requestToken();
     }
 
   ngOnInit(): void {
@@ -173,10 +175,6 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/new-order'])
   }
 
-  refreshToken(){
-    this.newRegister.requestToken();
-  }
-  
   async getCustomer(){
     if( this.customerForm.invalid ) return;
 
@@ -196,6 +194,8 @@ export class RegisterComponent implements OnInit {
 
     var pn = this.customerForm.get('pn_search').value;
     const r = this.result$ = await this.newRegister.getCustomer( pn );
+    
+    localStorage.setItem('phone_number', pn);
 
     if( r && r.first_name && r.last_name && r.phone ){
       this.registerForm.patchValue({

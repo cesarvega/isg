@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { catchError, map, tap } from 'rxjs/operators';
 import { ApiService } from '@nx/republicw/services';
 import { SYSTEM_CONFIG } from '@nx/republicw/config';
-import { Observable, of, throwError } from "rxjs";
+import { of, throwError } from "rxjs";
 import { rep_wireless, get_sales_customer } from "@nx/republicw/services";
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -91,13 +91,31 @@ export class NewRegister {
         });
 
         const body = this.formData.value;
-        this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.TOKEN_PATH, body, undefined).pipe(
-            catchError( err => this.err = of( "Authentication error" ))
-        ).subscribe(
-            (data: any) => {
-                localStorage.setItem('token', data.token );
-            }
-        )
+        return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.TOKEN_PATH, body, undefined ).pipe(
+                catchError( err => {
+                    this.error$.next( { error: err.error.message } );
+                    return this.error$.asObservable();
+                }),
+                map( (response: any ) => {
+                    return response.token;
+                }),
+                tap( ( token: any ) => {
+                    localStorage.setItem('token', token );
+                    return token;
+                },(error) => {
+                    return error;
+                })
+            ).toPromise(); 
+        //}
+        // this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.TOKEN_PATH, body, undefined).pipe(
+        //     catchError( err => this.err = of( "Authentication error" ))
+        // ).subscribe(
+        //     (data: any) => {
+        //         localStorage.removeItem('token');
+        //         localStorage.setItem('token', data.token );
+        //         return data.token;
+        //     }
+        // )
 
     }
 

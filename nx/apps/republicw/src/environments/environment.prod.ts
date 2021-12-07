@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   apiUrl: 'https://isg-br-isgoe08/isg-backend/public/api',
   token: '/token',
   providers: '/republic/providers/filter',

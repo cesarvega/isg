@@ -66,8 +66,9 @@ export class NewOrderComponent implements OnInit {
     this.dniCallOptions = await this.newOrderService.getDniCall( agentId );
     if( this.dniCallOptions ){
       for( let callOpt of this.dniCallOptions ){
-
-        callOpt.customLabel = `${callOpt.callkey} - [${callOpt.phone}]`;
+        var event = new Date( callOpt.insertdate );
+        var time = event.toLocaleTimeString('en-GB', { hour12: false });
+        callOpt.customLabel = `${callOpt.callkey} - ${time} - [${callOpt.phone}]`;
         this.customLabel.push(callOpt);
 
       }

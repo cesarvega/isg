@@ -1,26 +1,20 @@
 import { Injectable } from '@angular/core';
-import { throwError, AsyncSubject } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { ApiService, plans_body, byod_body, get_customer, dni_call } from '@nx/republicw/services';
 import { SYSTEM_CONFIG } from '@nx/republicw/config';
-//import { CustomHeaders } from '@nx/earthlink/shared';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class NewOrderService {
+    error$ = new Subject;
     constructor(
         private apiService: ApiService,
-        //private customHeaders: CustomHeaders,
     ){ }
-
-    // response$ = new AsyncSubject();
-    // response$.subscribe( result => console.log('Server response:', result)
-    //     //err => console.log(err),
-    //     //() => console.log( 'Completed')
-    // );
-
 
     getLinesQuantity(){
         //const header = this.customHeaders.bearer(localStorage.getItem('token'));
@@ -108,6 +102,20 @@ export class NewOrderService {
         body = body.replace(/@date@/, today);
 
         body = JSON.parse(body);
+
+        //this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PRODUCTS_PATH, body, undefined ).pipe(
+        //     catchError( err => {
+        //         this.error$.next( {error: err.error.message });
+                
+        //         return throwError( err );
+        //     })
+        // ).subscribe(
+        //     (response: any ) => {
+        //         debugger;
+        //         return response.data;
+        //     }
+        // );
+        //return this.error$.asObservable();
         return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DNI_CALL, body, undefined ).pipe(
             map((response: any) => {
                 return response.data;
@@ -115,7 +123,7 @@ export class NewOrderService {
             tap( (request: any) => {
                 return request;
             }, (error) => {
-                // todo
+                return error.message;
             })
         ).toPromise();
     }
