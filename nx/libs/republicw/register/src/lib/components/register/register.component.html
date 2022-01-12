@@ -31,7 +31,7 @@
                     id="search"
                     class="p-inputtext-lg"
                     placeholder="Enter the phone number"
-                    (keypress)="onlyNumbers($event)"
+                    (keyup)="onlyNumbers($event)"
                     maxlength="10"
                     role="presentation"
                     autocomplete="off"
@@ -40,7 +40,7 @@
             </div>
             <div class="col-12 md:col-6 lg:col-4">
                 <label>&nbsp;</label>
-                <button [disabled]="customerForm.invalid" class="p-button-info" pButton type="submit" label="Search"></button>
+                <button [disabled]="customerForm.invalid || searching" class="p-button-info" pButton type="submit" label="Search"></button>
             </div>
         </div>
     </form>
@@ -130,6 +130,9 @@
                         <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched" class="alert alert-danger">
                             <div *ngIf="registerForm.controls['email'].errors.required">
                                 <small id="email-help" class="p-error">Email is required.</small>
+                            </div>
+                            <div *ngIf="registerForm.controls['email'].invalid">
+                                <small id="email-invalid" class="p-error">Invalid Email format</small>
                             </div>
                         </div>  
                 </div>

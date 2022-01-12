@@ -48,6 +48,34 @@
     },
     "republicw-token": {
       "tags": []
+    },
+    "isgcrm": {
+      "tags": []
+    },
+    "isgcrm-common": {
+      "tags": []
+    },
+    "isgcrm-config": {
+      "tags": []
+    },
+    "isgcrm-e2e": {
+      "tags": [],
+      "implicitDependencies": ["isgcrm"]
+    },
+    "isgcrm-edit": {
+      "tags": []
+    },
+    "isgcrm-login": {
+      "tags": []
+    },
+    "isgcrm-products": {
+      "tags": []
+    },
+    "isgcrm-shared": {
+      "tags": []
+    },
+    "isgcrm-view": {
+      "tags": []
     }
   }
 }

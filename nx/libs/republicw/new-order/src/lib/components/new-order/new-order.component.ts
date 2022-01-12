@@ -175,13 +175,15 @@ export class NewOrderComponent implements OnInit {
   }
 
 
-  onlyNumbers( input: any ){
-    if( input ){
-      const text = input.key;
+  onlyNumbers( $event: any ){
+    if( $event ){
+      const pn = $event.target.value;
+      const text = $event.key;
       const transformedInput = text.replace(/[^0-9]/g, '');
       if( text !== transformedInput ){
         return false;
       }
+      if( pn.length == 10 ) this.customerRequest();
       return text;
     }
   }

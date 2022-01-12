@@ -14,6 +14,7 @@ import { rep_wireless } from "@nx/republicw/services";
 })
 export class RegisterComponent implements OnInit {
 
+  searching = false;
   posted: boolean = false;
   notFound: boolean = false;
   agentiId!: any;
@@ -40,7 +41,10 @@ export class RegisterComponent implements OnInit {
       localStorage.setItem("agentId", this.agentiId);
     }
     this.customerForm = new FormGroup({
-      pn_search: new FormControl('', Validators.required)
+      pn_search: new FormControl('', [
+        Validators.required,
+        Validators.pattern("[0-9]{10}")
+      ])
     })
   }
 
@@ -49,7 +53,10 @@ export class RegisterComponent implements OnInit {
       first_name: new FormControl('', Validators.required),
       last_name: new FormControl('', Validators.required),
       phone_number: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,12}$")
+      ]),
       address_one: new FormControl('', Validators.required),
       address_two: new FormControl(''),
       city: new FormControl('', Validators.required),
@@ -64,13 +71,16 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  onlyNumbers( input: any ){
-    if( input ){
-      const text = input.key;
+  onlyNumbers( $event: any ){
+    if( $event ){
+      const pn = $event.target.value;
+      const text = $event.key;
       const transformedInput = text.replace(/[^0-9]/g, '');
       if( text !== transformedInput ){
         return false;
       }
+      if( pn.length == 10 )this.getCustomer();
+
       return text;
     }
   }
@@ -178,6 +188,8 @@ export class RegisterComponent implements OnInit {
   async getCustomer(){
     if( this.customerForm.invalid ) return;
 
+    this.searching = true;
+    
     this.notFound = false;
     this.registerForm.patchValue({
       record_id:'',
@@ -196,6 +208,8 @@ export class RegisterComponent implements OnInit {
     const r = this.result$ = await this.newRegister.getCustomer( pn );
     
     localStorage.setItem('phone_number', pn);
+    
+    this.searching = false;
 
     if( r && r.first_name && r.last_name && r.phone ){
       this.registerForm.patchValue({

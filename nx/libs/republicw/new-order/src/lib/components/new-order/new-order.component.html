@@ -89,7 +89,7 @@
                     id="phone_number"
                     class="p-inputtext-lg" 
                     placeholder="Required"
-                    (keypress)="onlyNumbers($event)"
+                    (keyup)="onlyNumbers($event)"
                     formControlName="phone_number"
                     role="presentation"
                     autocomplete="off"

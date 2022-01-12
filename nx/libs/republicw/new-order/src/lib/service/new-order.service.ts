@@ -103,19 +103,6 @@ export class NewOrderService {
 
         body = JSON.parse(body);
 
-        //this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PRODUCTS_PATH, body, undefined ).pipe(
-        //     catchError( err => {
-        //         this.error$.next( {error: err.error.message });
-                
-        //         return throwError( err );
-        //     })
-        // ).subscribe(
-        //     (response: any ) => {
-        //         debugger;
-        //         return response.data;
-        //     }
-        // );
-        //return this.error$.asObservable();
         return this.apiService.post(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.DNI_CALL, body, undefined ).pipe(
             map((response: any) => {
                 return response.data;
