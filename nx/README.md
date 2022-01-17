@@ -69,6 +69,7 @@ Run `ng build my-app` to build the project. The build artifacts will be stored i
   `ng build --configuration uat`
   `ng build --prod`
   `ng build --dev`
+  `ng build republicw --configuration production`
 
 
 ## Running unit tests

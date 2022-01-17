@@ -281,7 +281,8 @@ export class NewOrderComponent implements OnInit {
         "call_key":call_key.toString(),
         "order_number": order_number.toString(),
         "customer_id": customer_id.toString(),
-        "items": itemsArr
+        "items": itemsArr,
+        "agent_id": this.agentId.toString()
       }
     ];
 

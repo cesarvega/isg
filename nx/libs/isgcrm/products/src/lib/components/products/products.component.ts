@@ -23,7 +23,10 @@ export class ProductsComponent implements OnInit {
   token: any;
   headers: any = null;
   loading: boolean = false;
-  objErrors: any = null;
+  objErrors = {
+    status: 0,
+    description: null
+  };
 
   constructor(
     private router: Router,
@@ -114,7 +117,7 @@ export class ProductsComponent implements OnInit {
       tap((request) =>{
           
         },(error) => {
-          this.objErrors = error.error.message;
+          this.objErrors.status = error.status;
         }
       )
     ).toPromise()
