@@ -1,6 +1,6 @@
 export const environment = {
   production: 'uat',
-  apiUrl: 'https://aws-dev-01.isg.us/api',
+  apiUrl: 'https://isg-br-uat01/isg-backend/public/api',
   token: '/token',
   providers: '/republic/providers/filter',
   classTypes: '/republic/class_types/filter',
@@ -14,5 +14,5 @@ export const environment = {
   password: 'admin@isg',
   dni_call: '/isg/dni_call_key_mapping/filter',
   sales_customer: '/sales/search/customers',
-  url: 'https://aws-dev-01-isg.us',
+  url: 'https://isg-br-uat01',
 };
