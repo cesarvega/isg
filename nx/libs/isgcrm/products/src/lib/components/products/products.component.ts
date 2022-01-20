@@ -159,14 +159,20 @@ export class ProductsComponent implements OnInit {
   editProduct(id: number){
     if( !this.partnerId ){alert('Choose Partner'); return;}
     if( id ){
-      this.router.navigate(['product/edit/' + this.partnerId + '/' + id]);
+      this.router.navigate(
+        ['product/edit/' + this.partnerId + '/' + id ]
+      );
     }else{
-      this.router.navigate(['product/new/' + this.partnerId]);
+      this.router.navigate(
+        ['product/new/' + this.partnerId]
+      );
     }
   }
 
   viewProduct(id: number){
-    this.router.navigate(['product/view/' + id]);
+    this.router.navigate(
+      ['product/view/' + id]
+    );
   }
   // getPartnerName(partners: any){
   //   return partners.id === this.partnerId;

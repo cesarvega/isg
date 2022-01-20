@@ -15,11 +15,11 @@
     </div>
     <div >
         <p-accordion *ngIf="!productId" >
-            <p-accordionTab header="Options" [selected]="true">
+            <p-accordionTab header="Constructor" [selected]="true">
             <div class="grid">
                 <div class="col-12 md:col-6 lg:col-4">
                     <p-pickList 
-                        [source]="productType" [target]="list2" 
+                        [source]="classType" [target]="list2" 
                         [showSourceControls]="false" [showTargetControls]="false"
                         (onMoveToTarget)="onMoveToTarget($event)"
                         (onMoveToSource)="onMoveToSource($event)"
@@ -28,9 +28,9 @@
                         sourceHeader = "Class Type"
                         
                     >
-                        <ng-template let-product pTemplate="item">
-                            <div *ngIf="product && product.id" class="grid">
-                                <div class="flex align-items-center justify-content-center w-6rem h-3rem bg-blue-400 font-bold text-white border-round">{{product.name}}</div>
+                        <ng-template let-class pTemplate="item">
+                            <div *ngIf="class && class.ClassTypeId" class="grid">
+                                <div class="flex align-items-center justify-content-center w-full h-2rem bg-blue-400 font-bold text-white border-round">{{class.ClassType}}</div>
                             </div>
                         </ng-template>
                     </p-pickList>
@@ -43,8 +43,8 @@
                         *ngIf="visible"
                     >
                         <ng-template let-item pTemplate="item">
-                            <div *ngIf="item && item.id" class="grid">
-                                <div class="flex align-items-center justify-content-center h-3rem bg-blue-400 font-bold text-white border-round p-2">{{item.name}}</div>
+                            <div *ngIf="item && item.FeatureId" class="grid">
+                                <div class="flex align-items-center justify-content-center w-full h-2rem bg-blue-400 font-bold text-white border-round p-2">{{item.Feature}}</div>
                             </div>
                         </ng-template>
                     </p-pickList>

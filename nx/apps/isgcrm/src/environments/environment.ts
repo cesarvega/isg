@@ -4,10 +4,13 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://localhost:8000/api',
+  apiURL: 'https://aws-dev-01.isg.us/api',
   login: '/token',
-  partners: '/partners',
-  products: '/products',
+  partners: '/revenue/partners',
+  products: '/products',/** is it used??? */
+  classTypes: '/revenue/class_types',
+  features: '/revenue/features',
+  behaviors: '/revenue/behaviors',
 };
 
 /*

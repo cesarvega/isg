@@ -14,9 +14,9 @@ export class ViewComponent implements OnInit {
     private route: Router,
   ) { }
 
-  partnerId: any = null;
+  partnerId: number = 0;
   partnerName: any = null;
-  productId: any = null;
+  productId: number = 0;
   selectedProduct: any = null;
   formData!: any;
   selectedProductType: any = null;
@@ -42,13 +42,16 @@ export class ViewComponent implements OnInit {
     if( localStorage.getItem('partnerName') ){
       this.partnerName = localStorage.getItem('partnerName');
     }
-    this.partnerId = this.actRoute.snapshot.queryParams.get('partnerId');
-    this.productId = this.actRoute.snapshot.paramMap.get('productId');
+    this.actRoute.params
+      .subscribe(params => {
+        this.partnerId = params.partnerId;
+        this.productId = params.productId;
+      });
 
     let productsV:any =  localStorage.getItem('products');
     this.products = JSON.parse( productsV );
 
-    if( this.productId ){
+    if( this.productId > 0 ){
       this.selectedProduct = this.products.find( (x:any) => x.id == this.productId );
       if( this.selectedProduct ){
         this.selectedProductType = this.selectedProduct.type;

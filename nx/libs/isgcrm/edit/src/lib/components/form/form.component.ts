@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ApiService } from '@nx/isgcrm/common';
+import { SYSTEM_CONFIG } from '@nx/isgcrm/config';
+import { CustomHeaders } from '@nx/earthlink/shared';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'nx-form',
@@ -9,10 +13,16 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
 
+  token: any;
   constructor(
     private actRoute: ActivatedRoute,
     private route: Router,
-  ) { }
+    private apiService: ApiService,
+    private customHeaders: CustomHeaders,
+  ) {
+    this.token = localStorage.getItem('token'),
+    this.headers = this.customHeaders.bearer( this.token );
+   }
 
   partnerId: any = null;
   partnerName: any = null;
@@ -22,22 +32,20 @@ export class FormComponent implements OnInit {
   selectedProductType: any = null;
   selectedProductTypeId: any = null;
   productFeatures: any = [];
+  // productsV: any = [];
   disabled: boolean = true;
+  classType: Array<string> = [];
   list2: any = [];
   list3: any = [];
   list4: any = [];
   showSourceControls: boolean = false;
   showTargetControls: boolean = false;
-  featureList: any = [];
+  featureList: Array<string> = [];
   temp:any = [];
   visible: boolean = true;
   bkColor: any = '#689f38';
-
-  productType: any =[
-      {id: 1, name: 'Video'},
-      {id: 2, name: 'Audio'},
-      {id: 3, name: 'Internet'},
-    ]
+  headers: any = null;
+  productType: any =[]
 
     products: any = [];
 
@@ -51,9 +59,18 @@ export class FormComponent implements OnInit {
     this.partnerId = this.actRoute.snapshot.paramMap.get('partnerId');
     this.productId = this.actRoute.snapshot.paramMap.get('productId');
 
-    let productsV:any =  localStorage.getItem('products');
-    this.products = JSON.parse( productsV );
+    // let productsV:any =  localStorage.getItem('products');
+    // this.products = JSON.parse( productsV );
+    if( localStorage.getItem('class_type')){
+      let temp:any =  localStorage.getItem('class_type');
+      this.classType = JSON.parse( temp );
 
+      temp = localStorage.getItem('features');
+      this.featureList = JSON.parse(temp);
+     }else{
+       this.getClassTypes();
+       this.getFeatures();
+     }
     if( this.productId ){
       this.selectedProduct = this.products.find( (x:any) => x.id == this.productId );
       if( this.selectedProduct ){
@@ -64,8 +81,8 @@ export class FormComponent implements OnInit {
         this.populateForm();
         const ids = JSON.parse( this.selectedProduct.features );
 
-        this.list2 = this.productType.filter( (x:any) => x.name == this.selectedProductType );
-        this.list4 = this.getFeatures(this.selectedProductTypeId);
+        //this.classType = this.productType.filter( (x:any) => x.name == this.selectedProductType );
+        this.list4 = this.filterFeatures(this.selectedProductTypeId);
       }
     }else{
       this.bkColor = '#ff0000';
@@ -82,18 +99,9 @@ export class FormComponent implements OnInit {
     }
   }
 
-  getFeatures(id: any){
-    this.featureType =[
-      {id: 34, name: 'Feature id 34', key: 1},
-      {id: 35, name: 'Feature id 35', key: 1},
-      {id: 36, name: 'Feature id 36', key: 2},
-      {id: 37, name: 'Feature id 37', key: 2},
-      {id: 38, name: 'Feature id 38', key: 2},
-      {id: 39, name: 'Feature id 39', key: 3},
-      {id: 40, name: 'feature id 40', key: 3},
-      {id: 41, name: 'feature id 41', key: 1},
-    ];
-    return this.featureType.filter( (x:any) => x.key === id );
+  filterFeatures(id: any){
+    debugger;
+    return this.featureList.filter( (x:any) => x.ClassTypeId == id );
   }
 
   selectedFeature( fType: any ){
@@ -123,16 +131,17 @@ export class FormComponent implements OnInit {
   }
 
   onMoveToTarget( event: any ){
+    debugger;
     this.visible = false;
-    if( event && event.items && event.items[0].id ){
-      const key = event.items[0].id;
-      const arrTemp = this.getFeatures( key );
+    if( event && event.items && event.items[0].ClassTypeId ){
+      const key = event.items[0].ClassTypeId;
+      const arrTemp = this.filterFeatures( key );
 
       for ( let opt in arrTemp ){
         this.temp.push(arrTemp[opt]);
       }
       this.list3 = this.temp;
-      //this.list2 = arrTemp;
+      //this.classType = arrTemp;
     }
     setTimeout(() => {
         this.visible = true;
@@ -164,7 +173,7 @@ export class FormComponent implements OnInit {
   }
 
   onMoveAllToSource(){
-    this.list2 = [];
+    this.classType = [];
     this.list3 = [];
     this.list4 = [];
     this.temp = [];
@@ -174,5 +183,44 @@ export class FormComponent implements OnInit {
     alert('Please, select one Class Type');
     this.onMoveAllToSource();
     this.productType = event.items;
+  }
+
+  getClassTypes(){
+    this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.CLASS_TYPES, undefined, this.headers ).pipe(
+      map( (response: any) => {
+        localStorage.setItem('class_type', JSON.stringify(
+          response.data
+        ));
+        this.classType = response.data;
+        //return response.data;
+        }
+      ),
+      tap( (request) => {
+
+        },(error) => {
+          localStorage.removeItem('class_type');
+        return error.message;
+        }
+      )
+    ).toPromise()
+  }
+
+  getFeatures(){
+    this.apiService.get(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.FEATURES, undefined, this.headers ).pipe(
+      map( (response: any) => {
+        localStorage.setItem('features', JSON.stringify(
+          response.data
+        ));
+        this.featureList = response.data;
+        },
+        tap( ( request ) => {
+        
+          },( error ) => {
+            localStorage.removeItem('features');
+            return error.message;
+          }
+        )
+      )
+    ).toPromise()
   }
 }
