@@ -13,9 +13,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PickListModule } from 'primeng/picklist';
 import { CardModule } from 'primeng/card';
 import { AccordionModule } from 'primeng/accordion';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   imports: [
+    TooltipModule,
     AccordionModule,
     CardModule,
     PickListModule,

@@ -67,10 +67,11 @@ export class FormComponent implements OnInit {
 
       temp = localStorage.getItem('features');
       this.featureList = JSON.parse(temp);
-     }else{
-       this.getClassTypes();
-       this.getFeatures();
-     }
+    }else{
+      this.getClassTypes();
+      this.getFeatures();
+    }
+
     if( this.productId ){
       this.selectedProduct = this.products.find( (x:any) => x.id == this.productId );
       if( this.selectedProduct ){
@@ -100,7 +101,6 @@ export class FormComponent implements OnInit {
   }
 
   filterFeatures(id: any){
-    debugger;
     return this.featureList.filter( (x:any) => x.ClassTypeId == id );
   }
 
@@ -131,7 +131,6 @@ export class FormComponent implements OnInit {
   }
 
   onMoveToTarget( event: any ){
-    debugger;
     this.visible = false;
     if( event && event.items && event.items[0].ClassTypeId ){
       const key = event.items[0].ClassTypeId;
@@ -141,7 +140,7 @@ export class FormComponent implements OnInit {
         this.temp.push(arrTemp[opt]);
       }
       this.list3 = this.temp;
-      //this.classType = arrTemp;
+
     }
     setTimeout(() => {
         this.visible = true;
@@ -151,8 +150,8 @@ export class FormComponent implements OnInit {
 
   
   onMoveToSource( event: any ){
-    if( event && event.items && event.items[0].id ){
-      const key = event.items[0].id;
+    if( event && event.items && event.items[0].ClassTypeId ){
+      const key = event.items[0].ClassTypeId;
       const arrTemp3 = this.remFeatureItemsList3( key );
 
       this.list3 = arrTemp3;
@@ -165,15 +164,15 @@ export class FormComponent implements OnInit {
   }
 
   remFeatureItemsList3(id: any){
-    return this.list3.filter( (x:any) => x.key != id );
+    return this.list3.filter( (x:any) => x.ClassTypeId != id );
   }
 
   remFeatureItemsList4(id: any){
-    return this.list4.filter( (x:any) => x.key != id );
+    return this.list4.filter( (x:any) => x.ClassTypeId != id );
   }
 
   onMoveAllToSource(){
-    this.classType = [];
+    //this.classType = [];
     this.list3 = [];
     this.list4 = [];
     this.temp = [];
@@ -181,8 +180,9 @@ export class FormComponent implements OnInit {
 
   onMoveAllToTarget( event: any ){
     alert('Please, select one Class Type');
-    this.onMoveAllToSource();
-    this.productType = event.items;
+    this.list2 = [];
+    this.list3 = [];
+    this.classType = event.items;
   }
 
   getClassTypes(){

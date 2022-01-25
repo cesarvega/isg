@@ -6,8 +6,8 @@
             </h2>
         </div>
         <div class="flex align-items-center justify-content-center m-2">
-            <button *ngIf="productId" pButton type="button" label="Edit" class="p-button p-button-danger w-9rem"></button>
-            <button *ngIf="!productId" pButton type="button" label="New" class="p-button p-button-success w-9rem"></button>
+            <button *ngIf="productId" pButton type="button" label="You are Editing a Product" class="p-button p-button-danger w-full"></button>
+            <button *ngIf="!productId" pButton type="button" label="You are creating a Product" class="p-button p-button-success w-full"></button>
         </div>
     </div>
     <div>
@@ -15,9 +15,9 @@
     </div>
     <div >
         <p-accordion *ngIf="!productId" >
-            <p-accordionTab header="Constructor" [selected]="true">
+            <p-accordionTab header="Class Type & Features" [selected]="true">
             <div class="grid">
-                <div class="col-12 md:col-6 lg:col-4">
+                <div class="col-12 md:col-8 lg:col-5">
                     <p-pickList 
                         [source]="classType" [target]="list2" 
                         [showSourceControls]="false" [showTargetControls]="false"
@@ -25,26 +25,33 @@
                         (onMoveToSource)="onMoveToSource($event)"
                         (onMoveAllToSource)="onMoveAllToSource()"
                         (onMoveAllToTarget)="onMoveAllToTarget($event)"
-                        sourceHeader = "Class Type"
-                        
+                        sourceHeader = "Choose Class Type"
                     >
-                        <ng-template let-class pTemplate="item">
-                            <div *ngIf="class && class.ClassTypeId" class="grid">
-                                <div class="flex align-items-center justify-content-center w-full h-2rem bg-blue-400 font-bold text-white border-round">{{class.ClassType}}</div>
+                        <ng-template let-cType pTemplate="item">
+                            <div *ngIf="cType && cType.ClassTypeId" class="grid">
+                                <div class="flex align-items-center justify-content-left w-full h-full p-1 bg-blue-400 text-white border-round"
+                                pTooltip="Double click or select one and use arrow buttons">
+                                    {{cType.ClassType}}
+                                </div>
                             </div>
                         </ng-template>
                     </p-pickList>
                 </div>
-                <div class="col-12 md:col-10 lg:col-8">
+                <div class="col-12 md:col-4 lg:col-7">
                     <p-pickList 
                         [source]="list3" [target]="list4" 
                         [showSourceControls]="false" [showTargetControls]="false"
-                        sourceHeader = "Features"
+                        sourceHeader = "Choose Feature(s)"
                         *ngIf="visible"
                     >
                         <ng-template let-item pTemplate="item">
                             <div *ngIf="item && item.FeatureId" class="grid">
-                                <div class="flex align-items-center justify-content-center w-full h-2rem bg-blue-400 font-bold text-white border-round p-2">{{item.Feature}}</div>
+                                <div 
+                                    pTooltip="Double click or single click and use arrow buttons" 
+                                    tooltipPosition="top"
+                                    class="flex align-items-center justify-content-left w-full h-full bg-blue-400 text-white border-round p-1">
+                                    {{item.Feature}}
+                                </div>
                             </div>
                         </ng-template>
                     </p-pickList>
@@ -57,16 +64,16 @@
             <div class="col-12 md:col-6 lg:col-4">
                 <p-card header="Class Type" [style]="{'background':'#f8f9fa', 'color': '#495164'}">
                     <hr>
-                    <div *ngFor="let class of list2">
-                        {{ class.name }}
+                    <div *ngFor="let item of list2">
+                        {{ item.ClassType }}
                     </div>
                 </p-card>
             </div>
             <div class="col-12 md:col-6 lg:col-4">
                 <p-card header="Features" [style]="{'background':'#f8f9fa', 'color': '#495164'}">
                     <hr>
-                    <div *ngFor="let feature of list4">
-                        {{ feature.name }}
+                    <div *ngFor="let item of list4">
+                        {{ item.Feature }}
                     </div>
                 </p-card>
             </div>
