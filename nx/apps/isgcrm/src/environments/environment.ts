@@ -4,13 +4,14 @@
 
 export const environment = {
   production: false,
-  apiURL: 'https://aws-dev-01.isg.us/api',
-  login: '/token',
-  partners: '/revenue/partners',
+  apiUrl: 'https://api.isg-dev.one/api',
+  token: '/security/token',
+  partners: '/revenues/partners',
   products: '/products',/** is it used??? */
-  classTypes: '/revenue/class_types',
-  features: '/revenue/features',
-  behaviors: '/revenue/behaviors',
+  classTypes: '/revenues/class_types',
+  features: '/revenues/features',
+  behaviors: '/revenues/behaviors',
+  token_header_key: 'Authorization',
 };
 
 /*

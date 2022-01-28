@@ -19,9 +19,14 @@ export class LoginService {
 
   doLogin(user: any){
     console.log( 'dologin dispatched');
-    return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.LOGIN_PATH, user ).pipe(
+    return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.TOKEN_PATH, user ).pipe(
       map((response: any) => {
         if( response ){
+          //let storedUser = [];
+          let currentUser = btoa(JSON.stringify( user ));
+          //storedUser.push(currentUser);
+
+          localStorage.setItem('user', JSON.stringify( currentUser ));
           localStorage.setItem('token', response.token);
           this.router.navigate(['./products']);
         }else{
