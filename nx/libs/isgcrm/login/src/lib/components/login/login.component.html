@@ -3,7 +3,7 @@
       <div class="imgcontainer">
         <img src="./assets/img/ISG-LOGO-BLUE.png" alt="Avatar" class="avatar">
       </div>
-  
+
       <div class="container">
         <label for="uname"><b>Username</b></label>
         <input
@@ -21,7 +21,7 @@
             formControlName="password" 
             >
           
-        <button type="button" (click)="onSubmit()">Login</button>
+        <button [disabled]="formData.invalid" type="button" (click)="onSubmit()">Login</button>
 
       </div>
     </form>

@@ -78,14 +78,16 @@ export class ProductsComponent implements OnInit {
       localStorage.setItem('products', JSON.stringify(
         products
       ))
+    }else{
+      /********************************************
+       * Populating the dropdown
+       */
+      let p:any = localStorage.getItem('partners');
+      var response = JSON.parse(p);
+      this.partners = response;
     }
     
-    /********************************************
-     * Populating the dropdown
-     */
-    let p:any = localStorage.getItem('partners');
-    var response = JSON.parse(p);
-    this.partners = response;
+
     
     /********************************************
      * Load the products for the selected Partner
@@ -110,8 +112,15 @@ export class ProductsComponent implements OnInit {
 
   getPartners(){
     return this.partners = this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PARTNERS_PATH, undefined, this.headers).pipe(
-      map( (response: any) => {
-          return response.data;
+      map( (item: any) => {
+          if( item["hydra:member"] ){
+            return item["hydra:member"];
+            // item["hydra:member"].map( (key: {id: number}) =>{
+            //   console.log(item["hydra:member"][key.id]['name']);
+            //   return item["hydra:member"][1]['name'];
+            // })
+          }
+          return null;
         }
       ),
       tap((request) =>{

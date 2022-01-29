@@ -24,16 +24,20 @@ export class AuthService {
         };
 
         if( localStorage.getItem('user') ){
-            let userObj: any = localStorage.getItem('user');
-            let decriptedUser = atob( JSON.parse(userObj ) );
-            userObj =  JSON.parse( decriptedUser );
+            try {
+                let userObj: any = localStorage.getItem('user');
+                let decriptedUser = atob( JSON.parse(userObj ) );
+                userObj =  JSON.parse( decriptedUser );
 
-            this.formData = new FormData();
-            this.formData = new FormGroup({
-                user: new FormControl( userObj.user ),
-                password: new FormControl( userObj.password )
-            });
-            body = this.formData.value;
+                this.formData = new FormData();
+                this.formData = new FormGroup({
+                    user: new FormControl( userObj.user ),
+                    password: new FormControl( userObj.password )
+                });
+                body = this.formData.value;
+            }catch( error ){
+                console.log('Error decrypting user')
+            }
         }
         
         return this.http.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.TOKEN_PATH, body, httpOptions);
