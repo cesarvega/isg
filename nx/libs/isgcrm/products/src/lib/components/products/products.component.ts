@@ -115,10 +115,10 @@ export class ProductsComponent implements OnInit {
       map( (item: any) => {
           if( item["hydra:member"] ){
             return item["hydra:member"];
-            // item["hydra:member"].map( (key: {id: number}) =>{
-            //   console.log(item["hydra:member"][key.id]['name']);
-            //   return item["hydra:member"][1]['name'];
-            // })
+              // item["hydra:member"].map( (key: {id: number}) =>{
+              //   console.log(item["hydra:member"][key.id]['name']);
+              //   return item["hydra:member"][1]['name'];
+              // })
           }
           return null;
         }

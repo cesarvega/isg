@@ -20,9 +20,9 @@ export class FormComponent implements OnInit {
     private apiService: ApiService,
     private customHeaders: CustomHeaders,
   ) {
-    this.token = localStorage.getItem('token'),
-    this.headers = this.customHeaders.bearer( this.token );
-   }
+      this.token = localStorage.getItem('token'),
+      this.headers = this.customHeaders.bearer( this.token );
+    }
 
   partnerId: any = null;
   partnerName: any = null;
@@ -61,7 +61,8 @@ export class FormComponent implements OnInit {
 
     // let productsV:any =  localStorage.getItem('products');
     // this.products = JSON.parse( productsV );
-    if( localStorage.getItem('class_type')){
+
+    if( localStorage.getItem('class_type') && localStorage.getItem('class_type') != 'undefined' ){
       let temp:any =  localStorage.getItem('class_type');
       this.classType = JSON.parse( temp );
 
@@ -101,7 +102,7 @@ export class FormComponent implements OnInit {
   }
 
   filterFeatures(id: any){
-    return this.featureList.filter( (x:any) => x.ClassTypeId == id );
+    return this.featureList.filter( (x:any) => x.id == id );
   }
 
   selectedFeature( fType: any ){
@@ -132,8 +133,8 @@ export class FormComponent implements OnInit {
 
   onMoveToTarget( event: any ){
     this.visible = false;
-    if( event && event.items && event.items[0].ClassTypeId ){
-      const key = event.items[0].ClassTypeId;
+    if( event && event.items && event.items[0].classTypeId ){
+      const key = event.items[0].classTypeId;
       const arrTemp = this.filterFeatures( key );
 
       for ( let opt in arrTemp ){
@@ -150,8 +151,8 @@ export class FormComponent implements OnInit {
 
   
   onMoveToSource( event: any ){
-    if( event && event.items && event.items[0].ClassTypeId ){
-      const key = event.items[0].ClassTypeId;
+    if( event && event.items && event.items[0].classTypeId ){
+      const key = event.items[0].classTypeId;
       const arrTemp3 = this.remFeatureItemsList3( key );
 
       this.list3 = arrTemp3;
@@ -164,11 +165,11 @@ export class FormComponent implements OnInit {
   }
 
   remFeatureItemsList3(id: any){
-    return this.list3.filter( (x:any) => x.ClassTypeId != id );
+    return this.list3.filter( (x:any) => x.id != id );
   }
 
   remFeatureItemsList4(id: any){
-    return this.list4.filter( (x:any) => x.ClassTypeId != id );
+    return this.list4.filter( (x:any) => x.id != id );
   }
 
   onMoveAllToSource(){
@@ -188,11 +189,13 @@ export class FormComponent implements OnInit {
   getClassTypes(){
     this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.CLASS_TYPES, undefined, this.headers ).pipe(
       map( (response: any) => {
-        localStorage.setItem('class_type', JSON.stringify(
-          response.data
-        ));
-        this.classType = response.data;
-        //return response.data;
+        if( response && response["hydra:member"] ){
+          const primary = response["hydra:member"].filter( (item:any) => item.primary === true );
+          localStorage.setItem('class_type', JSON.stringify(
+           primary
+          ));
+          this.classType = primary;//response["hydra:member"];
+          }
         }
       ),
       tap( (request) => {
@@ -208,10 +211,12 @@ export class FormComponent implements OnInit {
   getFeatures(){
     this.apiService.get(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.FEATURES, undefined, this.headers ).pipe(
       map( (response: any) => {
-        localStorage.setItem('features', JSON.stringify(
-          response.data
-        ));
-        this.featureList = response.data;
+        if( response && response["hydra:member"] ){
+          localStorage.setItem('features', JSON.stringify(
+            response["hydra:member"]
+          ));
+          this.featureList = response["hydra:member"];
+          }
         },
         tap( ( request ) => {
         

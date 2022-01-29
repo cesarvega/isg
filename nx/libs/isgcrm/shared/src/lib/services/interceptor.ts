@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
@@ -70,8 +70,12 @@ export class IsgcrmInterceptor implements HttpInterceptor {
         const url = environment.apiUrl;
         if( !request.url.match(url) ) return request;
         /**********************************************************************/
-        
-        return request.clone({ headers: request.headers.set(environment.token_header_key, 'Bearer ' + token) });
+        const customHeaders = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/ld+JSON'
+        });
+        return request.clone( { headers: customHeaders } );
+        //return request.clone({ headers: request.headers.set(environment.token_header_key, 'Bearer ' + token) });
     }
 }
 
