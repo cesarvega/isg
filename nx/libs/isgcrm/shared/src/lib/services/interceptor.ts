@@ -1,36 +1,50 @@
-import { HTTP_INTERCEPTORS, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-
+import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders }   from '@angular/common/http';
+import { Injectable } from "@angular/core"
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
+import { tap, catchError, switchMap, filter, take, map } from "rxjs/operators";
+import { ToastrService } from 'ngx-toastr';
 import { TokenStorageService } from './token-services/token-storage-service';
 import { AuthService } from './token-services/auth-service';
-
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { environment } from 'apps/isgcrm/src/environments/environment';
-
 
 @Injectable()
 export class IsgcrmInterceptor implements HttpInterceptor {
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    
+    private isRefreshing = false;
+    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private tokenService: TokenStorageService, private authService: AuthService) { }
+    constructor(
+        public toasterService: ToastrService,
+        private tokenService: TokenStorageService, 
+        private authService: AuthService
+    ) {}
+intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
         let authReq = req;
         const token = this.tokenService.getToken();
         if (token != null) {
             authReq = this.addTokenHeader(req, token);
         }
+        return next.handle(authReq).pipe(map((event: any) => {
+                return event;
+            }), catchError( err => {
+                if( err instanceof HttpErrorResponse ){
+                    if( err.error.message == "Invalid Credentials."){
+                        this.tokenService.signOut();
+                    }
+                    this.toasterService.error(err.error.message, err.statusText, { positionClass: 'toast-top-center' });
+                }
 
-        return next.handle(authReq).pipe(catchError(error => {
-            if (error instanceof HttpErrorResponse && error.status === 401) {
-                return this.handle401Error(authReq, next);
-            }
-
-            return throwError(error);
-        }));
+                if( err.status === 401 ) {
+                    return this.handle401Error(authReq, next);
+                }
+                const error = err.error.message || err.statusText;
+                return throwError(err);
+            })
+        );
     }
 
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
@@ -49,7 +63,6 @@ export class IsgcrmInterceptor implements HttpInterceptor {
                 }),
                 catchError((err) => {
                     this.isRefreshing = false;
-                    
                     this.tokenService.signOut();
                     return throwError(err);
                 })
@@ -77,8 +90,5 @@ export class IsgcrmInterceptor implements HttpInterceptor {
         return request.clone( { headers: customHeaders } );
         //return request.clone({ headers: request.headers.set(environment.token_header_key, 'Bearer ' + token) });
     }
-}
 
-export const authInterceptorProviders = [
-    { provide: HTTP_INTERCEPTORS, useClass: IsgcrmInterceptor, multi: true }
-];
+}

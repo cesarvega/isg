@@ -25,13 +25,16 @@ export class ProductsService {
   }
 
   getPartners(){
-    return this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PARTNERS_PATH, undefined, this.headers).pipe(
+    return this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PARTNERS_PATH, undefined).pipe(
       map( (response: any) => {
-        return response.data;
+        if( response["hydra:member"]){
+          return response["hydra:member"];
+        }
+        return false;
       }),
-      tap((request) =>{
+      tap((request: string) =>{
         console.log('tap:' + request);
-      },(error) => {
+      },(error: string) => {
         console.log( 'ISG: ' + error);
       }
       )

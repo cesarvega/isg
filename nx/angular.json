@@ -753,7 +753,11 @@
             "tsConfig": "apps/isgcrm/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["apps/isgcrm/src/favicon.ico", "apps/isgcrm/src/assets"],
-            "styles": ["apps/isgcrm/src/styles.scss"],
+            "styles": [
+              "apps/isgcrm/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css",
+              "src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {

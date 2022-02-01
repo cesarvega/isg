@@ -133,8 +133,8 @@ export class FormComponent implements OnInit {
 
   onMoveToTarget( event: any ){
     this.visible = false;
-    if( event && event.items && event.items[0].classTypeId ){
-      const key = event.items[0].classTypeId;
+    if( event && event.items && event.items[0].id ){
+      const key = event.items[0].id;
       const arrTemp = this.filterFeatures( key );
 
       for ( let opt in arrTemp ){
@@ -151,8 +151,8 @@ export class FormComponent implements OnInit {
 
   
   onMoveToSource( event: any ){
-    if( event && event.items && event.items[0].classTypeId ){
-      const key = event.items[0].classTypeId;
+    if( event && event.items && event.items[0].id ){
+      const key = event.items[0].id;
       const arrTemp3 = this.remFeatureItemsList3( key );
 
       this.list3 = arrTemp3;
@@ -192,9 +192,9 @@ export class FormComponent implements OnInit {
         if( response && response["hydra:member"] ){
           const primary = response["hydra:member"].filter( (item:any) => item.primary === true );
           localStorage.setItem('class_type', JSON.stringify(
-           primary
+            primary
           ));
-          this.classType = primary;//response["hydra:member"];
+          this.classType = primary;
           }
         }
       ),
@@ -202,7 +202,7 @@ export class FormComponent implements OnInit {
 
         },(error) => {
           localStorage.removeItem('class_type');
-        return error.message;
+          return error.message;
         }
       )
     ).toPromise()

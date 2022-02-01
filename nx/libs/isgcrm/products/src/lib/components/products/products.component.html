@@ -1,6 +1,6 @@
 <div class="container-fluid">
-    <div class="container" *ngIf="objErrors.status == 401">
-        <p-message severity="error" text="Unauthorized. A login is required." styleClass="p-mr-2"></p-message>
+    <div class="container" *ngIf="objErrors.status">
+        <p-message severity="error" text="{{ objErrors.message }}" styleClass="p-mr-2"></p-message>
     </div>
     <div class="container" *ngIf="objErrors.status == 404">
         <p-message severity="error" text="The requested endpoint was not found." styleClass="p-mr-2"></p-message>

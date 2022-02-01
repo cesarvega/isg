@@ -25,7 +25,7 @@ export class ProductsComponent implements OnInit {
   loading: boolean = false;
   objErrors = {
     status: 0,
-    description: null
+    message: null
   };
 
   constructor(

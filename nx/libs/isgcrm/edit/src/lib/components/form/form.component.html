@@ -28,7 +28,7 @@
                         sourceHeader = "Choose Class Type"
                     >
                         <ng-template let-cType pTemplate="item">
-                            <div *ngIf="cType && cType.classTypeId" class="grid">
+                            <div *ngIf="cType && cType.id" class="grid">
                                 <div class="flex align-items-center justify-content-left w-full h-full p-1 bg-blue-400 text-white border-round"
                                 pTooltip="Double click or select one and use arrow buttons">
                                     {{cType.name}}

@@ -8,7 +8,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ToastrModule } from 'ngx-toastr';
 import { IsgcrmCommonModule } from '@nx/isgcrm/common';
 import { IsgcrmLoginModule } from '@nx/isgcrm/login';
 import { IsgcrmInterceptor } from '@nx/isgcrm/shared';
@@ -16,6 +16,9 @@ import { IsgcrmInterceptor } from '@nx/isgcrm/shared';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center'
+    }),
     RouterModule.forRoot([
       {
         path: 'login',

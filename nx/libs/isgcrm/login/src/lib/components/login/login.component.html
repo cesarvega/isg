@@ -21,7 +21,7 @@
             formControlName="password" 
             >
           
-        <button [disabled]="formData.invalid" type="button" (click)="onSubmit()">Login</button>
+        <button [disabled]="formData.invalid" type="button" (click)="onSubmit()" [class]="(formData.invalid) ? 'disabled' : ''">Login</button>
 
       </div>
     </form>
