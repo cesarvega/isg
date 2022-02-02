@@ -7,7 +7,8 @@ export const environment = {
   apiUrl: 'https://api.isg-dev.one/api',
   token: '/security/token',
   partners: '/revenues/partners',
-  products: '/products',/** is it used??? */
+  catalogByProvider: '/revenues/revenue_catalog_by_providers',
+  catalog: '/revenues/catalog/',
   classTypes: '/revenues/class_types',
   features: '/revenues/features',
   behaviors: '/revenues/behaviors',

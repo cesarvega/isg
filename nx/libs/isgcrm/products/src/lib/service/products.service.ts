@@ -25,19 +25,9 @@ export class ProductsService {
   }
 
   getPartners(){
-    return this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PARTNERS_PATH, undefined).pipe(
-      map( (response: any) => {
-        if( response["hydra:member"]){
-          return response["hydra:member"];
-        }
-        return false;
-      }),
-      tap((request: string) =>{
-        console.log('tap:' + request);
-      },(error: string) => {
-        console.log( 'ISG: ' + error);
-      }
-      )
-    ).toPromise()
+    return this.apiService.get(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.PARTNERS_PATH, undefined);
+  }
+  getCatalog(){
+    return this.apiService.get(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.CATALOG_BY_PROVIDER);
   }
 }

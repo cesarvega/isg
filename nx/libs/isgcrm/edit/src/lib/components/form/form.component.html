@@ -6,15 +6,15 @@
             </h2>
         </div>
         <div class="flex align-items-center justify-content-center m-2">
-            <button *ngIf="productId" pButton type="button" label="You are Editing a Product" class="p-button p-button-danger w-full"></button>
-            <button *ngIf="!productId" pButton type="button" label="You are creating a Product" class="p-button p-button-success w-full"></button>
+            <button *ngIf="catalogId" pButton type="button" label="You are Editing a Product" class="p-button p-button-danger w-full"></button>
+            <button *ngIf="!catalogId" pButton type="button" label="You are creating a Product" class="p-button p-button-success w-full"></button>
         </div>
     </div>
     <div>
         <hr>
     </div>
     <div >
-        <p-accordion *ngIf="!productId" >
+        <p-accordion *ngIf="!catalogId" >
             <p-accordionTab header="Class Type & Features" [selected]="true">
             <div class="grid">
                 <div class="col-12 md:col-8 lg:col-5">
@@ -100,18 +100,18 @@
                 </div>
             </div>
         </div>
-        <div class="grid" ng-if="selectedProduct">
+        <div class="grid" ng-if="selectedCatalog">
             <div class="col-12 md:col-6 lg:col-3">
                 <label for="pName">Price</label>
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">$</span>
                     <p-inputNumber 
                         [disabled]="disabled" 
-                        [(ngModel)]="selectedProduct.revenue" 
+                        [(ngModel)]="selectedCatalog.revenue" 
                         mode="currency" 
                         currency="USD" 
                         locale="en-US"
-                        formControlName="price">
+                        formControlName="revenue">
                     </p-inputNumber>
                 </div>
             </div>

@@ -48,7 +48,7 @@
                         type="text" 
                         class="p-inputtext-lg" 
                         placeholder="Required" 
-                        [(ngModel)]="selectedProduct.description"
+                        [(ngModel)]="selectedCatalog.name"
                     >         
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <label for="pName">Price</label>
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">$</span>
-                        <input pInputText disabled [(ngModel)]="selectedProduct.revenue">
+                        <input pInputText disabled [(ngModel)]="selectedCatalog.revenue">
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <label for="pName">Start Date</label>
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                    <input pInputText disabled [(ngModel)]="selectedProduct.start">        
+                    <input pInputText disabled [(ngModel)]="selectedCatalog.start">        
                 </div>
             </div>
         
@@ -75,7 +75,7 @@
                 <label for="pName">Date End</label>
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-calendar-times"></i></span>
-                    <input pInputText disabled [(ngModel)]="selectedProduct.end">  
+                    <input pInputText disabled [(ngModel)]="selectedCatalog.end">  
                 </div>
             </div>
         </div>

@@ -16,8 +16,8 @@ export class ViewComponent implements OnInit {
 
   partnerId: number = 0;
   partnerName: any = null;
-  productId: number = 0;
-  selectedProduct: any = null;
+  catalogId: number = 0;
+  selectedCatalog: any = null;
   formData!: any;
   selectedProductType: any = null;
   selectedProductTypeId: any = null;
@@ -27,14 +27,14 @@ export class ViewComponent implements OnInit {
   list2: any = [];
   list4: any = [];
 
-    productType: any =[
-      {id: null, name:'---'},
-      {id: 1, name: 'Video'},
-      {id: 2, name: 'Audio'},
-      {id: 3, name: 'Internet'},
-    ]
+    // productType: any =[
+    //   {id: null, name:'---'},
+    //   {id: 1, name: 'Video'},
+    //   {id: 2, name: 'Audio'},
+    //   {id: 3, name: 'Internet'},
+    // ]
 
-    products: any = [];
+    catalog: any = [];
 
     featureType: any =[];
 
@@ -45,21 +45,21 @@ export class ViewComponent implements OnInit {
     this.actRoute.params
       .subscribe(params => {
         this.partnerId = params.partnerId;
-        this.productId = params.productId;
+        this.catalogId = params.catalogId;
       });
 
-    let productsV:any =  localStorage.getItem('products');
-    this.products = JSON.parse( productsV );
+    let catalogP:any =  localStorage.getItem('catalog');
+    this.catalog = JSON.parse( catalogP );
 
-    if( this.productId > 0 ){
-      this.selectedProduct = this.products.find( (x:any) => x.id == this.productId );
-      if( this.selectedProduct ){
-        this.selectedProductType = this.selectedProduct.type;
-        let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
-        this.selectedProductTypeId = productTypeId.id;
+    if( this.catalogId > 0 ){
+      this.selectedCatalog = this.catalog.find( (x:any) => x.id == this.catalogId );
+      if( this.selectedCatalog ){
+        //this.selectedProductType = this.selectedCatalog.type;
+        //let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
+        //this.selectedProductTypeId = productTypeId.id;
 
-        this.list2 = [{id:1, name: this.selectedProduct.type}];
-        this.list4 = this.getFeatures(this.selectedProductTypeId);
+        //this.list2 = [{id:1, name: this.selectedCatalog.type}];
+        //this.list4 = this.getFeatures(this.selectedProductTypeId);
       }
     }
   }

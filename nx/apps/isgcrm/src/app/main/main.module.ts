@@ -18,12 +18,12 @@ const routes: Routes = [
               ),
           },
           {
-            path: 'product/edit/:partnerId/:productId',
+            path: 'product/edit/:partnerId/:catalogId',
             loadChildren: () =>
               import('@nx/isgcrm/edit').then((module) => module.IsgcrmEditModule),
           },
           {
-            path: 'product/view/:productId',
+            path: 'product/view/:catalogId',
             loadChildren: () =>
               import('@nx/isgcrm/view').then((module) => module.IsgcrmViewModule),
           },
