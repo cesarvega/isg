@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
+//import { map, tap } from 'rxjs/operators';
 
-import { SYSTEM_CONFIG } from '@nx/isgcrm/config';
+//import { SYSTEM_CONFIG } from '@nx/isgcrm/config';
 import { ApiService } from '@nx/isgcrm/common';
-import { ProductsService } from '../../service/products.service';
+import { CreateCatalogService } from '../../service/createCatalog.service';
 
 @Component({
   selector: 'nx-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+  templateUrl: './createCatalog.component.html',
+  styleUrls: ['./createCatalog.component.scss'],
 
 })
-export class ProductsComponent implements OnInit {
+export class CreateCatalogComponent implements OnInit {
 
   partners: any = {};
   formData!: any;
@@ -29,7 +29,7 @@ export class ProductsComponent implements OnInit {
   constructor(
     private router: Router,
     private apiService: ApiService,
-    private productsService: ProductsService,
+    private createCatalogService: CreateCatalogService,
 
   ) {
     this.token = localStorage.getItem('token')
@@ -84,7 +84,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getPartners() {
-    this.productsService.getPartners().subscribe((res: any) => {
+    this.createCatalogService.getPartners().subscribe((res: any) => {
       if (res['hydra:member']) {
         this.partners = res['hydra:member'];
       }
@@ -99,7 +99,7 @@ export class ProductsComponent implements OnInit {
 
   getCatalogByProvider(event: any) {
     this.catalog = [];
-    this.productsService.getCatalog().subscribe( (res: any) => {
+    this.createCatalogService.getCatalog().subscribe( (res: any) => {
     if ( res["hydra:member"] ) {
         this.catalog = res["hydra:member"];
         localStorage.setItem( 'catalog', JSON.stringify( this.catalog ) );
@@ -112,18 +112,18 @@ export class ProductsComponent implements OnInit {
     if (!this.partnerId) { alert('Choose Partner'); return; }
     if (id) {
       this.router.navigate(
-        ['product/edit/' + this.partnerId + '/' + id]
+        ['catalog/edit/' + this.partnerId + '/' + id]
       );
     } else {
       this.router.navigate(
-        ['product/new/' + this.partnerId]
+        ['catalog/new/' + this.partnerId]
       );
     }
   }
 
   viewProduct(id: number) {
     this.router.navigate(
-      ['product/view/' + id]
+      ['catalog/view/' + id]
     );
   }
   // getPartnerName(partners: any){

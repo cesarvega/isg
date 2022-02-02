@@ -11,24 +11,23 @@ const routes: Routes = [
         component: MainComponent,
         children: [
           {
-            path: 'products',
+            path: 'catalog',
             loadChildren: () => 
-              import ('@nx/isgcrm/products').then(
-                (module) => module.IsgcrmProductsModule
+              import ('@nx/isgcrm/catalog').then((module) => module.IsgcrmCatalogModule
               ),
           },
           {
-            path: 'product/edit/:partnerId/:catalogId',
+            path: 'catalog/edit/:partnerId/:catalogId',
             loadChildren: () =>
               import('@nx/isgcrm/edit').then((module) => module.IsgcrmEditModule),
           },
           {
-            path: 'product/view/:catalogId',
+            path: 'catalog/view/:catalogId',
             loadChildren: () =>
               import('@nx/isgcrm/view').then((module) => module.IsgcrmViewModule),
           },
           {
-            path: 'product/new/:partnerId',
+            path: 'catalog/new/:partnerId',
             loadChildren: () =>
               import('@nx/isgcrm/edit').then((module) => module.IsgcrmEditModule),
           }

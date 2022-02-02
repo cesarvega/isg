@@ -2,7 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ProductsComponent } from './components/products/products.component';
+import { CreateCatalogComponent } from './components/catalog/createCatalog.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 //import { MenuItem, PrimeIcons} from 'primeng/api';
@@ -11,7 +11,7 @@ import { MessageModule} from 'primeng/message';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 
-export interface Product {
+export interface Catalog {
   type: any;
   description: any;
   features: any;
@@ -31,11 +31,11 @@ export interface Product {
     TableModule,
     CommonModule,
     RouterModule.forChild([
-      {path: '', pathMatch: 'full', component: ProductsComponent}
+      {path: '', pathMatch: 'full', component: CreateCatalogComponent}
     ])
   ],
   declarations: [
-    ProductsComponent
+    CreateCatalogComponent
   ],
 })
-export class IsgcrmProductsModule {}
+export class IsgcrmCatalogModule {}
