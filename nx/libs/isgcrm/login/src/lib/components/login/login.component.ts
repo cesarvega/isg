@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
 
   createForm(){
     this.formData = new FormGroup({
-      user: new FormControl( '', [Validators.required]),
-      password: new FormControl('', [Validators.required])
+      user: new FormControl( 'user@isg.us', [Validators.required]),
+      password: new FormControl('user@isg.us', [Validators.required])
     })
   }
 

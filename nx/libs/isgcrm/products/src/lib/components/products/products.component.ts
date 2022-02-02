@@ -103,6 +103,7 @@ export class ProductsComponent implements OnInit {
     if ( res["hydra:member"] ) {
         this.catalog = res["hydra:member"];
         localStorage.setItem( 'catalog', JSON.stringify( this.catalog ) );
+        localStorage.setItem( 'partnerId', event.value.id );
       }
     });
   }

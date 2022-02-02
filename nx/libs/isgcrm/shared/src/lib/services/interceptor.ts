@@ -29,6 +29,7 @@ intercept(
             authReq = this.addTokenHeader(req, token);
         }
         return next.handle(authReq).pipe(map((event: any) => {
+                //this.toasterService.success("We are back!", "Token refreshed", { positionClass: 'toast-top-center'} );
                 return event;
             }), catchError( err => {
                 if( err instanceof HttpErrorResponse ){
@@ -85,7 +86,8 @@ intercept(
         /**********************************************************************/
         const customHeaders = new HttpHeaders({
             'Authorization': `Bearer ${token}`,
-            'Accept': 'application/ld+JSON'
+            'Accept': 'application/ld+json',
+            'Content-Type': 'application/ld+json'
         });
         return request.clone( { headers: customHeaders } );
         //return request.clone({ headers: request.headers.set(environment.token_header_key, 'Bearer ' + token) });
