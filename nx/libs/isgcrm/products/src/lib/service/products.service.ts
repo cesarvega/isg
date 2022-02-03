@@ -7,9 +7,6 @@ import { ApiService } from '@nx/isgcrm/common';
 })
 export class ProductsService {
 
-  token: any;
-  headers: any = null;
-
   constructor(
     private apiService: ApiService,
   ) { }

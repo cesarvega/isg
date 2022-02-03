@@ -17,8 +17,18 @@
         <p-accordion *ngIf="!catalogId" >
             <p-accordionTab header="Class Type & Features" [selected]="true">
             <div class="grid">
-                <div class="col-12 md:col-8 lg:col-5">
-                    <p-pickList 
+                <div class="flex justify-content-between flex-wrap card-container purple-container">
+                    <div class="flex align-items-center justify-content-center h-4rem m-2">
+                        <label for="cType">Choose Class Type</label><br>
+                        <p-dropdown
+                            [options]="classType"
+                            optionLabel="name"
+                            (onChange)="SelectedClassType($event)"
+                            id="cType"
+                        >
+                        </p-dropdown>
+                    </div>
+                    <!-- <p-pickList 
                         [source]="classType" [target]="list2" 
                         [showSourceControls]="false" [showTargetControls]="false"
                         (onMoveToTarget)="onMoveToTarget($event)"
@@ -35,7 +45,7 @@
                                 </div>
                             </div>
                         </ng-template>
-                    </p-pickList>
+                    </p-pickList> -->
                 </div>
                 <div class="col-12 md:col-4 lg:col-7">
                     <p-pickList 

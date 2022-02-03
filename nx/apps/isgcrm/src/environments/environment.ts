@@ -10,7 +10,7 @@ export const environment = {
   catalogByProvider: '/revenues/revenue_catalog_by_providers',
   catalog: '/revenues/catalog/',
   classTypes: '/revenues/class_types',
-  features: '/revenues/features',
+  features: '/revenues/class_types/',
   behaviors: '/revenues/behaviors',
   token_header_key: 'Authorization',
 };

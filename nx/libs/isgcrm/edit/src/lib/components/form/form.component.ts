@@ -5,6 +5,7 @@ import { ApiService } from '@nx/isgcrm/common';
 import { SYSTEM_CONFIG } from '@nx/isgcrm/config';
 import { CustomHeaders } from '@nx/earthlink/shared';
 import { map, tap } from 'rxjs/operators';
+import { FeaturesService } from '../../services/features.services';
 
 @Component({
   selector: 'nx-form',
@@ -18,11 +19,9 @@ export class FormComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private route: Router,
     private apiService: ApiService,
-    private customHeaders: CustomHeaders,
-  ) {
-      this.token = localStorage.getItem('token'),
-      this.headers = this.customHeaders.bearer( this.token );
-    }
+    private featureService: FeaturesService,
+    
+  ) { }
 
   partnerId: any = null;
   partnerName: any = null;
@@ -196,11 +195,11 @@ export class FormComponent implements OnInit {
     this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.CLASS_TYPES, undefined, this.headers ).pipe(
       map( (response: any) => {
         if( response && response["hydra:member"] ){
-          const primary = response["hydra:member"].filter( (item:any) => item.primary === true );
+          //const primary = response["hydra:member"].filter( (item:any) => item.primary === true );
           localStorage.setItem('class_type', JSON.stringify(
-            primary
+            response["hydra:member"]
           ));
-          this.classType = primary;
+          this.classType = response["hydra:member"];
           }
         }
       ),
@@ -233,5 +232,22 @@ export class FormComponent implements OnInit {
         )
       )
     ).toPromise()
+  }
+
+  SelectedClassType( event:any ){
+    this.list3 = [];
+    if( event && event.value && event.value.primary && event.value.primary == true ){
+      const endPointPref = `/revenues/${event.value.name}_class_types`;
+      this.featureService.getPrimarys( endPointPref.toLocaleLowerCase() ).subscribe( (res: any) => {
+        if( res && res["hydra:member"] ){
+          this.list3 = res["hydra:member"];
+        }
+      });
+    }else{
+      const id = event.value.id;
+      this.featureService.getFeatures( id ).subscribe( (res: any) => {
+        this.list3 = res["hydra:member"];
+      });
+    }
   }
 }
