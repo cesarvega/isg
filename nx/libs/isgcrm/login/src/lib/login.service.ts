@@ -18,10 +18,11 @@ export class LoginService {
   ) { }
 
   doLogin(user: any){
-    console.log( 'dologin dispatched');
-    return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.LOGIN_PATH, user ).pipe(
+    return this.apiService.post( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.TOKEN_PATH, user ).pipe(
       map((response: any) => {
-        if( response ){
+        if( response && response.token ){
+          let currentUser = btoa(JSON.stringify( user ));
+          localStorage.setItem('user', JSON.stringify( currentUser ));
           localStorage.setItem('token', response.token);
           this.router.navigate(['./products']);
         }else{
@@ -33,6 +34,7 @@ export class LoginService {
       tap((request) => {
 
       }, (error) =>{
+        console.log('error at 37')
         return error;
       })
     ).toPromise();

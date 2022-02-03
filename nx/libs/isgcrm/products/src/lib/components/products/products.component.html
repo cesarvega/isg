@@ -1,6 +1,6 @@
 <div class="container-fluid">
-    <div class="container" *ngIf="objErrors.status == 401">
-        <p-message severity="error" text="Unauthorized. A login is required." styleClass="p-mr-2"></p-message>
+    <div class="container" *ngIf="objErrors.status">
+        <p-message severity="error" text="{{ objErrors.message }}" styleClass="p-mr-2"></p-message>
     </div>
     <div class="container" *ngIf="objErrors.status == 404">
         <p-message severity="error" text="The requested endpoint was not found." styleClass="p-mr-2"></p-message>
@@ -11,13 +11,13 @@
             <p-dropdown 
                 [options]="partners" 
                 optionLabel="name"
-                (onChange)="getPartnerProducts($event)"
+                (onChange)="getCatalogByProvider($event)"
                 [(ngModel)]="selectedPartner"
                 >
             </p-dropdown>
         </div>
         <div class="flex align-items-center justify-content-center m-2">
-            <button [disabled]="!partnerId" pButton type="button" label="Create Product" class="p-button p-button-info" (click)="editProduct(0)"></button>
+            <button [disabled]="!partnerId" pButton type="button" label="Create Catalog" class="p-button p-button-info" (click)="editProduct(0)"></button>
         </div>
     </div>
 
@@ -26,7 +26,7 @@
     </div>
 
     <div class="row">
-        <p-table [value]="products"
+        <p-table [value]="catalog"
             [rowHover]="true"
             [rows]="10"
             [rowsPerPageOptions]="[5,10,30]"
@@ -35,23 +35,23 @@
         >
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Type</th>
+                    <!-- <th>Type</th> -->
                     <th>Description</th>
-                    <th>Features</th>
+                    <!-- <th>Features</th> -->
                     <th>Revenue</th>
-                    <th>Start</th>
-                    <th>End</th>
+                    <!-- <th>Start</th> -->
+                    <!-- <th>End</th> -->
                     <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
                 <tr>
-                    <td>{{ product.type }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.features }}</td>
+                    <!-- <td>{{ product.type }}</td> -->
+                    <td>{{ product.name }}</td>
+                    <!-- <td>{{ product.features }}</td> -->
                     <td>{{ product.revenue }}</td>
-                    <td>{{ product.start }}</td>
-                    <td>{{ product.end }}</td>
+                    <!-- <td>{{ product.start }}</td> -->
+                    <!-- <td>{{ product.end }}</td> -->
                     <td>
                         <!-- <ng-template pTemplate="header"> -->
                             <div class="grid">

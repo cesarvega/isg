@@ -20,19 +20,19 @@ export class FormComponent implements OnInit {
     private apiService: ApiService,
     private customHeaders: CustomHeaders,
   ) {
-    this.token = localStorage.getItem('token'),
-    this.headers = this.customHeaders.bearer( this.token );
-   }
+      this.token = localStorage.getItem('token'),
+      this.headers = this.customHeaders.bearer( this.token );
+    }
 
   partnerId: any = null;
   partnerName: any = null;
-  productId: any = null;
-  selectedProduct: any = null;
+  catalogId: any = null;
+  selectedCatalog: any = null;
   formData!: any;
   selectedProductType: any = null;
   selectedProductTypeId: any = null;
   productFeatures: any = [];
-  // productsV: any = [];
+  catalog: any = [];
   disabled: boolean = true;
   classType: Array<string> = [];
   list2: any = [];
@@ -57,11 +57,12 @@ export class FormComponent implements OnInit {
       this.partnerName = localStorage.getItem('partnerName');
     }
     this.partnerId = this.actRoute.snapshot.paramMap.get('partnerId');
-    this.productId = this.actRoute.snapshot.paramMap.get('productId');
+    this.catalogId = this.actRoute.snapshot.paramMap.get('catalogId');
 
-    // let productsV:any =  localStorage.getItem('products');
-    // this.products = JSON.parse( productsV );
-    if( localStorage.getItem('class_type')){
+    let catalogP:any =  localStorage.getItem('catalog');
+    this.catalog = JSON.parse( catalogP );
+
+    if( localStorage.getItem('class_type') && localStorage.getItem('class_type') != 'undefined' ){
       let temp:any =  localStorage.getItem('class_type');
       this.classType = JSON.parse( temp );
 
@@ -72,36 +73,41 @@ export class FormComponent implements OnInit {
       this.getFeatures();
     }
 
-    if( this.productId ){
-      this.selectedProduct = this.products.find( (x:any) => x.id == this.productId );
-      if( this.selectedProduct ){
-        this.selectedProductType = this.selectedProduct.type;
-        let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
-        this.selectedProductTypeId = productTypeId.id;
+    if( this.catalogId ){
+      this.selectedCatalog = this.catalog.find( (x:any) => x.id == this.catalogId );
+      if( this.selectedCatalog ){
+        //this.selectedProductType = this.selectedCatalog.type;
+        //let productTypeId = this.productType.find( (x:any) => x.name == this.selectedProductType );
+        //this.selectedProductTypeId = productTypeId.id;
 
         this.populateForm();
-        const ids = JSON.parse( this.selectedProduct.features );
+        //const ids = JSON.parse( this.selectedCatalog.features );
 
         //this.classType = this.productType.filter( (x:any) => x.name == this.selectedProductType );
         this.list4 = this.filterFeatures(this.selectedProductTypeId);
       }
     }else{
       this.bkColor = '#ff0000';
-      this.selectedProduct ={
-        description: "",
-        end: "",
-        features: "",
+      this.selectedCatalog ={
+        name: "",
         id: 0,
         revenue: "",
-        start: "",
-        type: ""
       }
+      // this.selectedCatalog ={
+      //   description: "",
+      //   end: "",
+      //   features: "",
+      //   id: 0,
+      //   revenue: "",
+      //   start: "",
+      //   type: ""
+      // }
       this.disabled = false;
     }
   }
 
   filterFeatures(id: any){
-    return this.featureList.filter( (x:any) => x.ClassTypeId == id );
+    return this.featureList.filter( (x:any) => x.id == id );
   }
 
   selectedFeature( fType: any ){
@@ -117,7 +123,7 @@ export class FormComponent implements OnInit {
   createForm(){
     this.formData = new FormGroup({
       name: new FormControl(''),
-      price: new FormControl(''),
+      revenue: new FormControl(''),
       start: new FormControl(''),
       end: new FormControl('')
     })
@@ -125,15 +131,16 @@ export class FormComponent implements OnInit {
 
   populateForm(){
     this.formData.patchValue({
-      name: this.selectedProduct.description,
-      start: this.selectedProduct.start,
+      name: this.selectedCatalog.name,
+      revenue: this.selectedCatalog.revenue,
+      //start: this.selectedCatalog.start,
     })
   }
 
   onMoveToTarget( event: any ){
     this.visible = false;
-    if( event && event.items && event.items[0].ClassTypeId ){
-      const key = event.items[0].ClassTypeId;
+    if( event && event.items && event.items[0].id ){
+      const key = event.items[0].id;
       const arrTemp = this.filterFeatures( key );
 
       for ( let opt in arrTemp ){
@@ -150,8 +157,8 @@ export class FormComponent implements OnInit {
 
   
   onMoveToSource( event: any ){
-    if( event && event.items && event.items[0].ClassTypeId ){
-      const key = event.items[0].ClassTypeId;
+    if( event && event.items && event.items[0].id ){
+      const key = event.items[0].id;
       const arrTemp3 = this.remFeatureItemsList3( key );
 
       this.list3 = arrTemp3;
@@ -164,11 +171,11 @@ export class FormComponent implements OnInit {
   }
 
   remFeatureItemsList3(id: any){
-    return this.list3.filter( (x:any) => x.ClassTypeId != id );
+    return this.list3.filter( (x:any) => x.id != id );
   }
 
   remFeatureItemsList4(id: any){
-    return this.list4.filter( (x:any) => x.ClassTypeId != id );
+    return this.list4.filter( (x:any) => x.id != id );
   }
 
   onMoveAllToSource(){
@@ -188,18 +195,20 @@ export class FormComponent implements OnInit {
   getClassTypes(){
     this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.CLASS_TYPES, undefined, this.headers ).pipe(
       map( (response: any) => {
-        localStorage.setItem('class_type', JSON.stringify(
-          response.data
-        ));
-        this.classType = response.data;
-        //return response.data;
+        if( response && response["hydra:member"] ){
+          const primary = response["hydra:member"].filter( (item:any) => item.primary === true );
+          localStorage.setItem('class_type', JSON.stringify(
+            primary
+          ));
+          this.classType = primary;
+          }
         }
       ),
       tap( (request) => {
 
         },(error) => {
           localStorage.removeItem('class_type');
-        return error.message;
+          return error.message;
         }
       )
     ).toPromise()
@@ -208,10 +217,12 @@ export class FormComponent implements OnInit {
   getFeatures(){
     this.apiService.get(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.FEATURES, undefined, this.headers ).pipe(
       map( (response: any) => {
-        localStorage.setItem('features', JSON.stringify(
-          response.data
-        ));
-        this.featureList = response.data;
+        if( response && response["hydra:member"] ){
+          localStorage.setItem('features', JSON.stringify(
+            response["hydra:member"]
+          ));
+          this.featureList = response["hydra:member"];
+          }
         },
         tap( ( request ) => {
         
