@@ -17,54 +17,65 @@
         <p-accordion *ngIf="!catalogId" >
             <p-accordionTab header="Class Type & Features" [selected]="true">
             <div class="grid">
-                <div class="flex justify-content-between flex-wrap card-container purple-container">
-                    <div class="flex align-items-center justify-content-center h-4rem m-2">
-                        <label for="cType">Choose Class Type</label><br>
-                        <p-dropdown
-                            [options]="classType"
-                            optionLabel="name"
-                            (onChange)="SelectedClassType($event)"
-                            id="cType"
-                        >
-                        </p-dropdown>
+                <div class="col-8 md:col-4 lg:col-2 justify-content-between flex-wrap card-container purple-container">
+                    <div class="row">
+                        <div class="align-items-center justify-content-center h-4rem m-2">
+                            <label for="cType">Choose Class Type</label>
+                            <p-dropdown
+                                [options]="classType"
+                                optionLabel="name"
+                                (onChange)="SelectedClassType($event)"
+                                id="cType"
+                            >
+                            </p-dropdown>
+                        </div>
                     </div>
-                    <!-- <p-pickList 
-                        [source]="classType" [target]="list2" 
-                        [showSourceControls]="false" [showTargetControls]="false"
-                        (onMoveToTarget)="onMoveToTarget($event)"
-                        (onMoveToSource)="onMoveToSource($event)"
-                        (onMoveAllToSource)="onMoveAllToSource()"
-                        (onMoveAllToTarget)="onMoveAllToTarget($event)"
-                        sourceHeader = "Choose Class Type"
-                    >
-                        <ng-template let-cType pTemplate="item">
-                            <div *ngIf="cType && cType.id" class="grid">
-                                <div class="flex align-items-center justify-content-left w-full h-full p-1 bg-blue-400 text-white border-round"
-                                pTooltip="Double click or select one and use arrow buttons">
-                                    {{cType.name}}
-                                </div>
-                            </div>
-                        </ng-template>
-                    </p-pickList> -->
+                    <div class="row" *ngIf="!isPrimary">
+                        <div class="align-items-center justify-content-center h-4rem m-2">
+                            <label for="applyTo">Apply to</label>
+                            <p-dropdown
+                                [options]="primaryOpts"
+                                optionLabel="name"
+                                id="applyTo"
+                            >
+                            </p-dropdown>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12 md:col-4 lg:col-7">
+                <div class="col-12 md:col-8 lg:col-6">
                     <p-pickList 
                         [source]="list3" [target]="list4" 
                         [showSourceControls]="false" [showTargetControls]="false"
                         sourceHeader = "Choose Feature(s)"
                         *ngIf="visible"
+                        [dragdrop]="true"
+                        [sourceStyle]="{'height': '20rem'}"
+                        (onMoveToTarget)="onMoveToTarget($event)"
                     >
                         <ng-template let-item pTemplate="item">
                             <div *ngIf="item && item.id" class="grid">
                                 <div 
                                     pTooltip="Double click or single click and use arrow buttons" 
                                     tooltipPosition="top"
-                                    class="flex align-items-center justify-content-left w-full h-full bg-blue-400 text-white border-round p-1">
+                                    class="flex align-items-center justify-content-left w-full h-full bg-blue-400 text-white border-round p-1"
+                                >
                                     {{item.name}}
                                 </div>
                             </div>
                         </ng-template>
                     </p-pickList>
+                </div>
+                <div class="col-12 md:col-4 lg:col-4">
+                    <p-card header="Details" [style]="{'background':'#f8f9fa', 'color': '#495164'}">
+                        <ul *ngFor="let opt of list4">
+                            <li>{{ opt.description }}
+                                <ul>
+                                    <li>Start Date: {{opt.startDate}}</li>
+                                    <li>End Date: {{opt.endDate}}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </p-card>
                 </div>
             </div>
             </p-accordionTab>

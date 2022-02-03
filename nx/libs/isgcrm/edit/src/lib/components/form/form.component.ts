@@ -22,7 +22,9 @@ export class FormComponent implements OnInit {
     private featureService: FeaturesService,
     
   ) { }
-
+  primaryOpts: any = [];
+  itemDetails: any = null;
+  isPrimary: boolean = true;
   partnerId: any = null;
   partnerName: any = null;
   catalogId: any = null;
@@ -142,12 +144,20 @@ export class FormComponent implements OnInit {
       const key = event.items[0].id;
       const arrTemp = this.filterFeatures( key );
 
-      for ( let opt in arrTemp ){
-        this.temp.push(arrTemp[opt]);
-      }
-      this.list3 = this.temp;
+      // for ( let opt in arrTemp ){
+      //   this.temp.push(arrTemp[opt]);
+      // }
+      // this.list3 = this.temp;
 
     }
+
+    if( this.list4 ){
+      this.list4.map( (item:any) =>{
+        console.log( item.description);
+        //this.itemDetails.push(`${item.description}/{item.endDate}`);
+      })
+    }
+
     setTimeout(() => {
         this.visible = true;
       },10
@@ -192,50 +202,32 @@ export class FormComponent implements OnInit {
   }
 
   getClassTypes(){
-    this.apiService.get( SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.CLASS_TYPES, undefined, this.headers ).pipe(
-      map( (response: any) => {
-        if( response && response["hydra:member"] ){
-          //const primary = response["hydra:member"].filter( (item:any) => item.primary === true );
-          localStorage.setItem('class_type', JSON.stringify(
-            response["hydra:member"]
-          ));
-          this.classType = response["hydra:member"];
-          }
-        }
-      ),
-      tap( (request) => {
-
-        },(error) => {
-          localStorage.removeItem('class_type');
-          return error.message;
-        }
-      )
-    ).toPromise()
+    this.featureService.getClassType().subscribe( (res:any) => {
+      if( res && res["hydra:member"] ){
+        localStorage.setItem( 'class_type', JSON.stringify(
+          res["hydra:member"]
+        ));
+        this.classType = res["hydra:member"];
+      }
+    });
   }
 
+
   getFeatures(){
-    this.apiService.get(SYSTEM_CONFIG.API_URL + SYSTEM_CONFIG.FEATURES, undefined, this.headers ).pipe(
-      map( (response: any) => {
-        if( response && response["hydra:member"] ){
-          localStorage.setItem('features', JSON.stringify(
-            response["hydra:member"]
-          ));
-          this.featureList = response["hydra:member"];
-          }
-        },
-        tap( ( request ) => {
-        
-          },( error ) => {
-            localStorage.removeItem('features');
-            return error.message;
-          }
-        )
-      )
-    ).toPromise()
+    this.featureService.getFeatures().subscribe( (res:any) => {
+      if( res && res["hydra:member"] ){
+        localStorage.setItem( 'features', JSON.stringify( 
+          res["hydra:member"]
+          )
+        );
+        this.featureList = res["hydra:member"];
+      }
+    });
   }
 
   SelectedClassType( event:any ){
     this.list3 = [];
+    this.isPrimary = true;
     if( event && event.value && event.value.primary && event.value.primary == true ){
       const endPointPref = `/revenues/${event.value.name}_class_types`;
       this.featureService.getPrimarys( endPointPref.toLocaleLowerCase() ).subscribe( (res: any) => {
@@ -245,9 +237,23 @@ export class FormComponent implements OnInit {
       });
     }else{
       const id = event.value.id;
-      this.featureService.getFeatures( id ).subscribe( (res: any) => {
+      this.isPrimary = false;
+      this.featureService.getFeatures().subscribe( (res: any) => {
         this.list3 = res["hydra:member"];
       });
+      this.onlyPrimary();
+    }
+  }
+
+  moreInformation( event: any ){
+    console.log( event.value );
+  }
+
+  onlyPrimary(){
+    if( localStorage.getItem( 'class_type' ) ){
+      var primaryClass:any = localStorage.getItem( 'class_type' );
+      primaryClass = JSON.parse( primaryClass );
+      this.primaryOpts = primaryClass.filter( (item:any) => item.primary === true );
     }
   }
 }
