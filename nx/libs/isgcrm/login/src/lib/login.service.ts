@@ -24,7 +24,7 @@ export class LoginService {
           let currentUser = btoa(JSON.stringify( user ));
           localStorage.setItem('user', JSON.stringify( currentUser ));
           localStorage.setItem('token', response.token);
-          this.router.navigate(['./catalog']);
+          this.router.navigate(['./products']);
         }else{
           if( response.error ){
             return response.error;

@@ -76,9 +76,6 @@
     "isgcrm": {
       "tags": []
     },
-    "isgcrm-catalog": {
-      "tags": []
-    },
     "isgcrm-common": {
       "tags": []
     },
@@ -95,10 +92,16 @@
     "isgcrm-login": {
       "tags": []
     },
+    "isgcrm-products": {
+      "tags": []
+    },
     "isgcrm-shared": {
       "tags": []
     },
     "isgcrm-view": {
+      "tags": []
+    },
+    "isgrcrm-products": {
       "tags": []
     },
     "republicw": {

@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'isgcrm-catalog',
+  displayName: 'isgcrm-products',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/isgcrm/catalog',
+  coverageDirectory: '../../../coverage/libs/isgcrm/products',
   transform: {
     '^.+\\.(ts|js|html)$': 'jest-preset-angular',
   },

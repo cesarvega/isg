@@ -565,31 +565,6 @@
         }
       }
     },
-    "isgcrm-catalog": {
-      "projectType": "library",
-      "root": "libs/isgcrm/catalog",
-      "sourceRoot": "libs/isgcrm/catalog/src",
-      "prefix": "nx",
-      "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/isgcrm/catalog"],
-          "options": {
-            "jestConfig": "libs/isgcrm/catalog/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/isgcrm/catalog/src/**/*.ts",
-              "libs/isgcrm/catalog/src/**/*.html"
-            ]
-          }
-        }
-      }
-    },
     "isgcrm-common": {
       "projectType": "library",
       "root": "libs/isgcrm/common",
@@ -716,6 +691,31 @@
         }
       }
     },
+    "isgcrm-products": {
+      "projectType": "library",
+      "root": "libs/isgcrm/products",
+      "sourceRoot": "libs/isgcrm/products/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/isgcrm/products"],
+          "options": {
+            "jestConfig": "libs/isgcrm/products/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/isgcrm/products/src/**/*.ts",
+              "libs/isgcrm/products/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "isgcrm-shared": {
       "projectType": "library",
       "root": "libs/isgcrm/shared",
@@ -761,6 +761,31 @@
             "lintFilePatterns": [
               "libs/isgcrm/view/src/**/*.ts",
               "libs/isgcrm/view/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "isgrcrm-products": {
+      "projectType": "library",
+      "root": "libs/isgrcrm/products",
+      "sourceRoot": "libs/isgrcrm/products/src",
+      "prefix": "nx",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/isgrcrm/products"],
+          "options": {
+            "jestConfig": "libs/isgrcrm/products/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/isgrcrm/products/src/**/*.ts",
+              "libs/isgrcrm/products/src/**/*.html"
             ]
           }
         }

@@ -11,9 +11,9 @@ const routes: Routes = [
         component: MainComponent,
         children: [
           {
-            path: 'catalog',
+            path: 'products',
             loadChildren: () => 
-              import ('@nx/isgcrm/catalog').then((module) => module.IsgcrmCatalogModule
+              import ('@nx/isgcrm/products').then((module) => module.IsgcrmProductsModule
               ),
           },
           {
@@ -27,7 +27,7 @@ const routes: Routes = [
               import('@nx/isgcrm/view').then((module) => module.IsgcrmViewModule),
           },
           {
-            path: 'catalog/new/:partnerId',
+            path: 'product/new/:partnerId',
             loadChildren: () =>
               import('@nx/isgcrm/edit').then((module) => module.IsgcrmEditModule),
           }
