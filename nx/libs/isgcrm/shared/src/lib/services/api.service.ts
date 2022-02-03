@@ -36,8 +36,8 @@ export class ApiService {
 
   private get headers(): HttpHeaders {
     const headersConfig = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      'Content-Type': 'application/ld+json',
+      'Accept': 'application/ld+json',
     };
 
     return new HttpHeaders(headersConfig);

@@ -12,6 +12,16 @@ input[type=text], input[type=password] {
 }
 
 /* Set a style for all buttons */
+.disabled {
+  background-color: #92959e;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: not-allowed;
+  width: 100%;
+}
+/* Set a style for all buttons */
 button {
   background-color: #21346e;
   color: white;

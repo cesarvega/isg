@@ -116,7 +116,7 @@ export class FormComponent implements OnInit {
 
   goPartners(){
     if(this.partnerId){
-      this.route.navigate(['products']);
+      this.route.navigate(['catalog']);
     }
   }
 

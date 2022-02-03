@@ -1,7 +1,6 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-//import { AppComponent } from '../app.component';
 import { MainComponent } from './main.component';
 import { IsgcrmCommonModule } from '@nx/isgcrm/common';
 
@@ -12,10 +11,9 @@ const routes: Routes = [
         component: MainComponent,
         children: [
           {
-            path: 'products',
+            path: 'catalog',
             loadChildren: () => 
-              import ('@nx/isgcrm/products').then(
-                (module) => module.IsgcrmProductsModule
+              import ('@nx/isgcrm/catalog').then((module) => module.IsgcrmCatalogModule
               ),
           },
           {
@@ -29,7 +27,7 @@ const routes: Routes = [
               import('@nx/isgcrm/view').then((module) => module.IsgcrmViewModule),
           },
           {
-            path: 'product/new/:partnerId',
+            path: 'catalog/new/:partnerId',
             loadChildren: () =>
               import('@nx/isgcrm/edit').then((module) => module.IsgcrmEditModule),
           }
