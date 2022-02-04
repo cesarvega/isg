@@ -1,11 +1,11 @@
 <div id="id01" class="modal">
-    <form class="modal-content animate" [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">
+    <form  [formGroup]="formData" novalidate (ngSubmit)="onSubmit()" autocomplete="off" autofill="off">
       <div class="imgcontainer">
         <img src="./assets/img/ISG-LOGO-BLUE.png" alt="Avatar" class="avatar">
       </div>
 
       <div class="container">
-        <label for="uname"><b>Username</b></label>
+        <label class="label" for="uname"><b>Username</b></label>
         <input
             role="presentation"
             autocomplete="off"
@@ -14,14 +14,14 @@
             placeholder="Enter Username" 
             >
   
-        <label for="psw"><b>Password</b></label>
+        <label class="label" for="psw"><b>Password</b></label>
         <input
             type="password" 
             placeholder="Enter Password" 
             formControlName="password" 
             >
           
-        <button [disabled]="formData.invalid" type="button" (click)="onSubmit()" [class]="(formData.invalid) ? 'disabled' : ''">Login</button>
+        <button class="login-button" [disabled]="formData.invalid" type="button" (click)="onSubmit()" [class]="(formData.invalid) ? 'disabled' : ''">Login</button>
 
       </div>
     </form>
